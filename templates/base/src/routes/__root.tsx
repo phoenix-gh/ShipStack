@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-import appCss from "~/styles/app.css?url";
+import appCss from "../styles/app.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -64,4 +64,3 @@ function RootDocument({ children }: { children: ReactNode }) {
     </html>
   );
 }
-

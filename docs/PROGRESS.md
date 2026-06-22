@@ -12,9 +12,9 @@ Last verified:
 - `pnpm build`
 - `pnpm smoke`
 
-Latest milestone commit:
+Latest commit:
 
-- `64e4d3c test: add generated app smoke tests`
+- Run `git log --oneline -1`.
 
 ## Phase Progress
 
@@ -33,11 +33,11 @@ Latest milestone commit:
 | Acceptance criterion                                   | Status        | Verification                                                        |
 | ------------------------------------------------------ | ------------- | ------------------------------------------------------------------- |
 | Dependencies install successfully                      | Passing       | `pnpm smoke` installs generated apps.                               |
-| App starts locally                                     | Not automated | Needs runtime smoke or manual dev-server check.                     |
-| Home route renders                                     | Not automated | Needs runtime smoke or browser check.                               |
+| App starts locally                                     | Passing       | Base generated app runtime smoke starts the dev server.             |
+| Home route renders                                     | Passing       | Base generated app runtime smoke checks `/`.                        |
 | Health route returns success                           | Not automated | Route exists, but runtime check remains.                            |
-| Health API returns success                             | Not automated | Route exists, but runtime API check remains.                        |
-| Authenticated `/api/v1/me` returns current user        | Partial       | Route exists after auth module; authenticated runtime test remains. |
+| Health API returns success                             | Passing       | Base generated app runtime smoke checks `/api/health`.              |
+| Authenticated `/api/v1/me` returns current user        | Partial       | Anonymous runtime smoke exists; authenticated runtime test remains. |
 | D1 migration runs locally                              | Not automated | Migration commands exist; local migration smoke remains.            |
 | User can sign up                                       | Partial       | Auth page and Better Auth route exist; e2e test remains.            |
 | User can sign in                                       | Partial       | Auth page and Better Auth route exist; e2e test remains.            |
@@ -57,15 +57,15 @@ Latest milestone commit:
 | Generated database app smoke | Passing | `pnpm smoke`     |
 | Generated auth app smoke     | Passing | `pnpm smoke`     |
 | CLI unit tests               | Missing | Planned          |
-| Runtime API tests            | Missing | Planned          |
+| Runtime API tests            | Partial | `pnpm smoke`     |
 | Auth browser e2e tests       | Missing | Planned          |
 | D1 migration smoke           | Missing | Planned          |
 
 ## Next Priority
 
-1. Add runtime smoke tests for `/`, `/api/health`, and `/api/v1/me`.
-2. Add CLI unit tests for create/add/doctor and idempotency.
-3. Add D1 local migration verification.
+1. Add CLI unit tests for create/add/doctor and idempotency.
+2. Add D1 local migration verification.
+3. Add authenticated runtime test for `/api/v1/me`.
 4. Add auth browser e2e tests.
 5. Extract a reusable protected route helper if more protected routes are added.
 
