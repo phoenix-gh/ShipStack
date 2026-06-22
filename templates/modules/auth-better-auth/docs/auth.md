@@ -8,6 +8,7 @@ This project uses Better Auth.
 - `src/features/auth/client.ts`: Better Auth React client
 - `src/features/auth/session.ts`: TanStack Start server helpers
 - `src/routes/api.auth.$.ts`: Better Auth handler mounted at `/api/auth/*`
+- `src/db/auth-schema.ts`: Better Auth Drizzle schema
 
 ## Environment Variables
 
@@ -24,5 +25,4 @@ Use Wrangler secrets for production values.
 
 This module depends on the `database-d1` module. Better Auth requires database tables for users, sessions, accounts, and verification data.
 
-The first version wires the Better Auth handler and Drizzle adapter. Schema generation and dashboard protection are implemented in follow-up modules.
-
+The module adds `src/db/auth-schema.ts` and updates `drizzle.config.ts` so Drizzle Kit can generate migrations for Better Auth tables.

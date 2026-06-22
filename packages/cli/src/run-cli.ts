@@ -174,6 +174,7 @@ BETTER_AUTH_URL="http://localhost:5173"
 `,
     "BETTER_AUTH_SECRET",
   );
+  await includeAuthSchemaInDrizzleConfig(resolve(cwd, "drizzle.config.ts"));
 
   console.log("Installed auth-better-auth module.");
   console.log("");
@@ -181,6 +182,24 @@ BETTER_AUTH_URL="http://localhost:5173"
   console.log("  pnpm install");
   console.log("  cp .dev.vars.example .dev.vars");
   console.log("  set BETTER_AUTH_SECRET in .dev.vars");
+}
+
+async function includeAuthSchemaInDrizzleConfig(file: string) {
+  if (!existsSync(file)) {
+    return;
+  }
+
+  const content = await readFile(file, "utf8");
+  if (content.includes("./src/db/auth-schema.ts")) {
+    return;
+  }
+
+  const nextContent = content.replace(
+    'schema: "./src/db/schema.ts",',
+    'schema: ["./src/db/schema.ts", "./src/db/auth-schema.ts"],',
+  );
+
+  await writeFile(file, nextContent);
 }
 
 function assertProjectFile(fileName: string) {
