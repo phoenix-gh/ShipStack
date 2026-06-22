@@ -37,9 +37,14 @@ export async function runCli(argv = process.argv.slice(2)) {
       return;
     }
 
+    if (moduleName === "auth" || moduleName === "auth-better-auth") {
+      await addAuthBetterAuth();
+      return;
+    }
+
     console.log(`Module installation is not implemented yet: ${moduleName}`);
-    console.log("Available now: database.");
-    console.log("Available soon: auth, api, billing-stripe, storage-r2.");
+    console.log("Available now: database, auth.");
+    console.log("Available soon: api, billing-stripe, storage-r2.");
     return;
   }
 
@@ -142,6 +147,40 @@ CLOUDFLARE_D1_TOKEN=""
   console.log("  pnpm db:cf:create");
   console.log("  pnpm db:generate");
   console.log("  pnpm db:cf:migrate:local");
+}
+
+async function addAuthBetterAuth() {
+  const cwd = process.cwd();
+  assertProjectFile("package.json");
+  assertProjectFile("wrangler.jsonc");
+
+  if (!existsSync(resolve(cwd, "src/db/client.ts"))) {
+    throw new Error("The auth module requires the database module. Run `shipstack add database` first.");
+  }
+
+  await copyModuleFiles("auth-better-auth", cwd);
+  await updatePackageJson(resolve(cwd, "package.json"), {
+    dependencies: {
+      "@better-auth/drizzle-adapter": "^1.6.20",
+      "better-auth": "^1.6.20",
+    },
+  });
+  await appendIfMissing(
+    resolve(cwd, ".dev.vars.example"),
+    `
+# Better Auth local Worker secrets.
+BETTER_AUTH_SECRET=""
+BETTER_AUTH_URL="http://localhost:5173"
+`,
+    "BETTER_AUTH_SECRET",
+  );
+
+  console.log("Installed auth-better-auth module.");
+  console.log("");
+  console.log("Next steps:");
+  console.log("  pnpm install");
+  console.log("  cp .dev.vars.example .dev.vars");
+  console.log("  set BETTER_AUTH_SECRET in .dev.vars");
 }
 
 function assertProjectFile(fileName: string) {
@@ -260,6 +299,7 @@ Usage:
 
 Modules:
   database    Add Cloudflare D1 + Drizzle ORM
+  auth        Add Better Auth
 
 This is an early CLI skeleton. More modules will land as the starter matures.`);
 }

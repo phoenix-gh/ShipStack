@@ -128,4 +128,39 @@ export const databaseD1Module: ShipStackModule = {
   ],
 };
 
-export const coreModules = [baseModule, databaseD1Module] satisfies ShipStackModule[];
+export const authBetterAuthModule: ShipStackModule = {
+  id: "auth-better-auth",
+  name: "Better Auth",
+  description: "Adds Better Auth, a TanStack Start auth handler, auth client, and session helpers.",
+  category: "core",
+  dependencies: ["base", "database-d1"],
+  packages: {
+    dependencies: {
+      "@better-auth/drizzle-adapter": "^1.6.20",
+      "better-auth": "^1.6.20",
+    },
+  },
+  env: [
+    {
+      name: "BETTER_AUTH_SECRET",
+      scope: "runtime",
+      required: true,
+      description: "Secret used by Better Auth to sign and verify auth data.",
+    },
+    {
+      name: "BETTER_AUTH_URL",
+      scope: "runtime",
+      required: false,
+      example: "http://localhost:5173",
+      description: "Base URL used by Better Auth for callbacks and generated URLs.",
+    },
+  ],
+  checks: [
+    {
+      id: "auth-handler",
+      description: "Generated app has a Better Auth handler mounted under /api/auth/*.",
+    },
+  ],
+};
+
+export const coreModules = [baseModule, databaseD1Module, authBetterAuthModule] satisfies ShipStackModule[];
