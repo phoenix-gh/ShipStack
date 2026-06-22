@@ -159,6 +159,7 @@ async function addAuthBetterAuth() {
   }
 
   await copyModuleFiles("auth-better-auth", cwd);
+  await copyModuleOverrides("auth-better-auth", cwd);
   await updatePackageJson(resolve(cwd, "package.json"), {
     dependencies: {
       "@better-auth/drizzle-adapter": "^1.6.20",
@@ -218,7 +219,23 @@ async function copyModuleFiles(moduleId: string, targetDir: string) {
     recursive: true,
     errorOnExist: false,
     force: false,
-    filter: (source) => !source.includes("node_modules") && !source.includes(".wrangler"),
+    filter: (source) =>
+      !source.includes("node_modules") &&
+      !source.includes(".wrangler") &&
+      !source.includes(`${moduleId}/_overrides`),
+  });
+}
+
+async function copyModuleOverrides(moduleId: string, targetDir: string) {
+  const overridesDir = resolve(modulesTemplateDir, moduleId, "_overrides");
+  if (!existsSync(overridesDir)) {
+    return;
+  }
+
+  await cp(overridesDir, targetDir, {
+    recursive: true,
+    errorOnExist: false,
+    force: true,
   });
 }
 

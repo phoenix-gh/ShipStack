@@ -109,6 +109,68 @@ p {
   text-decoration: none;
 }
 
+.actions button,
+.auth-form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid #17211b;
+  border-radius: 6px;
+  background: #17211b;
+  color: #ffffff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.actions button:disabled,
+.auth-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.auth-page {
+  max-width: 560px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 14px;
+  width: min(100%, 420px);
+  margin-top: 8px;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 6px;
+  color: #4c5a52;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.auth-form input {
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid #cfd8d2;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #17211b;
+  font: inherit;
+}
+
+.form-error {
+  color: #9b1c1c;
+  font-size: 14px;
+}
+
+.muted-link {
+  color: #68766d;
+  font-size: 14px;
+}
+
 .panel-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -154,4 +216,3 @@ p {
     grid-template-columns: 1fr;
   }
 }
-
