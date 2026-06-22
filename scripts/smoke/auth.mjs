@@ -1,4 +1,4 @@
-import { rm, writeFile } from "node:fs/promises";
+import { access, rm, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import {
@@ -65,6 +65,8 @@ async function verifyAuthRuntime(appDir) {
             `/api/v1/me returned the wrong user: ${JSON.stringify(me.data.user)}`,
           );
         }
+
+        await verifyAuthBrowserFlow(origin);
       },
       {
         beforeStart: async ({ origin }) => {
@@ -78,6 +80,70 @@ async function verifyAuthRuntime(appDir) {
   } finally {
     await rm(devVarsPath, { force: true });
   }
+}
+
+async function verifyAuthBrowserFlow(origin) {
+  const { chromium } = await import("playwright");
+  const browser = await chromium.launch({
+    executablePath: await findBrowserExecutable(),
+    headless: true,
+  });
+  const email = `browser-${Date.now()}@example.com`;
+  const password = "correct-horse-battery-staple";
+
+  try {
+    const page = await browser.newPage();
+
+    await page.goto(`${origin}/sign-up`);
+    await waitForHydration(page);
+    await page.getByLabel("Name").fill("Browser Tester");
+    await page.getByLabel("Email").fill(email);
+    await page.getByLabel("Password").fill(password);
+    await page.getByRole("button", { name: "Create account" }).click();
+    await page.waitForURL("**/dashboard");
+    await page.getByText(`Welcome, Browser Tester.`).waitFor();
+    await page.getByText(email).waitFor();
+
+    await page.getByRole("link", { name: "Account" }).click();
+    await page.waitForURL("**/account");
+    await page.getByText(email).waitFor();
+    await page.getByRole("button", { name: "Sign out" }).click();
+    await page.waitForURL("**/sign-in");
+    await waitForHydration(page);
+
+    await page.getByLabel("Email").fill(email);
+    await page.getByLabel("Password").fill(password);
+    await page.getByRole("button", { name: "Sign in" }).click();
+    await page.waitForURL("**/dashboard");
+    await page.getByText(`Welcome, Browser Tester.`).waitFor();
+  } finally {
+    await browser.close();
+  }
+}
+
+async function waitForHydration(page) {
+  await page.waitForLoadState("networkidle");
+  await page.waitForTimeout(500);
+}
+
+async function findBrowserExecutable() {
+  const candidates = [
+    process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE,
+    "/usr/bin/google-chrome",
+    "/usr/bin/chromium",
+    "/usr/bin/chromium-browser",
+  ].filter(Boolean);
+
+  for (const candidate of candidates) {
+    try {
+      await access(candidate);
+      return candidate;
+    } catch {
+      // Try the next candidate.
+    }
+  }
+
+  return undefined;
 }
 
 async function postAuthJson(url, cookieJar, body) {
