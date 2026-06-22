@@ -134,13 +134,25 @@ export async function verifyGeneratedApp(appDir, options = {}) {
 }
 
 export async function verifyRuntimeRoutes(appDir, checks) {
+  await withDevServer(appDir, async (origin) => {
+    for (const check of checks) {
+      await verifyHttpCheck(`${origin}${check.path}`, check);
+    }
+  });
+}
+
+export async function withDevServer(appDir, callback, options = {}) {
   const port = await getAvailablePort();
+  const origin = `http://127.0.0.1:${port}`;
+
+  if (options.beforeStart) {
+    await options.beforeStart({ origin, port });
+  }
+
   const server = await startDevServer(appDir, port);
 
   try {
-    for (const check of checks) {
-      await verifyHttpCheck(`http://127.0.0.1:${port}${check.path}`, check);
-    }
+    await callback(origin);
   } finally {
     await server.stop();
   }

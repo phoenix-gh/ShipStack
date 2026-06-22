@@ -37,11 +37,11 @@
 | Home route 可以渲染                | 通过     | base 生成应用 runtime smoke 会检查 `/`。                 |
 | Health route 返回成功              | 未自动化 | 路由已存在，但还需要 runtime 检查。                      |
 | Health API 返回成功                | 通过     | base 生成应用 runtime smoke 会检查 `/api/health`。       |
-| 认证后的 `/api/v1/me` 返回当前用户 | 部分完成 | 已有匿名 runtime smoke；还需要认证态 runtime test。      |
+| 认证后的 `/api/v1/me` 返回当前用户 | 通过     | auth 生成应用 runtime smoke 会登录并检查 `/api/v1/me`。  |
 | D1 migration 可以本地运行          | 通过     | database 生成应用 smoke 会运行 generate 和 local apply。 |
 | 用户可以注册                       | 部分完成 | 已有 auth 页面和 Better Auth route；还需要 e2e test。    |
 | 用户可以登录                       | 部分完成 | 已有 auth 页面和 Better Auth route；还需要 e2e test。    |
-| 匿名用户不能访问 dashboard         | 部分完成 | 已有服务端 route guard；还需要 runtime redirect test。   |
+| 匿名用户不能访问 dashboard         | 通过     | auth 生成应用 runtime smoke 会检查 dashboard redirect。  |
 | 登录用户可以访问 dashboard         | 部分完成 | dashboard UI 支持 session 状态；还需要 e2e test。        |
 | 应用可以构建到 Cloudflare Workers  | 通过     | `pnpm smoke` 会运行生成应用 build。                      |
 | 部署文档足够手动执行               | 部分完成 | 已有基础文档；还需要完整手动 deploy pass。               |
@@ -58,16 +58,16 @@
 | Generated database app smoke | 通过 | `pnpm smoke`     |
 | Generated auth app smoke     | 通过 | `pnpm smoke`     |
 | CLI unit tests               | 缺失 | 未来             |
-| Runtime API tests            | 部分 | `pnpm smoke`     |
+| Runtime API tests            | 通过 | `pnpm smoke`     |
 | Auth browser e2e tests       | 缺失 | 计划中           |
 | D1 migration smoke           | 通过 | `pnpm smoke`     |
 | Auth migration smoke         | 通过 | `pnpm smoke`     |
 
 ## 下一优先级
 
-1. 增加 `/api/v1/me` 的认证态 runtime test。
-2. 增加 auth browser e2e tests。
-3. 增加受保护 dashboard 的 runtime redirect test。
+1. 增加 auth browser e2e tests。
+2. 增加 authenticated dashboard browser check。
+3. 增加 Cloudflare 手动部署验证。
 4. 如果 patch helper 变复杂，再补更底层的 CLI 单元测试。
 5. 如果后续增加更多受保护页面，再抽出可复用 protected route helper。
 
