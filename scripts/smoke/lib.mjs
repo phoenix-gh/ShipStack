@@ -124,7 +124,9 @@ export async function verifyGeneratedApp(appDir, options = {}) {
     await run("pnpm", ["test"], { cwd: appDir });
   }
 
-  await run("pnpm", ["typecheck"], { cwd: appDir });
+  if (options.typecheck !== false) {
+    await run("pnpm", ["typecheck"], { cwd: appDir });
+  }
 
   if (options.build !== false) {
     await run("pnpm", ["build"], { cwd: appDir });

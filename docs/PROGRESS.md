@@ -38,7 +38,7 @@ Latest commit:
 | Health route returns success                           | Not automated | Route exists, but runtime check remains.                            |
 | Health API returns success                             | Passing       | Base generated app runtime smoke checks `/api/health`.              |
 | Authenticated `/api/v1/me` returns current user        | Partial       | Anonymous runtime smoke exists; authenticated runtime test remains. |
-| D1 migration runs locally                              | Not automated | Migration commands exist; local migration smoke remains.            |
+| D1 migration runs locally                              | Passing       | Database generated app smoke runs generate and local apply.         |
 | User can sign up                                       | Partial       | Auth page and Better Auth route exist; e2e test remains.            |
 | User can sign in                                       | Partial       | Auth page and Better Auth route exist; e2e test remains.            |
 | Anonymous user cannot access dashboard                 | Partial       | Server-side route guard exists; runtime redirect test remains.      |
@@ -60,13 +60,13 @@ Latest commit:
 | CLI unit tests               | Missing | Future           |
 | Runtime API tests            | Partial | `pnpm smoke`     |
 | Auth browser e2e tests       | Missing | Planned          |
-| D1 migration smoke           | Missing | Planned          |
+| D1 migration smoke           | Passing | `pnpm smoke`     |
 
 ## Next Priority
 
-1. Add D1 local migration verification.
-2. Add authenticated runtime test for `/api/v1/me`.
-3. Add auth browser e2e tests.
+1. Add authenticated runtime test for `/api/v1/me`.
+2. Add auth browser e2e tests.
+3. Add auth module migration verification.
 4. Add lower-level CLI unit tests if patching helpers become more complex.
 5. Extract a reusable protected route helper if more protected routes are added.
 
