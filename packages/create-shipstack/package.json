@@ -1,0 +1,21 @@
+{
+  "name": "create-shipstack",
+  "version": "0.1.0-alpha.0",
+  "private": false,
+  "type": "module",
+  "bin": {
+    "create-shipstack": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/make-bin-executable.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@shipstack/cli": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "typescript": "^6.0.3"
+  }
+}
+

@@ -1,0 +1,24 @@
+{
+  "name": "shipstack",
+  "version": "0.1.0-alpha.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r --if-present build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "pnpm -r --if-present lint",
+    "test": "pnpm -r --if-present test",
+    "format:check": "prettier --check \"**/*.{md,json,jsonc,ts,tsx,css}\"",
+    "format": "prettier --write \"**/*.{md,json,jsonc,ts,tsx,css}\""
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "prettier": "^3.7.4",
+    "typescript": "^6.0.3"
+  }
+}

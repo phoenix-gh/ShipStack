@@ -1,0 +1,26 @@
+{
+  "name": "@shipstack/cli",
+  "version": "0.1.0-alpha.0",
+  "private": false,
+  "type": "module",
+  "bin": {
+    "shipstack": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/make-bin-executable.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@shipstack/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "typescript": "^6.0.3"
+  }
+}
