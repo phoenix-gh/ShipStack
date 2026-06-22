@@ -18,15 +18,15 @@
 
 ## 阶段进度
 
-| 阶段                              | 状态     | 说明                                                                                                                        |
-| --------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Phase 0: Design Foundation        | 已完成   | 已有产品方向、MVP 范围、模块模型、agent guide 和法律边界。                                                                  |
-| Phase 1: Minimal Runnable Starter | 基本完成 | 基础 TanStack Start + Cloudflare Workers 模板可构建，并通过生成应用 smoke tests。CI 和最终 UI primitive 选择还未完成。      |
-| Phase 2: Database And Auth        | 进行中   | 已有 D1、Drizzle、Better Auth、认证页面、session API、dashboard/account 服务端保护和 account route。还需要 auth e2e tests。 |
-| Phase 3: CLI MVP                  | 进行中   | 已有 `create`、`doctor`、`add database` 和 `add auth`。还需要 CLI 单元测试和更强的 doctor 检查。                            |
-| Phase 4: Billing And Storage      | 未开始   | Stripe 和 R2 等基础路径稳定后再做。                                                                                         |
-| Phase 5: Recipes                  | 未开始   | Recipes 等 MVP 模块稳定后再做。                                                                                             |
-| Phase 6: Ecosystem                | 未开始   | Docs site、贡献指南、发布流程和 examples 后续再做。                                                                         |
+| 阶段                              | 状态     | 说明                                                                                                                                          |
+| --------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Phase 0: Design Foundation        | 已完成   | 已有产品方向、MVP 范围、模块模型、agent guide 和法律边界。                                                                                    |
+| Phase 1: Minimal Runnable Starter | 基本完成 | 基础 TanStack Start + Cloudflare Workers 模板可构建，并通过生成应用 smoke tests。CI 和最终 UI primitive 选择还未完成。                        |
+| Phase 2: Database And Auth        | 进行中   | 已有 D1、Drizzle、Better Auth、认证页面、session API、dashboard/account 服务端保护、auth migrations 和 account route。还需要 auth e2e tests。 |
+| Phase 3: CLI MVP                  | 进行中   | 已有 `create`、`doctor`、`add database` 和 `add auth`。还需要 CLI 单元测试和更强的 doctor 检查。                                              |
+| Phase 4: Billing And Storage      | 未开始   | Stripe 和 R2 等基础路径稳定后再做。                                                                                                           |
+| Phase 5: Recipes                  | 未开始   | Recipes 等 MVP 模块稳定后再做。                                                                                                               |
+| Phase 6: Ecosystem                | 未开始   | Docs site、贡献指南、发布流程和 examples 后续再做。                                                                                           |
 
 ## MVP 验收进度
 
@@ -61,12 +61,13 @@
 | Runtime API tests            | 部分 | `pnpm smoke`     |
 | Auth browser e2e tests       | 缺失 | 计划中           |
 | D1 migration smoke           | 通过 | `pnpm smoke`     |
+| Auth migration smoke         | 通过 | `pnpm smoke`     |
 
 ## 下一优先级
 
 1. 增加 `/api/v1/me` 的认证态 runtime test。
 2. 增加 auth browser e2e tests。
-3. 增加 auth module migration 验证。
+3. 增加受保护 dashboard 的 runtime redirect test。
 4. 如果 patch helper 变复杂，再补更底层的 CLI 单元测试。
 5. 如果后续增加更多受保护页面，再抽出可复用 protected route helper。
 

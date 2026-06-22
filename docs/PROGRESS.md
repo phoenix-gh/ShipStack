@@ -18,15 +18,15 @@ Latest commit:
 
 ## Phase Progress
 
-| Phase                             | Status      | Notes                                                                                                                                     |
-| --------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Phase 0: Design Foundation        | Done        | Product direction, MVP scope, module model, agent guide, and legal boundaries exist.                                                      |
-| Phase 1: Minimal Runnable Starter | Mostly done | Base TanStack Start + Cloudflare Workers template builds and passes generated-app smoke tests. CI and final UI primitive decision remain. |
-| Phase 2: Database And Auth        | In progress | D1, Drizzle, Better Auth, auth pages, session API, protected dashboard/account guards, and account route exist. Auth e2e tests remain.    |
-| Phase 3: CLI MVP                  | In progress | `create`, `doctor`, `add database`, and `add auth` exist. CLI unit tests and stronger doctor checks remain.                               |
-| Phase 4: Billing And Storage      | Not started | Stripe and R2 are planned after the base path is reliable.                                                                                |
-| Phase 5: Recipes                  | Not started | Recipes wait until MVP modules are stable.                                                                                                |
-| Phase 6: Ecosystem                | Not started | Docs site, contribution guide, releases, and examples come later.                                                                         |
+| Phase                             | Status      | Notes                                                                                                                                                   |
+| --------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Phase 0: Design Foundation        | Done        | Product direction, MVP scope, module model, agent guide, and legal boundaries exist.                                                                    |
+| Phase 1: Minimal Runnable Starter | Mostly done | Base TanStack Start + Cloudflare Workers template builds and passes generated-app smoke tests. CI and final UI primitive decision remain.               |
+| Phase 2: Database And Auth        | In progress | D1, Drizzle, Better Auth, auth pages, session API, protected dashboard/account guards, auth migrations, and account route exist. Auth e2e tests remain. |
+| Phase 3: CLI MVP                  | In progress | `create`, `doctor`, `add database`, and `add auth` exist. CLI unit tests and stronger doctor checks remain.                                             |
+| Phase 4: Billing And Storage      | Not started | Stripe and R2 are planned after the base path is reliable.                                                                                              |
+| Phase 5: Recipes                  | Not started | Recipes wait until MVP modules are stable.                                                                                                              |
+| Phase 6: Ecosystem                | Not started | Docs site, contribution guide, releases, and examples come later.                                                                                       |
 
 ## MVP Acceptance Progress
 
@@ -61,12 +61,13 @@ Latest commit:
 | Runtime API tests            | Partial | `pnpm smoke`     |
 | Auth browser e2e tests       | Missing | Planned          |
 | D1 migration smoke           | Passing | `pnpm smoke`     |
+| Auth migration smoke         | Passing | `pnpm smoke`     |
 
 ## Next Priority
 
 1. Add authenticated runtime test for `/api/v1/me`.
 2. Add auth browser e2e tests.
-3. Add auth module migration verification.
+3. Add runtime redirect test for protected dashboard.
 4. Add lower-level CLI unit tests if patching helpers become more complex.
 5. Extract a reusable protected route helper if more protected routes are added.
 
