@@ -10,6 +10,7 @@ ShipStack 是一个开源、模块化、Cloudflare 优先的 TanStack Start SaaS
 - [MVP 规格](./MVP_SPEC.md)
 - [模块 Manifest 设计](./MODULE_MANIFEST.md)
 - [路线图](./ROADMAP.md)
+- [进度](./PROGRESS.md)
 - [架构决策](./DECISIONS.md)
 - [法律与竞品边界](./LEGAL_BOUNDARIES.md)
 - [开发环境](./DEVELOPMENT.md)

@@ -41,6 +41,7 @@ Cloudflare is the default path, but the architecture should keep provider seams 
 - [MVP Specification](./docs/MVP_SPEC.md)
 - [Module Manifest Design](./docs/MODULE_MANIFEST.md)
 - [Roadmap](./docs/ROADMAP.md)
+- [Progress](./docs/PROGRESS.md)
 - [Architecture Decisions](./docs/DECISIONS.md)
 - [Legal And Competitive Boundaries](./docs/LEGAL_BOUNDARIES.md)
 - [Development](./docs/DEVELOPMENT.md)
