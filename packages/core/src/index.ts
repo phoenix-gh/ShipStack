@@ -72,3 +72,60 @@ export const baseModule: ShipStackModule = {
   ],
 };
 
+export const databaseD1Module: ShipStackModule = {
+  id: "database-d1",
+  name: "Cloudflare D1 database",
+  description: "Adds Cloudflare D1, Drizzle ORM, Drizzle Kit configuration, and migration scripts.",
+  category: "core",
+  dependencies: ["base"],
+  packages: {
+    dependencies: {
+      "drizzle-orm": "^0.45.2",
+    },
+    devDependencies: {
+      "@cloudflare/workers-types": "^4.20260621.1",
+      "drizzle-kit": "^0.31.10",
+      dotenv: "^17.4.2",
+    },
+  },
+  env: [
+    {
+      name: "CLOUDFLARE_ACCOUNT_ID",
+      scope: "local",
+      required: true,
+      description: "Cloudflare account ID used by Drizzle Kit for D1 HTTP operations.",
+    },
+    {
+      name: "CLOUDFLARE_DATABASE_ID",
+      scope: "local",
+      required: true,
+      description: "D1 database ID used by Drizzle Kit for D1 HTTP operations.",
+    },
+    {
+      name: "CLOUDFLARE_D1_TOKEN",
+      scope: "local",
+      required: true,
+      description: "Cloudflare API token with D1 permissions for local tooling.",
+    },
+  ],
+  wrangler: [
+    {
+      type: "d1",
+      binding: "DB",
+      databaseName: "shipstack-db",
+      databaseIdPlaceholder: "replace-with-d1-database-id",
+    },
+  ],
+  checks: [
+    {
+      id: "db-schema",
+      description: "Generated app has a src/db/schema.ts file.",
+    },
+    {
+      id: "d1-binding",
+      description: "Generated app has a DB binding in wrangler.jsonc.",
+    },
+  ],
+};
+
+export const coreModules = [baseModule, databaseD1Module] satisfies ShipStackModule[];
