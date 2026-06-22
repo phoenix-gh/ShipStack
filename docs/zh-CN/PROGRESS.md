@@ -53,20 +53,21 @@
 | ---------------------------- | ---- | ---------------- |
 | Repository typecheck         | 通过 | `pnpm typecheck` |
 | Repository build             | 通过 | `pnpm build`     |
+| CLI behavior smoke           | 通过 | `pnpm smoke`     |
 | Generated base app smoke     | 通过 | `pnpm smoke`     |
 | Generated database app smoke | 通过 | `pnpm smoke`     |
 | Generated auth app smoke     | 通过 | `pnpm smoke`     |
-| CLI unit tests               | 缺失 | 计划中           |
+| CLI unit tests               | 缺失 | 未来             |
 | Runtime API tests            | 部分 | `pnpm smoke`     |
 | Auth browser e2e tests       | 缺失 | 计划中           |
 | D1 migration smoke           | 缺失 | 计划中           |
 
 ## 下一优先级
 
-1. 增加 create/add/doctor 和幂等性的 CLI 单元测试。
-2. 增加 D1 local migration 验证。
-3. 增加 `/api/v1/me` 的认证态 runtime test。
-4. 增加 auth browser e2e tests。
+1. 增加 D1 local migration 验证。
+2. 增加 `/api/v1/me` 的认证态 runtime test。
+3. 增加 auth browser e2e tests。
+4. 如果 patch helper 变复杂，再补更底层的 CLI 单元测试。
 5. 如果后续增加更多受保护页面，再抽出可复用 protected route helper。
 
 ## 更新规则

@@ -25,6 +25,7 @@ pnpm smoke
 
 The smoke suite creates temporary real apps, installs dependencies, and runs app-level checks:
 
+- `scripts/smoke/cli.mjs` creates an app and checks CLI errors, `doctor`, module dependency ordering, and repeated module installs.
 - `scripts/smoke/base.mjs` creates the base TanStack Start app, runs `pnpm install`, `pnpm test`, `pnpm typecheck`, starts the dev server, checks `/`, `/api/health`, and `/api/v1/me`, then runs `pnpm build`.
 - `scripts/smoke/database.mjs` creates an app, installs the D1 database module twice, then runs the same app checks.
 - `scripts/smoke/auth.mjs` creates an app, installs database and Better Auth modules, installs auth twice, then runs the same app checks.
@@ -35,7 +36,7 @@ Smoke workspaces are created in the operating system temp directory. Passing run
 
 Add tests in this order:
 
-1. CLI unit tests for create/add/doctor behavior, including existing target errors and module dependency errors.
+1. CLI unit tests around lower-level patching helpers if CLI behavior grows more complex.
 2. Authenticated runtime API tests for `/api/v1/me`.
 3. D1 migration checks for generated schemas.
 4. Browser tests for auth sign up, sign in, sign out, and protected dashboard behavior.

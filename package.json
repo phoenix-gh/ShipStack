@@ -13,7 +13,7 @@
     "typecheck": "pnpm -r --if-present typecheck",
     "lint": "pnpm -r --if-present lint",
     "test": "pnpm -r --if-present test",
-    "smoke": "pnpm build && node scripts/smoke/base.mjs && node scripts/smoke/database.mjs && node scripts/smoke/auth.mjs",
+    "smoke": "pnpm build && node scripts/smoke/cli.mjs && node scripts/smoke/base.mjs && node scripts/smoke/database.mjs && node scripts/smoke/auth.mjs",
     "format:check": "prettier --check \"**/*.{md,json,jsonc,ts,tsx,css}\"",
     "format": "prettier --write \"**/*.{md,json,jsonc,ts,tsx,css}\""
   },

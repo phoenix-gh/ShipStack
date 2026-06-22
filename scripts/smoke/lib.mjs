@@ -62,6 +62,39 @@ export async function run(command, args, options = {}) {
   });
 }
 
+export async function runAndCapture(command, args, options = {}) {
+  const cwd = options.cwd ?? repositoryRoot;
+  const label = [command, ...args].join(" ");
+  console.log(`\n$ ${label}`);
+
+  return await new Promise((resolvePromise, reject) => {
+    const child = spawn(command, args, {
+      cwd,
+      env: process.env,
+      shell: process.platform === "win32",
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    let stdout = "";
+    let stderr = "";
+
+    child.stdout.on("data", (chunk) => {
+      stdout += chunk.toString();
+    });
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk.toString();
+    });
+    child.on("error", reject);
+    child.on("close", (code) => {
+      resolvePromise({
+        code,
+        stdout,
+        stderr,
+        output: `${stdout}${stderr}`,
+      });
+    });
+  });
+}
+
 export async function runSmoke(label, scenario) {
   const workspace = await createWorkspace(label);
   console.log(`Smoke workspace: ${workspace.directory}`);

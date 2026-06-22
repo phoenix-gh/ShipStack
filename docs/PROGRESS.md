@@ -53,20 +53,21 @@ Latest commit:
 | ---------------------------- | ------- | ---------------- |
 | Repository typecheck         | Passing | `pnpm typecheck` |
 | Repository build             | Passing | `pnpm build`     |
+| CLI behavior smoke           | Passing | `pnpm smoke`     |
 | Generated base app smoke     | Passing | `pnpm smoke`     |
 | Generated database app smoke | Passing | `pnpm smoke`     |
 | Generated auth app smoke     | Passing | `pnpm smoke`     |
-| CLI unit tests               | Missing | Planned          |
+| CLI unit tests               | Missing | Future           |
 | Runtime API tests            | Partial | `pnpm smoke`     |
 | Auth browser e2e tests       | Missing | Planned          |
 | D1 migration smoke           | Missing | Planned          |
 
 ## Next Priority
 
-1. Add CLI unit tests for create/add/doctor and idempotency.
-2. Add D1 local migration verification.
-3. Add authenticated runtime test for `/api/v1/me`.
-4. Add auth browser e2e tests.
+1. Add D1 local migration verification.
+2. Add authenticated runtime test for `/api/v1/me`.
+3. Add auth browser e2e tests.
+4. Add lower-level CLI unit tests if patching helpers become more complex.
 5. Extract a reusable protected route helper if more protected routes are added.
 
 ## Update Rules
