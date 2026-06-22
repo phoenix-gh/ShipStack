@@ -1,8 +1,18 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 
 import { authClient } from "~/features/auth/client";
+import { getSession } from "~/features/auth/session";
 
 export const Route = createFileRoute("/dashboard")({
+  beforeLoad: async () => {
+    const session = await getSession();
+
+    if (!session) {
+      throw redirect({
+        to: "/sign-in",
+      });
+    }
+  },
   component: DashboardPage,
 });
 
@@ -56,4 +66,3 @@ function DashboardPage() {
     </section>
   );
 }
-

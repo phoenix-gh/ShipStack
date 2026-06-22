@@ -22,7 +22,7 @@ Latest milestone commit:
 | --------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | Phase 0: Design Foundation        | Done        | Product direction, MVP scope, module model, agent guide, and legal boundaries exist.                                                      |
 | Phase 1: Minimal Runnable Starter | Mostly done | Base TanStack Start + Cloudflare Workers template builds and passes generated-app smoke tests. CI and final UI primitive decision remain. |
-| Phase 2: Database And Auth        | In progress | D1, Drizzle, Better Auth, auth pages, session API, and account route exist. Protected server behavior and auth e2e tests remain.          |
+| Phase 2: Database And Auth        | In progress | D1, Drizzle, Better Auth, auth pages, session API, protected dashboard/account guards, and account route exist. Auth e2e tests remain.    |
 | Phase 3: CLI MVP                  | In progress | `create`, `doctor`, `add database`, and `add auth` exist. CLI unit tests and stronger doctor checks remain.                               |
 | Phase 4: Billing And Storage      | Not started | Stripe and R2 are planned after the base path is reliable.                                                                                |
 | Phase 5: Recipes                  | Not started | Recipes wait until MVP modules are stable.                                                                                                |
@@ -41,7 +41,7 @@ Latest milestone commit:
 | D1 migration runs locally                              | Not automated | Migration commands exist; local migration smoke remains.            |
 | User can sign up                                       | Partial       | Auth page and Better Auth route exist; e2e test remains.            |
 | User can sign in                                       | Partial       | Auth page and Better Auth route exist; e2e test remains.            |
-| Anonymous user cannot access dashboard                 | Partial       | Dashboard is session-aware; server-side guard remains.              |
+| Anonymous user cannot access dashboard                 | Partial       | Server-side route guard exists; runtime redirect test remains.      |
 | Authenticated user can access dashboard                | Partial       | Dashboard UI supports session state; e2e test remains.              |
 | App builds for Cloudflare Workers                      | Passing       | `pnpm smoke` runs generated app builds.                             |
 | Deployment docs are complete enough to follow manually | Partial       | Base docs exist; full manual deploy pass remains.                   |
@@ -63,11 +63,11 @@ Latest milestone commit:
 
 ## Next Priority
 
-1. Add a shared server-side route guard for protected dashboard behavior.
-2. Add runtime smoke tests for `/`, `/api/health`, and `/api/v1/me`.
-3. Add CLI unit tests for create/add/doctor and idempotency.
-4. Add D1 local migration verification.
-5. Add auth browser e2e tests.
+1. Add runtime smoke tests for `/`, `/api/health`, and `/api/v1/me`.
+2. Add CLI unit tests for create/add/doctor and idempotency.
+3. Add D1 local migration verification.
+4. Add auth browser e2e tests.
+5. Extract a reusable protected route helper if more protected routes are added.
 
 ## Update Rules
 
