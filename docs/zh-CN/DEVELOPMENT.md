@@ -22,6 +22,12 @@ pnpm typecheck
 pnpm build
 ```
 
+修改模板或 CLI 行为后，运行生成应用 smoke suite：
+
+```bash
+pnpm smoke
+```
+
 ## 生成 Smoke App
 
 先构建 CLI：

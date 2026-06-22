@@ -22,6 +22,12 @@ pnpm typecheck
 pnpm build
 ```
 
+Run the generated-app smoke suite when template or CLI behavior changes:
+
+```bash
+pnpm smoke
+```
+
 ## Generate A Smoke App
 
 Build the CLI first:

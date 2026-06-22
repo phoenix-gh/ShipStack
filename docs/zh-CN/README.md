@@ -13,11 +13,12 @@ ShipStack 是一个开源、模块化、Cloudflare 优先的 TanStack Start SaaS
 - [架构决策](./DECISIONS.md)
 - [法律与竞品边界](./LEGAL_BOUNDARIES.md)
 - [开发环境](./DEVELOPMENT.md)
+- [测试](./TESTING.md)
 - [Agent 指南](./AGENTS.md)
 
 ## 当前阶段
 
-当前仓库处于设计阶段。下一步目标是实现 `v0.1.0` 最小可运行 starter：
+当前仓库正在实现 `v0.1.0` 最小可运行 starter，已经有基础模板、D1 + Drizzle 模块、Better Auth 模块、认证页面和生成应用 smoke tests。下一步会继续完善：
 
 - TanStack Start
 - Cloudflare Workers
@@ -26,4 +27,4 @@ ShipStack 是一个开源、模块化、Cloudflare 优先的 TanStack Start SaaS
 - 受保护 Dashboard
 - 基础 API 服务能力
 - 清晰的环境变量和部署文档
-- smoke tests
+- runtime integration tests
