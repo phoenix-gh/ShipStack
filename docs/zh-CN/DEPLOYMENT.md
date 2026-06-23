@@ -37,6 +37,7 @@ pnpm smoke
 
    ```bash
    pnpm install
+   pnpm lint
    pnpm typecheck
    pnpm test
    pnpm build

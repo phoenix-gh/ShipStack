@@ -56,4 +56,3 @@ pnpm db:push
 pnpm db:migrate
 pnpm db:studio
 ```
-

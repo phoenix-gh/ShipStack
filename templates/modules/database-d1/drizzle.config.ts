@@ -12,4 +12,3 @@ export default defineConfig({
     token: process.env.CLOUDFLARE_D1_TOKEN!,
   },
 });
-

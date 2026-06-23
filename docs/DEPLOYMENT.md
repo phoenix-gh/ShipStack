@@ -38,6 +38,7 @@ Use a real Cloudflare account for this checklist.
 
    ```bash
    pnpm install
+   pnpm lint
    pnpm typecheck
    pnpm test
    pnpm build

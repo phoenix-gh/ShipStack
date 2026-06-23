@@ -124,6 +124,10 @@ export async function verifyGeneratedApp(appDir, options = {}) {
     await run("pnpm", ["test"], { cwd: appDir });
   }
 
+  if (options.lint !== false) {
+    await run("pnpm", ["lint"], { cwd: appDir });
+  }
+
   if (options.typecheck !== false) {
     await run("pnpm", ["typecheck"], { cwd: appDir });
   }

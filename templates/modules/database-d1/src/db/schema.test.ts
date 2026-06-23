@@ -7,4 +7,3 @@ describe("database schema", () => {
     expect(healthChecks).toBeTruthy();
   });
 });
-

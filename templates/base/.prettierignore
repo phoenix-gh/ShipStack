@@ -1,0 +1,7 @@
+node_modules
+dist
+.wrangler
+drizzle/migrations/meta
+pnpm-lock.yaml
+wrangler.jsonc
+src/routeTree.gen.ts

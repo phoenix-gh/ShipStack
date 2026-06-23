@@ -57,6 +57,7 @@ Latest commit:
 | Generated base app smoke     | Passing | `pnpm smoke`     |
 | Generated database app smoke | Passing | `pnpm smoke`     |
 | Generated auth app smoke     | Passing | `pnpm smoke`     |
+| Generated app lint           | Passing | `pnpm smoke`     |
 | CLI unit tests               | Passing | `pnpm test`      |
 | Runtime API tests            | Passing | `pnpm smoke`     |
 | Auth browser e2e tests       | Passing | `pnpm smoke`     |

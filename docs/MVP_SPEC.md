@@ -101,9 +101,13 @@ Target flow:
 pnpm create shipstack my-app
 cd my-app
 pnpm install
-pnpm shipstack doctor
-pnpm db:migrate:local
+shipstack doctor
+shipstack add database
+shipstack add auth
+pnpm db:generate
+pnpm db:cf:migrate:local
 pnpm dev
+pnpm lint
 pnpm test
 pnpm deploy
 ```

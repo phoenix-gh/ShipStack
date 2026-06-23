@@ -14,6 +14,7 @@ Install dependencies and verify the app locally:
 
 ```bash
 pnpm install
+pnpm lint
 pnpm typecheck
 pnpm test
 pnpm build

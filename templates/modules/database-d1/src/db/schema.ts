@@ -7,4 +7,3 @@ export const healthChecks = sqliteTable("health_checks", {
     .notNull()
     .$defaultFn(() => new Date()),
 });
-

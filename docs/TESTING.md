@@ -26,9 +26,9 @@ pnpm smoke
 The smoke suite creates temporary real apps, installs dependencies, and runs app-level checks:
 
 - `scripts/smoke/cli.mjs` creates an app and checks CLI errors, `doctor`, module dependency ordering, and repeated module installs.
-- `scripts/smoke/base.mjs` creates the base TanStack Start app, runs `pnpm install`, `pnpm test`, `pnpm typecheck`, starts the dev server, checks `/`, `/api/health`, and `/api/v1/me`, then runs `pnpm build`.
-- `scripts/smoke/database.mjs` creates an app, installs the D1 database module twice, generates a migration, applies it locally with Wrangler, then runs the same app checks.
-- `scripts/smoke/auth.mjs` creates an app, installs database and Better Auth modules, installs auth twice, generates auth migrations, applies them locally with Wrangler, starts the dev server, verifies anonymous dashboard redirect, signs in, checks authenticated `/api/v1/me`, runs browser sign up/sign out/sign in/dashboard checks, then runs the same app checks.
+- `scripts/smoke/base.mjs` creates the base TanStack Start app, runs `pnpm install`, `pnpm test`, `pnpm lint`, `pnpm typecheck`, starts the dev server, checks `/`, `/health`, `/api/health`, and `/api/v1/me`, then runs `pnpm build`.
+- `scripts/smoke/database.mjs` creates an app, installs the D1 database module twice, verifies linting, generates a migration, applies it locally with Wrangler, then runs the same app checks.
+- `scripts/smoke/auth.mjs` creates an app, installs database and Better Auth modules, installs auth twice, verifies linting, generates auth migrations, applies them locally with Wrangler, starts the dev server, verifies anonymous dashboard redirect, signs in, checks authenticated `/api/v1/me`, runs browser sign up/sign out/sign in/dashboard checks, then runs the same app checks.
 
 Smoke workspaces are created in the operating system temp directory. Passing runs are removed automatically. Failed runs are kept and printed so the generated project can be inspected.
 

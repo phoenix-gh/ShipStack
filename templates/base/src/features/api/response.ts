@@ -51,4 +51,3 @@ function createRequestId() {
 
   return `req_${Date.now().toString(36)}`;
 }
-

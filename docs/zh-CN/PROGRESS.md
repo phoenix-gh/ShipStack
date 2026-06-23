@@ -57,6 +57,7 @@
 | Generated base app smoke     | 通过   | `pnpm smoke`     |
 | Generated database app smoke | 通过   | `pnpm smoke`     |
 | Generated auth app smoke     | 通过   | `pnpm smoke`     |
+| Generated app lint           | 通过   | `pnpm smoke`     |
 | CLI unit tests               | 通过   | `pnpm test`      |
 | Runtime API tests            | 通过   | `pnpm smoke`     |
 | Auth browser e2e tests       | 通过   | `pnpm smoke`     |

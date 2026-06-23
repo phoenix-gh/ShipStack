@@ -27,4 +27,3 @@ Use Wrangler secrets:
 ```bash
 pnpm wrangler secret put SECRET_NAME
 ```
-

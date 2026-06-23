@@ -91,4 +91,3 @@ export function AuthForm({ mode }: AuthFormProps) {
     </form>
   );
 }
-

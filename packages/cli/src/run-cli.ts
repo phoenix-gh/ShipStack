@@ -432,7 +432,8 @@ function parseJsonc(content: string) {
 function stripJsonComments(content: string) {
   return content
     .replace(/\/\*[\s\S]*?\*\//g, "")
-    .replace(/(^|[^:])\/\/.*$/gm, "$1");
+    .replace(/(^|[^:])\/\/.*$/gm, "$1")
+    .replace(/,\s*([}\]])/g, "$1");
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
