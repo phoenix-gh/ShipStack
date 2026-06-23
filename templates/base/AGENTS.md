@@ -5,6 +5,7 @@ This app was generated from the ShipStack base template.
 ## Layout
 
 - `src/routes` contains TanStack Router and TanStack Start server routes.
+- `src/components` contains shared UI primitives.
 - `src/features` contains business logic grouped by feature.
 - `src/features/api` contains shared external API response helpers.
 - `src/lib` contains shared utilities.
@@ -18,4 +19,3 @@ This app was generated from the ShipStack base template.
 - Use helpers from `src/features/api` for JSON API responses.
 - Do not commit `.env`, `.env.local`, or `.dev.vars`.
 - Follow Cloudflare Workers constraints; do not assume Node-only APIs are available unless the compatibility setting supports them.
-

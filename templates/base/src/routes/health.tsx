@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { InfoPanel } from "~/components/ui/info-panel";
+
 export const Route = createFileRoute("/health")({
   component: HealthPage,
 });
@@ -14,16 +16,10 @@ function HealthPage() {
         API health route for operational probes and uptime checks.
       </p>
       <div className="panel-grid">
-        <div className="panel">
-          <span>App route</span>
-          <strong>ok</strong>
-        </div>
-        <div className="panel">
-          <span>API probe</span>
-          <strong>
-            <a href="/api/health">/api/health</a>
-          </strong>
-        </div>
+        <InfoPanel label="App route">ok</InfoPanel>
+        <InfoPanel label="API probe">
+          <a href="/api/health">/api/health</a>
+        </InfoPanel>
       </div>
     </section>
   );

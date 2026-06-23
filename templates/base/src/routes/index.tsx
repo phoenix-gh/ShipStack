@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { ActionLink } from "~/components/ui/action-link";
+
 export const Route = createFileRoute("/")({
   component: HomePage,
 });
@@ -15,8 +17,8 @@ function HomePage() {
         auth, billing, and storage modules.
       </p>
       <div className="actions">
-        <a href="/dashboard">Open dashboard</a>
-        <a href="/health">Check app health</a>
+        <ActionLink href="/dashboard">Open dashboard</ActionLink>
+        <ActionLink href="/health">Check app health</ActionLink>
       </div>
     </section>
   );

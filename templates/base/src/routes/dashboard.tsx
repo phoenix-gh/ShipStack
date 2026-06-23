@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { InfoPanel } from "~/components/ui/info-panel";
+
 export const Route = createFileRoute("/dashboard")({
   component: DashboardPage,
 });
@@ -14,20 +16,10 @@ function DashboardPage() {
         protected route guards, account settings, and session-aware data.
       </p>
       <div className="panel-grid">
-        <div className="panel">
-          <span>Database</span>
-          <strong>D1 + Drizzle module</strong>
-        </div>
-        <div className="panel">
-          <span>Auth</span>
-          <strong>Better Auth module</strong>
-        </div>
-        <div className="panel">
-          <span>API</span>
-          <strong>Versioned routes</strong>
-        </div>
+        <InfoPanel label="Database">D1 + Drizzle module</InfoPanel>
+        <InfoPanel label="Auth">Better Auth module</InfoPanel>
+        <InfoPanel label="API">Versioned routes</InfoPanel>
       </div>
     </section>
   );
 }
-

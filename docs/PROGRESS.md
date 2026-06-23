@@ -18,15 +18,15 @@ Latest commit:
 
 ## Phase Progress
 
-| Phase                             | Status      | Notes                                                                                                                                                   |
-| --------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Phase 0: Design Foundation        | Done        | Product direction, MVP scope, module model, agent guide, and legal boundaries exist.                                                                    |
-| Phase 1: Minimal Runnable Starter | Mostly done | Base TanStack Start + Cloudflare Workers template builds, passes generated-app smoke tests, and has a CI workflow. Final UI primitive decision remains. |
-| Phase 2: Database And Auth        | In progress | D1, Drizzle, Better Auth, auth pages, session API, protected dashboard/account guards, auth migrations, account route, and auth e2e smoke exist.        |
-| Phase 3: CLI MVP                  | Mostly done | `create`, `doctor`, `add database`, `add auth`, CLI unit tests, and module-aware doctor checks exist.                                                   |
-| Phase 4: Billing And Storage      | Not started | Stripe and R2 are planned after the base path is reliable.                                                                                              |
-| Phase 5: Recipes                  | Not started | Recipes wait until MVP modules are stable.                                                                                                              |
-| Phase 6: Ecosystem                | Not started | Docs site, contribution guide, releases, and examples come later.                                                                                       |
+| Phase                             | Status      | Notes                                                                                                                                              |
+| --------------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Phase 0: Design Foundation        | Done        | Product direction, MVP scope, module model, agent guide, and legal boundaries exist.                                                               |
+| Phase 1: Minimal Runnable Starter | Mostly done | Base TanStack Start + Cloudflare Workers template builds, uses Tailwind CSS, has minimal UI primitives, passes smoke tests, and has a CI workflow. |
+| Phase 2: Database And Auth        | Mostly done | D1, Drizzle, Better Auth, auth pages, session API, protected dashboard/account guards, auth migrations, account route, and auth e2e smoke exist.   |
+| Phase 3: CLI MVP                  | Mostly done | `create`, `doctor`, `add database`, `add auth`, CLI unit tests, and module-aware doctor checks exist.                                              |
+| Phase 4: Billing And Storage      | Not started | Stripe and R2 are planned after the base path is reliable.                                                                                         |
+| Phase 5: Recipes                  | Not started | Recipes wait until MVP modules are stable.                                                                                                         |
+| Phase 6: Ecosystem                | Not started | Docs site, contribution guide, releases, and examples come later.                                                                                  |
 
 ## MVP Acceptance Progress
 

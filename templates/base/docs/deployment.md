@@ -3,6 +3,7 @@
 This app follows the official TanStack Start + Cloudflare Workers setup:
 
 - `@cloudflare/vite-plugin`
+- `@tailwindcss/vite`
 - `wrangler`
 - `@tanstack/react-start/server-entry`
 - `compatibility_flags: ["nodejs_compat"]`
