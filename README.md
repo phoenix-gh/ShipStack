@@ -42,6 +42,7 @@ Cloudflare is the default path, but the architecture should keep provider seams 
 - [Module Manifest Design](./docs/MODULE_MANIFEST.md)
 - [Roadmap](./docs/ROADMAP.md)
 - [Progress](./docs/PROGRESS.md)
+- [Deployment Verification](./docs/DEPLOYMENT.md)
 - [Architecture Decisions](./docs/DECISIONS.md)
 - [Legal And Competitive Boundaries](./docs/LEGAL_BOUNDARIES.md)
 - [Development](./docs/DEVELOPMENT.md)
@@ -52,4 +53,4 @@ Chinese documentation is available at [docs/zh-CN](./docs/zh-CN/README.md).
 
 ## Status
 
-This repository now has an initial monorepo scaffold, CLI skeleton, base TanStack Start + Cloudflare Workers template, D1 + Drizzle module, Better Auth module, auth pages, and generated-app smoke tests. The next milestone is tightening protected route behavior and expanding runtime integration tests.
+This repository now has an initial monorepo scaffold, CLI skeleton, base TanStack Start + Cloudflare Workers template, D1 + Drizzle module, Better Auth module, protected auth pages, generated-app smoke tests, auth browser smoke checks, and a CI workflow. The next milestone is running a real Cloudflare deployment pass and then adding the first post-MVP modules.

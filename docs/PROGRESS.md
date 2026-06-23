@@ -44,7 +44,7 @@ Latest commit:
 | Anonymous user cannot access dashboard                 | Passing | Auth generated app runtime smoke checks dashboard redirect.          |
 | Authenticated user can access dashboard                | Passing | Auth browser smoke verifies the dashboard after sign up and sign in. |
 | App builds for Cloudflare Workers                      | Passing | `pnpm smoke` runs generated app builds.                              |
-| Deployment docs are complete enough to follow manually | Partial | Base docs exist; full manual deploy pass remains.                    |
+| Deployment docs are complete enough to follow manually | Passing | Generated and maintainer deployment checklists exist.                |
 | Generated `AGENTS.md` exists and matches layout        | Passing | Base template includes `AGENTS.md`.                                  |
 
 ## Test Progress
@@ -66,7 +66,7 @@ Latest commit:
 
 ## Next Priority
 
-1. Add manual Cloudflare deploy verification.
+1. Run manual Cloudflare deploy verification with real credentials.
 2. Confirm the GitHub Actions workflow on the remote repository.
 3. Add manual route checks to deployment documentation.
 4. Add lower-level CLI unit tests if patching helpers become more complex.

@@ -26,7 +26,11 @@ pnpm deploy
 
 `/api/v1/me` currently returns an anonymous placeholder until the auth module is installed.
 
+## Docs
+
+- [Deployment](./docs/deployment.md)
+- [Environment variables](./docs/env.md)
+
 ## Cloudflare
 
 This template follows the official TanStack Start + Cloudflare Workers path with `@cloudflare/vite-plugin`, `wrangler`, and `@tanstack/react-start/server-entry`.
-
