@@ -1,0 +1,47 @@
+name: Feature Request
+description: Suggest a ShipStack feature, module, or recipe.
+title: "feat: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What should ShipStack add or change?
+    validations:
+      required: true
+  - type: dropdown
+    id: shape
+    attributes:
+      label: Suggested Shape
+      options:
+        - base starter change
+        - module
+        - recipe
+        - documentation
+        - test or smoke check
+        - unsure
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Tradeoffs
+      description: What complexity, provider coupling, or maintenance cost does this introduce?
+    validations:
+      required: false
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Boundaries
+      options:
+        - label: This request does not require copying paid or private starter code, docs, assets, or implementation details.
+          required: true

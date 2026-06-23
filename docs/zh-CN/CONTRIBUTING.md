@@ -75,6 +75,10 @@ pnpm smoke:temporary-deploy
 - 用户可见行为变化时，同步更新英文和中文文档。
 - 永远不要提交真实 secrets。
 
+## 安全问题
+
+疑似漏洞不要创建公开 issue。请遵循 [Security Policy](../../SECURITY.md)。
+
 ## Commit 风格
 
 使用简洁的 conventional-style commit message，例如：

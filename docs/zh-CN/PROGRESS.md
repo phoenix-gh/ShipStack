@@ -81,6 +81,8 @@
 | 模块 AGENTS 指引             | 通过   | `pnpm test`, `pnpm smoke`     |
 | 开源许可证                   | 已添加 | `LICENSE`                     |
 | 贡献指南                     | 已添加 | `CONTRIBUTING.md`             |
+| 安全策略                     | 已添加 | `SECURITY.md`                 |
+| Issue 和 PR templates        | 已添加 | `.github` templates           |
 | CI workflow                  | 已添加 | GitHub Actions                |
 | Release verification command | 通过   | `pnpm verify:release`         |
 | v0.1.0 release notes         | 已添加 | `docs/releases`               |

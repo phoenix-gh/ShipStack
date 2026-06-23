@@ -49,6 +49,7 @@ Cloudflare is the default path, but the architecture should keep provider seams 
 - [Development](./docs/DEVELOPMENT.md)
 - [Testing](./docs/TESTING.md)
 - [Contributing](./CONTRIBUTING.md)
+- [Security Policy](./SECURITY.md)
 - [Agent Guide](./AGENTS.md)
 
 Chinese documentation is available at [docs/zh-CN](./docs/zh-CN/README.md).

@@ -1,0 +1,73 @@
+name: Bug Report
+description: Report a reproducible ShipStack bug.
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: List the smallest commands or steps that reproduce the bug.
+      placeholder: |
+        1. pnpm install
+        2. pnpm build
+        3. node packages/create-shipstack/dist/cli.js my-app
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What happened instead?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - base template
+        - CLI
+        - database module
+        - auth module
+        - API foundation
+        - deployment
+        - documentation
+        - tests
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include Node, pnpm, OS, and Cloudflare/Wrangler details when relevant.
+      placeholder: |
+        Node:
+        pnpm:
+        OS:
+        Wrangler:
+    validations:
+      required: false
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety
+      options:
+        - label: I did not include real secrets, tokens, session cookies, or private data.
+          required: true

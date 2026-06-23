@@ -18,6 +18,7 @@ ShipStack 是一个开源、模块化、Cloudflare 优先的 TanStack Start SaaS
 - [开发环境](./DEVELOPMENT.md)
 - [测试](./TESTING.md)
 - [贡献指南](./CONTRIBUTING.md)
+- [安全策略](../../SECURITY.md)
 - [Agent 指南](./AGENTS.md)
 
 ## 当前阶段

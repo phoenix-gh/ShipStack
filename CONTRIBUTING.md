@@ -78,6 +78,11 @@ does not replace a real-account deployment pass.
 - Update English and Chinese documentation when user-facing behavior changes.
 - Never commit real secrets.
 
+## Security Issues
+
+Do not open a public issue for suspected vulnerabilities. Follow the
+[Security Policy](./SECURITY.md) instead.
+
 ## Commit Style
 
 Use concise, conventional-style commit messages, for example:
