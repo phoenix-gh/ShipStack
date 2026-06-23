@@ -63,6 +63,25 @@ pnpm wrangler secret put SHIPSTACK_TRUSTED_ORIGINS
 
 Leave the value empty until you have a concrete trusted client origin.
 
+## GitHub Actions Deploy
+
+The generated app includes two workflows:
+
+- `.github/workflows/ci.yml` runs `pnpm verify` on pushes and pull requests.
+- `.github/workflows/deploy.yml` is a manual `workflow_dispatch` deploy to
+  Cloudflare Workers.
+
+To use the deploy workflow, add this repository secret in GitHub:
+
+```text
+CLOUDFLARE_API_TOKEN
+```
+
+Use a token that can deploy the target Worker. Keep production runtime secrets
+such as `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, and
+`SHIPSTACK_TRUSTED_ORIGINS` in Cloudflare Wrangler secrets, not in committed
+files.
+
 ## If The D1 Database Module Is Installed
 
 Create the database:

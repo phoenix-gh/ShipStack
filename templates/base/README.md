@@ -17,6 +17,7 @@ pnpm lint
 pnpm format:check
 pnpm format
 pnpm test
+pnpm verify
 pnpm build
 pnpm preview
 pnpm deploy:dry-run

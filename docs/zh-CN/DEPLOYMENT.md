@@ -15,6 +15,7 @@ Smoke suite 已经覆盖这些与部署相关的检查：
 - auth 注册、退出、登录和受保护 dashboard 本地可用
 - 生成应用可以构建到 Cloudflare Workers
 - base 生成应用可以通过 `wrangler deploy --dry-run`
+- 生成应用包含 CI 和手动 deploy workflows
 
 运行完整检查：
 

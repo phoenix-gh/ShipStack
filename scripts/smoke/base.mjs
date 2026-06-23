@@ -89,6 +89,5 @@ await runSmoke("base", async (workspace) => {
       status: 200,
     },
   ]);
-  await verifyGeneratedApp(appDir, { install: false, test: false });
-  await run("pnpm", ["deploy:dry-run"], { cwd: appDir });
+  await run("pnpm", ["verify"], { cwd: appDir });
 });

@@ -16,6 +16,7 @@ The smoke suite already verifies these deployment-adjacent checks:
 - auth sign up, sign out, sign in, and protected dashboard access work locally
 - generated apps build for Cloudflare Workers
 - the base generated app passes `wrangler deploy --dry-run`
+- generated app CI and manual deploy workflows exist
 
 Run the full suite:
 
