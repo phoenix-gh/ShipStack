@@ -66,6 +66,7 @@ Latest commit:
 | D1 migration smoke           | Passing | `pnpm smoke`     |
 | Auth migration smoke         | Passing | `pnpm smoke`     |
 | CI workflow                  | Added   | GitHub Actions   |
+| v0.1.0 release notes         | Added   | `docs/releases`  |
 
 ## Next Priority
 

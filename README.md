@@ -43,6 +43,7 @@ Cloudflare is the default path, but the architecture should keep provider seams 
 - [Roadmap](./docs/ROADMAP.md)
 - [Progress](./docs/PROGRESS.md)
 - [Deployment Verification](./docs/DEPLOYMENT.md)
+- [v0.1.0 Release Notes](./docs/releases/v0.1.0.md)
 - [Architecture Decisions](./docs/DECISIONS.md)
 - [Legal And Competitive Boundaries](./docs/LEGAL_BOUNDARIES.md)
 - [Development](./docs/DEVELOPMENT.md)

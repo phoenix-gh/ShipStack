@@ -66,6 +66,7 @@
 | D1 migration smoke           | 通过   | `pnpm smoke`     |
 | Auth migration smoke         | 通过   | `pnpm smoke`     |
 | CI workflow                  | 已添加 | GitHub Actions   |
+| v0.1.0 release notes         | 已添加 | `docs/releases`  |
 
 ## 下一优先级
 
