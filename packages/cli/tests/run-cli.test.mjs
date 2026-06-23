@@ -60,6 +60,8 @@ test("database and auth installers patch generated apps idempotently", async () 
 
       const devVarsExample = await readFile(".dev.vars.example", "utf8");
       assert.equal(count(devVarsExample, "BETTER_AUTH_SECRET"), 1);
+      assert.equal(count(devVarsExample, "GOOGLE_CLIENT_ID"), 1);
+      assert.equal(count(devVarsExample, "GOOGLE_CLIENT_SECRET"), 1);
 
       const drizzleConfig = await readFile("drizzle.config.ts", "utf8");
       assert.equal(count(drizzleConfig, "./src/db/auth-schema.ts"), 1);

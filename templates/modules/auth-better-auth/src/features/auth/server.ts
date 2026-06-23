@@ -7,6 +7,8 @@ import { drizzle } from "drizzle-orm/d1";
 import * as authSchema from "~/db/auth-schema";
 
 const db = drizzle(env.DB, { schema: authSchema });
+const googleClientId = env.GOOGLE_CLIENT_ID;
+const googleClientSecret = env.GOOGLE_CLIENT_SECRET;
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -16,6 +18,15 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  socialProviders:
+    googleClientId && googleClientSecret
+      ? {
+          google: {
+            clientId: googleClientId,
+            clientSecret: googleClientSecret,
+          },
+        }
+      : undefined,
   secret: env.BETTER_AUTH_SECRET,
   baseURL: env.BETTER_AUTH_URL,
   plugins: [tanstackStartCookies()],

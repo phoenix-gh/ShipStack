@@ -309,6 +309,10 @@ async function addAuthBetterAuth() {
 # Better Auth local Worker secrets.
 BETTER_AUTH_SECRET=""
 BETTER_AUTH_URL="http://localhost:5173"
+
+# Optional Google OAuth local Worker secrets.
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
 `,
     "BETTER_AUTH_SECRET",
   );
