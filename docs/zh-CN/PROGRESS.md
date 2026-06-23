@@ -83,6 +83,7 @@
 | 贡献指南                     | 已添加 | `CONTRIBUTING.md`             |
 | 安全策略                     | 已添加 | `SECURITY.md`                 |
 | Issue 和 PR templates        | 已添加 | `.github` templates           |
+| Release checklist            | 已添加 | `docs/RELEASE.md`             |
 | CI workflow                  | 已添加 | GitHub Actions                |
 | Release verification command | 通过   | `pnpm verify:release`         |
 | v0.1.0 release notes         | 已添加 | `docs/releases`               |

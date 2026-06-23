@@ -25,6 +25,7 @@ Read these documents first:
 - [Roadmap](./docs/ROADMAP.md)
 - [Legal Boundaries](./docs/LEGAL_BOUNDARIES.md)
 - [Testing](./docs/TESTING.md)
+- [Release Checklist](./docs/RELEASE.md)
 
 Avoid copying private boilerplates, paid starter templates, proprietary docs,
 marketing copy, or implementation details.
@@ -102,3 +103,5 @@ Before tagging `v0.1.0`, maintainers should verify:
 2. `pnpm smoke:temporary-deploy` passes.
 3. A real Cloudflare account deploy has been completed and recorded.
 4. The remote GitHub Actions workflow passes.
+
+Use the [Release Checklist](./docs/RELEASE.md) for the full release flow.

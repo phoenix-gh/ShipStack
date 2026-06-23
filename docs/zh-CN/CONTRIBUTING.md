@@ -25,6 +25,7 @@ ShipStack 当前聚焦一个最小、可验证、Cloudflare-first 的 MVP：
 - [路线图](./ROADMAP.md)
 - [法律边界](./LEGAL_BOUNDARIES.md)
 - [测试](./TESTING.md)
+- [Release Checklist](./RELEASE.md)
 
 不要复制私有 boilerplate、付费 starter templates、专有文档、营销文案或实现细节。
 
@@ -98,3 +99,5 @@ docs: clarify cloudflare deployment
 2. `pnpm smoke:temporary-deploy` 通过。
 3. 已完成并记录真实 Cloudflare 账号部署。
 4. 远端 GitHub Actions workflow 通过。
+
+完整 release flow 见 [Release Checklist](./RELEASE.md)。

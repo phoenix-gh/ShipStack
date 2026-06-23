@@ -83,6 +83,7 @@ Latest commit:
 | Contribution guide           | Added   | `CONTRIBUTING.md`             |
 | Security policy              | Added   | `SECURITY.md`                 |
 | Issue and PR templates       | Added   | `.github` templates           |
+| Release checklist            | Added   | `docs/RELEASE.md`             |
 | CI workflow                  | Added   | GitHub Actions                |
 | Release verification command | Passing | `pnpm verify:release`         |
 | v0.1.0 release notes         | Added   | `docs/releases`               |
