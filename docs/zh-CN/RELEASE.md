@@ -24,14 +24,20 @@
    pnpm smoke:temporary-deploy
    ```
 
-4. 执行 [部署验证](./DEPLOYMENT.md) 里的真实 Cloudflare 账号部署 checklist。
+4. 验证 npm package 内容。
 
-5. 确认 release branch 上的远端 GitHub Actions workflow 通过。
+   ```sh
+   pnpm pack:check
+   ```
 
-6. 在 [部署验证](./DEPLOYMENT.md) 或
+5. 执行 [部署验证](./DEPLOYMENT.md) 里的真实 Cloudflare 账号部署 checklist。
+
+6. 确认 release branch 上的远端 GitHub Actions workflow 通过。
+
+7. 在 [部署验证](./DEPLOYMENT.md) 或
    [v0.1.0 release notes](./releases/v0.1.0.md) 里记录真实部署后的 Worker 验证结果。
 
-7. 确认 release notes 包含：
+8. 确认 release notes 包含：
 
    - 支持的 Node.js version
    - 支持的 pnpm version
@@ -40,7 +46,7 @@
    - known limitations
    - next planned modules
 
-8. 创建 release tag。
+9. 创建 release tag。
 
    ```sh
    git tag v0.1.0

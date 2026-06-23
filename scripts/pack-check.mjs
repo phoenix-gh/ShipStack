@@ -1,0 +1,104 @@
+import { access, mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { resolve } from "node:path";
+import { spawn } from "node:child_process";
+
+const repositoryRoot = resolve(import.meta.dirname, "..");
+const outputDir = await mkdtemp(resolve(tmpdir(), "shipstack-pack-"));
+
+try {
+  const cliTarball = await pack("packages/cli");
+  const createTarball = await pack("packages/create-shipstack");
+  const coreTarball = await pack("packages/core");
+
+  await assertTarIncludes(cliTarball, [
+    "package/dist/cli.js",
+    "package/dist/index.d.ts",
+    "package/templates/base/package.json",
+    "package/templates/modules/auth-better-auth/src/features/auth/route-guards.ts",
+    "package/templates/modules/database-d1/drizzle.config.ts",
+  ]);
+  await assertTarIncludes(createTarball, [
+    "package/dist/cli.js",
+    "package/package.json",
+  ]);
+  await assertTarIncludes(coreTarball, [
+    "package/dist/index.js",
+    "package/dist/index.d.ts",
+    "package/package.json",
+  ]);
+
+  await assertMissing(resolve(repositoryRoot, "packages/cli/templates"));
+  console.log("Pack check passed.");
+} finally {
+  await rm(outputDir, {
+    force: true,
+    recursive: true,
+  });
+}
+
+async function pack(packagePath) {
+  const output = await run("pnpm", ["pack", "--pack-destination", outputDir], {
+    cwd: resolve(repositoryRoot, packagePath),
+  });
+  const match = output.match(/Tarball Details\s*\n(.+\.tgz)/);
+
+  if (!match) {
+    throw new Error(`Failed to find tarball path in pack output:\n${output}`);
+  }
+
+  return match[1].trim();
+}
+
+async function assertTarIncludes(tarball, expectedFiles) {
+  const output = await run("tar", ["-tf", tarball]);
+  const files = new Set(output.trim().split("\n"));
+
+  for (const expectedFile of expectedFiles) {
+    if (!files.has(expectedFile)) {
+      throw new Error(`Expected ${tarball} to include ${expectedFile}`);
+    }
+  }
+}
+
+async function assertMissing(path) {
+  try {
+    await access(path);
+  } catch {
+    return;
+  }
+
+  throw new Error(`Expected generated path to be cleaned up: ${path}`);
+}
+
+async function run(command, args, options = {}) {
+  return await new Promise((resolvePromise, reject) => {
+    const child = spawn(command, args, {
+      cwd: options.cwd ?? repositoryRoot,
+      env: process.env,
+      shell: process.platform === "win32",
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    let output = "";
+
+    child.stdout.on("data", (chunk) => {
+      output += chunk.toString();
+    });
+    child.stderr.on("data", (chunk) => {
+      output += chunk.toString();
+    });
+    child.on("error", reject);
+    child.on("close", (code) => {
+      if (code === 0) {
+        resolvePromise(output);
+        return;
+      }
+
+      reject(
+        new Error(
+          `Command failed with exit code ${code}: ${command} ${args.join(" ")}\n${output}`,
+        ),
+      );
+    });
+  });
+}

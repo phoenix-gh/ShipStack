@@ -5,8 +5,13 @@ import { fileURLToPath } from "node:url";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryRoot = resolve(packageRoot, "../..");
-const baseTemplateDir = resolve(repositoryRoot, "templates/base");
-const modulesTemplateDir = resolve(repositoryRoot, "templates/modules");
+const packagedTemplatesDir = resolve(packageRoot, "templates");
+const repositoryTemplatesDir = resolve(repositoryRoot, "templates");
+const templatesDir = existsSync(packagedTemplatesDir)
+  ? packagedTemplatesDir
+  : repositoryTemplatesDir;
+const baseTemplateDir = resolve(templatesDir, "base");
+const modulesTemplateDir = resolve(templatesDir, "modules");
 
 export async function runCli(argv = process.argv.slice(2)) {
   const [command, ...args] = argv;

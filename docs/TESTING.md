@@ -47,13 +47,14 @@ pnpm format:check
 pnpm typecheck
 pnpm test
 pnpm build
+pnpm pack:check
 pnpm smoke
 ```
 
 The CI workflow installs Playwright Chromium before running the release
 verification because the auth smoke includes a real browser flow.
 
-`pnpm test` runs package-level unit tests. `pnpm format:check` verifies repository formatting.
+`pnpm test` runs package-level unit tests. `pnpm format:check` verifies repository formatting. `pnpm pack:check` verifies that npm package tarballs include the compiled entrypoints and generated-app templates required by the CLI.
 
 ### Optional Temporary Cloudflare Deploy Smoke
 

@@ -78,7 +78,9 @@ function findWorkerUrl(output) {
   );
 
   if (!match) {
-    throw new Error("Temporary deploy output did not include a workers.dev URL");
+    throw new Error(
+      "Temporary deploy output did not include a workers.dev URL",
+    );
   }
 
   return match[0];

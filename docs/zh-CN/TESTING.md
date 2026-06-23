@@ -47,12 +47,13 @@ pnpm format:check
 pnpm typecheck
 pnpm test
 pnpm build
+pnpm pack:check
 pnpm smoke
 ```
 
 CI workflow 会先安装 Playwright Chromium，因为 release verification 里的 auth smoke 包含真实浏览器流程。
 
-`pnpm test` 会运行 package-level unit tests。`pnpm format:check` 会验证仓库格式。
+`pnpm test` 会运行 package-level unit tests。`pnpm format:check` 会验证仓库格式。`pnpm pack:check` 会验证 npm package tarballs 包含 CLI 需要的编译入口和生成应用 templates。
 
 ### 可选 Cloudflare 临时部署 Smoke
 

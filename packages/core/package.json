@@ -1,8 +1,13 @@
 {
   "name": "@shipstack/core",
   "version": "0.1.0-alpha.0",
+  "license": "MIT",
   "private": false,
   "type": "module",
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

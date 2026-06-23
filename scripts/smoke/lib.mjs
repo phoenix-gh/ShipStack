@@ -138,11 +138,15 @@ export async function verifyGeneratedApp(appDir, options = {}) {
 }
 
 export async function verifyRuntimeRoutes(appDir, checks, options = {}) {
-  await withDevServer(appDir, async (origin) => {
-    for (const check of checks) {
-      await verifyHttpCheck(`${origin}${check.path}`, check);
-    }
-  }, options);
+  await withDevServer(
+    appDir,
+    async (origin) => {
+      for (const check of checks) {
+        await verifyHttpCheck(`${origin}${check.path}`, check);
+      }
+    },
+    options,
+  );
 }
 
 export async function withDevServer(appDir, callback, options = {}) {

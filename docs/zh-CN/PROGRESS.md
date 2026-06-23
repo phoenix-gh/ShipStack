@@ -19,6 +19,7 @@
 - `pnpm build`
 - `pnpm format:check`
 - `pnpm smoke`
+- `pnpm pack:check`
 - `pnpm verify:release`
 
 最新提交：
@@ -84,6 +85,7 @@
 | 安全策略                     | 已添加 | `SECURITY.md`                 |
 | Issue 和 PR templates        | 已添加 | `.github` templates           |
 | Release checklist            | 已添加 | `docs/RELEASE.md`             |
+| npm package 内容             | 通过   | `pnpm pack:check`             |
 | CI workflow                  | 已添加 | GitHub Actions                |
 | Release verification command | 通过   | `pnpm verify:release`         |
 | v0.1.0 release notes         | 已添加 | `docs/releases`               |

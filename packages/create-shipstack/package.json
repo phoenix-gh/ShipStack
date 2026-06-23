@@ -1,13 +1,19 @@
 {
   "name": "create-shipstack",
   "version": "0.1.0-alpha.0",
+  "license": "MIT",
   "private": false,
   "type": "module",
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "bin": {
     "create-shipstack": "./dist/cli.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json && node scripts/make-bin-executable.mjs",
+    "prepack": "pnpm build",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

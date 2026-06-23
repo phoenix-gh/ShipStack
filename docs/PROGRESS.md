@@ -19,6 +19,7 @@ Last verified:
 - `pnpm build`
 - `pnpm format:check`
 - `pnpm smoke`
+- `pnpm pack:check`
 - `pnpm verify:release`
 
 Latest commit:
@@ -84,6 +85,7 @@ Latest commit:
 | Security policy              | Added   | `SECURITY.md`                 |
 | Issue and PR templates       | Added   | `.github` templates           |
 | Release checklist            | Added   | `docs/RELEASE.md`             |
+| npm package contents         | Passing | `pnpm pack:check`             |
 | CI workflow                  | Added   | GitHub Actions                |
 | Release verification command | Passing | `pnpm verify:release`         |
 | v0.1.0 release notes         | Added   | `docs/releases`               |

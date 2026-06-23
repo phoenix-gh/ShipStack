@@ -24,16 +24,22 @@ Do not tag `v0.1.0` until these checks are complete:
    pnpm smoke:temporary-deploy
    ```
 
-4. Run the real Cloudflare account deploy checklist in
+4. Verify npm package contents.
+
+   ```sh
+   pnpm pack:check
+   ```
+
+5. Run the real Cloudflare account deploy checklist in
    [Deployment Verification](./DEPLOYMENT.md).
 
-5. Confirm the remote GitHub Actions workflow passes on the release branch.
+6. Confirm the remote GitHub Actions workflow passes on the release branch.
 
-6. Record the real deployed Worker verification result in
+7. Record the real deployed Worker verification result in
    [Deployment Verification](./DEPLOYMENT.md) or
    [v0.1.0 release notes](./releases/v0.1.0.md).
 
-7. Confirm release notes include:
+8. Confirm release notes include:
 
    - supported Node.js version
    - supported pnpm version
@@ -42,7 +48,7 @@ Do not tag `v0.1.0` until these checks are complete:
    - known limitations
    - next planned modules
 
-8. Create the release tag.
+9. Create the release tag.
 
    ```sh
    git tag v0.1.0
