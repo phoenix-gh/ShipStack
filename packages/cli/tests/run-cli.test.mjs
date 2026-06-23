@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import test from "node:test";
@@ -34,6 +34,18 @@ test("database and auth installers patch generated apps idempotently", async () 
       );
       assert.equal(d1Bindings.length, 1);
       assert.equal(d1Bindings[0].migrations_dir, "drizzle/migrations");
+      await runSilently(["doctor"]);
+
+      const originalWrangler = await readFile("wrangler.jsonc", "utf8");
+      await writeFile(
+        "wrangler.jsonc",
+        `${JSON.stringify({ ...wrangler, d1_databases: [] }, null, 2)}\n`,
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("wrangler.jsonc", originalWrangler);
 
       const envExample = await readFile(".env.example", "utf8");
       assert.equal(count(envExample, "CLOUDFLARE_ACCOUNT_ID"), 1);
@@ -51,6 +63,7 @@ test("database and auth installers patch generated apps idempotently", async () 
 
       const drizzleConfig = await readFile("drizzle.config.ts", "utf8");
       assert.equal(count(drizzleConfig, "./src/db/auth-schema.ts"), 1);
+      await runSilently(["doctor"]);
     });
   });
 });

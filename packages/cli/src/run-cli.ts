@@ -11,7 +11,12 @@ const modulesTemplateDir = resolve(repositoryRoot, "templates/modules");
 export async function runCli(argv = process.argv.slice(2)) {
   const [command, ...args] = argv;
 
-  if (!command || command === "help" || command === "--help" || command === "-h") {
+  if (
+    !command ||
+    command === "help" ||
+    command === "--help" ||
+    command === "-h"
+  ) {
     printHelp();
     return;
   }
@@ -64,7 +69,8 @@ async function create(projectName: string | undefined) {
 
   await cp(baseTemplateDir, targetDir, {
     recursive: true,
-    filter: (source) => !source.includes("node_modules") && !source.includes(".wrangler"),
+    filter: (source) =>
+      !source.includes("node_modules") && !source.includes(".wrangler"),
   });
 
   await replaceInFile(resolve(targetDir, "package.json"), {
@@ -83,12 +89,78 @@ async function create(projectName: string | undefined) {
 }
 
 async function doctor() {
-  const checks = [
-    ["package.json", existsSync(resolve(process.cwd(), "package.json"))],
-    ["wrangler.jsonc", existsSync(resolve(process.cwd(), "wrangler.jsonc"))],
-    ["src/routes", existsSync(resolve(process.cwd(), "src/routes"))],
-    [".env.example", existsSync(resolve(process.cwd(), ".env.example"))],
-  ] as const;
+  const cwd = process.cwd();
+  const checks: Array<[string, boolean]> = [
+    ["package.json", existsSync(resolve(cwd, "package.json"))],
+    ["wrangler.jsonc", existsSync(resolve(cwd, "wrangler.jsonc"))],
+    ["src/routes", existsSync(resolve(cwd, "src/routes"))],
+    [".env.example", existsSync(resolve(cwd, ".env.example"))],
+  ];
+
+  if (await hasDatabaseModule(cwd)) {
+    checks.push(
+      [
+        "database drizzle.config.ts",
+        existsSync(resolve(cwd, "drizzle.config.ts")),
+      ],
+      [
+        "database src/db/schema.ts",
+        existsSync(resolve(cwd, "src/db/schema.ts")),
+      ],
+      [
+        "database src/db/client.ts",
+        existsSync(resolve(cwd, "src/db/client.ts")),
+      ],
+      [
+        "database .env.example D1 vars",
+        await fileIncludes(
+          resolve(cwd, ".env.example"),
+          "CLOUDFLARE_DATABASE_ID",
+        ),
+      ],
+      ["database wrangler DB binding", await hasWranglerBinding(cwd, "DB")],
+    );
+  }
+
+  if (await hasAuthModule(cwd)) {
+    checks.push(
+      [
+        "auth src/db/auth-schema.ts",
+        existsSync(resolve(cwd, "src/db/auth-schema.ts")),
+      ],
+      [
+        "auth src/features/auth/server.ts",
+        existsSync(resolve(cwd, "src/features/auth/server.ts")),
+      ],
+      [
+        "auth src/features/auth/session.ts",
+        existsSync(resolve(cwd, "src/features/auth/session.ts")),
+      ],
+      ["auth api route", existsSync(resolve(cwd, "src/routes/api.auth.$.ts"))],
+      [
+        "auth sign-in route",
+        existsSync(resolve(cwd, "src/routes/sign-in.tsx")),
+      ],
+      [
+        "auth sign-up route",
+        existsSync(resolve(cwd, "src/routes/sign-up.tsx")),
+      ],
+      [
+        "auth .dev.vars.example secret",
+        await fileIncludes(
+          resolve(cwd, ".dev.vars.example"),
+          "BETTER_AUTH_SECRET",
+        ),
+      ],
+      [
+        "auth drizzle schema config",
+        await fileIncludes(
+          resolve(cwd, "drizzle.config.ts"),
+          "./src/db/auth-schema.ts",
+        ),
+      ],
+    );
+  }
 
   let failed = 0;
   for (const [label, ok] of checks) {
@@ -101,6 +173,58 @@ async function doctor() {
   if (failed > 0) {
     throw new Error(`${failed} check(s) failed`);
   }
+}
+
+async function hasDatabaseModule(cwd: string) {
+  return (
+    existsSync(resolve(cwd, "src/db/client.ts")) ||
+    (await packageJsonHasDependency(cwd, "drizzle-orm"))
+  );
+}
+
+async function hasAuthModule(cwd: string) {
+  return (
+    existsSync(resolve(cwd, "src/features/auth/server.ts")) ||
+    (await packageJsonHasDependency(cwd, "better-auth"))
+  );
+}
+
+async function packageJsonHasDependency(cwd: string, dependency: string) {
+  const packageJsonPath = resolve(cwd, "package.json");
+  if (!existsSync(packageJsonPath)) {
+    return false;
+  }
+
+  const packageJson = JSON.parse(
+    await readFile(packageJsonPath, "utf8"),
+  ) as Record<string, unknown>;
+  return (
+    objectHasKey(packageJson.dependencies, dependency) ||
+    objectHasKey(packageJson.devDependencies, dependency)
+  );
+}
+
+async function hasWranglerBinding(cwd: string, bindingName: string) {
+  const wranglerPath = resolve(cwd, "wrangler.jsonc");
+  if (!existsSync(wranglerPath)) {
+    return false;
+  }
+
+  const config = parseJsonc(await readFile(wranglerPath, "utf8"));
+  const d1Databases = Array.isArray(config.d1_databases)
+    ? config.d1_databases
+    : [];
+  return d1Databases.some((binding) => {
+    return isRecord(binding) && binding.binding === bindingName;
+  });
+}
+
+async function fileIncludes(file: string, marker: string) {
+  if (!existsSync(file)) {
+    return false;
+  }
+
+  return (await readFile(file, "utf8")).includes(marker);
 }
 
 async function addDatabaseD1() {
@@ -155,7 +279,9 @@ async function addAuthBetterAuth() {
   assertProjectFile("wrangler.jsonc");
 
   if (!existsSync(resolve(cwd, "src/db/client.ts"))) {
-    throw new Error("The auth module requires the database module. Run `shipstack add database` first.");
+    throw new Error(
+      "The auth module requires the database module. Run `shipstack add database` first.",
+    );
   }
 
   await copyModuleFiles("auth-better-auth", cwd);
@@ -205,7 +331,9 @@ async function includeAuthSchemaInDrizzleConfig(file: string) {
 
 function assertProjectFile(fileName: string) {
   if (!existsSync(resolve(process.cwd(), fileName))) {
-    throw new Error(`Expected ${fileName} in the current directory. Run this command from a ShipStack app.`);
+    throw new Error(
+      `Expected ${fileName} in the current directory. Run this command from a ShipStack app.`,
+    );
   }
 }
 
@@ -246,7 +374,10 @@ interface PackageJsonChanges {
 }
 
 async function updatePackageJson(file: string, changes: PackageJsonChanges) {
-  const packageJson = JSON.parse(await readFile(file, "utf8")) as Record<string, unknown>;
+  const packageJson = JSON.parse(await readFile(file, "utf8")) as Record<
+    string,
+    unknown
+  >;
 
   mergeObject(packageJson, "dependencies", changes.dependencies);
   mergeObject(packageJson, "devDependencies", changes.devDependencies);
@@ -273,7 +404,9 @@ function mergeObject(
 
 async function updateWranglerD1(file: string) {
   const config = parseJsonc(await readFile(file, "utf8"));
-  const d1Databases = Array.isArray(config.d1_databases) ? config.d1_databases : [];
+  const d1Databases = Array.isArray(config.d1_databases)
+    ? config.d1_databases
+    : [];
 
   const hasDbBinding = d1Databases.some((binding) => {
     return isRecord(binding) && binding.binding === "DB";
@@ -306,6 +439,10 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+function objectHasKey(value: unknown, key: string) {
+  return isRecord(value) && Object.prototype.hasOwnProperty.call(value, key);
+}
+
 async function appendIfMissing(file: string, content: string, marker: string) {
   const existing = existsSync(file) ? await readFile(file, "utf8") : "";
   if (existing.includes(marker)) {
@@ -316,7 +453,10 @@ async function appendIfMissing(file: string, content: string, marker: string) {
   await writeFile(file, `${existing.trimEnd()}\n${content.trimEnd()}\n`);
 }
 
-async function replaceInFile(file: string, replacements: Record<string, string>) {
+async function replaceInFile(
+  file: string,
+  replacements: Record<string, string>,
+) {
   let content = await readFile(file, "utf8");
   for (const [from, to] of Object.entries(replacements)) {
     content = content.split(from).join(to);
