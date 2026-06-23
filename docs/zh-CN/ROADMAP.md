@@ -2,7 +2,7 @@
 
 ## Phase 0: Design Foundation
 
-状态：当前阶段。
+状态：已完成。
 
 - 定义产品定位
 - 定义项目架构
@@ -19,7 +19,7 @@
 - workspace setup
 - base TanStack Start template
 - Cloudflare Workers configuration
-- Tailwind 和 shadcn/ui setup
+- Tailwind 和最小 UI primitives
 - health route
 - API health route
 - basic dashboard route
@@ -33,6 +33,8 @@
 - fresh clone 可以本地运行
 - 生成 app 可以部署到 Cloudflare Workers
 - CI 证明 template 可以 build
+
+当前说明：本地生成应用 build 和 smoke path 已通过。真实 Cloudflare deploy pass 仍需要账号凭据。
 
 ## Phase 2: Database And Auth
 
@@ -67,7 +69,7 @@
 - `shipstack doctor`
 - `shipstack add database`
 - `shipstack add auth`
-- `shipstack cf create-d1`
+- 生成应用的 `pnpm db:cf:create`
 - 幂等 file operations
 - CLI tests
 
@@ -76,6 +78,8 @@
 - 用户可以通过 CLI 创建并验证项目
 - 重复运行命令不会破坏 app
 - 错误信息能说明下一步怎么做
+
+当前说明：CLI create、doctor、database、auth 模块流程已通过本地 smoke 和单元测试。专用 Cloudflare 管理命令属于 MVP 后能力。
 
 ## Phase 4: Billing And Storage
 

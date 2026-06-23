@@ -4,7 +4,7 @@ This file is the working progress board for ShipStack. Update it whenever a deli
 
 ## Current Snapshot
 
-Status: building toward `v0.1.0` MVP.
+Status: local `v0.1.0` MVP release candidate. External Cloudflare deploy and remote CI verification are still pending.
 
 Last verified:
 
@@ -23,9 +23,9 @@ Latest commit:
 | Phase                             | Status      | Notes                                                                                                                                              |
 | --------------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Phase 0: Design Foundation        | Done        | Product direction, MVP scope, module model, agent guide, and legal boundaries exist.                                                               |
-| Phase 1: Minimal Runnable Starter | Mostly done | Base TanStack Start + Cloudflare Workers template builds, uses Tailwind CSS, has minimal UI primitives, passes smoke tests, and has a CI workflow. |
-| Phase 2: Database And Auth        | Mostly done | D1, Drizzle, Better Auth, auth pages, session API, protected dashboard/account guards, auth migrations, account route, and auth e2e smoke exist.   |
-| Phase 3: CLI MVP                  | Mostly done | `create`, `doctor`, `add database`, `add auth`, CLI unit tests, and module-aware doctor checks exist.                                              |
+| Phase 1: Minimal Runnable Starter | Local pass  | Base TanStack Start + Cloudflare Workers template builds, uses Tailwind CSS, has minimal UI primitives, passes smoke tests, and has a CI workflow. |
+| Phase 2: Database And Auth        | Local pass  | D1, Drizzle, Better Auth, auth pages, session API, protected dashboard/account guards, auth migrations, account route, and auth e2e smoke exist.   |
+| Phase 3: CLI MVP                  | Local pass  | `create`, `doctor`, `add database`, `add auth`, CLI unit tests, and module-aware doctor checks exist.                                              |
 | Phase 4: Billing And Storage      | Not started | Stripe and R2 are planned after the base path is reliable.                                                                                         |
 | Phase 5: Recipes                  | Not started | Recipes wait until MVP modules are stable.                                                                                                         |
 | Phase 6: Ecosystem                | Not started | Docs site, contribution guide, releases, and examples come later.                                                                                  |
@@ -72,9 +72,8 @@ Latest commit:
 
 1. Run manual Cloudflare deploy verification with real credentials.
 2. Confirm the GitHub Actions workflow on the remote repository.
-3. Add manual route checks to deployment documentation.
-4. Extract a reusable protected route helper if more protected routes are added.
-5. Start the first post-MVP module after real deploy verification.
+3. Extract a reusable protected route helper if more protected routes are added.
+4. Start the first post-MVP module after real deploy verification.
 
 ## Update Rules
 

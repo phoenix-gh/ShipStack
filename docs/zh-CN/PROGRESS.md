@@ -4,7 +4,7 @@
 
 ## 当前快照
 
-状态：正在推进 `v0.1.0` MVP。
+状态：本地 `v0.1.0` MVP release candidate。真实 Cloudflare 部署和远端 CI 验证仍待完成。
 
 最近已验证：
 
@@ -23,9 +23,9 @@
 | 阶段                              | 状态     | 说明                                                                                                                                   |
 | --------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | Phase 0: Design Foundation        | 已完成   | 已有产品方向、MVP 范围、模块模型、agent guide 和法律边界。                                                                             |
-| Phase 1: Minimal Runnable Starter | 基本完成 | 基础 TanStack Start + Cloudflare Workers 模板可构建，使用 Tailwind CSS，已有最小 UI primitives，通过 smoke tests，并已有 CI workflow。 |
-| Phase 2: Database And Auth        | 基本完成 | 已有 D1、Drizzle、Better Auth、认证页面、session API、dashboard/account 服务端保护、auth migrations、account route 和 auth e2e smoke。 |
-| Phase 3: CLI MVP                  | 基本完成 | 已有 `create`、`doctor`、`add database`、`add auth`、CLI 单元测试和模块感知 doctor 检查。                                              |
+| Phase 1: Minimal Runnable Starter | 本地通过 | 基础 TanStack Start + Cloudflare Workers 模板可构建，使用 Tailwind CSS，已有最小 UI primitives，通过 smoke tests，并已有 CI workflow。 |
+| Phase 2: Database And Auth        | 本地通过 | 已有 D1、Drizzle、Better Auth、认证页面、session API、dashboard/account 服务端保护、auth migrations、account route 和 auth e2e smoke。 |
+| Phase 3: CLI MVP                  | 本地通过 | 已有 `create`、`doctor`、`add database`、`add auth`、CLI 单元测试和模块感知 doctor 检查。                                              |
 | Phase 4: Billing And Storage      | 未开始   | Stripe 和 R2 等基础路径稳定后再做。                                                                                                    |
 | Phase 5: Recipes                  | 未开始   | Recipes 等 MVP 模块稳定后再做。                                                                                                        |
 | Phase 6: Ecosystem                | 未开始   | Docs site、贡献指南、发布流程和 examples 后续再做。                                                                                    |
@@ -72,9 +72,8 @@
 
 1. 使用真实凭据运行 Cloudflare 手动部署验证。
 2. 在远端仓库确认 GitHub Actions workflow 可以通过。
-3. 在部署文档里增加手动 route checks。
-4. 如果后续增加更多受保护页面，再抽出可复用 protected route helper。
-5. 真实部署验证后，开始第一个 MVP 后模块。
+3. 如果后续增加更多受保护页面，再抽出可复用 protected route helper。
+4. 真实部署验证后，开始第一个 MVP 后模块。
 
 ## 更新规则
 

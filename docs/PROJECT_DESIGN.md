@@ -217,7 +217,7 @@ Creates the minimal app:
 - TanStack Router
 - Cloudflare Workers adapter
 - Tailwind CSS
-- shadcn/ui setup
+- minimal UI primitives
 - base layout
 - health route
 - environment loading
@@ -323,7 +323,6 @@ shipstack db create
 shipstack db migrate
 shipstack db seed
 shipstack cf init
-shipstack cf create-d1
 shipstack cf create-r2
 shipstack secrets sync
 shipstack deploy
@@ -334,7 +333,12 @@ MVP commands:
 - `shipstack doctor`: check Node, package manager, Wrangler, Cloudflare auth, env files, D1 binding, R2 binding
 - `shipstack add auth`: install auth module
 - `shipstack add database`: install database module
-- `shipstack add api`: install external API conventions and helpers
+- generated app `pnpm db:cf:create`: create a D1 database through Wrangler
+- generated app migration scripts: run local or remote migrations
+
+Post-MVP commands:
+
+- `shipstack add api`: install external API conventions and helpers when the API module becomes separate from the base starter
 - `shipstack cf create-d1`: create D1 database and patch Wrangler config
 - `shipstack db migrate`: run local or remote migrations
 

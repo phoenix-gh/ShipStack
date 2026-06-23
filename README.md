@@ -30,7 +30,7 @@ ShipStack turns those tasks into a documented, testable, modular path.
 - Cloudflare R2 for object storage
 - Better Auth for authentication
 - Stripe as the first billing provider
-- Tailwind CSS and shadcn/ui for interface primitives
+- Tailwind CSS and minimal UI primitives
 - Playwright and Vitest for verification
 
 Cloudflare is the default path, but the architecture should keep provider seams explicit enough to support future adapters such as Postgres, S3-compatible storage, Polar, or Creem.
@@ -54,4 +54,4 @@ Chinese documentation is available at [docs/zh-CN](./docs/zh-CN/README.md).
 
 ## Status
 
-This repository now has an initial monorepo scaffold, CLI skeleton, base TanStack Start + Cloudflare Workers template, D1 + Drizzle module, Better Auth module, protected auth pages, generated-app smoke tests, auth browser smoke checks, and a CI workflow. The next milestone is running a real Cloudflare deployment pass and then adding the first post-MVP modules.
+This repository is now a local `v0.1.0` MVP release candidate with a monorepo scaffold, CLI, base TanStack Start + Cloudflare Workers template, D1 + Drizzle module, Better Auth module, protected auth pages, generated-app smoke tests, auth browser smoke checks, and a CI workflow. The remaining release gate is running a real Cloudflare deployment pass and confirming the workflow on the remote repository.

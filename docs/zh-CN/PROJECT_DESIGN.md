@@ -217,7 +217,7 @@ export interface ShipStackModule {
 - TanStack Router
 - Cloudflare Workers adapter
 - Tailwind CSS
-- shadcn/ui setup
+- 最小 UI primitives
 - base layout
 - health route
 - 环境变量加载
@@ -323,7 +323,6 @@ shipstack db create
 shipstack db migrate
 shipstack db seed
 shipstack cf init
-shipstack cf create-d1
 shipstack cf create-r2
 shipstack secrets sync
 shipstack deploy
@@ -334,7 +333,12 @@ MVP 命令：
 - `shipstack doctor`：检查 Node、包管理器、Wrangler、Cloudflare 登录、env files、D1/R2 bindings
 - `shipstack add auth`：安装 auth 模块
 - `shipstack add database`：安装 database 模块
-- `shipstack add api`：安装外部 API 约定和 helpers
+- 生成应用的 `pnpm db:cf:create`：通过 Wrangler 创建 D1 database
+- 生成应用的 migration scripts：运行 local 或 remote migration
+
+MVP 后命令：
+
+- `shipstack add api`：当 API 模块从 base starter 拆出后，安装外部 API 约定和 helpers
 - `shipstack cf create-d1`：创建 D1 database 并 patch Wrangler 配置
 - `shipstack db migrate`：运行 local 或 remote migration
 

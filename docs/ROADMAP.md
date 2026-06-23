@@ -2,7 +2,7 @@
 
 ## Phase 0: Design Foundation
 
-Status: current.
+Status: done.
 
 - define positioning
 - define project architecture
@@ -19,7 +19,7 @@ Deliverables:
 - workspace setup
 - base TanStack Start template
 - Cloudflare Workers configuration
-- Tailwind and shadcn/ui setup
+- Tailwind and minimal UI primitives
 - health route
 - API health route
 - basic dashboard route
@@ -33,6 +33,8 @@ Exit criteria:
 - fresh clone runs locally
 - generated app can deploy to Cloudflare Workers
 - CI proves the template builds
+
+Current note: the local generated-app build and smoke path pass. A real Cloudflare deploy pass still needs account credentials.
 
 ## Phase 2: Database And Auth
 
@@ -67,7 +69,7 @@ Deliverables:
 - `shipstack doctor`
 - `shipstack add database`
 - `shipstack add auth`
-- `shipstack cf create-d1`
+- generated app `pnpm db:cf:create`
 - idempotent file operations
 - CLI tests
 
@@ -76,6 +78,8 @@ Exit criteria:
 - user can create and validate a project from the CLI
 - repeated commands do not corrupt the app
 - errors explain the next action
+
+Current note: CLI create, doctor, database, and auth module flows pass local smoke and unit tests. Dedicated Cloudflare management commands are post-MVP.
 
 ## Phase 4: Billing And Storage
 

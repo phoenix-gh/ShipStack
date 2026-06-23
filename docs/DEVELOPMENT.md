@@ -41,7 +41,7 @@ Then create a temporary app:
 ```bash
 mkdir -p /tmp/shipstack-smoke
 cd /tmp/shipstack-smoke
-node /workspace/projects/ShipStack/packages/create-shipstack/dist/cli.js smoke-app
+node /path/to/ShipStack/packages/create-shipstack/dist/cli.js smoke-app
 cd smoke-app
 pnpm install
 pnpm test
