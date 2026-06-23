@@ -7,6 +7,7 @@ This project uses Better Auth.
 - `src/features/auth/server.ts`: Better Auth server instance
 - `src/features/auth/client.ts`: Better Auth React client
 - `src/features/auth/session.ts`: TanStack Start server helpers
+- `src/features/auth/route-guards.ts`: protected route guard helpers
 - `src/routes/api.auth.$.ts`: Better Auth handler mounted at `/api/auth/*`
 - `src/db/auth-schema.ts`: Better Auth Drizzle schema
 
@@ -20,6 +21,26 @@ BETTER_AUTH_URL="http://localhost:5173"
 ```
 
 Use Wrangler secrets for production values.
+
+## Protected Routes
+
+Use `requireRouteSession` in route `beforeLoad` handlers for pages that require
+an authenticated user:
+
+```tsx
+import { createFileRoute } from "@tanstack/react-router";
+
+import { requireRouteSession } from "~/features/auth/route-guards";
+
+export const Route = createFileRoute("/example")({
+  beforeLoad: requireRouteSession,
+  component: ExamplePage,
+});
+```
+
+The helper redirects anonymous users to `/sign-in`. Server-side API handlers
+should derive identity from Better Auth session data or a future API key module,
+not from client-provided user IDs.
 
 ## Optional Google OAuth
 

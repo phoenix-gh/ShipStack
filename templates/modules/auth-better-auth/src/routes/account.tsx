@@ -1,23 +1,10 @@
-import {
-  Link,
-  createFileRoute,
-  redirect,
-  useNavigate,
-} from "@tanstack/react-router";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 
 import { authClient } from "~/features/auth/client";
-import { getSession } from "~/features/auth/session";
+import { requireRouteSession } from "~/features/auth/route-guards";
 
 export const Route = createFileRoute("/account")({
-  beforeLoad: async () => {
-    const session = await getSession();
-
-    if (!session) {
-      throw redirect({
-        to: "/sign-in",
-      });
-    }
-  },
+  beforeLoad: requireRouteSession,
   component: AccountPage,
 });
 
