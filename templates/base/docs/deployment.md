@@ -28,6 +28,15 @@ pnpm dlx wrangler login
 
 ## Base App Deploy
 
+Run a local Wrangler deploy dry-run before using real credentials:
+
+```bash
+pnpm deploy:dry-run
+```
+
+This compiles the Worker and asks Wrangler to validate the deployment bundle
+without uploading it to Cloudflare.
+
 Deploy the Worker:
 
 ```bash

@@ -14,6 +14,7 @@ Smoke suite 已经覆盖这些与部署相关的检查：
 - D1 migrations 可以本地 apply
 - auth 注册、退出、登录和受保护 dashboard 本地可用
 - 生成应用可以构建到 Cloudflare Workers
+- base 生成应用可以通过 `wrangler deploy --dry-run`
 
 运行完整检查：
 
@@ -41,6 +42,7 @@ pnpm smoke
    pnpm typecheck
    pnpm test
    pnpm build
+   pnpm deploy:dry-run
    ```
 
 3. 登录 Cloudflare。

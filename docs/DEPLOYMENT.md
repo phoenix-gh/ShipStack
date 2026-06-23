@@ -15,6 +15,7 @@ The smoke suite already verifies these deployment-adjacent checks:
 - D1 migrations apply locally
 - auth sign up, sign out, sign in, and protected dashboard access work locally
 - generated apps build for Cloudflare Workers
+- the base generated app passes `wrangler deploy --dry-run`
 
 Run the full suite:
 
@@ -42,6 +43,7 @@ Use a real Cloudflare account for this checklist.
    pnpm typecheck
    pnpm test
    pnpm build
+   pnpm deploy:dry-run
    ```
 
 3. Log in to Cloudflare.

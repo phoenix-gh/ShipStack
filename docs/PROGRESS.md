@@ -52,6 +52,7 @@ Latest commit:
 | Anonymous user cannot access dashboard                 | Passing | Auth generated app runtime smoke checks dashboard redirect.            |
 | Authenticated user can access dashboard                | Passing | Auth browser smoke verifies the dashboard after sign up and sign in.   |
 | App builds for Cloudflare Workers                      | Passing | `pnpm smoke` runs generated app builds.                                |
+| Worker deploy bundle passes local dry-run              | Passing | Base generated app smoke runs `pnpm deploy:dry-run`.                   |
 | Deployment docs are complete enough to follow manually | Passing | Generated and maintainer deployment checklists exist.                  |
 | Generated `AGENTS.md` exists and matches layout        | Passing | Base template includes `AGENTS.md`.                                    |
 
@@ -66,6 +67,7 @@ Latest commit:
 | Generated database app smoke | Passing | `pnpm smoke`     |
 | Generated auth app smoke     | Passing | `pnpm smoke`     |
 | Generated app lint           | Passing | `pnpm smoke`     |
+| Wrangler deploy dry-run      | Passing | `pnpm smoke`     |
 | CLI unit tests               | Passing | `pnpm test`      |
 | Runtime API tests            | Passing | `pnpm smoke`     |
 | API CORS smoke               | Passing | `pnpm smoke`     |

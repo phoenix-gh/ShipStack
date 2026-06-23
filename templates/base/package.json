@@ -9,6 +9,7 @@
     "build": "pnpm generate:routes && vite build && tsc --noEmit",
     "preview": "vite preview",
     "deploy": "pnpm build && wrangler deploy",
+    "deploy:dry-run": "pnpm build && wrangler deploy --dry-run",
     "cf-typegen": "wrangler types",
     "lint": "pnpm format:check",
     "format:check": "prettier --check \"**/*.{md,json,jsonc,yml,yaml,ts,tsx,css}\"",

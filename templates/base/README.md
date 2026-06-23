@@ -19,6 +19,7 @@ pnpm format
 pnpm test
 pnpm build
 pnpm preview
+pnpm deploy:dry-run
 pnpm deploy
 ```
 
@@ -37,3 +38,6 @@ pnpm deploy
 ## Cloudflare
 
 This template follows the official TanStack Start + Cloudflare Workers path with `@cloudflare/vite-plugin`, `wrangler`, and `@tanstack/react-start/server-entry`.
+
+Use `pnpm deploy:dry-run` before logging in to Cloudflare when you want Wrangler
+to compile and validate the Worker bundle without uploading it.

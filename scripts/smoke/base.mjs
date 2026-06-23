@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 
 import {
   createApp,
+  run,
   runSmoke,
   verifyGeneratedApp,
   verifyRuntimeRoutes,
@@ -89,4 +90,5 @@ await runSmoke("base", async (workspace) => {
     },
   ]);
   await verifyGeneratedApp(appDir, { install: false, test: false });
+  await run("pnpm", ["deploy:dry-run"], { cwd: appDir });
 });
