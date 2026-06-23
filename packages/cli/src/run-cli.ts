@@ -47,9 +47,20 @@ export async function runCli(argv = process.argv.slice(2)) {
       return;
     }
 
+    if (moduleName === "api") {
+      console.log(
+        "The API foundation is already included in the base starter.",
+      );
+      console.log(
+        "Available now: /api/health, /api/v1/me, JSON envelopes, request IDs, and trusted-origin CORS.",
+      );
+      console.log("Future API modules: api-keys, api-openapi, api-rate-limit.");
+      return;
+    }
+
     console.log(`Module installation is not implemented yet: ${moduleName}`);
     console.log("Available now: database, auth.");
-    console.log("Available soon: api, billing-stripe, storage-r2.");
+    console.log("Available later: billing-stripe, storage-r2, api-keys.");
     return;
   }
 

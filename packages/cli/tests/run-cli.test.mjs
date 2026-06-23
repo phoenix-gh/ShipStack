@@ -74,6 +74,21 @@ test("doctor reports missing project files", async () => {
   });
 });
 
+test("api module command explains that the API foundation is built in", async () => {
+  await withWorkspace(async (workspace) => {
+    await runSilently(["create", "api-app"]);
+    const appDir = resolve(workspace, "api-app");
+
+    await withCwd(appDir, async () => {
+      const output = await captureOutput(["add", "api"]);
+
+      assert.match(output, /API foundation is already included/);
+      assert.match(output, /\/api\/v1\/me/);
+      assert.match(output, /trusted-origin CORS/);
+    });
+  });
+});
+
 async function withWorkspace(callback) {
   const workspace = await mkdtemp(resolve(tmpdir(), "shipstack-cli-unit-"));
 
@@ -101,13 +116,24 @@ async function withCwd(directory, callback) {
 }
 
 async function runSilently(argv) {
+  await captureOutput(argv);
+}
+
+async function captureOutput(argv) {
   const originalLog = console.log;
   const originalError = console.error;
-  console.log = () => {};
-  console.error = () => {};
+  let output = "";
+
+  console.log = (...args) => {
+    output += `${args.join(" ")}\n`;
+  };
+  console.error = (...args) => {
+    output += `${args.join(" ")}\n`;
+  };
 
   try {
     await runCli(argv);
+    return output;
   } finally {
     console.log = originalLog;
     console.error = originalError;

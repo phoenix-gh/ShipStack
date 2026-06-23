@@ -16,6 +16,6 @@ This app was generated from the ShipStack base template.
 - Keep route files thin; put business logic in feature modules.
 - Use `/api/health` for operational checks.
 - Use `/api/v1/*` for external API routes.
-- Use helpers from `src/features/api` for JSON API responses.
+- Use helpers from `src/features/api` for JSON API responses, request IDs, and trusted-origin CORS.
 - Do not commit `.env`, `.env.local`, or `.dev.vars`.
 - Follow Cloudflare Workers constraints; do not assume Node-only APIs are available unless the compatibility setting supports them.
