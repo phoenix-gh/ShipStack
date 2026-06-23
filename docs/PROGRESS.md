@@ -18,6 +18,7 @@ Last verified:
 - `pnpm build`
 - `pnpm format:check`
 - `pnpm smoke`
+- `pnpm verify:release`
 
 Latest commit:
 
@@ -58,24 +59,25 @@ Latest commit:
 
 ## Test Progress
 
-| Check                        | Status  | Command          |
-| ---------------------------- | ------- | ---------------- |
-| Repository typecheck         | Passing | `pnpm typecheck` |
-| Repository build             | Passing | `pnpm build`     |
-| CLI behavior smoke           | Passing | `pnpm smoke`     |
-| Generated base app smoke     | Passing | `pnpm smoke`     |
-| Generated database app smoke | Passing | `pnpm smoke`     |
-| Generated auth app smoke     | Passing | `pnpm smoke`     |
-| Generated app lint           | Passing | `pnpm smoke`     |
-| Wrangler deploy dry-run      | Passing | `pnpm smoke`     |
-| CLI unit tests               | Passing | `pnpm test`      |
-| Runtime API tests            | Passing | `pnpm smoke`     |
-| API CORS smoke               | Passing | `pnpm smoke`     |
-| Auth browser e2e tests       | Passing | `pnpm smoke`     |
-| D1 migration smoke           | Passing | `pnpm smoke`     |
-| Auth migration smoke         | Passing | `pnpm smoke`     |
-| CI workflow                  | Added   | GitHub Actions   |
-| v0.1.0 release notes         | Added   | `docs/releases`  |
+| Check                        | Status  | Command               |
+| ---------------------------- | ------- | --------------------- |
+| Repository typecheck         | Passing | `pnpm typecheck`      |
+| Repository build             | Passing | `pnpm build`          |
+| CLI behavior smoke           | Passing | `pnpm smoke`          |
+| Generated base app smoke     | Passing | `pnpm smoke`          |
+| Generated database app smoke | Passing | `pnpm smoke`          |
+| Generated auth app smoke     | Passing | `pnpm smoke`          |
+| Generated app lint           | Passing | `pnpm smoke`          |
+| Wrangler deploy dry-run      | Passing | `pnpm smoke`          |
+| CLI unit tests               | Passing | `pnpm test`           |
+| Runtime API tests            | Passing | `pnpm smoke`          |
+| API CORS smoke               | Passing | `pnpm smoke`          |
+| Auth browser e2e tests       | Passing | `pnpm smoke`          |
+| D1 migration smoke           | Passing | `pnpm smoke`          |
+| Auth migration smoke         | Passing | `pnpm smoke`          |
+| CI workflow                  | Added   | GitHub Actions        |
+| Release verification command | Passing | `pnpm verify:release` |
+| v0.1.0 release notes         | Added   | `docs/releases`       |
 
 ## Next Priority
 

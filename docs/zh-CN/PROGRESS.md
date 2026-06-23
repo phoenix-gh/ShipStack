@@ -18,6 +18,7 @@
 - `pnpm build`
 - `pnpm format:check`
 - `pnpm smoke`
+- `pnpm verify:release`
 
 最新提交：
 
@@ -58,24 +59,25 @@
 
 ## 测试进度
 
-| 检查                         | 状态   | 命令             |
-| ---------------------------- | ------ | ---------------- |
-| Repository typecheck         | 通过   | `pnpm typecheck` |
-| Repository build             | 通过   | `pnpm build`     |
-| CLI behavior smoke           | 通过   | `pnpm smoke`     |
-| Generated base app smoke     | 通过   | `pnpm smoke`     |
-| Generated database app smoke | 通过   | `pnpm smoke`     |
-| Generated auth app smoke     | 通过   | `pnpm smoke`     |
-| Generated app lint           | 通过   | `pnpm smoke`     |
-| Wrangler deploy dry-run      | 通过   | `pnpm smoke`     |
-| CLI unit tests               | 通过   | `pnpm test`      |
-| Runtime API tests            | 通过   | `pnpm smoke`     |
-| API CORS smoke               | 通过   | `pnpm smoke`     |
-| Auth browser e2e tests       | 通过   | `pnpm smoke`     |
-| D1 migration smoke           | 通过   | `pnpm smoke`     |
-| Auth migration smoke         | 通过   | `pnpm smoke`     |
-| CI workflow                  | 已添加 | GitHub Actions   |
-| v0.1.0 release notes         | 已添加 | `docs/releases`  |
+| 检查                         | 状态   | 命令                  |
+| ---------------------------- | ------ | --------------------- |
+| Repository typecheck         | 通过   | `pnpm typecheck`      |
+| Repository build             | 通过   | `pnpm build`          |
+| CLI behavior smoke           | 通过   | `pnpm smoke`          |
+| Generated base app smoke     | 通过   | `pnpm smoke`          |
+| Generated database app smoke | 通过   | `pnpm smoke`          |
+| Generated auth app smoke     | 通过   | `pnpm smoke`          |
+| Generated app lint           | 通过   | `pnpm smoke`          |
+| Wrangler deploy dry-run      | 通过   | `pnpm smoke`          |
+| CLI unit tests               | 通过   | `pnpm test`           |
+| Runtime API tests            | 通过   | `pnpm smoke`          |
+| API CORS smoke               | 通过   | `pnpm smoke`          |
+| Auth browser e2e tests       | 通过   | `pnpm smoke`          |
+| D1 migration smoke           | 通过   | `pnpm smoke`          |
+| Auth migration smoke         | 通过   | `pnpm smoke`          |
+| CI workflow                  | 已添加 | GitHub Actions        |
+| Release verification command | 通过   | `pnpm verify:release` |
+| v0.1.0 release notes         | 已添加 | `docs/releases`       |
 
 ## 下一优先级
 

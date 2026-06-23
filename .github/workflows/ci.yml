@@ -34,17 +34,5 @@ jobs:
       - name: Install browser dependencies
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Check formatting
-        run: pnpm format:check
-
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Test
-        run: pnpm test
-
-      - name: Build
-        run: pnpm build
-
-      - name: Smoke
-        run: pnpm smoke
+      - name: Verify release candidate
+        run: pnpm verify:release
