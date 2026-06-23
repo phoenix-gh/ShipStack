@@ -199,7 +199,7 @@ async function startDevServer(appDir, port) {
   };
 }
 
-async function verifyHttpCheck(url, check) {
+export async function verifyHttpCheck(url, check) {
   const response = await fetch(url, {
     headers: check.headers,
     redirect: check.redirect ?? "follow",

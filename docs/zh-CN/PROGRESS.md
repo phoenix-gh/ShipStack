@@ -9,6 +9,7 @@
 当前 workspace 的外部验证状态：
 
 - `pnpm dlx wrangler whoami` 显示 Wrangler 尚未登录。
+- `pnpm smoke:temporary-deploy` 已通过 Cloudflare temporary account flow。
 - `git remote -v` 没有配置 remote，因此当前 workspace 无法检查远端 GitHub Actions。
 
 最近已验证：
@@ -60,25 +61,26 @@
 
 ## 测试进度
 
-| 检查                         | 状态   | 命令                  |
-| ---------------------------- | ------ | --------------------- |
-| Repository typecheck         | 通过   | `pnpm typecheck`      |
-| Repository build             | 通过   | `pnpm build`          |
-| CLI behavior smoke           | 通过   | `pnpm smoke`          |
-| Generated base app smoke     | 通过   | `pnpm smoke`          |
-| Generated database app smoke | 通过   | `pnpm smoke`          |
-| Generated auth app smoke     | 通过   | `pnpm smoke`          |
-| Generated app lint           | 通过   | `pnpm smoke`          |
-| Wrangler deploy dry-run      | 通过   | `pnpm smoke`          |
-| CLI unit tests               | 通过   | `pnpm test`           |
-| Runtime API tests            | 通过   | `pnpm smoke`          |
-| API CORS smoke               | 通过   | `pnpm smoke`          |
-| Auth browser e2e tests       | 通过   | `pnpm smoke`          |
-| D1 migration smoke           | 通过   | `pnpm smoke`          |
-| Auth migration smoke         | 通过   | `pnpm smoke`          |
-| CI workflow                  | 已添加 | GitHub Actions        |
-| Release verification command | 通过   | `pnpm verify:release` |
-| v0.1.0 release notes         | 已添加 | `docs/releases`       |
+| 检查                         | 状态   | 命令                          |
+| ---------------------------- | ------ | ----------------------------- |
+| Repository typecheck         | 通过   | `pnpm typecheck`              |
+| Repository build             | 通过   | `pnpm build`                  |
+| CLI behavior smoke           | 通过   | `pnpm smoke`                  |
+| Generated base app smoke     | 通过   | `pnpm smoke`                  |
+| Generated database app smoke | 通过   | `pnpm smoke`                  |
+| Generated auth app smoke     | 通过   | `pnpm smoke`                  |
+| Generated app lint           | 通过   | `pnpm smoke`                  |
+| Wrangler deploy dry-run      | 通过   | `pnpm smoke`                  |
+| Cloudflare 临时部署          | 通过   | `pnpm smoke:temporary-deploy` |
+| CLI unit tests               | 通过   | `pnpm test`                   |
+| Runtime API tests            | 通过   | `pnpm smoke`                  |
+| API CORS smoke               | 通过   | `pnpm smoke`                  |
+| Auth browser e2e tests       | 通过   | `pnpm smoke`                  |
+| D1 migration smoke           | 通过   | `pnpm smoke`                  |
+| Auth migration smoke         | 通过   | `pnpm smoke`                  |
+| CI workflow                  | 已添加 | GitHub Actions                |
+| Release verification command | 通过   | `pnpm verify:release`         |
+| v0.1.0 release notes         | 已添加 | `docs/releases`               |
 
 ## 下一优先级
 

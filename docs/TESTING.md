@@ -55,12 +55,31 @@ verification because the auth smoke includes a real browser flow.
 
 `pnpm test` runs package-level unit tests. `pnpm format:check` verifies repository formatting.
 
+### Optional Temporary Cloudflare Deploy Smoke
+
+When Wrangler is not authenticated, maintainers can still verify a real external
+upload and Worker runtime with Cloudflare's temporary deploy flow:
+
+```sh
+pnpm smoke:temporary-deploy
+```
+
+This command creates a fresh generated app, installs dependencies, runs the
+generated app checks, deploys with `wrangler deploy --temporary`, redacts the
+temporary account claim URL from logs, and checks the deployed `/health`,
+`/api/health`, and `/api/v1/me` routes.
+
+This check is intentionally not part of `pnpm verify:release` because it depends
+on Cloudflare's external network and temporary account service. A successful
+temporary deploy is useful deployment evidence, but it does not replace the
+manual deploy pass with the maintainer's real Cloudflare account.
+
 ## What To Add Next
 
 Add tests in this order:
 
 1. CLI unit tests around lower-level patching helpers if CLI behavior grows more complex.
-2. Manual Cloudflare deploy verification.
+2. Manual Cloudflare deploy verification with the maintainer's real account.
 3. Confirm the GitHub Actions workflow on the remote repository.
 4. More D1 migration edge cases for future schema changes.
 5. Module smoke tests for future Stripe, R2, and API key modules.

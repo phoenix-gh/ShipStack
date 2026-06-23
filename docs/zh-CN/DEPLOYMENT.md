@@ -23,6 +23,15 @@ Smoke suite 已经覆盖这些与部署相关的检查：
 pnpm smoke
 ```
 
+维护者也可以在未登录账号的情况下运行可选的 Cloudflare 临时部署 smoke：
+
+```bash
+pnpm smoke:temporary-deploy
+```
+
+这会验证真实上传到 Cloudflare temporary account 服务，并检查已部署的
+`/health`、`/api/health` 和 `/api/v1/me` routes。这是外部网络证据，但不能替代下面的真实账号检查清单。
+
 ## Cloudflare 手动部署检查
 
 这份 checklist 需要真实 Cloudflare 账号。
@@ -136,7 +145,7 @@ pnpm smoke
 
 ## 当前手动状态
 
-当前仓库还没有记录过真实 Cloudflare 手动部署验证。生成应用已经包含维护者或贡献者拿到 Cloudflare 凭据后完成部署验证所需的命令和 route checks。
+当前 workspace 已通过 `pnpm smoke:temporary-deploy` 完成 Cloudflare 临时部署验证。真实账号部署验证还没有记录。生成应用已经包含维护者或贡献者拿到 Cloudflare 凭据后完成部署验证所需的命令和 route checks。
 
 ## 参考资料
 

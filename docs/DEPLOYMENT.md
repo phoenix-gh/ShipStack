@@ -24,6 +24,17 @@ Run the full suite:
 pnpm smoke
 ```
 
+Maintainers can also run an optional temporary Cloudflare deploy smoke without a
+logged-in account:
+
+```bash
+pnpm smoke:temporary-deploy
+```
+
+This verifies a real upload to Cloudflare's temporary account service and checks
+the deployed `/health`, `/api/health`, and `/api/v1/me` routes. It is external
+network evidence, not a replacement for the real-account checklist below.
+
 ## Manual Cloudflare Deploy Pass
 
 Use a real Cloudflare account for this checklist.
@@ -140,9 +151,11 @@ modules.
 
 ## Current Manual Status
 
-Manual deployment has not been recorded for this repository yet. The generated
-app includes the commands and route checks needed for a maintainer or
-contributor with Cloudflare credentials to complete the pass.
+Temporary Cloudflare deployment has passed from this workspace with
+`pnpm smoke:temporary-deploy`. Real-account deployment has not been recorded for
+this repository yet. The generated app includes the commands and route checks
+needed for a maintainer or contributor with Cloudflare credentials to complete
+the pass.
 
 ## References
 
