@@ -48,9 +48,12 @@ Cloudflare is the default path, but the architecture should keep provider seams 
 - [Legal And Competitive Boundaries](./docs/LEGAL_BOUNDARIES.md)
 - [Development](./docs/DEVELOPMENT.md)
 - [Testing](./docs/TESTING.md)
+- [Contributing](./CONTRIBUTING.md)
 - [Agent Guide](./AGENTS.md)
 
 Chinese documentation is available at [docs/zh-CN](./docs/zh-CN/README.md).
+
+ShipStack is released under the [MIT License](./LICENSE).
 
 ## Status
 

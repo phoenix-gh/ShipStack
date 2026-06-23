@@ -79,6 +79,8 @@ Latest commit:
 | D1 migration smoke           | Passing | `pnpm smoke`                  |
 | Auth migration smoke         | Passing | `pnpm smoke`                  |
 | Module AGENTS guidance       | Passing | `pnpm test`, `pnpm smoke`     |
+| Open-source license          | Added   | `LICENSE`                     |
+| Contribution guide           | Added   | `CONTRIBUTING.md`             |
 | CI workflow                  | Added   | GitHub Actions                |
 | Release verification command | Passing | `pnpm verify:release`         |
 | v0.1.0 release notes         | Added   | `docs/releases`               |
