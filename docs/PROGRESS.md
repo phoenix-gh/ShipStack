@@ -31,7 +31,7 @@ Latest commit:
 | --------------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Phase 0: Design Foundation        | Done        | Product direction, MVP scope, module model, agent guide, and legal boundaries exist.                                                                     |
 | Phase 1: Minimal Runnable Starter | Local pass  | Base TanStack Start + Cloudflare Workers template builds, uses Tailwind CSS, has minimal UI primitives, passes smoke tests, and has CI/deploy workflows. |
-| Phase 2: Database And Auth        | Local pass  | D1, Drizzle, Better Auth, auth pages, session API, protected dashboard/account guards, auth migrations, account route, and auth e2e smoke exist.         |
+| Phase 2: Database And Auth        | Local pass  | D1, Drizzle, Better Auth, auth pages, session API, reusable protected route guards, auth migrations, account route, and auth e2e smoke exist.            |
 | Phase 3: CLI MVP                  | Local pass  | `create`, `doctor`, `add database`, `add auth`, CLI unit tests, and module-aware doctor checks exist.                                                    |
 | Phase 4: Billing And Storage      | Not started | Stripe and R2 are planned after the base path is reliable.                                                                                               |
 | Phase 5: Recipes                  | Not started | Recipes wait until MVP modules are stable.                                                                                                               |
@@ -57,7 +57,7 @@ Latest commit:
 | Worker deploy bundle passes local dry-run              | Passing | Base generated app smoke runs `pnpm deploy:dry-run`.                   |
 | Generated CI and deploy workflows exist                | Passing | Base template includes CI and manual Cloudflare deploy workflows.      |
 | Deployment docs are complete enough to follow manually | Passing | Generated and maintainer deployment checklists exist.                  |
-| Generated `AGENTS.md` exists and matches layout        | Passing | Base template includes `AGENTS.md`.                                    |
+| Generated `AGENTS.md` exists and matches layout        | Passing | Base template and installed modules include `AGENTS.md` guidance.      |
 
 ## Test Progress
 
@@ -78,6 +78,7 @@ Latest commit:
 | Auth browser e2e tests       | Passing | `pnpm smoke`                  |
 | D1 migration smoke           | Passing | `pnpm smoke`                  |
 | Auth migration smoke         | Passing | `pnpm smoke`                  |
+| Module AGENTS guidance       | Passing | `pnpm test`                   |
 | CI workflow                  | Added   | GitHub Actions                |
 | Release verification command | Passing | `pnpm verify:release`         |
 | v0.1.0 release notes         | Added   | `docs/releases`               |
@@ -86,8 +87,7 @@ Latest commit:
 
 1. Run manual Cloudflare deploy verification with real credentials.
 2. Confirm the GitHub Actions workflow on the remote repository.
-3. Extract a reusable protected route helper if more protected routes are added.
-4. Start the first post-MVP module after real deploy verification.
+3. Start the first post-MVP module after real deploy verification.
 
 ## Update Rules
 

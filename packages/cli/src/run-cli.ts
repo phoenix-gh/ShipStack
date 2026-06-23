@@ -274,6 +274,19 @@ CLOUDFLARE_D1_TOKEN=""
 `,
     "CLOUDFLARE_ACCOUNT_ID",
   );
+  await appendIfMissing(
+    resolve(cwd, "AGENTS.md"),
+    `
+## Database Module
+
+- Drizzle schema files under \`src/db\` are the source of truth.
+- Use \`src/db/client.ts\` for D1-backed database access.
+- Commit generated migrations under \`drizzle/migrations\`.
+- Keep local and remote migration commands distinct.
+- Do not add real Cloudflare credentials or database IDs to committed files.
+`,
+    "## Database Module",
+  );
 
   console.log("Installed database-d1 module.");
   console.log("");
@@ -317,6 +330,19 @@ GOOGLE_CLIENT_SECRET=""
     "BETTER_AUTH_SECRET",
   );
   await includeAuthSchemaInDrizzleConfig(resolve(cwd, "drizzle.config.ts"));
+  await appendIfMissing(
+    resolve(cwd, "AGENTS.md"),
+    `
+## Auth Module
+
+- Use \`src/features/auth/route-guards.ts\` for protected page routes.
+- Use \`src/features/auth/session.ts\` for server-side session access.
+- Do not trust client-side auth state for protected server behavior.
+- Derive API user identity from Better Auth session data or a future API key module, never from a client-provided user ID.
+- Keep OAuth providers optional unless the app explicitly requires them.
+`,
+    "## Auth Module",
+  );
 
   console.log("Installed auth-better-auth module.");
   console.log("");

@@ -49,6 +49,9 @@ async function assertDatabaseModule(appDir) {
   const envExample = await readFile(resolve(appDir, ".env.example"), "utf8");
   assertCount(envExample, "CLOUDFLARE_ACCOUNT_ID", 1);
 
+  const agents = await readFile(resolve(appDir, "AGENTS.md"), "utf8");
+  assertCount(agents, "## Database Module", 1);
+
   const wrangler = JSON.parse(
     await readFile(resolve(appDir, "wrangler.jsonc"), "utf8"),
   );
@@ -81,6 +84,13 @@ async function assertAuthModule(appDir) {
     "utf8",
   );
   assertCount(rootRoute, 'to="/sign-in"', 1);
+
+  const agents = await readFile(resolve(appDir, "AGENTS.md"), "utf8");
+  assertCount(agents, "## Database Module", 1);
+  assertCount(agents, "## Auth Module", 1);
+  if (!agents.includes("src/features/auth/route-guards.ts")) {
+    throw new Error("Expected AGENTS.md to mention auth route guards");
+  }
 }
 
 async function expectFailure([command, args], cwd, expectedOutput) {

@@ -50,6 +50,9 @@ test("database and auth installers patch generated apps idempotently", async () 
       const envExample = await readFile(".env.example", "utf8");
       assert.equal(count(envExample, "CLOUDFLARE_ACCOUNT_ID"), 1);
 
+      const databaseAgents = await readFile("AGENTS.md", "utf8");
+      assert.equal(count(databaseAgents, "## Database Module"), 1);
+
       await runSilently(["add", "auth"]);
       await runSilently(["add", "auth"]);
 
@@ -65,6 +68,11 @@ test("database and auth installers patch generated apps idempotently", async () 
 
       const drizzleConfig = await readFile("drizzle.config.ts", "utf8");
       assert.equal(count(drizzleConfig, "./src/db/auth-schema.ts"), 1);
+
+      const authAgents = await readFile("AGENTS.md", "utf8");
+      assert.equal(count(authAgents, "## Database Module"), 1);
+      assert.equal(count(authAgents, "## Auth Module"), 1);
+      assert.match(authAgents, /src\/features\/auth\/route-guards\.ts/);
       await runSilently(["doctor"]);
     });
   });

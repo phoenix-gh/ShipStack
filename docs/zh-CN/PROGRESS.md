@@ -31,7 +31,7 @@
 | --------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Phase 0: Design Foundation        | 已完成   | 已有产品方向、MVP 范围、模块模型、agent guide 和法律边界。                                                                                     |
 | Phase 1: Minimal Runnable Starter | 本地通过 | 基础 TanStack Start + Cloudflare Workers 模板可构建，使用 Tailwind CSS，已有最小 UI primitives，通过 smoke tests，并已有 CI/deploy workflows。 |
-| Phase 2: Database And Auth        | 本地通过 | 已有 D1、Drizzle、Better Auth、认证页面、session API、dashboard/account 服务端保护、auth migrations、account route 和 auth e2e smoke。         |
+| Phase 2: Database And Auth        | 本地通过 | 已有 D1、Drizzle、Better Auth、认证页面、session API、可复用 protected route guards、auth migrations、account route 和 auth e2e smoke。        |
 | Phase 3: CLI MVP                  | 本地通过 | 已有 `create`、`doctor`、`add database`、`add auth`、CLI 单元测试和模块感知 doctor 检查。                                                      |
 | Phase 4: Billing And Storage      | 未开始   | Stripe 和 R2 等基础路径稳定后再做。                                                                                                            |
 | Phase 5: Recipes                  | 未开始   | Recipes 等 MVP 模块稳定后再做。                                                                                                                |
@@ -57,7 +57,7 @@
 | Worker deploy bundle 通过本地 dry-run | 通过 | base 生成应用 smoke 会运行 `pnpm deploy:dry-run`。                |
 | 生成应用包含 CI 和 deploy workflows   | 通过 | base template 包含 CI 和手动 Cloudflare deploy workflows。        |
 | 部署文档足够手动执行                  | 通过 | 已有生成应用和维护者部署检查清单。                                |
-| 生成应用有匹配布局的 `AGENTS.md`      | 通过 | base template 已包含 `AGENTS.md`。                                |
+| 生成应用有匹配布局的 `AGENTS.md`      | 通过 | base template 和已安装模块会提供 `AGENTS.md` 指引。               |
 
 ## 测试进度
 
@@ -78,6 +78,7 @@
 | Auth browser e2e tests       | 通过   | `pnpm smoke`                  |
 | D1 migration smoke           | 通过   | `pnpm smoke`                  |
 | Auth migration smoke         | 通过   | `pnpm smoke`                  |
+| 模块 AGENTS 指引             | 通过   | `pnpm test`                   |
 | CI workflow                  | 已添加 | GitHub Actions                |
 | Release verification command | 通过   | `pnpm verify:release`         |
 | v0.1.0 release notes         | 已添加 | `docs/releases`               |
@@ -86,8 +87,7 @@
 
 1. 使用真实凭据运行 Cloudflare 手动部署验证。
 2. 在远端仓库确认 GitHub Actions workflow 可以通过。
-3. 如果后续增加更多受保护页面，再抽出可复用 protected route helper。
-4. 真实部署验证后，开始第一个 MVP 后模块。
+3. 真实部署验证后，开始第一个 MVP 后模块。
 
 ## 更新规则
 
