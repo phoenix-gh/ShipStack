@@ -16,9 +16,8 @@ function HomePage() {
       </p>
       <div className="actions">
         <a href="/dashboard">Open dashboard</a>
-        <a href="/api/health">Check API health</a>
+        <a href="/health">Check app health</a>
       </div>
     </section>
   );
 }
-

@@ -39,6 +39,9 @@ function RootComponent() {
           <Link to="/" activeProps={{ className: "active" }}>
             Home
           </Link>
+          <Link to="/health" activeProps={{ className: "active" }}>
+            Health
+          </Link>
           <Link to="/dashboard" activeProps={{ className: "active" }}>
             Dashboard
           </Link>

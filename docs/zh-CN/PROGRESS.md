@@ -35,7 +35,7 @@
 | 依赖可以成功安装                   | 通过     | `pnpm smoke` 会安装生成应用。                            |
 | 应用可以本地启动                   | 通过     | base 生成应用 runtime smoke 会启动 dev server。          |
 | Home route 可以渲染                | 通过     | base 生成应用 runtime smoke 会检查 `/`。                 |
-| Health route 返回成功              | 未自动化 | 路由已存在，但还需要 runtime 检查。                      |
+| Health route 返回成功              | 通过     | base 生成应用 runtime smoke 会检查 `/health`。           |
 | Health API 返回成功                | 通过     | base 生成应用 runtime smoke 会检查 `/api/health`。       |
 | 认证后的 `/api/v1/me` 返回当前用户 | 通过     | auth 生成应用 runtime smoke 会登录并检查 `/api/v1/me`。  |
 | D1 migration 可以本地运行          | 通过     | database 生成应用 smoke 会运行 generate 和 local apply。 |
@@ -68,7 +68,7 @@
 
 1. 增加 Cloudflare 手动部署验证。
 2. 在远端仓库确认 GitHub Actions workflow 可以通过。
-3. 增加 health page runtime check，或者移除独立 health route 验收项。
+3. 在部署文档里增加手动 route checks。
 4. 如果 patch helper 变复杂，再补更底层的 CLI 单元测试。
 5. 如果后续增加更多受保护页面，再抽出可复用 protected route helper。
 

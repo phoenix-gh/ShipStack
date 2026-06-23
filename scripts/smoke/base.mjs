@@ -15,6 +15,11 @@ await runSmoke("base", async (workspace) => {
       includes: "ShipStack",
     },
     {
+      path: "/health",
+      status: 200,
+      includes: "System health is ok.",
+    },
+    {
       path: "/api/health",
       status: 200,
       json: (body) => {

@@ -30,22 +30,22 @@ Latest commit:
 
 ## MVP Acceptance Progress
 
-| Acceptance criterion                                   | Status        | Verification                                                         |
-| ------------------------------------------------------ | ------------- | -------------------------------------------------------------------- |
-| Dependencies install successfully                      | Passing       | `pnpm smoke` installs generated apps.                                |
-| App starts locally                                     | Passing       | Base generated app runtime smoke starts the dev server.              |
-| Home route renders                                     | Passing       | Base generated app runtime smoke checks `/`.                         |
-| Health route returns success                           | Not automated | Route exists, but runtime check remains.                             |
-| Health API returns success                             | Passing       | Base generated app runtime smoke checks `/api/health`.               |
-| Authenticated `/api/v1/me` returns current user        | Passing       | Auth generated app runtime smoke signs in and checks `/api/v1/me`.   |
-| D1 migration runs locally                              | Passing       | Database generated app smoke runs generate and local apply.          |
-| User can sign up                                       | Passing       | Auth browser smoke signs up through the generated UI.                |
-| User can sign in                                       | Passing       | Auth browser smoke signs back in through the generated UI.           |
-| Anonymous user cannot access dashboard                 | Passing       | Auth generated app runtime smoke checks dashboard redirect.          |
-| Authenticated user can access dashboard                | Passing       | Auth browser smoke verifies the dashboard after sign up and sign in. |
-| App builds for Cloudflare Workers                      | Passing       | `pnpm smoke` runs generated app builds.                              |
-| Deployment docs are complete enough to follow manually | Partial       | Base docs exist; full manual deploy pass remains.                    |
-| Generated `AGENTS.md` exists and matches layout        | Passing       | Base template includes `AGENTS.md`.                                  |
+| Acceptance criterion                                   | Status  | Verification                                                         |
+| ------------------------------------------------------ | ------- | -------------------------------------------------------------------- |
+| Dependencies install successfully                      | Passing | `pnpm smoke` installs generated apps.                                |
+| App starts locally                                     | Passing | Base generated app runtime smoke starts the dev server.              |
+| Home route renders                                     | Passing | Base generated app runtime smoke checks `/`.                         |
+| Health route returns success                           | Passing | Base generated app runtime smoke checks `/health`.                   |
+| Health API returns success                             | Passing | Base generated app runtime smoke checks `/api/health`.               |
+| Authenticated `/api/v1/me` returns current user        | Passing | Auth generated app runtime smoke signs in and checks `/api/v1/me`.   |
+| D1 migration runs locally                              | Passing | Database generated app smoke runs generate and local apply.          |
+| User can sign up                                       | Passing | Auth browser smoke signs up through the generated UI.                |
+| User can sign in                                       | Passing | Auth browser smoke signs back in through the generated UI.           |
+| Anonymous user cannot access dashboard                 | Passing | Auth generated app runtime smoke checks dashboard redirect.          |
+| Authenticated user can access dashboard                | Passing | Auth browser smoke verifies the dashboard after sign up and sign in. |
+| App builds for Cloudflare Workers                      | Passing | `pnpm smoke` runs generated app builds.                              |
+| Deployment docs are complete enough to follow manually | Partial | Base docs exist; full manual deploy pass remains.                    |
+| Generated `AGENTS.md` exists and matches layout        | Passing | Base template includes `AGENTS.md`.                                  |
 
 ## Test Progress
 
@@ -68,7 +68,7 @@ Latest commit:
 
 1. Add manual Cloudflare deploy verification.
 2. Confirm the GitHub Actions workflow on the remote repository.
-3. Add health page runtime check or remove the separate criterion.
+3. Add manual route checks to deployment documentation.
 4. Add lower-level CLI unit tests if patching helpers become more complex.
 5. Extract a reusable protected route helper if more protected routes are added.
 
