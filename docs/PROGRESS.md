@@ -78,7 +78,7 @@ Latest commit:
 | Auth browser e2e tests       | Passing | `pnpm smoke`                  |
 | D1 migration smoke           | Passing | `pnpm smoke`                  |
 | Auth migration smoke         | Passing | `pnpm smoke`                  |
-| Module AGENTS guidance       | Passing | `pnpm test`                   |
+| Module AGENTS guidance       | Passing | `pnpm test`, `pnpm smoke`     |
 | CI workflow                  | Added   | GitHub Actions                |
 | Release verification command | Passing | `pnpm verify:release`         |
 | v0.1.0 release notes         | Added   | `docs/releases`               |

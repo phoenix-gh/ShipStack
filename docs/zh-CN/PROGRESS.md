@@ -78,7 +78,7 @@
 | Auth browser e2e tests       | 通过   | `pnpm smoke`                  |
 | D1 migration smoke           | 通过   | `pnpm smoke`                  |
 | Auth migration smoke         | 通过   | `pnpm smoke`                  |
-| 模块 AGENTS 指引             | 通过   | `pnpm test`                   |
+| 模块 AGENTS 指引             | 通过   | `pnpm test`, `pnpm smoke`     |
 | CI workflow                  | 已添加 | GitHub Actions                |
 | Release verification command | 通过   | `pnpm verify:release`         |
 | v0.1.0 release notes         | 已添加 | `docs/releases`               |

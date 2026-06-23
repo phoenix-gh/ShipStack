@@ -130,6 +130,10 @@ async function doctor() {
         ),
       ],
       ["database wrangler DB binding", await hasWranglerBinding(cwd, "DB")],
+      [
+        "database AGENTS.md guidance",
+        await fileIncludes(resolve(cwd, "AGENTS.md"), "## Database Module"),
+      ],
     );
   }
 
@@ -169,6 +173,10 @@ async function doctor() {
           resolve(cwd, "drizzle.config.ts"),
           "./src/db/auth-schema.ts",
         ),
+      ],
+      [
+        "auth AGENTS.md guidance",
+        await fileIncludes(resolve(cwd, "AGENTS.md"), "## Auth Module"),
       ],
     );
   }

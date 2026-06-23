@@ -52,6 +52,15 @@ test("database and auth installers patch generated apps idempotently", async () 
 
       const databaseAgents = await readFile("AGENTS.md", "utf8");
       assert.equal(count(databaseAgents, "## Database Module"), 1);
+      await writeFile(
+        "AGENTS.md",
+        databaseAgents.replace("## Database Module", "## Missing Module"),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("AGENTS.md", databaseAgents);
 
       await runSilently(["add", "auth"]);
       await runSilently(["add", "auth"]);
@@ -73,6 +82,15 @@ test("database and auth installers patch generated apps idempotently", async () 
       assert.equal(count(authAgents, "## Database Module"), 1);
       assert.equal(count(authAgents, "## Auth Module"), 1);
       assert.match(authAgents, /src\/features\/auth\/route-guards\.ts/);
+      await writeFile(
+        "AGENTS.md",
+        authAgents.replace("## Auth Module", "## Missing Auth Module"),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("AGENTS.md", authAgents);
       await runSilently(["doctor"]);
     });
   });
