@@ -9,7 +9,9 @@ Status: building toward `v0.1.0` MVP.
 Last verified:
 
 - `pnpm typecheck`
+- `pnpm test`
 - `pnpm build`
+- `pnpm format:check`
 - `pnpm smoke`
 
 Latest commit:

@@ -9,7 +9,9 @@
 最近已验证：
 
 - `pnpm typecheck`
+- `pnpm test`
 - `pnpm build`
+- `pnpm format:check`
 - `pnpm smoke`
 
 最新提交：
