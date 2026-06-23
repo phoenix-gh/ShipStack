@@ -38,13 +38,14 @@ GitHub Actions 会在 push 和 pull request 时运行同样的项目级检查：
 
 ```sh
 pnpm typecheck
+pnpm test
 pnpm build
 pnpm smoke
 ```
 
 CI workflow 会先安装 Playwright Chromium，因为 auth smoke 包含真实浏览器流程。
 
-`pnpm format:check` 可用于本地格式检查，但目前还没有放进 CI，因为早期仓库文件还需要一次专门的格式整理。
+`pnpm test` 会运行 package-level unit tests。`pnpm format:check` 可用于本地格式检查，但目前还没有放进 CI，因为早期仓库文件还需要一次专门的格式整理。
 
 ## 下一步应补充什么
 

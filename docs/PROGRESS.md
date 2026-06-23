@@ -23,7 +23,7 @@ Latest commit:
 | Phase 0: Design Foundation        | Done        | Product direction, MVP scope, module model, agent guide, and legal boundaries exist.                                                                    |
 | Phase 1: Minimal Runnable Starter | Mostly done | Base TanStack Start + Cloudflare Workers template builds, passes generated-app smoke tests, and has a CI workflow. Final UI primitive decision remains. |
 | Phase 2: Database And Auth        | In progress | D1, Drizzle, Better Auth, auth pages, session API, protected dashboard/account guards, auth migrations, account route, and auth e2e smoke exist.        |
-| Phase 3: CLI MVP                  | In progress | `create`, `doctor`, `add database`, and `add auth` exist. CLI unit tests and stronger doctor checks remain.                                             |
+| Phase 3: CLI MVP                  | In progress | `create`, `doctor`, `add database`, `add auth`, and CLI unit tests exist. Stronger doctor checks remain.                                                |
 | Phase 4: Billing And Storage      | Not started | Stripe and R2 are planned after the base path is reliable.                                                                                              |
 | Phase 5: Recipes                  | Not started | Recipes wait until MVP modules are stable.                                                                                                              |
 | Phase 6: Ecosystem                | Not started | Docs site, contribution guide, releases, and examples come later.                                                                                       |
@@ -57,7 +57,7 @@ Latest commit:
 | Generated base app smoke     | Passing | `pnpm smoke`     |
 | Generated database app smoke | Passing | `pnpm smoke`     |
 | Generated auth app smoke     | Passing | `pnpm smoke`     |
-| CLI unit tests               | Missing | Future           |
+| CLI unit tests               | Passing | `pnpm test`      |
 | Runtime API tests            | Passing | `pnpm smoke`     |
 | Auth browser e2e tests       | Passing | `pnpm smoke`     |
 | D1 migration smoke           | Passing | `pnpm smoke`     |
@@ -69,7 +69,7 @@ Latest commit:
 1. Run manual Cloudflare deploy verification with real credentials.
 2. Confirm the GitHub Actions workflow on the remote repository.
 3. Add manual route checks to deployment documentation.
-4. Add lower-level CLI unit tests if patching helpers become more complex.
+4. Strengthen `shipstack doctor` with module-aware checks.
 5. Extract a reusable protected route helper if more protected routes are added.
 
 ## Update Rules
