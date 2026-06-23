@@ -71,4 +71,3 @@ ShipStack 可以使用开源 TanStack packages。ShipStack 不能复制 TanStart
 
 - ShipStack
 - 明确的模块名，例如 `database-d1`、`auth-better-auth`、`billing-stripe`、`storage-r2`
-

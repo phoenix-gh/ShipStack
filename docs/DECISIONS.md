@@ -104,4 +104,3 @@ Consequence:
 
 - CI should build and test a generated project.
 - Module changes should update smoke tests where behavior changes.
-

@@ -71,4 +71,3 @@ Use:
 
 - ShipStack
 - explicit module names such as `database-d1`, `auth-better-auth`, `billing-stripe`, and `storage-r2`
-

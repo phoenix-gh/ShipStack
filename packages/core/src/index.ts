@@ -58,7 +58,8 @@ export interface ShipStackModule {
 export const baseModule: ShipStackModule = {
   id: "base",
   name: "Base TanStack Start app",
-  description: "Minimal TanStack Start application configured for Cloudflare Workers.",
+  description:
+    "Minimal TanStack Start application configured for Cloudflare Workers.",
   category: "core",
   checks: [
     {
@@ -75,7 +76,8 @@ export const baseModule: ShipStackModule = {
 export const databaseD1Module: ShipStackModule = {
   id: "database-d1",
   name: "Cloudflare D1 database",
-  description: "Adds Cloudflare D1, Drizzle ORM, Drizzle Kit configuration, and migration scripts.",
+  description:
+    "Adds Cloudflare D1, Drizzle ORM, Drizzle Kit configuration, and migration scripts.",
   category: "core",
   dependencies: ["base"],
   packages: {
@@ -93,7 +95,8 @@ export const databaseD1Module: ShipStackModule = {
       name: "CLOUDFLARE_ACCOUNT_ID",
       scope: "local",
       required: true,
-      description: "Cloudflare account ID used by Drizzle Kit for D1 HTTP operations.",
+      description:
+        "Cloudflare account ID used by Drizzle Kit for D1 HTTP operations.",
     },
     {
       name: "CLOUDFLARE_DATABASE_ID",
@@ -105,7 +108,8 @@ export const databaseD1Module: ShipStackModule = {
       name: "CLOUDFLARE_D1_TOKEN",
       scope: "local",
       required: true,
-      description: "Cloudflare API token with D1 permissions for local tooling.",
+      description:
+        "Cloudflare API token with D1 permissions for local tooling.",
     },
   ],
   wrangler: [
@@ -131,7 +135,8 @@ export const databaseD1Module: ShipStackModule = {
 export const authBetterAuthModule: ShipStackModule = {
   id: "auth-better-auth",
   name: "Better Auth",
-  description: "Adds Better Auth, a TanStack Start auth handler, auth client, and session helpers.",
+  description:
+    "Adds Better Auth, a TanStack Start auth handler, auth client, and session helpers.",
   category: "core",
   dependencies: ["base", "database-d1"],
   packages: {
@@ -152,15 +157,21 @@ export const authBetterAuthModule: ShipStackModule = {
       scope: "runtime",
       required: false,
       example: "http://localhost:5173",
-      description: "Base URL used by Better Auth for callbacks and generated URLs.",
+      description:
+        "Base URL used by Better Auth for callbacks and generated URLs.",
     },
   ],
   checks: [
     {
       id: "auth-handler",
-      description: "Generated app has a Better Auth handler mounted under /api/auth/*.",
+      description:
+        "Generated app has a Better Auth handler mounted under /api/auth/*.",
     },
   ],
 };
 
-export const coreModules = [baseModule, databaseD1Module, authBetterAuthModule] satisfies ShipStackModule[];
+export const coreModules = [
+  baseModule,
+  databaseD1Module,
+  authBetterAuthModule,
+] satisfies ShipStackModule[];

@@ -187,21 +187,21 @@ my-app/
 
 ```ts
 export interface ShipStackModule {
-  id: string
-  name: string
-  description: string
-  dependencies?: string[]
+  id: string;
+  name: string;
+  description: string;
+  dependencies?: string[];
   packages?: {
-    dependencies?: Record<string, string>
-    devDependencies?: Record<string, string>
-  }
-  env?: EnvVarSpec[]
-  wrangler?: WranglerBindingSpec[]
-  files?: FileOperation[]
-  patches?: PatchOperation[]
-  migrations?: MigrationSpec[]
-  tests?: TestSpec[]
-  docs?: DocSpec[]
+    dependencies?: Record<string, string>;
+    devDependencies?: Record<string, string>;
+  };
+  env?: EnvVarSpec[];
+  wrangler?: WranglerBindingSpec[];
+  files?: FileOperation[];
+  patches?: PatchOperation[];
+  migrations?: MigrationSpec[];
+  tests?: TestSpec[];
+  docs?: DocSpec[];
 }
 ```
 

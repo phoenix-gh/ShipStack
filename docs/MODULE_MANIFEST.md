@@ -23,21 +23,21 @@ The module system should start simple and become more structured as commands mat
 
 ```ts
 export interface ShipStackModule {
-  id: string
-  name: string
-  description: string
-  category: "core" | "provider" | "recipe"
-  dependencies?: string[]
-  conflicts?: string[]
-  packages?: PackageChanges
-  env?: EnvVarSpec[]
-  wrangler?: WranglerChanges
-  files?: FileOperation[]
-  patches?: PatchOperation[]
-  migrations?: MigrationSpec[]
-  scripts?: PackageScriptSpec[]
-  docs?: DocSpec[]
-  checks?: CheckSpec[]
+  id: string;
+  name: string;
+  description: string;
+  category: "core" | "provider" | "recipe";
+  dependencies?: string[];
+  conflicts?: string[];
+  packages?: PackageChanges;
+  env?: EnvVarSpec[];
+  wrangler?: WranglerChanges;
+  files?: FileOperation[];
+  patches?: PatchOperation[];
+  migrations?: MigrationSpec[];
+  scripts?: PackageScriptSpec[];
+  docs?: DocSpec[];
+  checks?: CheckSpec[];
 }
 ```
 
@@ -85,11 +85,11 @@ Environment variables introduced by the module.
 
 ```ts
 export interface EnvVarSpec {
-  name: string
-  scope: "public" | "build" | "runtime" | "local"
-  required: boolean
-  example?: string
-  description: string
+  name: string;
+  scope: "public" | "build" | "runtime" | "local";
+  required: boolean;
+  example?: string;
+  description: string;
 }
 ```
 
