@@ -45,6 +45,15 @@ curl https://<your-worker-url>/api/health
 The API health response should return a JSON envelope with `data.status` set to
 `ok`.
 
+If a browser app, mobile shell, or desktop client will call the API from another
+origin, configure the trusted origin allowlist before deploy:
+
+```bash
+pnpm wrangler secret put SHIPSTACK_TRUSTED_ORIGINS
+```
+
+Leave the value empty until you have a concrete trusted client origin.
+
 ## If The D1 Database Module Is Installed
 
 Create the database:

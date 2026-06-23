@@ -137,12 +137,12 @@ export async function verifyGeneratedApp(appDir, options = {}) {
   }
 }
 
-export async function verifyRuntimeRoutes(appDir, checks) {
+export async function verifyRuntimeRoutes(appDir, checks, options = {}) {
   await withDevServer(appDir, async (origin) => {
     for (const check of checks) {
       await verifyHttpCheck(`${origin}${check.path}`, check);
     }
-  });
+  }, options);
 }
 
 export async function withDevServer(appDir, callback, options = {}) {
@@ -201,6 +201,7 @@ async function startDevServer(appDir, port) {
 
 async function verifyHttpCheck(url, check) {
   const response = await fetch(url, {
+    headers: check.headers,
     redirect: check.redirect ?? "follow",
   });
 
@@ -211,6 +212,17 @@ async function verifyHttpCheck(url, check) {
   }
 
   const body = await response.text();
+  if (check.responseHeaders) {
+    for (const [name, expected] of Object.entries(check.responseHeaders)) {
+      const actual = response.headers.get(name);
+      if (actual !== expected) {
+        throw new Error(
+          `Expected ${url} response header ${name} to equal ${expected}, received ${actual}`,
+        );
+      }
+    }
+  }
+
   if (check.includes && !body.includes(check.includes)) {
     throw new Error(`Expected ${url} response to include: ${check.includes}`);
   }

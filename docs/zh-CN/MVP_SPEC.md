@@ -50,6 +50,7 @@
 - shared JSON response helper
 - shared JSON error helper
 - request ID helper
+- trusted app clients 的默认收紧 CORS helper
 - API smoke test
 
 ### Deployment

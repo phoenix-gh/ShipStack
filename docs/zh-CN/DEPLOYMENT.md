@@ -69,6 +69,14 @@ pnpm smoke
    - `/api/health` 返回 JSON envelope，且 `data.status` 等于 `ok`
    - auth 安装前，`/api/v1/me` 返回匿名 envelope
 
+6. 如果浏览器应用、mobile shell 或桌面客户端会从另一个 origin 调用 API，设置逗号分隔的 trusted origin allowlist。
+
+   ```bash
+   pnpm wrangler secret put SHIPSTACK_TRUSTED_ORIGINS
+   ```
+
+   在有明确可信客户端 origin 之前保持为空。为空时，CORS 默认保持收紧。
+
 ## D1 和 Auth 手动部署检查
 
 验证 database 和 auth 模块时，在生成应用里继续执行这些步骤。

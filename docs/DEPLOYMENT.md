@@ -70,6 +70,16 @@ Use a real Cloudflare account for this checklist.
    - `/api/health` returns a JSON envelope with `data.status` equal to `ok`
    - `/api/v1/me` returns an anonymous envelope before auth is installed
 
+6. If a browser app, mobile shell, or desktop client will call the API from
+   another origin, set a comma-separated trusted origin allowlist.
+
+   ```bash
+   pnpm wrangler secret put SHIPSTACK_TRUSTED_ORIGINS
+   ```
+
+   Leave the value empty until you have a concrete trusted client origin. CORS
+   stays restrictive by default when this value is empty.
+
 ## Manual D1 And Auth Deploy Pass
 
 Run these extra steps from a generated app when validating the database and auth

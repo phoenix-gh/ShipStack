@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { preflight, withCors } from "~/features/api/cors";
 import { ok } from "~/features/api/response";
 
 export const Route = createFileRoute("/api/v1/me")({
@@ -8,18 +9,45 @@ export const Route = createFileRoute("/api/v1/me")({
   server: {
     handlers: {
       GET: async ({ request }: { request: Request }) => {
+        const trustedOrigins = await getTrustedOrigins();
+
         if (!import.meta.env.SSR) {
-          return ok({ user: null, authenticated: false });
+          return withCors(request, ok({ user: null, authenticated: false }), {
+            trustedOrigins,
+          });
         }
 
         const { auth } = await import("~/features/auth/server");
         const session = await auth.api.getSession({ headers: request.headers });
 
-        return ok({
-          user: session?.user ?? null,
-          authenticated: Boolean(session),
+        return withCors(
+          request,
+          ok({
+            user: session?.user ?? null,
+            authenticated: Boolean(session),
+          }),
+          {
+            trustedOrigins,
+          },
+        );
+      },
+      OPTIONS: async ({ request }: { request: Request }) => {
+        const trustedOrigins = await getTrustedOrigins();
+
+        return preflight(request, {
+          trustedOrigins,
         });
       },
     },
   },
 } as any);
+
+async function getTrustedOrigins() {
+  if (!import.meta.env.SSR) {
+    return undefined;
+  }
+
+  const { getApiTrustedOrigins } =
+    await import("~/features/api/runtime-env.server");
+  return getApiTrustedOrigins();
+}

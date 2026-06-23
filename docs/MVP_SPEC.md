@@ -50,6 +50,7 @@ A developer can create a TanStack Start app, run it locally, authenticate a user
 - shared JSON response helper
 - shared JSON error helper
 - request ID helper
+- restrictive CORS helper for trusted app clients
 - API smoke test
 
 ### Deployment

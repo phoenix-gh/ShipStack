@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { preflight, withCors } from "./cors";
 import { fail, ok } from "./response";
 
 interface TestEnvelope {
@@ -29,5 +30,55 @@ describe("api response helpers", () => {
     expect(response.status).toBe(401);
     expect(body.data).toBeNull();
     expect(body.error?.code).toBe("UNAUTHORIZED");
+  });
+
+  it("keeps CORS restrictive unless the origin is trusted", () => {
+    const request = new Request("https://api.example.test/api/health", {
+      headers: {
+        origin: "https://app.example.test",
+      },
+    });
+
+    const response = withCors(request, ok({ status: "ok" }));
+
+    expect(response.headers.get("access-control-allow-origin")).toBeNull();
+    expect(response.headers.get("vary")).toContain("Origin");
+  });
+
+  it("allows configured trusted origins", () => {
+    const request = new Request("https://api.example.test/api/health", {
+      headers: {
+        origin: "https://app.example.test",
+      },
+    });
+
+    const response = withCors(request, ok({ status: "ok" }), {
+      trustedOrigins: "https://app.example.test, https://admin.example.test",
+    });
+
+    expect(response.headers.get("access-control-allow-origin")).toBe(
+      "https://app.example.test",
+    );
+    expect(response.headers.get("access-control-allow-credentials")).toBe(
+      "true",
+    );
+  });
+
+  it("responds to trusted preflight requests", () => {
+    const request = new Request("https://api.example.test/api/health", {
+      headers: {
+        origin: "https://app.example.test",
+      },
+      method: "OPTIONS",
+    });
+
+    const response = preflight(request, {
+      trustedOrigins: "https://app.example.test",
+    });
+
+    expect(response.status).toBe(204);
+    expect(response.headers.get("access-control-allow-methods")).toContain(
+      "GET",
+    );
   });
 });
