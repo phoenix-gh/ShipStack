@@ -37,6 +37,7 @@ Smoke workspaces are created in the operating system temp directory. Passing run
 GitHub Actions runs the same project-level checks on push and pull requests:
 
 ```sh
+pnpm format:check
 pnpm typecheck
 pnpm test
 pnpm build
@@ -45,7 +46,7 @@ pnpm smoke
 
 The CI workflow installs Playwright Chromium before running smoke tests because the auth smoke includes a real browser flow.
 
-`pnpm test` runs package-level unit tests. `pnpm format:check` exists for local formatting review, but it is not enforced in CI yet because the early repository files still need one dedicated formatting pass.
+`pnpm test` runs package-level unit tests. `pnpm format:check` verifies repository formatting.
 
 ## What To Add Next
 
