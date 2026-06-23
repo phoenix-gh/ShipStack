@@ -32,13 +32,27 @@ The smoke suite creates temporary real apps, installs dependencies, and runs app
 
 Smoke workspaces are created in the operating system temp directory. Passing runs are removed automatically. Failed runs are kept and printed so the generated project can be inspected.
 
+### Continuous Integration
+
+GitHub Actions runs the same project-level checks on push and pull requests:
+
+```sh
+pnpm typecheck
+pnpm build
+pnpm smoke
+```
+
+The CI workflow installs Playwright Chromium before running smoke tests because the auth smoke includes a real browser flow.
+
+`pnpm format:check` exists for local formatting review, but it is not enforced in CI yet because the early repository files still need one dedicated formatting pass.
+
 ## What To Add Next
 
 Add tests in this order:
 
 1. CLI unit tests around lower-level patching helpers if CLI behavior grows more complex.
 2. Manual Cloudflare deploy verification.
-3. CI workflow for typecheck, build, and smoke checks.
+3. Confirm the GitHub Actions workflow on the remote repository.
 4. More D1 migration edge cases for future schema changes.
 5. Module smoke tests for future Stripe, R2, and API key modules.
 
