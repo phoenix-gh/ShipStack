@@ -6,6 +6,11 @@ This file is the working progress board for ShipStack. Update it whenever a deli
 
 Status: local `v0.1.0` MVP release candidate. External Cloudflare deploy and remote CI verification are still pending.
 
+External verification status in this workspace:
+
+- `pnpm dlx wrangler whoami` reports that Wrangler is not authenticated.
+- `git remote -v` has no configured remote, so remote GitHub Actions cannot be checked from this workspace.
+
 Last verified:
 
 - `pnpm typecheck`

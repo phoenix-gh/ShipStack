@@ -6,6 +6,11 @@
 
 状态：本地 `v0.1.0` MVP release candidate。真实 Cloudflare 部署和远端 CI 验证仍待完成。
 
+当前 workspace 的外部验证状态：
+
+- `pnpm dlx wrangler whoami` 显示 Wrangler 尚未登录。
+- `git remote -v` 没有配置 remote，因此当前 workspace 无法检查远端 GitHub Actions。
+
 最近已验证：
 
 - `pnpm typecheck`
