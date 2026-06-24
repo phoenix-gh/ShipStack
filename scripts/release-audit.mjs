@@ -50,6 +50,16 @@ const secretPatterns = [
     context: /cloudflare|wrangler|cf_api|api_token/i,
   },
 ];
+const restrictedCompetitorNames = /\b(?:TanStarter|MkFast)\b/;
+const allowedCompetitorReferenceFiles = new Set([
+  "AGENTS.md",
+  "CONTRIBUTING.md",
+  "docs/LEGAL_BOUNDARIES.md",
+  "docs/RELEASE.md",
+  "docs/zh-CN/AGENTS.md",
+  "docs/zh-CN/LEGAL_BOUNDARIES.md",
+  "docs/zh-CN/RELEASE.md",
+]);
 
 const checks = [
   {
@@ -264,6 +274,20 @@ const checks = [
     },
   },
   {
+    label: "paid starter names stay in boundary docs",
+    action: async () => {
+      const findings = await scanTrackedFilesForRestrictedCompetitorNames();
+
+      return {
+        ok: findings.length === 0,
+        detail:
+          findings.length === 0
+            ? "restricted names only appear in boundary guidance"
+            : findings.join("\n  "),
+      };
+    },
+  },
+  {
     label: "Git remote is configured",
     action: async () => {
       const result = await run("git", ["remote", "-v"]);
@@ -403,12 +427,7 @@ async function auditPublishablePackageMetadata() {
 }
 
 async function scanTrackedFilesForSecrets() {
-  const result = await run("git", ["ls-files"]);
-  const files = result.stdout
-    .split("\n")
-    .map((file) => file.trim())
-    .filter(Boolean)
-    .filter((file) => !isGeneratedOrLockFile(file));
+  const files = await listTrackedTextCandidateFiles();
   const findings = [];
 
   for (const file of files) {
@@ -430,8 +449,36 @@ async function scanTrackedFilesForSecrets() {
   return findings;
 }
 
+async function scanTrackedFilesForRestrictedCompetitorNames() {
+  const files = await listTrackedTextCandidateFiles();
+  const findings = [];
+
+  for (const file of files) {
+    if (allowedCompetitorReferenceFiles.has(file)) {
+      continue;
+    }
+
+    const content = await readTextFileIfPossible(file);
+    if (content !== null && restrictedCompetitorNames.test(content)) {
+      findings.push(`${file}: restricted paid starter reference`);
+    }
+  }
+
+  return findings;
+}
+
+async function listTrackedTextCandidateFiles() {
+  const result = await run("git", ["ls-files"]);
+  return result.stdout
+    .split("\n")
+    .map((file) => file.trim())
+    .filter(Boolean)
+    .filter((file) => !isGeneratedOrLockFile(file));
+}
+
 function isGeneratedOrLockFile(file) {
   return (
+    file === "scripts/release-audit.mjs" ||
     file === "pnpm-lock.yaml" ||
     file.endsWith("routeTree.gen.ts") ||
     file.includes("/routeTree.gen.ts")
