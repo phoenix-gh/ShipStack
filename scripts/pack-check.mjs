@@ -1,4 +1,4 @@
-import { access, mkdtemp, rm } from "node:fs/promises";
+import { access, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { spawn } from "node:child_process";
@@ -28,6 +28,7 @@ try {
     "package/package.json",
   ]);
 
+  await verifyPackedCli({ cliTarball, coreTarball, createTarball });
   await assertMissing(resolve(repositoryRoot, "packages/cli/templates"));
   console.log("Pack check passed.");
 } finally {
@@ -69,6 +70,77 @@ async function assertMissing(path) {
   }
 
   throw new Error(`Expected generated path to be cleaned up: ${path}`);
+}
+
+async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
+  const workspace = await mkdtemp(resolve(tmpdir(), "shipstack-packed-cli-"));
+
+  try {
+    await writeFile(
+      resolve(workspace, "package.json"),
+      `${JSON.stringify(
+        {
+          private: true,
+          dependencies: {
+            "@shipstack/cli": `file:${cliTarball}`,
+            "@shipstack/core": `file:${coreTarball}`,
+            "create-shipstack": `file:${createTarball}`,
+          },
+          pnpm: {
+            overrides: {
+              "@shipstack/cli": `file:${cliTarball}`,
+              "@shipstack/core": `file:${coreTarball}`,
+            },
+          },
+        },
+        null,
+        2,
+      )}\n`,
+      "utf8",
+    );
+    await run("pnpm", ["install", "--ignore-scripts"], { cwd: workspace });
+
+    await run(
+      "node",
+      [
+        resolve(workspace, "node_modules/create-shipstack/dist/cli.js"),
+        "packed-app",
+      ],
+      {
+        cwd: workspace,
+      },
+    );
+
+    const appDir = resolve(workspace, "packed-app");
+    await assertExists(resolve(appDir, "package.json"));
+    await assertExists(resolve(appDir, "src/routes/api.health.ts"));
+    await assertExists(resolve(appDir, "AGENTS.md"));
+
+    const shipstackBin = resolve(
+      workspace,
+      "node_modules/@shipstack/cli/dist/cli.js",
+    );
+    await run("node", [shipstackBin, "add", "database"], { cwd: appDir });
+    await run("node", [shipstackBin, "add", "auth"], { cwd: appDir });
+    await run("node", [shipstackBin, "doctor"], { cwd: appDir });
+
+    await assertExists(resolve(appDir, "src/db/schema.ts"));
+    await assertExists(resolve(appDir, "src/features/auth/route-guards.ts"));
+    await assertExists(resolve(appDir, "src/routes/sign-in.tsx"));
+  } finally {
+    await rm(workspace, {
+      force: true,
+      recursive: true,
+    });
+  }
+}
+
+async function assertExists(path) {
+  try {
+    await access(path);
+  } catch {
+    throw new Error(`Expected path to exist: ${path}`);
+  }
 }
 
 async function run(command, args, options = {}) {
