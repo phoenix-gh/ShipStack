@@ -82,6 +82,30 @@ const checks = [
     },
   },
   {
+    label: "release notes describe remaining gates",
+    action: async () => {
+      const file = "docs/releases/v0.1.0.md";
+      const content = await readFile(resolve(repositoryRoot, file), "utf8");
+      const requiredMarkers = [
+        "pnpm release:audit",
+        "real Cloudflare deploy",
+        "remote CI",
+        "npm publish workflow dry-run",
+      ];
+      const missingMarkers = requiredMarkers.filter(
+        (marker) => !content.includes(marker),
+      );
+
+      return {
+        ok: missingMarkers.length === 0,
+        detail:
+          missingMarkers.length > 0
+            ? `missing markers: ${missingMarkers.join(", ")}`
+            : file,
+      };
+    },
+  },
+  {
     label: "Git remote is configured",
     action: async () => {
       const result = await run("git", ["remote", "-v"]);
