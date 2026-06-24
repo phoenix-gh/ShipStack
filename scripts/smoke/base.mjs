@@ -15,6 +15,7 @@ await runSmoke("base", async (workspace) => {
   const devVarsPath = resolve(appDir, ".dev.vars");
 
   await verifyGeneratedMetadata(appDir);
+  await verifyGeneratedEnvFiles(appDir);
   await verifyGeneratedApp(appDir, { build: false });
   try {
     await verifyRuntimeRoutes(
@@ -121,6 +122,31 @@ async function verifyGeneratedMetadata(appDir) {
   ]) {
     if (!readme.includes(expectedCommand)) {
       throw new Error(`Generated README is missing ${expectedCommand}`);
+    }
+  }
+}
+
+async function verifyGeneratedEnvFiles(appDir) {
+  const envExample = await readFile(resolve(appDir, ".env.example"), "utf8");
+  const devVarsExample = await readFile(
+    resolve(appDir, ".dev.vars.example"),
+    "utf8",
+  );
+  const gitignore = await readFile(resolve(appDir, ".gitignore"), "utf8");
+
+  if (!envExample.includes("VITE_APP_NAME")) {
+    throw new Error("Generated .env.example is missing VITE_APP_NAME");
+  }
+
+  if (!devVarsExample.includes("SHIPSTACK_TRUSTED_ORIGINS")) {
+    throw new Error(
+      "Generated .dev.vars.example is missing SHIPSTACK_TRUSTED_ORIGINS",
+    );
+  }
+
+  for (const ignoredFile of [".env", ".env.*", ".dev.vars", ".dev.vars.*"]) {
+    if (!gitignore.includes(ignoredFile)) {
+      throw new Error(`Generated .gitignore is missing ${ignoredFile}`);
     }
   }
 }

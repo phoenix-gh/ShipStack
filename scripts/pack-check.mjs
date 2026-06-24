@@ -15,6 +15,7 @@ try {
     "package/README.md",
     "package/dist/cli.js",
     "package/dist/index.d.ts",
+    "package/templates/base/_gitignore",
     "package/templates/base/package.json",
     "package/templates/modules/auth-better-auth/src/features/auth/route-guards.ts",
     "package/templates/modules/database-d1/drizzle.config.ts",
@@ -116,6 +117,7 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
 
     const appDir = resolve(workspace, "packed-app");
     await assertExists(resolve(appDir, "package.json"));
+    await assertExists(resolve(appDir, ".gitignore"));
     await assertExists(resolve(appDir, "scripts/verify-deployed.mjs"));
     await assertExists(resolve(appDir, "src/routes/api.health.ts"));
     await assertExists(resolve(appDir, "AGENTS.md"));

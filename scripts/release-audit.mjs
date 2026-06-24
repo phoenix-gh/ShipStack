@@ -160,6 +160,43 @@ const checks = [
     },
   },
   {
+    label: "Generated env examples are guarded",
+    action: async () => {
+      const checks = [
+        await assertFileContainsMarkers("templates/base/.env.example", [
+          "VITE_APP_NAME",
+        ]),
+        await assertFileContainsMarkers("templates/base/.dev.vars.example", [
+          "SHIPSTACK_TRUSTED_ORIGINS",
+        ]),
+        await assertFileContainsMarkers("templates/base/_gitignore", [
+          ".env",
+          ".env.*",
+          "!.env.example",
+          ".dev.vars",
+          ".dev.vars.*",
+          "!.dev.vars.example",
+        ]),
+        await assertFileContainsMarkers("templates/base/docs/env.md", [
+          "cp .env.example .env.local",
+          "cp .dev.vars.example .dev.vars",
+          "Never put secrets in `VITE_*` variables.",
+        ]),
+      ];
+      const findings = checks
+        .filter((check) => !check.ok)
+        .map((check) => check.detail);
+
+      return {
+        ok: findings.length === 0,
+        detail:
+          findings.length === 0
+            ? "env examples, ignore rules, and docs are aligned"
+            : findings.join("\n  "),
+      };
+    },
+  },
+  {
     label: "Generated app CI workflow shape is valid",
     action: async () => {
       return await assertFileContainsMarkers(

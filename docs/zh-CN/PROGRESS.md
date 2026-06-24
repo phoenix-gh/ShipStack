@@ -59,6 +59,7 @@
 | Worker deploy bundle 通过本地 dry-run | 通过 | base 生成应用 smoke 会运行 `pnpm deploy:dry-run`。                |
 | 已部署 Worker routes 可自动验证       | 通过 | base 生成应用 smoke 会用 dev URL 运行 `pnpm verify:deployed`。    |
 | 生成应用包含 CI 和 deploy workflows   | 通过 | base template 包含 CI 和手动 Cloudflare deploy workflows。        |
+| 生成应用 env 文件可安全自定义         | 通过 | base smoke 和 release audit 会检查 env examples 与 `.gitignore`。 |
 | 部署文档足够手动执行                  | 通过 | 已有生成应用和维护者部署检查清单。                                |
 | 生成应用有匹配布局的 `AGENTS.md`      | 通过 | base template 和已安装模块会提供 `AGENTS.md` 指引。               |
 
@@ -75,6 +76,7 @@
 | Generated app lint           | 通过     | `pnpm smoke`                        |
 | Wrangler deploy dry-run      | 通过     | `pnpm smoke`                        |
 | Deployed route verifier      | 通过     | `pnpm smoke`                        |
+| 生成应用 env 安全            | 通过     | `pnpm smoke`, `pnpm release:audit`  |
 | Cloudflare 临时部署          | 外部阻塞 | `pnpm smoke:temporary-deploy`       |
 | CLI unit tests               | 通过     | `pnpm test`                         |
 | Runtime API tests            | 通过     | `pnpm smoke`                        |

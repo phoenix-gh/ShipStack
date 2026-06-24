@@ -20,6 +20,11 @@ pnpm test
 pnpm build
 ```
 
+Local environment examples are committed as `.env.example` and
+`.dev.vars.example`. Copy them to `.env.local` and `.dev.vars` for local
+development only. The generated `.gitignore` keeps those local files out of
+version control.
+
 Log in to Cloudflare:
 
 ```bash

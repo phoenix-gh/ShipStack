@@ -5,6 +5,11 @@ ShipStack separates environment values into clear buckets.
 ## Public Browser Variables
 
 Stored in `.env` or `.env.local` and exposed through Vite.
+Copy `.env.example` when you want a local file:
+
+```bash
+cp .env.example .env.local
+```
 
 ```text
 VITE_APP_NAME="ShipStack App"
@@ -26,6 +31,9 @@ to keep cross-origin browser requests blocked by default.
 ```text
 SHIPSTACK_TRUSTED_ORIGINS="https://app.example.com,https://admin.example.com"
 ```
+
+The D1 module appends local Drizzle tooling variables to `.env.example`. The
+Better Auth module appends local auth secrets to `.dev.vars.example`.
 
 ## Production Runtime Secrets
 

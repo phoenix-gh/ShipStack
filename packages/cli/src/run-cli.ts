@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { cp, mkdir, readFile, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -87,6 +87,7 @@ async function create(projectName: string | undefined) {
     recursive: true,
     filter: (source) => isCopyableTemplatePath(baseTemplateDir, source),
   });
+  await renameTemplateDotfiles(targetDir);
 
   await replaceInFile(resolve(targetDir, "package.json"), {
     "{{projectName}}": projectName,
@@ -101,6 +102,16 @@ async function create(projectName: string | undefined) {
   console.log(`  cd ${projectName}`);
   console.log("  pnpm install");
   console.log("  pnpm dev");
+}
+
+async function renameTemplateDotfiles(targetDir: string) {
+  const gitignoreTemplate = resolve(targetDir, "_gitignore");
+
+  if (!existsSync(gitignoreTemplate)) {
+    return;
+  }
+
+  await rename(gitignoreTemplate, resolve(targetDir, ".gitignore"));
 }
 
 async function doctor() {
