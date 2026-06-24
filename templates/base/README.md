@@ -22,6 +22,7 @@ pnpm build
 pnpm preview
 pnpm deploy:dry-run
 pnpm deploy
+pnpm verify:deployed https://<your-worker-url>
 ```
 
 ## API Routes

@@ -43,16 +43,26 @@ Deploy the Worker:
 pnpm deploy
 ```
 
-After deployment, Wrangler prints the Worker URL. Check both browser and API
-health routes:
+After deployment, Wrangler prints the Worker URL. Verify the deployed browser
+and API health routes:
+
+```bash
+pnpm verify:deployed https://<your-worker-url>
+```
+
+The verification script checks:
+
+- `/health` returns the health page
+- `/api/health` returns a JSON envelope with `data.status` set to `ok`
+- `/api/v1/me` returns the anonymous API envelope before auth is installed
+
+You can also inspect the routes manually:
 
 ```bash
 curl https://<your-worker-url>/health
 curl https://<your-worker-url>/api/health
+curl https://<your-worker-url>/api/v1/me
 ```
-
-The API health response should return a JSON envelope with `data.status` set to
-`ok`.
 
 If a browser app, mobile shell, or desktop client will call the API from another
 origin, configure the trusted origin allowlist before deploy:

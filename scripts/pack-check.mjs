@@ -113,6 +113,7 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
 
     const appDir = resolve(workspace, "packed-app");
     await assertExists(resolve(appDir, "package.json"));
+    await assertExists(resolve(appDir, "scripts/verify-deployed.mjs"));
     await assertExists(resolve(appDir, "src/routes/api.health.ts"));
     await assertExists(resolve(appDir, "AGENTS.md"));
 

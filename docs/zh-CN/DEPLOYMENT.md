@@ -70,9 +70,7 @@ pnpm smoke:temporary-deploy
 5. 检查线上 routes。
 
    ```bash
-   curl https://<your-worker-url>/health
-   curl https://<your-worker-url>/api/health
-   curl https://<your-worker-url>/api/v1/me
+   pnpm verify:deployed https://<your-worker-url>
    ```
 
    预期结果：
@@ -80,6 +78,14 @@ pnpm smoke:temporary-deploy
    - `/health` 返回包含 `System health is ok.` 的 HTML 页面
    - `/api/health` 返回 JSON envelope，且 `data.status` 等于 `ok`
    - auth 安装前，`/api/v1/me` 返回匿名 envelope
+
+   也可以用 `curl` 手动检查同样的 routes：
+
+   ```bash
+   curl https://<your-worker-url>/health
+   curl https://<your-worker-url>/api/health
+   curl https://<your-worker-url>/api/v1/me
+   ```
 
 6. 如果浏览器应用、mobile shell 或桌面客户端会从另一个 origin 调用 API，设置逗号分隔的 trusted origin allowlist。
 

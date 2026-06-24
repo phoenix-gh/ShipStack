@@ -7,6 +7,7 @@ import {
   runSmoke,
   verifyGeneratedApp,
   verifyRuntimeRoutes,
+  withDevServer,
 } from "./lib.mjs";
 
 await runSmoke("base", async (workspace) => {
@@ -76,6 +77,10 @@ await runSmoke("base", async (workspace) => {
   } finally {
     await rm(devVarsPath, { force: true });
   }
+
+  await withDevServer(appDir, async (origin) => {
+    await run("pnpm", ["verify:deployed", origin], { cwd: appDir });
+  });
 
   await verifyRuntimeRoutes(appDir, [
     {

@@ -73,9 +73,7 @@ Use a real Cloudflare account for this checklist.
 5. Check the deployed routes.
 
    ```bash
-   curl https://<your-worker-url>/health
-   curl https://<your-worker-url>/api/health
-   curl https://<your-worker-url>/api/v1/me
+   pnpm verify:deployed https://<your-worker-url>
    ```
 
    Expected results:
@@ -83,6 +81,14 @@ Use a real Cloudflare account for this checklist.
    - `/health` returns an HTML page containing `System health is ok.`
    - `/api/health` returns a JSON envelope with `data.status` equal to `ok`
    - `/api/v1/me` returns an anonymous envelope before auth is installed
+
+   You can also inspect the same routes manually with `curl`:
+
+   ```bash
+   curl https://<your-worker-url>/health
+   curl https://<your-worker-url>/api/health
+   curl https://<your-worker-url>/api/v1/me
+   ```
 
 6. If a browser app, mobile shell, or desktop client will call the API from
    another origin, set a comma-separated trusted origin allowlist.

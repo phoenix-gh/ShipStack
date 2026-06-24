@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "deploy": "pnpm build && wrangler deploy",
     "deploy:dry-run": "pnpm build && wrangler deploy --dry-run",
+    "verify:deployed": "node scripts/verify-deployed.mjs",
     "cf-typegen": "wrangler types",
     "lint": "pnpm format:check",
     "format:check": "prettier --check \"**/*.{md,json,jsonc,yml,yaml,ts,tsx,css}\"",

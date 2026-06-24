@@ -56,6 +56,7 @@ Latest commit:
 | Authenticated user can access dashboard                | Passing | Auth browser smoke verifies the dashboard after sign up and sign in.   |
 | App builds for Cloudflare Workers                      | Passing | `pnpm smoke` runs generated app builds.                                |
 | Worker deploy bundle passes local dry-run              | Passing | Base generated app smoke runs `pnpm deploy:dry-run`.                   |
+| Deployed Worker routes can be verified automatically   | Passing | Base generated app smoke runs `pnpm verify:deployed` against dev URL.  |
 | Generated CI and deploy workflows exist                | Passing | Base template includes CI and manual Cloudflare deploy workflows.      |
 | Deployment docs are complete enough to follow manually | Passing | Generated and maintainer deployment checklists exist.                  |
 | Generated `AGENTS.md` exists and matches layout        | Passing | Base template and installed modules include `AGENTS.md` guidance.      |
@@ -72,6 +73,7 @@ Latest commit:
 | Generated auth app smoke     | Passing | `pnpm smoke`                        |
 | Generated app lint           | Passing | `pnpm smoke`                        |
 | Wrangler deploy dry-run      | Passing | `pnpm smoke`                        |
+| Deployed route verifier      | Passing | `pnpm smoke`                        |
 | Temporary Cloudflare deploy  | Passing | `pnpm smoke:temporary-deploy`       |
 | CLI unit tests               | Passing | `pnpm test`                         |
 | Runtime API tests            | Passing | `pnpm smoke`                        |
