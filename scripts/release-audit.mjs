@@ -9,6 +9,20 @@ const packageJsonFiles = [
   "packages/cli/package.json",
   "packages/create-shipstack/package.json",
 ];
+const publishablePackages = [
+  {
+    directory: "packages/core",
+    name: "@shipstack/core",
+  },
+  {
+    directory: "packages/cli",
+    name: "@shipstack/cli",
+  },
+  {
+    directory: "packages/create-shipstack",
+    name: "create-shipstack",
+  },
+];
 const secretPatterns = [
   {
     label: "private key block",
@@ -94,6 +108,20 @@ const checks = [
             : packageVersions
                 .map(([file, packageVersion]) => `${file}: ${packageVersion}`)
                 .join("\n  "),
+      };
+    },
+  },
+  {
+    label: "Publishable package metadata is complete",
+    action: async () => {
+      const findings = await auditPublishablePackageMetadata();
+
+      return {
+        ok: findings.length === 0,
+        detail:
+          findings.length === 0
+            ? "package metadata and README files are present"
+            : findings.join("\n  "),
       };
     },
   },
@@ -308,6 +336,56 @@ async function assertFileContainsMarkers(file, requiredMarkers) {
         ? `missing markers: ${missingMarkers.join(", ")}`
         : file,
   };
+}
+
+async function auditPublishablePackageMetadata() {
+  const findings = [];
+
+  for (const packageInfo of publishablePackages) {
+    const packageJsonPath = resolve(
+      repositoryRoot,
+      packageInfo.directory,
+      "package.json",
+    );
+    const readmePath = resolve(
+      repositoryRoot,
+      packageInfo.directory,
+      "README.md",
+    );
+    const packageJson = JSON.parse(await readFile(packageJsonPath, "utf8"));
+    const readme = (await exists(readmePath))
+      ? await readFile(readmePath, "utf8")
+      : "";
+
+    if (packageJson.name !== packageInfo.name) {
+      findings.push(`${packageInfo.directory}: unexpected package name`);
+    }
+
+    if (
+      typeof packageJson.description !== "string" ||
+      packageJson.description.trim().length < 20
+    ) {
+      findings.push(`${packageInfo.directory}: missing package description`);
+    }
+
+    if (packageJson.license !== "MIT") {
+      findings.push(`${packageInfo.directory}: license must be MIT`);
+    }
+
+    if (packageJson.private !== false) {
+      findings.push(`${packageInfo.directory}: package must be publishable`);
+    }
+
+    if (!readme.includes(`# ${packageInfo.name}`)) {
+      findings.push(`${packageInfo.directory}: README title is missing`);
+    }
+
+    if (!readme.includes("0.1.0-alpha.0")) {
+      findings.push(`${packageInfo.directory}: README version is missing`);
+    }
+  }
+
+  return findings;
 }
 
 async function scanTrackedFilesForSecrets() {
