@@ -12,6 +12,12 @@
    git status --short
    ```
 
+   也可以运行 release gate audit，快速查看本地和外部阻塞项：
+
+   ```sh
+   pnpm release:audit
+   ```
+
 2. 运行本地 release verification。
 
    ```sh

@@ -12,6 +12,13 @@ Do not tag `v0.1.0` until these checks are complete:
    git status --short
    ```
 
+   You can also run the release gate audit for a quick local and external
+   blocker summary:
+
+   ```sh
+   pnpm release:audit
+   ```
+
 2. Run local release verification.
 
    ```sh
