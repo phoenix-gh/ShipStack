@@ -40,12 +40,44 @@ const checks = [
     },
   },
   {
-    label: "npm release workflow exists",
+    label: "npm release workflow shape is valid",
     action: async () => {
       const file = ".github/workflows/release-npm.yml";
+      const workflowPath = resolve(repositoryRoot, file);
+      const content = await readFile(workflowPath, "utf8");
+      const requiredMarkers = [
+        "workflow_dispatch:",
+        "pnpm verify:release",
+        "NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}",
+        "pnpm pack --pack-destination",
+        "npm publish",
+        "--provenance",
+      ];
+      const missingMarkers = requiredMarkers.filter(
+        (marker) => !content.includes(marker),
+      );
+      const expectedOrder = [
+        "packages/core",
+        "packages/cli",
+        "packages/create-shipstack",
+      ];
+      const packageOrder = expectedOrder.map((packagePath) =>
+        content.indexOf(packagePath),
+      );
+      const orderIsValid =
+        packageOrder.every((index) => index >= 0) &&
+        packageOrder.every((index, position) => {
+          return position === 0 || index > packageOrder[position - 1];
+        });
+
       return {
-        ok: await exists(resolve(repositoryRoot, file)),
-        detail: file,
+        ok: missingMarkers.length === 0 && orderIsValid,
+        detail:
+          missingMarkers.length > 0
+            ? `missing markers: ${missingMarkers.join(", ")}`
+            : orderIsValid
+              ? file
+              : `package publish order must be ${expectedOrder.join(" -> ")}`,
       };
     },
   },
