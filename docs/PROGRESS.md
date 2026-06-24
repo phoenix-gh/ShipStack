@@ -12,6 +12,10 @@ External verification status in this workspace:
 - `pnpm smoke:temporary-deploy` has passed before, but the latest attempt on
   2026-06-24 failed before upload with Wrangler `fetch failed` connectivity
   errors.
+- The latest `pnpm verify:release` retry on 2026-06-24 reached generated app
+  dependency installation, then was stopped after repeated npm registry
+  `ECONNRESET` failures. No ShipStack code failure was observed before the
+  network stall.
 - `git remote -v` has no configured remote, so remote GitHub Actions cannot be checked from this workspace.
 
 Last verified:
@@ -22,6 +26,7 @@ Last verified:
 - `pnpm format:check`
 - `pnpm smoke`
 - `pnpm pack:check`
+- `pnpm verify:local`
 - `pnpm verify:release`
 
 Latest commit:
