@@ -3,6 +3,12 @@ import { resolve } from "node:path";
 import { spawn } from "node:child_process";
 
 const repositoryRoot = resolve(import.meta.dirname, "..");
+const packageJsonFiles = [
+  "package.json",
+  "packages/core/package.json",
+  "packages/cli/package.json",
+  "packages/create-shipstack/package.json",
+];
 
 const checks = [
   {
@@ -26,6 +32,41 @@ const checks = [
       return {
         ok: typeof script === "string" && script.includes("pnpm smoke"),
         detail: script ?? "missing",
+      };
+    },
+  },
+  {
+    label: "Package versions are aligned for v0.1.0",
+    action: async () => {
+      const packageVersions = await Promise.all(
+        packageJsonFiles.map(async (file) => {
+          const packageJson = JSON.parse(
+            await readFile(resolve(repositoryRoot, file), "utf8"),
+          );
+
+          return [file, packageJson.version];
+        }),
+      );
+      const versions = new Set(packageVersions.map(([, version]) => version));
+      const version = packageVersions[0]?.[1];
+      const releaseNotes = await readFile(
+        resolve(repositoryRoot, "docs/releases/v0.1.0.md"),
+        "utf8",
+      );
+      const releaseNotesMatch = releaseNotes.includes("# ShipStack v0.1.0");
+      const expectedVersion = "0.1.0-alpha.0";
+
+      return {
+        ok:
+          versions.size === 1 &&
+          version === expectedVersion &&
+          releaseNotesMatch,
+        detail:
+          versions.size === 1 && releaseNotesMatch
+            ? `${version} packages, v0.1.0 release notes`
+            : packageVersions
+                .map(([file, packageVersion]) => `${file}: ${packageVersion}`)
+                .join("\n  "),
       };
     },
   },
