@@ -1,6 +1,7 @@
 {
   "name": "@shipstack/core",
   "version": "0.1.0-alpha.0",
+  "description": "Shared utilities for the ShipStack SaaS starter.",
   "license": "MIT",
   "private": false,
   "type": "module",

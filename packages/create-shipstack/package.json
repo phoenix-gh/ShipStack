@@ -1,6 +1,7 @@
 {
   "name": "create-shipstack",
   "version": "0.1.0-alpha.0",
+  "description": "Create a new ShipStack TanStack Start app.",
   "license": "MIT",
   "private": false,
   "type": "module",

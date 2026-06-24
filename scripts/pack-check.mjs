@@ -12,6 +12,7 @@ try {
   const coreTarball = await pack("packages/core");
 
   await assertTarIncludes(cliTarball, [
+    "package/README.md",
     "package/dist/cli.js",
     "package/dist/index.d.ts",
     "package/templates/base/package.json",
@@ -19,10 +20,12 @@ try {
     "package/templates/modules/database-d1/drizzle.config.ts",
   ]);
   await assertTarIncludes(createTarball, [
+    "package/README.md",
     "package/dist/cli.js",
     "package/package.json",
   ]);
   await assertTarIncludes(coreTarball, [
+    "package/README.md",
     "package/dist/index.js",
     "package/dist/index.d.ts",
     "package/package.json",
