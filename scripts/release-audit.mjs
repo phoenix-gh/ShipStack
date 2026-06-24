@@ -77,6 +77,20 @@ const checks = [
     },
   },
   {
+    label: "Repository CI workflow shape is valid",
+    action: async () => {
+      return await assertFileContainsMarkers(".github/workflows/ci.yml", [
+        "push:",
+        "pull_request:",
+        "version: 10.33.0",
+        "node-version: 22",
+        "pnpm install --frozen-lockfile",
+        "pnpm exec playwright install --with-deps chromium",
+        "pnpm verify:release",
+      ]);
+    },
+  },
+  {
     label: "Package versions are aligned for v0.1.0",
     action: async () => {
       const packageVersions = await Promise.all(
