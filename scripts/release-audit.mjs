@@ -261,6 +261,15 @@ const checks = [
     },
   },
   {
+    label: "External audit checks are bounded",
+    action: async () => {
+      return await assertFileContainsMarkers("scripts/release-audit.mjs", [
+        "timeoutMs: 15_000",
+        "Command timed out after",
+      ]);
+    },
+  },
+  {
     label: "Generated app CI workflow shape is valid",
     action: async () => {
       return await assertFileContainsMarkers(
@@ -402,7 +411,9 @@ const checks = [
   {
     label: "Wrangler is authenticated",
     action: async () => {
-      const result = await run("pnpm", ["dlx", "wrangler", "whoami"]);
+      const result = await run("pnpm", ["dlx", "wrangler", "whoami"], {
+        timeoutMs: 15_000,
+      });
       const output = `${result.stdout}${result.stderr}`.trim();
       const unauthenticated = /not authenticated|wrangler login/i.test(output);
 
@@ -595,7 +606,7 @@ async function readTextFileIfPossible(file) {
   }
 }
 
-async function run(command, args) {
+async function run(command, args, options = {}) {
   return await new Promise((resolvePromise, reject) => {
     const child = spawn(command, args, {
       cwd: repositoryRoot,
@@ -605,6 +616,14 @@ async function run(command, args) {
     });
     let stdout = "";
     let stderr = "";
+    let timedOut = false;
+    const timeout =
+      typeof options.timeoutMs === "number"
+        ? setTimeout(() => {
+            timedOut = true;
+            child.kill("SIGTERM");
+          }, options.timeoutMs)
+        : null;
 
     child.stdout.on("data", (chunk) => {
       stdout += chunk.toString();
@@ -614,7 +633,17 @@ async function run(command, args) {
     });
     child.on("error", reject);
     child.on("close", (code) => {
-      resolvePromise({ code, stdout, stderr });
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+
+      resolvePromise({
+        code: timedOut ? 124 : code,
+        stdout,
+        stderr: timedOut
+          ? `${stderr.trimEnd()}\nCommand timed out after ${options.timeoutMs}ms.`.trimStart()
+          : stderr,
+      });
     });
   });
 }

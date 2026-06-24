@@ -53,7 +53,9 @@ pnpm smoke
 
 Use `pnpm release:audit` when you need a quick status summary of release gates.
 It checks local release scaffolding and reports external blockers such as
-missing git remotes or unauthenticated Wrangler sessions.
+missing git remotes or unauthenticated Wrangler sessions. External checks are
+bounded so transient registry or Cloudflare connectivity does not hide local
+gate results.
 
 The CI workflow installs Playwright Chromium before running the release
 verification because the auth smoke includes a real browser flow.

@@ -52,7 +52,8 @@ pnpm smoke
 ```
 
 需要快速查看 release gate 状态时，可以运行 `pnpm release:audit`。它会检查本地
-release 脚手架，并报告缺少 git remote、Wrangler 未登录等外部阻塞项。
+release 脚手架，并报告缺少 git remote、Wrangler 未登录等外部阻塞项。外部检查会
+限制耗时，避免 registry 或 Cloudflare 临时网络问题遮住本地 gate 结果。
 
 CI workflow 会先安装 Playwright Chromium，因为 release verification 里的 auth smoke 包含真实浏览器流程。
 
