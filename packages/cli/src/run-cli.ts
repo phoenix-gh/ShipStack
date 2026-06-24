@@ -149,6 +149,22 @@ async function doctor() {
         "database AGENTS.md guidance",
         await fileIncludes(resolve(cwd, "AGENTS.md"), "## Database Module"),
       ],
+      [
+        "database docs",
+        existsSync(resolve(cwd, "docs/database.md")) &&
+          existsSync(resolve(cwd, "docs/zh-CN/database.md")),
+      ],
+      [
+        "database README docs links",
+        (await fileIncludes(
+          resolve(cwd, "README.md"),
+          "[Database](./docs/database.md)",
+        )) &&
+          (await fileIncludes(
+            resolve(cwd, "README.md"),
+            "[数据库](./docs/zh-CN/database.md)",
+          )),
+      ],
     );
   }
 
@@ -192,6 +208,22 @@ async function doctor() {
       [
         "auth AGENTS.md guidance",
         await fileIncludes(resolve(cwd, "AGENTS.md"), "## Auth Module"),
+      ],
+      [
+        "auth docs",
+        existsSync(resolve(cwd, "docs/auth.md")) &&
+          existsSync(resolve(cwd, "docs/zh-CN/auth.md")),
+      ],
+      [
+        "auth README docs links",
+        (await fileIncludes(
+          resolve(cwd, "README.md"),
+          "[Authentication](./docs/auth.md)",
+        )) &&
+          (await fileIncludes(
+            resolve(cwd, "README.md"),
+            "[认证](./docs/zh-CN/auth.md)",
+          )),
       ],
     );
   }

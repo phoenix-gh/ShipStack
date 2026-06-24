@@ -239,6 +239,17 @@ const checks = [
     },
   },
   {
+    label: "Doctor checks module docs",
+    action: async () => {
+      return await assertFileContainsMarkers("packages/cli/src/run-cli.ts", [
+        "database docs",
+        "database README docs links",
+        "auth docs",
+        "auth README docs links",
+      ]);
+    },
+  },
+  {
     label: "Generated app CI workflow shape is valid",
     action: async () => {
       return await assertFileContainsMarkers(

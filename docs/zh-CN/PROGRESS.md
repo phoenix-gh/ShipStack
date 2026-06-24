@@ -63,6 +63,7 @@
 | 生成应用包含中文文档                  | 通过 | base smoke 会检查生成应用中文 env 和 deployment docs。            |
 | 模块包含中文文档                      | 通过 | database/auth smoke 会检查生成应用中的模块中文文档。              |
 | 生成 README 会链接模块文档            | 通过 | CLI、database/auth smoke 和 pack check 会验证 README 模块链接。   |
+| Doctor 可发现缺失的模块文档           | 通过 | CLI 单元测试和 pack check 会在模块文档已安装时运行 doctor。       |
 | 部署文档足够手动执行                  | 通过 | 已有生成应用和维护者部署检查清单。                                |
 | 生成应用有匹配布局的 `AGENTS.md`      | 通过 | base template 和已安装模块会提供 `AGENTS.md` 指引。               |
 
@@ -83,6 +84,7 @@
 | 生成应用中文文档             | 通过     | `pnpm smoke`, `pnpm pack:check`     |
 | 模块中文文档                 | 通过     | `pnpm smoke`, `pnpm pack:check`     |
 | README 模块文档链接          | 通过     | `pnpm smoke`, `pnpm pack:check`     |
+| Doctor 模块文档检查          | 通过     | `pnpm test`, `pnpm pack:check`      |
 | Cloudflare 临时部署          | 外部阻塞 | `pnpm smoke:temporary-deploy`       |
 | CLI unit tests               | 通过     | `pnpm test`                         |
 | Runtime API tests            | 通过     | `pnpm smoke`                        |

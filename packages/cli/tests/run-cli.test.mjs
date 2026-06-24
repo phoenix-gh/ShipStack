@@ -56,6 +56,18 @@ test("database and auth installers patch generated apps idempotently", async () 
         count(databaseReadme, "[数据库](./docs/zh-CN/database.md)"),
         1,
       );
+      await writeFile(
+        "README.md",
+        databaseReadme.replace(
+          "[Database](./docs/database.md)",
+          "[Missing Database](./docs/database.md)",
+        ),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("README.md", databaseReadme);
 
       const databaseAgents = await readFile("AGENTS.md", "utf8");
       assert.equal(count(databaseAgents, "## Database Module"), 1);
@@ -94,6 +106,18 @@ test("database and auth installers patch generated apps idempotently", async () 
       assert.equal(count(authReadme, "[Database](./docs/database.md)"), 1);
       assert.equal(count(authReadme, "[Authentication](./docs/auth.md)"), 1);
       assert.equal(count(authReadme, "[认证](./docs/zh-CN/auth.md)"), 1);
+      await writeFile(
+        "README.md",
+        authReadme.replace(
+          "[Authentication](./docs/auth.md)",
+          "[Missing Auth](./docs/auth.md)",
+        ),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("README.md", authReadme);
       await writeFile(
         "AGENTS.md",
         authAgents.replace("## Auth Module", "## Missing Auth Module"),

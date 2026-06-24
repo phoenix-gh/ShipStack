@@ -64,6 +64,7 @@ Latest commit:
 | Generated app Chinese docs exist                       | Passing | Base smoke checks generated app Chinese env and deployment docs.       |
 | Module Chinese docs exist                              | Passing | Database/auth smoke checks generated module Chinese docs.              |
 | Module docs are linked from generated README           | Passing | CLI, database/auth smoke, and pack check verify README module links.   |
+| Doctor detects missing module docs                     | Passing | CLI unit tests and pack check run doctor with module docs installed.   |
 | Deployment docs are complete enough to follow manually | Passing | Generated and maintainer deployment checklists exist.                  |
 | Generated `AGENTS.md` exists and matches layout        | Passing | Base template and installed modules include `AGENTS.md` guidance.      |
 
@@ -84,6 +85,7 @@ Latest commit:
 | Generated Chinese docs       | Passing          | `pnpm smoke`, `pnpm pack:check`     |
 | Module Chinese docs          | Passing          | `pnpm smoke`, `pnpm pack:check`     |
 | Module docs README links     | Passing          | `pnpm smoke`, `pnpm pack:check`     |
+| Doctor module docs checks    | Passing          | `pnpm test`, `pnpm pack:check`      |
 | Temporary Cloudflare deploy  | External blocked | `pnpm smoke:temporary-deploy`       |
 | CLI unit tests               | Passing          | `pnpm test`                         |
 | Runtime API tests            | Passing          | `pnpm smoke`                        |
