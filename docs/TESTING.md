@@ -9,11 +9,16 @@ ShipStack tests should prove that generated apps work, not only that repository 
 Run these before committing ordinary code changes:
 
 ```sh
-pnpm typecheck
-pnpm build
+pnpm verify:local
 ```
 
-`pnpm typecheck` validates packages in the monorepo. `pnpm build` produces the CLI packages that smoke tests execute.
+`pnpm verify:local` runs formatting, typecheck, unit tests, build,
+`pnpm pack:check`, and `pnpm release:audit:local`. It is the fast local gate
+for changes that do not need full generated-app smoke coverage. It allows a
+dirty worktree so it can run before you commit.
+
+`pnpm typecheck` validates packages in the monorepo. `pnpm build` produces the
+CLI packages that smoke tests execute.
 
 ### Generated App Smoke Tests
 
@@ -50,6 +55,10 @@ pnpm build
 pnpm pack:check
 pnpm smoke
 ```
+
+Use `pnpm verify:local` for the same local repository and package checks
+without generated-app smoke tests. It skips external release gates and the clean
+worktree check.
 
 Use `pnpm release:audit` when you need a quick status summary of release gates.
 It checks local release scaffolding and reports external blockers such as

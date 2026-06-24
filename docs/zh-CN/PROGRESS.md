@@ -66,6 +66,7 @@
 | Doctor 可发现缺失的模块文档           | 通过 | CLI 单元测试和 pack check 会在模块文档已安装时运行 doctor。       |
 | Doctor 会检查基础文档和 secret guards | 通过 | CLI 单元测试、CLI smoke 和 pack check 覆盖 base doctor checks。   |
 | 支持只检查本地 release audit          | 通过 | `pnpm release:audit:local` 会跳过外部 gates。                     |
+| 支持快速本地验证命令                  | 通过 | `pnpm verify:local` 会运行本地 repo/package gates，不跑 smoke。   |
 | 部署文档足够手动执行                  | 通过 | 已有生成应用和维护者部署检查清单。                                |
 | 生成应用有匹配布局的 `AGENTS.md`      | 通过 | base template 和已安装模块会提供 `AGENTS.md` 指引。               |
 
@@ -89,6 +90,7 @@
 | Doctor 模块文档检查          | 通过     | `pnpm test`, `pnpm pack:check`      |
 | Doctor base docs 检查        | 通过     | `pnpm test`, `pnpm pack:check`      |
 | 本地-only release audit      | 通过     | `pnpm release:audit:local`          |
+| 快速本地验证                 | 通过     | `pnpm verify:local`                 |
 | Cloudflare 临时部署          | 外部阻塞 | `pnpm smoke:temporary-deploy`       |
 | CLI unit tests               | 通过     | `pnpm test`                         |
 | Runtime API tests            | 通过     | `pnpm smoke`                        |

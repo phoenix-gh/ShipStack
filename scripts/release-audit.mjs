@@ -4,6 +4,7 @@ import { spawn } from "node:child_process";
 
 const repositoryRoot = resolve(import.meta.dirname, "..");
 const localOnly = process.argv.includes("--local");
+const allowDirty = process.argv.includes("--allow-dirty");
 const packageJsonFiles = [
   "package.json",
   "packages/core/package.json",
@@ -65,6 +66,7 @@ const allowedCompetitorReferenceFiles = new Set([
 const checks = [
   {
     label: "Worktree is clean",
+    requiresCleanWorktree: true,
     action: async () => {
       const result = await run("git", ["status", "--short"]);
       return {
@@ -266,6 +268,7 @@ const checks = [
     action: async () => {
       return await assertFileContainsMarkers("scripts/release-audit.mjs", [
         "--local",
+        "--allow-dirty",
         "timeoutMs: 15_000",
         "Command timed out after",
       ]);
@@ -433,7 +436,11 @@ const checks = [
 let failed = 0;
 let externalBlocked = 0;
 
-for (const check of checks.filter((check) => !localOnly || !check.external)) {
+for (const check of checks.filter(
+  (check) =>
+    (!localOnly || !check.external) &&
+    (!allowDirty || !check.requiresCleanWorktree),
+)) {
   try {
     const result = await check.action();
     const prefix = result.ok ? "ok" : result.external ? "external" : "fail";

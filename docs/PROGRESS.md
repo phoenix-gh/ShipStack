@@ -67,6 +67,7 @@ Latest commit:
 | Doctor detects missing module docs                     | Passing | CLI unit tests and pack check run doctor with module docs installed.   |
 | Doctor checks base docs and secret guards              | Passing | CLI unit tests, CLI smoke, and pack check cover base doctor checks.    |
 | Local-only release audit exists                        | Passing | `pnpm release:audit:local` skips external gates for local checks.      |
+| Fast local verification command exists                 | Passing | `pnpm verify:local` runs local repo/package gates without smoke.       |
 | Deployment docs are complete enough to follow manually | Passing | Generated and maintainer deployment checklists exist.                  |
 | Generated `AGENTS.md` exists and matches layout        | Passing | Base template and installed modules include `AGENTS.md` guidance.      |
 
@@ -90,6 +91,7 @@ Latest commit:
 | Doctor module docs checks    | Passing          | `pnpm test`, `pnpm pack:check`      |
 | Doctor base docs checks      | Passing          | `pnpm test`, `pnpm pack:check`      |
 | Local-only release audit     | Passing          | `pnpm release:audit:local`          |
+| Fast local verification      | Passing          | `pnpm verify:local`                 |
 | Temporary Cloudflare deploy  | External blocked | `pnpm smoke:temporary-deploy`       |
 | CLI unit tests               | Passing          | `pnpm test`                         |
 | Runtime API tests            | Passing          | `pnpm smoke`                        |
