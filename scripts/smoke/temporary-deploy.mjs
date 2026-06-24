@@ -4,7 +4,6 @@ import {
   runAndCapture,
   runSmoke,
   verifyGeneratedApp,
-  verifyHttpCheck,
 } from "./lib.mjs";
 
 await runSmoke("temporary-deploy", async (workspace) => {
@@ -16,33 +15,7 @@ await runSmoke("temporary-deploy", async (workspace) => {
   const result = await runTemporaryDeploy(appDir);
   const workerUrl = findWorkerUrl(result.output);
 
-  await retry(
-    async () => {
-      await verifyHttpCheck(`${workerUrl}/health`, {
-        status: 200,
-        includes: "System health is ok.",
-      });
-      await verifyHttpCheck(`${workerUrl}/api/health`, {
-        status: 200,
-        json: (body) => {
-          if (body.data?.status !== "ok" || body.error !== null) {
-            throw new Error("/api/health returned an unexpected envelope");
-          }
-        },
-      });
-      await verifyHttpCheck(`${workerUrl}/api/v1/me`, {
-        status: 200,
-        json: (body) => {
-          if (body.data?.authenticated !== false || body.error !== null) {
-            throw new Error(
-              "/api/v1/me returned an unexpected anonymous envelope",
-            );
-          }
-        },
-      });
-    },
-    { label: "temporary worker route checks" },
-  );
+  await run("pnpm", ["verify:deployed", workerUrl], { cwd: appDir });
 });
 
 async function runTemporaryDeploy(appDir) {

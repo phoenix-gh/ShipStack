@@ -26,7 +26,7 @@ pnpm smoke
 Smoke suite 会创建临时的真实应用，安装依赖，并运行应用级检查：
 
 - `scripts/smoke/cli.mjs` 创建应用，并检查 CLI 错误、`doctor`、模块依赖顺序和重复安装模块。
-- `scripts/smoke/base.mjs` 创建基础 TanStack Start 应用，运行 `pnpm install`、`pnpm test`、`pnpm lint`、`pnpm typecheck`，启动 dev server，检查 `/`、`/health`、`/api/health`、`/api/v1/me`、trusted API CORS、默认收紧的 CORS 行为、`pnpm build` 和 `pnpm deploy:dry-run`。
+- `scripts/smoke/base.mjs` 创建基础 TanStack Start 应用，运行 `pnpm install`、`pnpm test`、`pnpm lint`、`pnpm typecheck`，启动 dev server，检查 `/`、`/health`、`/api/health`、`/api/v1/me`、trusted API CORS、默认收紧的 CORS 行为，用 dev server URL 运行生成应用里的 `pnpm verify:deployed`，然后运行 `pnpm build` 和 `pnpm deploy:dry-run`。
 - `scripts/smoke/database.mjs` 创建应用，重复安装两次 D1 database 模块，验证 lint，生成 migration，用 Wrangler 本地应用 migration，然后运行同样的应用检查。
 - `scripts/smoke/auth.mjs` 创建应用，安装 database 与 Better Auth 模块，重复安装两次 auth 模块，验证 lint，生成 auth migrations，用 Wrangler 本地应用 migrations，启动 dev server，验证匿名 dashboard redirect，登录后检查认证态 `/api/v1/me`，运行浏览器注册、退出、登录和 dashboard 检查，然后运行同样的应用检查。
 
@@ -53,7 +53,7 @@ pnpm smoke
 
 CI workflow 会先安装 Playwright Chromium，因为 release verification 里的 auth smoke 包含真实浏览器流程。
 
-`pnpm test` 会运行 package-level unit tests。`pnpm format:check` 会验证仓库格式。`pnpm pack:check` 会验证 npm package tarballs 包含 CLI 需要的编译入口和生成应用 templates。
+`pnpm test` 会运行 package-level unit tests。`pnpm format:check` 会验证仓库格式。`pnpm pack:check` 会验证 npm package tarballs 包含 CLI 需要的编译入口和生成应用 templates，把打包后的 tarballs 安装到临时 workspace，用打包后的 `create-shipstack` CLI 创建应用，用打包后的 `shipstack` CLI 安装 database 和 auth modules，并运行 `shipstack doctor`。
 
 ### 可选 Cloudflare 临时部署 Smoke
 
@@ -66,7 +66,8 @@ pnpm smoke:temporary-deploy
 
 这个命令会创建 fresh 生成应用、安装依赖、运行生成应用检查、用
 `wrangler deploy --temporary` 部署、在日志里隐藏 temporary account claim
-URL，并检查已部署的 `/health`、`/api/health` 和 `/api/v1/me` routes。
+URL，并通过生成应用里的 `pnpm verify:deployed` 检查已部署的 `/health`、
+`/api/health` 和 `/api/v1/me` routes。
 
 这个检查刻意不放进 `pnpm verify:release`，因为它依赖 Cloudflare 外部网络和
 temporary account 服务。temporary deploy 成功是有价值的部署证据，但不能替代维护者真实

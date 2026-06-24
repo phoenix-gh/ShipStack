@@ -9,7 +9,9 @@ Status: local `v0.1.0` MVP release candidate. External Cloudflare deploy and rem
 External verification status in this workspace:
 
 - `pnpm dlx wrangler whoami` reports that Wrangler is not authenticated.
-- `pnpm smoke:temporary-deploy` passes with Cloudflare's temporary account flow.
+- `pnpm smoke:temporary-deploy` has passed before, but the latest attempt on
+  2026-06-24 failed before upload with Wrangler `fetch failed` connectivity
+  errors.
 - `git remote -v` has no configured remote, so remote GitHub Actions cannot be checked from this workspace.
 
 Last verified:
@@ -63,35 +65,35 @@ Latest commit:
 
 ## Test Progress
 
-| Check                        | Status  | Command                             |
-| ---------------------------- | ------- | ----------------------------------- |
-| Repository typecheck         | Passing | `pnpm typecheck`                    |
-| Repository build             | Passing | `pnpm build`                        |
-| CLI behavior smoke           | Passing | `pnpm smoke`                        |
-| Generated base app smoke     | Passing | `pnpm smoke`                        |
-| Generated database app smoke | Passing | `pnpm smoke`                        |
-| Generated auth app smoke     | Passing | `pnpm smoke`                        |
-| Generated app lint           | Passing | `pnpm smoke`                        |
-| Wrangler deploy dry-run      | Passing | `pnpm smoke`                        |
-| Deployed route verifier      | Passing | `pnpm smoke`                        |
-| Temporary Cloudflare deploy  | Passing | `pnpm smoke:temporary-deploy`       |
-| CLI unit tests               | Passing | `pnpm test`                         |
-| Runtime API tests            | Passing | `pnpm smoke`                        |
-| API CORS smoke               | Passing | `pnpm smoke`                        |
-| Auth browser e2e tests       | Passing | `pnpm smoke`                        |
-| D1 migration smoke           | Passing | `pnpm smoke`                        |
-| Auth migration smoke         | Passing | `pnpm smoke`                        |
-| Module AGENTS guidance       | Passing | `pnpm test`, `pnpm smoke`           |
-| Open-source license          | Added   | `LICENSE`                           |
-| Contribution guide           | Added   | `CONTRIBUTING.md`                   |
-| Security policy              | Added   | `SECURITY.md`                       |
-| Issue and PR templates       | Added   | `.github` templates                 |
-| Release checklist            | Added   | `docs/RELEASE.md`                   |
-| npm package contents         | Passing | `pnpm pack:check`                   |
-| CI workflow                  | Added   | GitHub Actions                      |
-| Release verification command | Passing | `pnpm verify:release`               |
-| v0.1.0 release notes         | Added   | `docs/releases`                     |
-| npm publish workflow         | Added   | `.github/workflows/release-npm.yml` |
+| Check                        | Status           | Command                             |
+| ---------------------------- | ---------------- | ----------------------------------- |
+| Repository typecheck         | Passing          | `pnpm typecheck`                    |
+| Repository build             | Passing          | `pnpm build`                        |
+| CLI behavior smoke           | Passing          | `pnpm smoke`                        |
+| Generated base app smoke     | Passing          | `pnpm smoke`                        |
+| Generated database app smoke | Passing          | `pnpm smoke`                        |
+| Generated auth app smoke     | Passing          | `pnpm smoke`                        |
+| Generated app lint           | Passing          | `pnpm smoke`                        |
+| Wrangler deploy dry-run      | Passing          | `pnpm smoke`                        |
+| Deployed route verifier      | Passing          | `pnpm smoke`                        |
+| Temporary Cloudflare deploy  | External blocked | `pnpm smoke:temporary-deploy`       |
+| CLI unit tests               | Passing          | `pnpm test`                         |
+| Runtime API tests            | Passing          | `pnpm smoke`                        |
+| API CORS smoke               | Passing          | `pnpm smoke`                        |
+| Auth browser e2e tests       | Passing          | `pnpm smoke`                        |
+| D1 migration smoke           | Passing          | `pnpm smoke`                        |
+| Auth migration smoke         | Passing          | `pnpm smoke`                        |
+| Module AGENTS guidance       | Passing          | `pnpm test`, `pnpm smoke`           |
+| Open-source license          | Added            | `LICENSE`                           |
+| Contribution guide           | Added            | `CONTRIBUTING.md`                   |
+| Security policy              | Added            | `SECURITY.md`                       |
+| Issue and PR templates       | Added            | `.github` templates                 |
+| Release checklist            | Added            | `docs/RELEASE.md`                   |
+| npm package contents         | Passing          | `pnpm pack:check`                   |
+| CI workflow                  | Added            | GitHub Actions                      |
+| Release verification command | Passing          | `pnpm verify:release`               |
+| v0.1.0 release notes         | Added            | `docs/releases`                     |
+| npm publish workflow         | Added            | `.github/workflows/release-npm.yml` |
 
 ## Next Priority
 

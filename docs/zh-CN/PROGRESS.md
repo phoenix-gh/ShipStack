@@ -9,7 +9,8 @@
 当前 workspace 的外部验证状态：
 
 - `pnpm dlx wrangler whoami` 显示 Wrangler 尚未登录。
-- `pnpm smoke:temporary-deploy` 已通过 Cloudflare temporary account flow。
+- `pnpm smoke:temporary-deploy` 之前通过过 Cloudflare temporary account flow，
+  但 2026-06-24 最新一次尝试在上传前因 Wrangler `fetch failed` 网络错误失败。
 - `git remote -v` 没有配置 remote，因此当前 workspace 无法检查远端 GitHub Actions。
 
 最近已验证：
@@ -63,35 +64,35 @@
 
 ## 测试进度
 
-| 检查                         | 状态   | 命令                                |
-| ---------------------------- | ------ | ----------------------------------- |
-| Repository typecheck         | 通过   | `pnpm typecheck`                    |
-| Repository build             | 通过   | `pnpm build`                        |
-| CLI behavior smoke           | 通过   | `pnpm smoke`                        |
-| Generated base app smoke     | 通过   | `pnpm smoke`                        |
-| Generated database app smoke | 通过   | `pnpm smoke`                        |
-| Generated auth app smoke     | 通过   | `pnpm smoke`                        |
-| Generated app lint           | 通过   | `pnpm smoke`                        |
-| Wrangler deploy dry-run      | 通过   | `pnpm smoke`                        |
-| Deployed route verifier      | 通过   | `pnpm smoke`                        |
-| Cloudflare 临时部署          | 通过   | `pnpm smoke:temporary-deploy`       |
-| CLI unit tests               | 通过   | `pnpm test`                         |
-| Runtime API tests            | 通过   | `pnpm smoke`                        |
-| API CORS smoke               | 通过   | `pnpm smoke`                        |
-| Auth browser e2e tests       | 通过   | `pnpm smoke`                        |
-| D1 migration smoke           | 通过   | `pnpm smoke`                        |
-| Auth migration smoke         | 通过   | `pnpm smoke`                        |
-| 模块 AGENTS 指引             | 通过   | `pnpm test`, `pnpm smoke`           |
-| 开源许可证                   | 已添加 | `LICENSE`                           |
-| 贡献指南                     | 已添加 | `CONTRIBUTING.md`                   |
-| 安全策略                     | 已添加 | `SECURITY.md`                       |
-| Issue 和 PR templates        | 已添加 | `.github` templates                 |
-| Release checklist            | 已添加 | `docs/RELEASE.md`                   |
-| npm package 内容             | 通过   | `pnpm pack:check`                   |
-| CI workflow                  | 已添加 | GitHub Actions                      |
-| Release verification command | 通过   | `pnpm verify:release`               |
-| v0.1.0 release notes         | 已添加 | `docs/releases`                     |
-| npm publish workflow         | 已添加 | `.github/workflows/release-npm.yml` |
+| 检查                         | 状态     | 命令                                |
+| ---------------------------- | -------- | ----------------------------------- |
+| Repository typecheck         | 通过     | `pnpm typecheck`                    |
+| Repository build             | 通过     | `pnpm build`                        |
+| CLI behavior smoke           | 通过     | `pnpm smoke`                        |
+| Generated base app smoke     | 通过     | `pnpm smoke`                        |
+| Generated database app smoke | 通过     | `pnpm smoke`                        |
+| Generated auth app smoke     | 通过     | `pnpm smoke`                        |
+| Generated app lint           | 通过     | `pnpm smoke`                        |
+| Wrangler deploy dry-run      | 通过     | `pnpm smoke`                        |
+| Deployed route verifier      | 通过     | `pnpm smoke`                        |
+| Cloudflare 临时部署          | 外部阻塞 | `pnpm smoke:temporary-deploy`       |
+| CLI unit tests               | 通过     | `pnpm test`                         |
+| Runtime API tests            | 通过     | `pnpm smoke`                        |
+| API CORS smoke               | 通过     | `pnpm smoke`                        |
+| Auth browser e2e tests       | 通过     | `pnpm smoke`                        |
+| D1 migration smoke           | 通过     | `pnpm smoke`                        |
+| Auth migration smoke         | 通过     | `pnpm smoke`                        |
+| 模块 AGENTS 指引             | 通过     | `pnpm test`, `pnpm smoke`           |
+| 开源许可证                   | 已添加   | `LICENSE`                           |
+| 贡献指南                     | 已添加   | `CONTRIBUTING.md`                   |
+| 安全策略                     | 已添加   | `SECURITY.md`                       |
+| Issue 和 PR templates        | 已添加   | `.github` templates                 |
+| Release checklist            | 已添加   | `docs/RELEASE.md`                   |
+| npm package 内容             | 通过     | `pnpm pack:check`                   |
+| CI workflow                  | 已添加   | GitHub Actions                      |
+| Release verification command | 通过     | `pnpm verify:release`               |
+| v0.1.0 release notes         | 已添加   | `docs/releases`                     |
+| npm publish workflow         | 已添加   | `.github/workflows/release-npm.yml` |
 
 ## 下一优先级
 
