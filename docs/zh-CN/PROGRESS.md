@@ -62,6 +62,7 @@
 | 生成应用 env 文件可安全自定义         | 通过 | base smoke 和 release audit 会检查 env examples 与 `.gitignore`。 |
 | 生成应用包含中文文档                  | 通过 | base smoke 会检查生成应用中文 env 和 deployment docs。            |
 | 模块包含中文文档                      | 通过 | database/auth smoke 会检查生成应用中的模块中文文档。              |
+| 生成 README 会链接模块文档            | 通过 | CLI、database/auth smoke 和 pack check 会验证 README 模块链接。   |
 | 部署文档足够手动执行                  | 通过 | 已有生成应用和维护者部署检查清单。                                |
 | 生成应用有匹配布局的 `AGENTS.md`      | 通过 | base template 和已安装模块会提供 `AGENTS.md` 指引。               |
 
@@ -81,6 +82,7 @@
 | 生成应用 env 安全            | 通过     | `pnpm smoke`, `pnpm release:audit`  |
 | 生成应用中文文档             | 通过     | `pnpm smoke`, `pnpm pack:check`     |
 | 模块中文文档                 | 通过     | `pnpm smoke`, `pnpm pack:check`     |
+| README 模块文档链接          | 通过     | `pnpm smoke`, `pnpm pack:check`     |
 | Cloudflare 临时部署          | 外部阻塞 | `pnpm smoke:temporary-deploy`       |
 | CLI unit tests               | 通过     | `pnpm test`                         |
 | Runtime API tests            | 通过     | `pnpm smoke`                        |

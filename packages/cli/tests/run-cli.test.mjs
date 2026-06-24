@@ -50,6 +50,13 @@ test("database and auth installers patch generated apps idempotently", async () 
       const envExample = await readFile(".env.example", "utf8");
       assert.equal(count(envExample, "CLOUDFLARE_ACCOUNT_ID"), 1);
 
+      const databaseReadme = await readFile("README.md", "utf8");
+      assert.equal(count(databaseReadme, "[Database](./docs/database.md)"), 1);
+      assert.equal(
+        count(databaseReadme, "[数据库](./docs/zh-CN/database.md)"),
+        1,
+      );
+
       const databaseAgents = await readFile("AGENTS.md", "utf8");
       assert.equal(count(databaseAgents, "## Database Module"), 1);
       await writeFile(
@@ -82,6 +89,11 @@ test("database and auth installers patch generated apps idempotently", async () 
       assert.equal(count(authAgents, "## Database Module"), 1);
       assert.equal(count(authAgents, "## Auth Module"), 1);
       assert.match(authAgents, /src\/features\/auth\/route-guards\.ts/);
+
+      const authReadme = await readFile("README.md", "utf8");
+      assert.equal(count(authReadme, "[Database](./docs/database.md)"), 1);
+      assert.equal(count(authReadme, "[Authentication](./docs/auth.md)"), 1);
+      assert.equal(count(authReadme, "[认证](./docs/zh-CN/auth.md)"), 1);
       await writeFile(
         "AGENTS.md",
         authAgents.replace("## Auth Module", "## Missing Auth Module"),

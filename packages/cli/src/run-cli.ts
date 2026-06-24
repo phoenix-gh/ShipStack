@@ -310,6 +310,14 @@ CLOUDFLARE_D1_TOKEN=""
 `,
     "## Database Module",
   );
+  await appendIfMissing(
+    resolve(cwd, "README.md"),
+    `
+- [Database](./docs/database.md)
+- [数据库](./docs/zh-CN/database.md)
+`,
+    "[Database](./docs/database.md)",
+  );
 
   console.log("Installed database-d1 module.");
   console.log("");
@@ -365,6 +373,14 @@ GOOGLE_CLIENT_SECRET=""
 - Keep OAuth providers optional unless the app explicitly requires them.
 `,
     "## Auth Module",
+  );
+  await appendIfMissing(
+    resolve(cwd, "README.md"),
+    `
+- [Authentication](./docs/auth.md)
+- [认证](./docs/zh-CN/auth.md)
+`,
+    "[Authentication](./docs/auth.md)",
   );
 
   console.log("Installed auth-better-auth module.");

@@ -52,6 +52,10 @@ async function assertDatabaseModule(appDir) {
   const agents = await readFile(resolve(appDir, "AGENTS.md"), "utf8");
   assertCount(agents, "## Database Module", 1);
 
+  const readme = await readFile(resolve(appDir, "README.md"), "utf8");
+  assertCount(readme, "[Database](./docs/database.md)", 1);
+  assertCount(readme, "[数据库](./docs/zh-CN/database.md)", 1);
+
   const wrangler = JSON.parse(
     await readFile(resolve(appDir, "wrangler.jsonc"), "utf8"),
   );
@@ -91,6 +95,11 @@ async function assertAuthModule(appDir) {
   if (!agents.includes("src/features/auth/route-guards.ts")) {
     throw new Error("Expected AGENTS.md to mention auth route guards");
   }
+
+  const readme = await readFile(resolve(appDir, "README.md"), "utf8");
+  assertCount(readme, "[Database](./docs/database.md)", 1);
+  assertCount(readme, "[Authentication](./docs/auth.md)", 1);
+  assertCount(readme, "[认证](./docs/zh-CN/auth.md)", 1);
 }
 
 async function expectFailure([command, args], cwd, expectedOutput) {

@@ -27,10 +27,21 @@ await runSmoke("database", async (workspace) => {
 });
 
 async function verifyDatabaseDocs(appDir) {
+  const readme = await readFile(resolve(appDir, "README.md"), "utf8");
   const chineseDatabaseDoc = await readFile(
     resolve(appDir, "docs/zh-CN/database.md"),
     "utf8",
   );
+
+  if (!readme.includes("[Database](./docs/database.md)")) {
+    throw new Error("Generated README is missing database module docs link");
+  }
+
+  if (!readme.includes("[数据库](./docs/zh-CN/database.md)")) {
+    throw new Error(
+      "Generated README is missing Chinese database module docs link",
+    );
+  }
 
   if (!chineseDatabaseDoc.includes("pnpm db:cf:migrate:remote")) {
     throw new Error(

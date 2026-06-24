@@ -1,4 +1,4 @@
-import { access, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { access, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { spawn } from "node:child_process";
@@ -138,6 +138,12 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
 
     await assertExists(resolve(appDir, "docs/zh-CN/database.md"));
     await assertExists(resolve(appDir, "docs/zh-CN/auth.md"));
+    await assertFileContains(resolve(appDir, "README.md"), [
+      "[Database](./docs/database.md)",
+      "[Authentication](./docs/auth.md)",
+      "[数据库](./docs/zh-CN/database.md)",
+      "[认证](./docs/zh-CN/auth.md)",
+    ]);
     await assertExists(resolve(appDir, "src/db/schema.ts"));
     await assertExists(resolve(appDir, "src/features/auth/route-guards.ts"));
     await assertExists(resolve(appDir, "src/routes/sign-in.tsx"));
@@ -154,6 +160,17 @@ async function assertExists(path) {
     await access(path);
   } catch {
     throw new Error(`Expected path to exist: ${path}`);
+  }
+}
+
+async function assertFileContains(path, markers) {
+  const content = await readFile(path, "utf8");
+  const missingMarkers = markers.filter((marker) => !content.includes(marker));
+
+  if (missingMarkers.length > 0) {
+    throw new Error(
+      `Expected ${path} to include markers: ${missingMarkers.join(", ")}`,
+    );
   }
 }
 

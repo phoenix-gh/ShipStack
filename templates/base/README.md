@@ -42,7 +42,7 @@ pnpm verify:deployed https://<your-worker-url>
 
 `/api/v1/me` currently returns an anonymous placeholder until the auth module is installed.
 
-## Docs
+## Generated Docs
 
 - [Deployment](./docs/deployment.md)
 - [Environment variables](./docs/env.md)

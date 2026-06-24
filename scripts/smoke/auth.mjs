@@ -30,10 +30,21 @@ await runSmoke("auth", async (workspace) => {
 });
 
 async function verifyAuthDocs(appDir) {
+  const readme = await readFile(resolve(appDir, "README.md"), "utf8");
   const chineseAuthDoc = await readFile(
     resolve(appDir, "docs/zh-CN/auth.md"),
     "utf8",
   );
+
+  if (!readme.includes("[Authentication](./docs/auth.md)")) {
+    throw new Error("Generated README is missing auth module docs link");
+  }
+
+  if (!readme.includes("[认证](./docs/zh-CN/auth.md)")) {
+    throw new Error(
+      "Generated README is missing Chinese auth module docs link",
+    );
+  }
 
   if (!chineseAuthDoc.includes("requireRouteSession")) {
     throw new Error(

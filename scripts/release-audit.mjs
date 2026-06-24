@@ -228,6 +228,17 @@ const checks = [
     },
   },
   {
+    label: "Generated module docs are linked from README",
+    action: async () => {
+      return await assertFileContainsMarkers("packages/cli/src/run-cli.ts", [
+        "[Database](./docs/database.md)",
+        "[Authentication](./docs/auth.md)",
+        "[数据库](./docs/zh-CN/database.md)",
+        "[认证](./docs/zh-CN/auth.md)",
+      ]);
+    },
+  },
+  {
     label: "Generated app CI workflow shape is valid",
     action: async () => {
       return await assertFileContainsMarkers(
