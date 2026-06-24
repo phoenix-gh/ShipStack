@@ -55,6 +55,9 @@ pnpm smoke
 release 脚手架，并报告缺少 git remote、Wrangler 未登录等外部阻塞项。外部检查会
 限制耗时，避免 registry 或 Cloudflare 临时网络问题遮住本地 gate 结果。
 
+只想检查本地 gate、并且在外部 release gates 尚未完成时仍得到 0 exit code，可以运行
+`pnpm release:audit:local`。
+
 CI workflow 会先安装 Playwright Chromium，因为 release verification 里的 auth smoke 包含真实浏览器流程。
 
 `pnpm test` 会运行 package-level unit tests。`pnpm format:check` 会验证仓库格式。`pnpm pack:check` 会验证 npm package tarballs 包含 CLI 需要的编译入口和生成应用 templates，把打包后的 tarballs 安装到临时 workspace，用打包后的 `create-shipstack` CLI 创建应用，用打包后的 `shipstack` CLI 安装 database 和 auth modules，验证模块文档链接，并运行 `shipstack doctor`。

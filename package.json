@@ -19,6 +19,7 @@
     "smoke:temporary-deploy": "pnpm build && node scripts/smoke/temporary-deploy.mjs",
     "pack:check": "node scripts/pack-check.mjs",
     "release:audit": "node scripts/release-audit.mjs",
+    "release:audit:local": "node scripts/release-audit.mjs --local",
     "format:check": "prettier --check \"**/*.{md,json,jsonc,yml,yaml,mjs,ts,tsx,css}\"",
     "format": "prettier --write \"**/*.{md,json,jsonc,yml,yaml,mjs,ts,tsx,css}\""
   },

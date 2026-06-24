@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { spawn } from "node:child_process";
 
 const repositoryRoot = resolve(import.meta.dirname, "..");
+const localOnly = process.argv.includes("--local");
 const packageJsonFiles = [
   "package.json",
   "packages/core/package.json",
@@ -264,6 +265,7 @@ const checks = [
     label: "External audit checks are bounded",
     action: async () => {
       return await assertFileContainsMarkers("scripts/release-audit.mjs", [
+        "--local",
         "timeoutMs: 15_000",
         "Command timed out after",
       ]);
@@ -399,6 +401,7 @@ const checks = [
   },
   {
     label: "Git remote is configured",
+    external: true,
     action: async () => {
       const result = await run("git", ["remote", "-v"]);
       return {
@@ -410,6 +413,7 @@ const checks = [
   },
   {
     label: "Wrangler is authenticated",
+    external: true,
     action: async () => {
       const result = await run("pnpm", ["dlx", "wrangler", "whoami"], {
         timeoutMs: 15_000,
@@ -429,7 +433,7 @@ const checks = [
 let failed = 0;
 let externalBlocked = 0;
 
-for (const check of checks) {
+for (const check of checks.filter((check) => !localOnly || !check.external)) {
   try {
     const result = await check.action();
     const prefix = result.ok ? "ok" : result.external ? "external" : "fail";
@@ -461,7 +465,9 @@ if (failed > 0 || externalBlocked > 0) {
   process.exitCode = 1;
 } else {
   console.log("");
-  console.log("Release audit passed.");
+  console.log(
+    localOnly ? "Local release audit passed." : "Release audit passed.",
+  );
 }
 
 async function exists(path) {

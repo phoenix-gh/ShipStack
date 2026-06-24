@@ -57,6 +57,9 @@ missing git remotes or unauthenticated Wrangler sessions. External checks are
 bounded so transient registry or Cloudflare connectivity does not hide local
 gate results.
 
+Use `pnpm release:audit:local` when you only want local gate status and a zero
+exit code while external release gates are still intentionally pending.
+
 The CI workflow installs Playwright Chromium before running the release
 verification because the auth smoke includes a real browser flow.
 
