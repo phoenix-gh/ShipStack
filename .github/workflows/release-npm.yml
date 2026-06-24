@@ -1,0 +1,74 @@
+name: Release npm Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      npm_tag:
+        description: npm dist-tag to publish with
+        required: true
+        default: next
+        type: choice
+        options:
+          - next
+          - latest
+      dry_run:
+        description: Run npm publish with --dry-run
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install browser dependencies
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Verify release candidate
+        run: pnpm verify:release
+
+      - name: Publish packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TAG: ${{ inputs.npm_tag }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+
+          pack_dir="$(mktemp -d)"
+          publish_args=(--access public --provenance --tag "$NPM_TAG")
+          if [ "$DRY_RUN" = "true" ]; then
+            publish_args+=(--dry-run)
+          fi
+
+          for package_dir in packages/core packages/cli packages/create-shipstack; do
+            echo "Packing $package_dir"
+            tarball="$(cd "$package_dir" && pnpm pack --pack-destination "$pack_dir" | tail -n 1)"
+            echo "Publishing $tarball with tag $NPM_TAG"
+            npm publish "$tarball" "${publish_args[@]}"
+          done

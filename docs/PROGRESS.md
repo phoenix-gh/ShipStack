@@ -62,39 +62,41 @@ Latest commit:
 
 ## Test Progress
 
-| Check                        | Status  | Command                       |
-| ---------------------------- | ------- | ----------------------------- |
-| Repository typecheck         | Passing | `pnpm typecheck`              |
-| Repository build             | Passing | `pnpm build`                  |
-| CLI behavior smoke           | Passing | `pnpm smoke`                  |
-| Generated base app smoke     | Passing | `pnpm smoke`                  |
-| Generated database app smoke | Passing | `pnpm smoke`                  |
-| Generated auth app smoke     | Passing | `pnpm smoke`                  |
-| Generated app lint           | Passing | `pnpm smoke`                  |
-| Wrangler deploy dry-run      | Passing | `pnpm smoke`                  |
-| Temporary Cloudflare deploy  | Passing | `pnpm smoke:temporary-deploy` |
-| CLI unit tests               | Passing | `pnpm test`                   |
-| Runtime API tests            | Passing | `pnpm smoke`                  |
-| API CORS smoke               | Passing | `pnpm smoke`                  |
-| Auth browser e2e tests       | Passing | `pnpm smoke`                  |
-| D1 migration smoke           | Passing | `pnpm smoke`                  |
-| Auth migration smoke         | Passing | `pnpm smoke`                  |
-| Module AGENTS guidance       | Passing | `pnpm test`, `pnpm smoke`     |
-| Open-source license          | Added   | `LICENSE`                     |
-| Contribution guide           | Added   | `CONTRIBUTING.md`             |
-| Security policy              | Added   | `SECURITY.md`                 |
-| Issue and PR templates       | Added   | `.github` templates           |
-| Release checklist            | Added   | `docs/RELEASE.md`             |
-| npm package contents         | Passing | `pnpm pack:check`             |
-| CI workflow                  | Added   | GitHub Actions                |
-| Release verification command | Passing | `pnpm verify:release`         |
-| v0.1.0 release notes         | Added   | `docs/releases`               |
+| Check                        | Status  | Command                             |
+| ---------------------------- | ------- | ----------------------------------- |
+| Repository typecheck         | Passing | `pnpm typecheck`                    |
+| Repository build             | Passing | `pnpm build`                        |
+| CLI behavior smoke           | Passing | `pnpm smoke`                        |
+| Generated base app smoke     | Passing | `pnpm smoke`                        |
+| Generated database app smoke | Passing | `pnpm smoke`                        |
+| Generated auth app smoke     | Passing | `pnpm smoke`                        |
+| Generated app lint           | Passing | `pnpm smoke`                        |
+| Wrangler deploy dry-run      | Passing | `pnpm smoke`                        |
+| Temporary Cloudflare deploy  | Passing | `pnpm smoke:temporary-deploy`       |
+| CLI unit tests               | Passing | `pnpm test`                         |
+| Runtime API tests            | Passing | `pnpm smoke`                        |
+| API CORS smoke               | Passing | `pnpm smoke`                        |
+| Auth browser e2e tests       | Passing | `pnpm smoke`                        |
+| D1 migration smoke           | Passing | `pnpm smoke`                        |
+| Auth migration smoke         | Passing | `pnpm smoke`                        |
+| Module AGENTS guidance       | Passing | `pnpm test`, `pnpm smoke`           |
+| Open-source license          | Added   | `LICENSE`                           |
+| Contribution guide           | Added   | `CONTRIBUTING.md`                   |
+| Security policy              | Added   | `SECURITY.md`                       |
+| Issue and PR templates       | Added   | `.github` templates                 |
+| Release checklist            | Added   | `docs/RELEASE.md`                   |
+| npm package contents         | Passing | `pnpm pack:check`                   |
+| CI workflow                  | Added   | GitHub Actions                      |
+| Release verification command | Passing | `pnpm verify:release`               |
+| v0.1.0 release notes         | Added   | `docs/releases`                     |
+| npm publish workflow         | Added   | `.github/workflows/release-npm.yml` |
 
 ## Next Priority
 
 1. Run manual Cloudflare deploy verification with real credentials.
 2. Confirm the GitHub Actions workflow on the remote repository.
-3. Start the first post-MVP module after real deploy verification.
+3. Run the npm publish workflow in dry-run mode on the remote repository.
+4. Start the first post-MVP module after real deploy verification.
 
 ## Update Rules
 

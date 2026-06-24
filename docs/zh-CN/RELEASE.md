@@ -53,12 +53,27 @@
    git push origin v0.1.0
    ```
 
+10. 从 GitHub Actions 发布 npm packages。
+
+    等 tag 或 release branch 上的 CI 通过后，使用 `Release npm Packages`
+    workflow。先用 `dry_run: true` 跑一次并检查输出；确认无误后，再用
+    `dry_run: false` 正式发布。
+
+    Packages 会按依赖顺序发布：
+
+    - `@shipstack/core`
+    - `@shipstack/cli`
+    - `create-shipstack`
+
+    该 workflow 需要仓库 secret `NPM_TOKEN`，并启用 npm provenance。
+
 ## Pre-Release Safety Checks
 
 - 没有提交真实 secrets、tokens、session cookies 或 production IDs。
 - 没有复制私有或付费 starter code、docs、assets、prompts 或实现细节。
 - 用户可见变化已同步更新英文和中文文档。
 - 修改 templates 或 modules 后，已通过 smoke tests 验证生成应用行为。
+- `pnpm pack:check` 会在发布前验证 package 内容，并从打包 tarballs 创建应用。
 - `docs/PROGRESS.md` 与当前 release 状态一致。
 
 ## 当前已知外部缺口

@@ -55,12 +55,29 @@ Do not tag `v0.1.0` until these checks are complete:
    git push origin v0.1.0
    ```
 
+10. Publish npm packages from GitHub Actions.
+
+    Use the `Release npm Packages` workflow after CI passes on the tag or
+    release branch. Run it once with `dry_run: true`, inspect the output, then
+    run it with `dry_run: false` when ready.
+
+    Packages are published in dependency order:
+
+    - `@shipstack/core`
+    - `@shipstack/cli`
+    - `create-shipstack`
+
+    The workflow requires the repository secret `NPM_TOKEN` and publishes with
+    npm provenance enabled.
+
 ## Pre-Release Safety Checks
 
 - No real secrets, tokens, session cookies, or production IDs are committed.
 - No private or paid starter code, docs, assets, prompts, or implementation details were copied.
 - English and Chinese docs are updated for user-visible changes.
 - Generated-app behavior is verified through smoke tests after template or module changes.
+- `pnpm pack:check` verifies package contents and creates an app from packed
+  tarballs before publishing.
 - `docs/PROGRESS.md` matches the current release status.
 
 ## Current Known External Gaps
