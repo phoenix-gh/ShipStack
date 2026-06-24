@@ -46,6 +46,8 @@ pnpm verify:deployed https://<your-worker-url>
 
 - [Deployment](./docs/deployment.md)
 - [Environment variables](./docs/env.md)
+- [中文部署文档](./docs/zh-CN/deployment.md)
+- [中文环境变量文档](./docs/zh-CN/env.md)
 
 ## Cloudflare
 

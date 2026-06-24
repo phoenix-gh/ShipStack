@@ -26,7 +26,7 @@ pnpm smoke
 Smoke suite 会创建临时的真实应用，安装依赖，并运行应用级检查：
 
 - `scripts/smoke/cli.mjs` 创建应用，并检查 CLI 错误、`doctor`、模块依赖顺序和重复安装模块。
-- `scripts/smoke/base.mjs` 创建基础 TanStack Start 应用，检查 env example files 和 `.gitignore` secret guards，运行 `pnpm install`、`pnpm test`、`pnpm lint`、`pnpm typecheck`，启动 dev server，检查 `/`、`/health`、`/api/health`、`/api/v1/me`、trusted API CORS、默认收紧的 CORS 行为，用 dev server URL 运行生成应用里的 `pnpm verify:deployed`，然后运行 `pnpm build` 和 `pnpm deploy:dry-run`。
+- `scripts/smoke/base.mjs` 创建基础 TanStack Start 应用，检查 env example files、`.gitignore` secret guards 和生成应用中文文档，运行 `pnpm install`、`pnpm test`、`pnpm lint`、`pnpm typecheck`，启动 dev server，检查 `/`、`/health`、`/api/health`、`/api/v1/me`、trusted API CORS、默认收紧的 CORS 行为，用 dev server URL 运行生成应用里的 `pnpm verify:deployed`，然后运行 `pnpm build` 和 `pnpm deploy:dry-run`。
 - `scripts/smoke/database.mjs` 创建应用，重复安装两次 D1 database 模块，验证 lint，生成 migration，用 Wrangler 本地应用 migration，然后运行同样的应用检查。
 - `scripts/smoke/auth.mjs` 创建应用，安装 database 与 Better Auth 模块，重复安装两次 auth 模块，验证 lint，生成 auth migrations，用 Wrangler 本地应用 migrations，启动 dev server，验证匿名 dashboard redirect，登录后检查认证态 `/api/v1/me`，运行浏览器注册、退出、登录和 dashboard 检查，然后运行同样的应用检查。
 

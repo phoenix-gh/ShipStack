@@ -61,6 +61,7 @@ Latest commit:
 | Deployed Worker routes can be verified automatically   | Passing | Base generated app smoke runs `pnpm verify:deployed` against dev URL.  |
 | Generated CI and deploy workflows exist                | Passing | Base template includes CI and manual Cloudflare deploy workflows.      |
 | Generated env files are safe to customize              | Passing | Base smoke and release audit check env examples and `.gitignore`.      |
+| Generated app Chinese docs exist                       | Passing | Base smoke checks generated app Chinese env and deployment docs.       |
 | Deployment docs are complete enough to follow manually | Passing | Generated and maintainer deployment checklists exist.                  |
 | Generated `AGENTS.md` exists and matches layout        | Passing | Base template and installed modules include `AGENTS.md` guidance.      |
 
@@ -78,6 +79,7 @@ Latest commit:
 | Wrangler deploy dry-run      | Passing          | `pnpm smoke`                        |
 | Deployed route verifier      | Passing          | `pnpm smoke`                        |
 | Generated env safety         | Passing          | `pnpm smoke`, `pnpm release:audit`  |
+| Generated Chinese docs       | Passing          | `pnpm smoke`, `pnpm pack:check`     |
 | Temporary Cloudflare deploy  | External blocked | `pnpm smoke:temporary-deploy`       |
 | CLI unit tests               | Passing          | `pnpm test`                         |
 | Runtime API tests            | Passing          | `pnpm smoke`                        |

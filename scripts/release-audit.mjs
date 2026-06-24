@@ -182,6 +182,11 @@ const checks = [
           "cp .dev.vars.example .dev.vars",
           "Never put secrets in `VITE_*` variables.",
         ]),
+        await assertFileContainsMarkers("templates/base/docs/zh-CN/env.md", [
+          "cp .env.example .env.local",
+          "cp .dev.vars.example .dev.vars",
+          "不要把 secrets 放进 `VITE_*` 变量。",
+        ]),
       ];
       const findings = checks
         .filter((check) => !check.ok)

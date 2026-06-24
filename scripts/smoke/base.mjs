@@ -104,6 +104,14 @@ async function verifyGeneratedMetadata(appDir) {
     await readFile(resolve(appDir, "package.json"), "utf8"),
   );
   const readme = await readFile(resolve(appDir, "README.md"), "utf8");
+  const chineseEnvDoc = await readFile(
+    resolve(appDir, "docs/zh-CN/env.md"),
+    "utf8",
+  );
+  const chineseDeploymentDoc = await readFile(
+    resolve(appDir, "docs/zh-CN/deployment.md"),
+    "utf8",
+  );
 
   if (packageJson.name !== "base-app") {
     throw new Error(`Unexpected generated package name: ${packageJson.name}`);
@@ -123,6 +131,18 @@ async function verifyGeneratedMetadata(appDir) {
     if (!readme.includes(expectedCommand)) {
       throw new Error(`Generated README is missing ${expectedCommand}`);
     }
+  }
+
+  if (!readme.includes("中文部署文档")) {
+    throw new Error("Generated README should link Chinese generated docs");
+  }
+
+  if (!chineseEnvDoc.includes("SHIPSTACK_TRUSTED_ORIGINS")) {
+    throw new Error("Generated Chinese env docs are missing trusted origins");
+  }
+
+  if (!chineseDeploymentDoc.includes("pnpm verify:deployed")) {
+    throw new Error("Generated Chinese deployment docs are missing verifier");
   }
 }
 
