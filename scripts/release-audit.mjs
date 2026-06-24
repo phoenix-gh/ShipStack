@@ -81,6 +81,40 @@ const checks = [
     },
   },
   {
+    label: "Generated app CI workflow shape is valid",
+    action: async () => {
+      return await assertFileContainsMarkers(
+        "templates/base/.github/workflows/ci.yml",
+        [
+          "push:",
+          "pull_request:",
+          "version: 10.33.0",
+          "node-version: 22",
+          "pnpm install --frozen-lockfile",
+          "pnpm verify",
+        ],
+      );
+    },
+  },
+  {
+    label: "Generated app deploy workflow shape is valid",
+    action: async () => {
+      return await assertFileContainsMarkers(
+        "templates/base/.github/workflows/deploy.yml",
+        [
+          "workflow_dispatch:",
+          "environment: production",
+          "version: 10.33.0",
+          "node-version: 22",
+          "pnpm install --frozen-lockfile",
+          "pnpm verify",
+          "CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}",
+          "pnpm deploy",
+        ],
+      );
+    },
+  },
+  {
     label: "npm release workflow shape is valid",
     action: async () => {
       const file = ".github/workflows/release-npm.yml";
@@ -218,6 +252,21 @@ async function exists(path) {
   } catch {
     return false;
   }
+}
+
+async function assertFileContainsMarkers(file, requiredMarkers) {
+  const content = await readFile(resolve(repositoryRoot, file), "utf8");
+  const missingMarkers = requiredMarkers.filter(
+    (marker) => !content.includes(marker),
+  );
+
+  return {
+    ok: missingMarkers.length === 0,
+    detail:
+      missingMarkers.length > 0
+        ? `missing markers: ${missingMarkers.join(", ")}`
+        : file,
+  };
 }
 
 async function run(command, args) {
