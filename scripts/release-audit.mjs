@@ -9,6 +9,33 @@ const packageJsonFiles = [
   "packages/cli/package.json",
   "packages/create-shipstack/package.json",
 ];
+const secretPatterns = [
+  {
+    label: "private key block",
+    pattern: /-----BEGIN (?:RSA |EC |OPENSSH |PRIVATE )?PRIVATE KEY-----/,
+  },
+  {
+    label: "GitHub token",
+    pattern: /\bgh[pousr]_[A-Za-z0-9_]{36,}\b/,
+  },
+  {
+    label: "npm token",
+    pattern: /\bnpm_[A-Za-z0-9]{36,}\b/,
+  },
+  {
+    label: "Stripe secret key",
+    pattern: /\bsk_(?:live|test)_[A-Za-z0-9]{20,}\b/,
+  },
+  {
+    label: "Slack token",
+    pattern: /\bxox[baprs]-[A-Za-z0-9-]{20,}\b/,
+  },
+  {
+    label: "Cloudflare API token",
+    pattern: /\b[A-Za-z0-9_-]{40,}\b/,
+    context: /cloudflare|wrangler|cf_api|api_token/i,
+  },
+];
 
 const checks = [
   {
@@ -181,6 +208,20 @@ const checks = [
     },
   },
   {
+    label: "tracked files do not contain obvious secrets",
+    action: async () => {
+      const findings = await scanTrackedFilesForSecrets();
+
+      return {
+        ok: findings.length === 0,
+        detail:
+          findings.length === 0
+            ? "no obvious tracked secrets"
+            : findings.slice(0, 10).join("\n  "),
+      };
+    },
+  },
+  {
     label: "Git remote is configured",
     action: async () => {
       const result = await run("git", ["remote", "-v"]);
@@ -267,6 +308,51 @@ async function assertFileContainsMarkers(file, requiredMarkers) {
         ? `missing markers: ${missingMarkers.join(", ")}`
         : file,
   };
+}
+
+async function scanTrackedFilesForSecrets() {
+  const result = await run("git", ["ls-files"]);
+  const files = result.stdout
+    .split("\n")
+    .map((file) => file.trim())
+    .filter(Boolean)
+    .filter((file) => !isGeneratedOrLockFile(file));
+  const findings = [];
+
+  for (const file of files) {
+    const content = await readTextFileIfPossible(file);
+    if (content === null) {
+      continue;
+    }
+
+    for (const secretPattern of secretPatterns) {
+      if (
+        secretPattern.pattern.test(content) &&
+        (!secretPattern.context || secretPattern.context.test(content))
+      ) {
+        findings.push(`${file}: ${secretPattern.label}`);
+      }
+    }
+  }
+
+  return findings;
+}
+
+function isGeneratedOrLockFile(file) {
+  return (
+    file === "pnpm-lock.yaml" ||
+    file.endsWith("routeTree.gen.ts") ||
+    file.includes("/routeTree.gen.ts")
+  );
+}
+
+async function readTextFileIfPossible(file) {
+  try {
+    const content = await readFile(resolve(repositoryRoot, file), "utf8");
+    return content.includes("\0") ? null : content;
+  } catch {
+    return null;
+  }
 }
 
 async function run(command, args) {
