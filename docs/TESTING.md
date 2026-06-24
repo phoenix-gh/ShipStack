@@ -27,8 +27,8 @@ The smoke suite creates temporary real apps, installs dependencies, and runs app
 
 - `scripts/smoke/cli.mjs` creates an app and checks CLI errors, `doctor`, module dependency ordering, and repeated module installs.
 - `scripts/smoke/base.mjs` creates the base TanStack Start app, checks env example files, `.gitignore` secret guards, and generated Chinese docs, runs `pnpm install`, `pnpm test`, `pnpm lint`, `pnpm typecheck`, starts the dev server, checks `/`, `/health`, `/api/health`, `/api/v1/me`, trusted API CORS, default restrictive CORS behavior, runs the generated `pnpm verify:deployed` script against the dev server URL, runs `pnpm build`, and runs `pnpm deploy:dry-run`.
-- `scripts/smoke/database.mjs` creates an app, installs the D1 database module twice, verifies linting, generates a migration, applies it locally with Wrangler, then runs the same app checks.
-- `scripts/smoke/auth.mjs` creates an app, installs database and Better Auth modules, installs auth twice, verifies linting, generates auth migrations, applies them locally with Wrangler, starts the dev server, verifies anonymous dashboard redirect, signs in, checks authenticated `/api/v1/me`, runs browser sign up/sign out/sign in/dashboard checks, then runs the same app checks.
+- `scripts/smoke/database.mjs` creates an app, installs the D1 database module twice, checks module Chinese docs, verifies linting, generates a migration, applies it locally with Wrangler, then runs the same app checks.
+- `scripts/smoke/auth.mjs` creates an app, installs database and Better Auth modules, installs auth twice, checks module Chinese docs, verifies linting, generates auth migrations, applies them locally with Wrangler, starts the dev server, verifies anonymous dashboard redirect, signs in, checks authenticated `/api/v1/me`, runs browser sign up/sign out/sign in/dashboard checks, then runs the same app checks.
 
 Smoke workspaces are created in the operating system temp directory. Passing runs are removed automatically. Failed runs are kept and printed so the generated project can be inspected.
 

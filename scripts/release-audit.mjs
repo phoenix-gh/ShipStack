@@ -202,6 +202,32 @@ const checks = [
     },
   },
   {
+    label: "Generated module Chinese docs are present",
+    action: async () => {
+      const checks = [
+        await assertFileContainsMarkers(
+          "templates/modules/database-d1/docs/zh-CN/database.md",
+          ["pnpm db:cf:migrate:local", "pnpm db:cf:migrate:remote"],
+        ),
+        await assertFileContainsMarkers(
+          "templates/modules/auth-better-auth/docs/zh-CN/auth.md",
+          ["requireRouteSession", "GOOGLE_CLIENT_SECRET"],
+        ),
+      ];
+      const findings = checks
+        .filter((check) => !check.ok)
+        .map((check) => check.detail);
+
+      return {
+        ok: findings.length === 0,
+        detail:
+          findings.length === 0
+            ? "database and auth module Chinese docs are present"
+            : findings.join("\n  "),
+      };
+    },
+  },
+  {
     label: "Generated app CI workflow shape is valid",
     action: async () => {
       return await assertFileContainsMarkers(

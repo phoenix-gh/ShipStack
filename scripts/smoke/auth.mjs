@@ -1,4 +1,4 @@
-import { access, rm, writeFile } from "node:fs/promises";
+import { access, readFile, rm, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import {
@@ -16,6 +16,7 @@ await runSmoke("auth", async (workspace) => {
   await run("node", [shipStackBin, "add", "database"], { cwd: appDir });
   await run("node", [shipStackBin, "add", "auth"], { cwd: appDir });
   await run("node", [shipStackBin, "add", "auth"], { cwd: appDir });
+  await verifyAuthDocs(appDir);
 
   await verifyGeneratedApp(appDir, {
     build: false,
@@ -27,6 +28,25 @@ await runSmoke("auth", async (workspace) => {
   await verifyAuthRuntime(appDir);
   await verifyGeneratedApp(appDir, { install: false });
 });
+
+async function verifyAuthDocs(appDir) {
+  const chineseAuthDoc = await readFile(
+    resolve(appDir, "docs/zh-CN/auth.md"),
+    "utf8",
+  );
+
+  if (!chineseAuthDoc.includes("requireRouteSession")) {
+    throw new Error(
+      "Generated Chinese auth docs are missing protected route guidance",
+    );
+  }
+
+  if (!chineseAuthDoc.includes("GOOGLE_CLIENT_SECRET")) {
+    throw new Error(
+      "Generated Chinese auth docs are missing optional OAuth guidance",
+    );
+  }
+}
 
 async function verifyAuthRuntime(appDir) {
   const email = `smoke-${Date.now()}@example.com`;

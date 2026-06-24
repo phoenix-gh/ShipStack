@@ -19,7 +19,9 @@ try {
     "package/templates/base/docs/zh-CN/deployment.md",
     "package/templates/base/docs/zh-CN/env.md",
     "package/templates/base/package.json",
+    "package/templates/modules/auth-better-auth/docs/zh-CN/auth.md",
     "package/templates/modules/auth-better-auth/src/features/auth/route-guards.ts",
+    "package/templates/modules/database-d1/docs/zh-CN/database.md",
     "package/templates/modules/database-d1/drizzle.config.ts",
   ]);
   await assertTarIncludes(createTarball, [
@@ -134,6 +136,8 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
     await run("node", [shipstackBin, "add", "auth"], { cwd: appDir });
     await run("node", [shipstackBin, "doctor"], { cwd: appDir });
 
+    await assertExists(resolve(appDir, "docs/zh-CN/database.md"));
+    await assertExists(resolve(appDir, "docs/zh-CN/auth.md"));
     await assertExists(resolve(appDir, "src/db/schema.ts"));
     await assertExists(resolve(appDir, "src/features/auth/route-guards.ts"));
     await assertExists(resolve(appDir, "src/routes/sign-in.tsx"));

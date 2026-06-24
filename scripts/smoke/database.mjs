@@ -1,3 +1,6 @@
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
+
 import {
   createApp,
   run,
@@ -11,6 +14,7 @@ await runSmoke("database", async (workspace) => {
 
   await run("node", [shipStackBin, "add", "database"], { cwd: appDir });
   await run("node", [shipStackBin, "add", "database"], { cwd: appDir });
+  await verifyDatabaseDocs(appDir);
 
   await verifyGeneratedApp(appDir, {
     build: false,
@@ -21,3 +25,16 @@ await runSmoke("database", async (workspace) => {
   await run("pnpm", ["db:cf:migrate:local"], { cwd: appDir });
   await verifyGeneratedApp(appDir, { install: false });
 });
+
+async function verifyDatabaseDocs(appDir) {
+  const chineseDatabaseDoc = await readFile(
+    resolve(appDir, "docs/zh-CN/database.md"),
+    "utf8",
+  );
+
+  if (!chineseDatabaseDoc.includes("pnpm db:cf:migrate:remote")) {
+    throw new Error(
+      "Generated Chinese database docs are missing remote migration command",
+    );
+  }
+}
