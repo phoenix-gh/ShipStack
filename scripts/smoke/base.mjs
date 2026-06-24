@@ -1,4 +1,4 @@
-import { rm, writeFile } from "node:fs/promises";
+import { readFile, rm, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import {
@@ -14,6 +14,7 @@ await runSmoke("base", async (workspace) => {
   const appDir = await createApp(workspace, "base-app");
   const devVarsPath = resolve(appDir, ".dev.vars");
 
+  await verifyGeneratedMetadata(appDir);
   await verifyGeneratedApp(appDir, { build: false });
   try {
     await verifyRuntimeRoutes(
@@ -96,3 +97,30 @@ await runSmoke("base", async (workspace) => {
   ]);
   await run("pnpm", ["verify"], { cwd: appDir });
 });
+
+async function verifyGeneratedMetadata(appDir) {
+  const packageJson = JSON.parse(
+    await readFile(resolve(appDir, "package.json"), "utf8"),
+  );
+  const readme = await readFile(resolve(appDir, "README.md"), "utf8");
+
+  if (packageJson.name !== "base-app") {
+    throw new Error(`Unexpected generated package name: ${packageJson.name}`);
+  }
+
+  if (
+    packageJson.description !==
+    "ShipStack app generated for TanStack Start on Cloudflare Workers."
+  ) {
+    throw new Error("Generated package description is missing or incorrect");
+  }
+
+  for (const expectedCommand of [
+    "shipstack add database",
+    "shipstack add auth",
+  ]) {
+    if (!readme.includes(expectedCommand)) {
+      throw new Error(`Generated README is missing ${expectedCommand}`);
+    }
+  }
+}

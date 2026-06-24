@@ -9,6 +9,16 @@ pnpm install
 pnpm dev
 ```
 
+## Add Modules
+
+```bash
+shipstack add database
+shipstack add auth
+```
+
+The database module adds Cloudflare D1 and Drizzle. The auth module adds Better
+Auth, sign-in/sign-up pages, and protected dashboard/account routes.
+
 ## Useful Commands
 
 ```bash

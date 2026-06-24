@@ -1,5 +1,6 @@
 {
   "name": "{{projectName}}",
+  "description": "ShipStack app generated for TanStack Start on Cloudflare Workers.",
   "private": true,
   "type": "module",
   "sideEffects": false,
