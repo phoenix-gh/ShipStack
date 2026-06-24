@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, unlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import test from "node:test";
@@ -15,6 +15,36 @@ test("database and auth installers patch generated apps idempotently", async () 
       await assert.rejects(
         () => runSilently(["add", "auth"]),
         /requires the database module/,
+      );
+      await runSilently(["doctor"]);
+
+      const baseReadme = await readFile("README.md", "utf8");
+      await writeFile(
+        "README.md",
+        baseReadme.replace("[Deployment]", "[Missing Deployment]"),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("README.md", baseReadme);
+
+      const gitignore = await readFile(".gitignore", "utf8");
+      await writeFile(".gitignore", gitignore.replace(".dev.vars.*", ""));
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile(".gitignore", gitignore);
+
+      await unlink(".dev.vars.example");
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile(
+        ".dev.vars.example",
+        '# Local Worker runtime secrets go here.\n# Copy this file to .dev.vars for local development.\nSHIPSTACK_TRUSTED_ORIGINS=""\n',
       );
 
       await runSilently(["add", "database"]);
@@ -134,7 +164,7 @@ test("database and auth installers patch generated apps idempotently", async () 
 
 test("doctor reports missing project files", async () => {
   await withWorkspace(async () => {
-    await assert.rejects(() => runSilently(["doctor"]), /4 check\(s\) failed/);
+    await assert.rejects(() => runSilently(["doctor"]), /8 check\(s\) failed/);
   });
 });
 

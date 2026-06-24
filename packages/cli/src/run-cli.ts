@@ -121,6 +121,24 @@ async function doctor() {
     ["wrangler.jsonc", existsSync(resolve(cwd, "wrangler.jsonc"))],
     ["src/routes", existsSync(resolve(cwd, "src/routes"))],
     [".env.example", existsSync(resolve(cwd, ".env.example"))],
+    [".dev.vars.example", existsSync(resolve(cwd, ".dev.vars.example"))],
+    [
+      ".gitignore secret guards",
+      (await fileIncludes(resolve(cwd, ".gitignore"), ".env.*")) &&
+        (await fileIncludes(resolve(cwd, ".gitignore"), ".dev.vars.*")),
+    ],
+    [
+      "base docs",
+      existsSync(resolve(cwd, "docs/env.md")) &&
+        existsSync(resolve(cwd, "docs/deployment.md")) &&
+        existsSync(resolve(cwd, "docs/zh-CN/env.md")) &&
+        existsSync(resolve(cwd, "docs/zh-CN/deployment.md")),
+    ],
+    [
+      "base README docs links",
+      (await fileIncludes(resolve(cwd, "README.md"), "[Deployment]")) &&
+        (await fileIncludes(resolve(cwd, "README.md"), "[中文部署文档]")),
+    ],
   ];
 
   if (await hasDatabaseModule(cwd)) {

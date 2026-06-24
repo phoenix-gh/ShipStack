@@ -250,6 +250,17 @@ const checks = [
     },
   },
   {
+    label: "Doctor checks base docs and secret guards",
+    action: async () => {
+      return await assertFileContainsMarkers("packages/cli/src/run-cli.ts", [
+        ".dev.vars.example",
+        ".gitignore secret guards",
+        "base docs",
+        "base README docs links",
+      ]);
+    },
+  },
+  {
     label: "Generated app CI workflow shape is valid",
     action: async () => {
       return await assertFileContainsMarkers(
