@@ -32,6 +32,10 @@ await runSmoke("cli", async (workspace) => {
   await run("node", [shipStackBin, "add", "storage"], { cwd: appDir });
   await assertStorageModule(appDir);
 
+  await run("node", [shipStackBin, "add", "billing"], { cwd: appDir });
+  await run("node", [shipStackBin, "add", "billing"], { cwd: appDir });
+  await assertBillingModule(appDir);
+
   await expectFailure(
     ["node", [createShipStackBin, "cli-app"]],
     workspace,
@@ -131,6 +135,32 @@ async function assertStorageModule(appDir) {
   const readme = await readFile(resolve(appDir, "README.md"), "utf8");
   assertCount(readme, "[Storage](./docs/storage.md)", 1);
   assertCount(readme, "[存储](./docs/zh-CN/storage.md)", 1);
+}
+
+async function assertBillingModule(appDir) {
+  const devVarsExample = await readFile(
+    resolve(appDir, ".dev.vars.example"),
+    "utf8",
+  );
+  assertCount(devVarsExample, "STRIPE_SECRET_KEY", 1);
+  assertCount(devVarsExample, "STRIPE_WEBHOOK_SECRET", 1);
+  assertCount(devVarsExample, "STRIPE_PRICE_ID", 1);
+
+  const drizzleConfig = await readFile(
+    resolve(appDir, "drizzle.config.ts"),
+    "utf8",
+  );
+  assertCount(drizzleConfig, "./src/db/billing-schema.ts", 1);
+
+  const agents = await readFile(resolve(appDir, "AGENTS.md"), "utf8");
+  assertCount(agents, "## Billing Module", 1);
+  if (!agents.includes("src/features/billing/server.ts")) {
+    throw new Error("Expected AGENTS.md to mention billing server helpers");
+  }
+
+  const readme = await readFile(resolve(appDir, "README.md"), "utf8");
+  assertCount(readme, "[Billing](./docs/billing.md)", 1);
+  assertCount(readme, "[支付](./docs/zh-CN/billing.md)", 1);
 }
 
 async function expectFailure([command, args], cwd, expectedOutput) {

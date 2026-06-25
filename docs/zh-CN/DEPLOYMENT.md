@@ -95,15 +95,16 @@ pnpm smoke:temporary-deploy
 
    在有明确可信客户端 origin 之前保持为空。为空时，CORS 默认保持收紧。
 
-## D1、Auth 和 Storage 手动部署检查
+## D1、Auth、Billing 和 Storage 手动部署检查
 
-验证 database、auth 和 storage 模块时，在生成应用里继续执行这些步骤。
+验证 database、auth、billing 和 storage 模块时，在生成应用里继续执行这些步骤。
 
 1. 安装模块。
 
    ```bash
    node ../packages/cli/dist/cli.js add database
    node ../packages/cli/dist/cli.js add auth
+   node ../packages/cli/dist/cli.js add billing
    node ../packages/cli/dist/cli.js add storage
    pnpm install
    ```
@@ -135,28 +136,50 @@ pnpm smoke:temporary-deploy
 
    `BETTER_AUTH_URL` 使用已部署的 Worker origin。
 
-6. 创建 R2 bucket。
+6. 设置生产 billing secrets。
+
+   ```bash
+   pnpm wrangler secret put STRIPE_SECRET_KEY
+   pnpm wrangler secret put STRIPE_WEBHOOK_SECRET
+   pnpm wrangler secret put STRIPE_PRICE_ID
+   pnpm wrangler secret put BILLING_SUCCESS_URL
+   pnpm wrangler secret put BILLING_CANCEL_URL
+   pnpm wrangler secret put BILLING_PORTAL_RETURN_URL
+   ```
+
+   在 Stripe 中把 `checkout.session.completed`、`customer.subscription.created`、
+   `customer.subscription.updated` 和 `customer.subscription.deleted` events
+   发送到 `/api/stripe/webhook`。
+
+7. 创建 R2 bucket。
 
    ```bash
    wrangler r2 bucket create shipstack-files
    ```
 
-7. 确认 `wrangler.jsonc` 包含 `FILES` R2 binding。
+8. 确认 `wrangler.jsonc` 包含 `FILES` R2 binding。
 
-8. 再次部署。
+9. 再次部署。
 
    ```bash
    pnpm deploy
    ```
 
-9. 在浏览器里手动验证 auth。
+10. 在浏览器里手动验证 auth。
 
-   - 访问 `/sign-up`
-   - 创建测试账号
-   - 确认 `/dashboard` 可以加载
-   - 退出登录
-   - 在 `/sign-in` 重新登录
-   - 再次确认 `/dashboard` 可以加载
+- 访问 `/sign-up`
+- 创建测试账号
+- 确认 `/dashboard` 可以加载
+- 退出登录
+- 在 `/sign-in` 重新登录
+- 再次确认 `/dashboard` 可以加载
+
+11. 用 Stripe test mode 手动验证 billing。
+
+- 通过 `POST /api/v1/billing/checkout` 创建 Checkout session
+- 使用 Stripe test card 完成 Checkout
+- 确认 `/api/v1/billing/status` 返回 active subscription
+- 打开 `POST /api/v1/billing/portal`，确认 Stripe 返回 portal URL
 
 ## 当前手动状态
 

@@ -200,9 +200,75 @@ export const storageR2Module: ShipStackModule = {
   ],
 };
 
+export const billingStripeModule: ShipStackModule = {
+  id: "billing-stripe",
+  name: "Stripe billing",
+  description:
+    "Adds Stripe Checkout, customer portal sessions, webhook-confirmed subscription state, and entitlement helpers.",
+  category: "core",
+  dependencies: ["base", "database-d1", "auth-better-auth"],
+  env: [
+    {
+      name: "STRIPE_SECRET_KEY",
+      scope: "runtime",
+      required: true,
+      description: "Stripe secret API key used by server-side billing routes.",
+    },
+    {
+      name: "STRIPE_WEBHOOK_SECRET",
+      scope: "runtime",
+      required: true,
+      description: "Stripe webhook signing secret used to verify events.",
+    },
+    {
+      name: "STRIPE_PRICE_ID",
+      scope: "runtime",
+      required: true,
+      description: "Stripe recurring price ID used for Checkout sessions.",
+    },
+    {
+      name: "BILLING_SUCCESS_URL",
+      scope: "runtime",
+      required: true,
+      example: "http://localhost:5173/account?checkout=success",
+      description: "URL Stripe redirects to after successful Checkout.",
+    },
+    {
+      name: "BILLING_CANCEL_URL",
+      scope: "runtime",
+      required: true,
+      example: "http://localhost:5173/account?checkout=cancelled",
+      description: "URL Stripe redirects to when Checkout is cancelled.",
+    },
+    {
+      name: "BILLING_PORTAL_RETURN_URL",
+      scope: "runtime",
+      required: true,
+      example: "http://localhost:5173/account",
+      description: "URL Stripe customer portal returns to.",
+    },
+  ],
+  checks: [
+    {
+      id: "billing-schema",
+      description: "Generated app has a src/db/billing-schema.ts file.",
+    },
+    {
+      id: "checkout-api",
+      description:
+        "Generated app has a session-authenticated billing checkout route.",
+    },
+    {
+      id: "stripe-webhook",
+      description: "Generated app has a Stripe webhook route.",
+    },
+  ],
+};
+
 export const coreModules = [
   baseModule,
   databaseD1Module,
   authBetterAuthModule,
   storageR2Module,
+  billingStripeModule,
 ] satisfies ShipStackModule[];

@@ -207,6 +207,51 @@ test("database and auth installers patch generated apps idempotently", async () 
       );
       await writeFile("README.md", storageReadme);
       await runSilently(["doctor"]);
+
+      await runSilently(["add", "billing"]);
+      await runSilently(["add", "billing"]);
+
+      const billingDevVarsExample = await readFile(".dev.vars.example", "utf8");
+      assert.equal(count(billingDevVarsExample, "STRIPE_SECRET_KEY"), 1);
+      assert.equal(count(billingDevVarsExample, "STRIPE_WEBHOOK_SECRET"), 1);
+      assert.equal(count(billingDevVarsExample, "STRIPE_PRICE_ID"), 1);
+
+      const billingDrizzleConfig = await readFile("drizzle.config.ts", "utf8");
+      assert.equal(
+        count(billingDrizzleConfig, "./src/db/billing-schema.ts"),
+        1,
+      );
+
+      const billingReadme = await readFile("README.md", "utf8");
+      assert.equal(count(billingReadme, "[Billing](./docs/billing.md)"), 1);
+      assert.equal(count(billingReadme, "[支付](./docs/zh-CN/billing.md)"), 1);
+
+      const billingAgents = await readFile("AGENTS.md", "utf8");
+      assert.equal(count(billingAgents, "## Billing Module"), 1);
+      assert.match(billingAgents, /src\/features\/billing\/server\.ts/);
+      await writeFile(
+        "AGENTS.md",
+        billingAgents.replace("## Billing Module", "## Missing Billing Module"),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("AGENTS.md", billingAgents);
+
+      await writeFile(
+        "README.md",
+        billingReadme.replace(
+          "[Billing](./docs/billing.md)",
+          "[Missing Billing](./docs/billing.md)",
+        ),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("README.md", billingReadme);
+      await runSilently(["doctor"]);
     });
   });
 });
@@ -226,6 +271,27 @@ test("storage installer requires database and auth modules", async () => {
 
       await assert.rejects(
         () => runSilently(["add", "storage"]),
+        /requires the auth module/,
+      );
+    });
+  });
+});
+
+test("billing installer requires database and auth modules", async () => {
+  await withWorkspace(async (workspace) => {
+    await runSilently(["create", "billing-app"]);
+    const appDir = resolve(workspace, "billing-app");
+
+    await withCwd(appDir, async () => {
+      await assert.rejects(
+        () => runSilently(["add", "billing"]),
+        /requires the database module/,
+      );
+
+      await runSilently(["add", "database"]);
+
+      await assert.rejects(
+        () => runSilently(["add", "billing"]),
         /requires the auth module/,
       );
     });

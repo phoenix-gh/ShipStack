@@ -57,6 +57,11 @@ export async function runCli(argv = process.argv.slice(2)) {
       return;
     }
 
+    if (moduleName === "billing" || moduleName === "billing-stripe") {
+      await addBillingStripe();
+      return;
+    }
+
     if (moduleName === "api") {
       console.log(
         "The API foundation is already included in the base starter.",
@@ -69,8 +74,8 @@ export async function runCli(argv = process.argv.slice(2)) {
     }
 
     console.log(`Module installation is not implemented yet: ${moduleName}`);
-    console.log("Available now: database, auth, storage.");
-    console.log("Available later: billing-stripe, api-keys.");
+    console.log("Available now: database, auth, storage, billing.");
+    console.log("Available later: api-keys.");
     return;
   }
 
@@ -299,6 +304,69 @@ async function doctor() {
     );
   }
 
+  if (await hasBillingModule(cwd)) {
+    checks.push(
+      [
+        "billing src/db/billing-schema.ts",
+        existsSync(resolve(cwd, "src/db/billing-schema.ts")),
+      ],
+      [
+        "billing src/features/billing/server.ts",
+        existsSync(resolve(cwd, "src/features/billing/server.ts")),
+      ],
+      [
+        "billing checkout api route",
+        existsSync(resolve(cwd, "src/routes/api.v1.billing.checkout.ts")),
+      ],
+      [
+        "billing portal api route",
+        existsSync(resolve(cwd, "src/routes/api.v1.billing.portal.ts")),
+      ],
+      [
+        "billing webhook route",
+        existsSync(resolve(cwd, "src/routes/api.stripe.webhook.ts")),
+      ],
+      [
+        "billing .dev.vars.example secrets",
+        (await fileIncludes(
+          resolve(cwd, ".dev.vars.example"),
+          "STRIPE_SECRET_KEY",
+        )) &&
+          (await fileIncludes(
+            resolve(cwd, ".dev.vars.example"),
+            "STRIPE_WEBHOOK_SECRET",
+          )),
+      ],
+      [
+        "billing drizzle schema config",
+        await fileIncludes(
+          resolve(cwd, "drizzle.config.ts"),
+          "./src/db/billing-schema.ts",
+        ),
+      ],
+      [
+        "billing AGENTS.md guidance",
+        await fileIncludes(resolve(cwd, "AGENTS.md"), "## Billing Module"),
+      ],
+      [
+        "billing docs",
+        existsSync(resolve(cwd, "docs/billing.md")) &&
+          existsSync(resolve(cwd, "docs/zh-CN/billing.md")),
+      ],
+      [
+        "billing README docs links",
+        (await fileIncludes(
+          resolve(cwd, "README.md"),
+          "[Billing](./docs/billing.md)",
+        )) &&
+          (await fileIncludes(
+            resolve(cwd, "README.md"),
+            "[支付](./docs/zh-CN/billing.md)",
+          )),
+      ],
+    );
+  }
+
   let failed = 0;
   for (const [label, ok] of checks) {
     console.log(`${ok ? "ok" : "missing"} ${label}`);
@@ -330,6 +398,13 @@ async function hasStorageModule(cwd: string) {
   return (
     existsSync(resolve(cwd, "src/features/storage/server.ts")) ||
     existsSync(resolve(cwd, "src/db/storage-schema.ts"))
+  );
+}
+
+async function hasBillingModule(cwd: string) {
+  return (
+    existsSync(resolve(cwd, "src/features/billing/server.ts")) ||
+    existsSync(resolve(cwd, "src/db/billing-schema.ts"))
   );
 }
 
@@ -522,6 +597,10 @@ async function includeStorageSchemaInDrizzleConfig(file: string) {
   await includeSchemaInDrizzleConfig(file, "./src/db/storage-schema.ts");
 }
 
+async function includeBillingSchemaInDrizzleConfig(file: string) {
+  await includeSchemaInDrizzleConfig(file, "./src/db/billing-schema.ts");
+}
+
 async function includeSchemaInDrizzleConfig(file: string, schemaPath: string) {
   if (!existsSync(file)) {
     return;
@@ -621,6 +700,70 @@ async function addStorageR2() {
   console.log("Next steps:");
   console.log("  pnpm install");
   console.log("  wrangler r2 bucket create shipstack-files");
+  console.log("  pnpm db:generate");
+  console.log("  pnpm db:cf:migrate:local");
+}
+
+async function addBillingStripe() {
+  const cwd = process.cwd();
+  assertProjectFile("package.json");
+  assertProjectFile("wrangler.jsonc");
+
+  if (!existsSync(resolve(cwd, "src/db/client.ts"))) {
+    throw new Error(
+      "The billing module requires the database module. Run `shipstack add database` first.",
+    );
+  }
+
+  if (!existsSync(resolve(cwd, "src/features/auth/server.ts"))) {
+    throw new Error(
+      "The billing module requires the auth module. Run `shipstack add auth` first.",
+    );
+  }
+
+  await copyModuleFiles("billing-stripe", cwd);
+  await includeBillingSchemaInDrizzleConfig(resolve(cwd, "drizzle.config.ts"));
+  await appendIfMissing(
+    resolve(cwd, ".dev.vars.example"),
+    `
+# Stripe billing local Worker secrets.
+STRIPE_SECRET_KEY=""
+STRIPE_WEBHOOK_SECRET=""
+STRIPE_PRICE_ID=""
+BILLING_SUCCESS_URL="http://localhost:5173/account?checkout=success"
+BILLING_CANCEL_URL="http://localhost:5173/account?checkout=cancelled"
+BILLING_PORTAL_RETURN_URL="http://localhost:5173/account"
+`,
+    "STRIPE_SECRET_KEY",
+  );
+  await appendIfMissing(
+    resolve(cwd, "AGENTS.md"),
+    `
+## Billing Module
+
+- Use \`src/features/billing/server.ts\` for checkout, portal, webhook, and entitlement behavior.
+- Treat Stripe webhooks as the source of truth for subscription state.
+- Keep webhook handling idempotent by recording processed Stripe event IDs.
+- Do not trust client-side billing state for paid feature access.
+- Keep product and price IDs in runtime env, not inline in route logic.
+`,
+    "## Billing Module",
+  );
+  await appendIfMissing(
+    resolve(cwd, "README.md"),
+    `
+- [Billing](./docs/billing.md)
+- [支付](./docs/zh-CN/billing.md)
+`,
+    "[Billing](./docs/billing.md)",
+  );
+
+  console.log("Installed billing-stripe module.");
+  console.log("");
+  console.log("Next steps:");
+  console.log("  pnpm install");
+  console.log("  cp .dev.vars.example .dev.vars");
+  console.log("  set Stripe billing values in .dev.vars");
   console.log("  pnpm db:generate");
   console.log("  pnpm db:cf:migrate:local");
 }
@@ -810,6 +953,7 @@ Modules:
   database    Add Cloudflare D1 + Drizzle ORM
   auth        Add Better Auth
   storage     Add Cloudflare R2 file storage
+  billing     Add Stripe billing
 
 This is an early CLI skeleton. More modules will land as the starter matures.`);
 }

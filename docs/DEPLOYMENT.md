@@ -100,16 +100,17 @@ Use a real Cloudflare account for this checklist.
    Leave the value empty until you have a concrete trusted client origin. CORS
    stays restrictive by default when this value is empty.
 
-## Manual D1, Auth, And Storage Deploy Pass
+## Manual D1, Auth, Billing, And Storage Deploy Pass
 
 Run these extra steps from a generated app when validating the database, auth,
-and storage modules.
+billing, and storage modules.
 
 1. Install modules.
 
    ```bash
    node ../packages/cli/dist/cli.js add database
    node ../packages/cli/dist/cli.js add auth
+   node ../packages/cli/dist/cli.js add billing
    node ../packages/cli/dist/cli.js add storage
    pnpm install
    ```
@@ -141,28 +142,50 @@ and storage modules.
 
    Use the deployed Worker origin for `BETTER_AUTH_URL`.
 
-6. Create the R2 bucket.
+6. Set production billing secrets.
+
+   ```bash
+   pnpm wrangler secret put STRIPE_SECRET_KEY
+   pnpm wrangler secret put STRIPE_WEBHOOK_SECRET
+   pnpm wrangler secret put STRIPE_PRICE_ID
+   pnpm wrangler secret put BILLING_SUCCESS_URL
+   pnpm wrangler secret put BILLING_CANCEL_URL
+   pnpm wrangler secret put BILLING_PORTAL_RETURN_URL
+   ```
+
+   Configure Stripe to send `checkout.session.completed`,
+   `customer.subscription.created`, `customer.subscription.updated`, and
+   `customer.subscription.deleted` events to `/api/stripe/webhook`.
+
+7. Create the R2 bucket.
 
    ```bash
    wrangler r2 bucket create shipstack-files
    ```
 
-7. Confirm `wrangler.jsonc` contains a `FILES` R2 binding.
+8. Confirm `wrangler.jsonc` contains a `FILES` R2 binding.
 
-8. Deploy again.
+9. Deploy again.
 
    ```bash
    pnpm deploy
    ```
 
-9. Verify auth manually in the browser.
+10. Verify auth manually in the browser.
 
-   - visit `/sign-up`
-   - create a test account
-   - confirm `/dashboard` loads
-   - sign out
-   - sign back in at `/sign-in`
-   - confirm `/dashboard` loads again
+- visit `/sign-up`
+- create a test account
+- confirm `/dashboard` loads
+- sign out
+- sign back in at `/sign-in`
+- confirm `/dashboard` loads again
+
+11. Verify billing manually with Stripe test mode.
+
+- create a Checkout session from `POST /api/v1/billing/checkout`
+- complete Checkout with a Stripe test card
+- confirm `/api/v1/billing/status` reports an active subscription
+- open `POST /api/v1/billing/portal` and confirm Stripe returns a portal URL
 
 ## Current Manual Status
 

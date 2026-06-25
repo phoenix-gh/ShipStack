@@ -85,19 +85,19 @@
 
 目标：补齐最小 SaaS 闭环。
 
-状态：部分完成。R2 storage 已实现并通过本地验证；Stripe billing 尚未开始。
+状态：本地通过。Stripe billing 和 R2 storage 已实现并通过本地验证。
 
 交付物：
 
-- Stripe checkout
-- Stripe webhook handler
-- subscription schema
-- billing portal
-- entitlement helper
+- Stripe checkout（本地完成）
+- Stripe webhook handler（本地完成）
+- subscription schema（本地完成）
+- billing portal（本地完成）
+- entitlement helper（本地完成）
 - R2 storage provider（本地完成）
 - file metadata table（本地完成）
 - upload and delete flows（本地完成）
-- billing and storage tests（storage 本地完成，billing 待完成）
+- billing and storage tests（本地完成）
 
 退出标准：
 

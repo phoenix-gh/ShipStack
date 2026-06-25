@@ -53,6 +53,25 @@ A developer can create a TanStack Start app, run it locally, authenticate a user
 - restrictive CORS helper for trusted app clients
 - API smoke test
 
+### Billing Module
+
+- `shipstack add billing`
+- Stripe Checkout session route
+- Stripe Billing Portal route
+- Stripe webhook route with idempotent event handling
+- subscription schema and migrations through Drizzle
+- server-side billing status and entitlement helpers
+- billing smoke test
+
+### Storage Module
+
+- `shipstack add storage`
+- Cloudflare R2 binding
+- file metadata schema and migrations through Drizzle
+- session-authenticated file upload, list, download, and delete routes
+- ownership checks before file access
+- storage smoke test
+
 ### Deployment
 
 - `wrangler.jsonc`
@@ -77,8 +96,6 @@ A developer can create a TanStack Start app, run it locally, authenticate a user
 
 ## Out Of Scope
 
-- billing
-- R2 storage
 - API keys
 - OpenAPI generation
 - public API rate limiting
@@ -105,6 +122,8 @@ pnpm install
 shipstack doctor
 shipstack add database
 shipstack add auth
+shipstack add billing
+shipstack add storage
 pnpm db:generate
 pnpm db:cf:migrate:local
 pnpm dev

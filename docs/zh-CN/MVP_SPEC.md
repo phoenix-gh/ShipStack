@@ -53,6 +53,25 @@
 - trusted app clients 的默认收紧 CORS helper
 - API smoke test
 
+### Billing Module
+
+- `shipstack add billing`
+- Stripe Checkout session route
+- Stripe Billing Portal route
+- Stripe webhook route，并支持 idempotent event handling
+- 通过 Drizzle 管理 subscription schema 和 migrations
+- server-side billing status 和 entitlement helpers
+- billing smoke test
+
+### Storage Module
+
+- `shipstack add storage`
+- Cloudflare R2 binding
+- 通过 Drizzle 管理 file metadata schema 和 migrations
+- session-authenticated file upload、list、download 和 delete routes
+- 文件访问前检查 ownership
+- storage smoke test
+
 ### Deployment
 
 - `wrangler.jsonc`
@@ -77,8 +96,6 @@
 
 ## 范围外
 
-- billing
-- R2 storage
 - API keys
 - OpenAPI generation
 - public API rate limiting
@@ -105,6 +122,8 @@ pnpm install
 shipstack doctor
 shipstack add database
 shipstack add auth
+shipstack add billing
+shipstack add storage
 pnpm db:generate
 pnpm db:cf:migrate:local
 pnpm dev
