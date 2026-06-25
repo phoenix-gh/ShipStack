@@ -158,6 +158,76 @@ test("database and auth installers patch generated apps idempotently", async () 
       );
       await writeFile("AGENTS.md", authAgents);
       await runSilently(["doctor"]);
+
+      await runSilently(["add", "storage"]);
+      await runSilently(["add", "storage"]);
+
+      const storageWrangler = JSON.parse(
+        await readFile("wrangler.jsonc", "utf8"),
+      );
+      const r2Bindings = storageWrangler.r2_buckets.filter(
+        (binding) => binding.binding === "FILES",
+      );
+      assert.equal(r2Bindings.length, 1);
+      assert.equal(r2Bindings[0].bucket_name, "shipstack-files");
+
+      const storageDrizzleConfig = await readFile("drizzle.config.ts", "utf8");
+      assert.equal(
+        count(storageDrizzleConfig, "./src/db/storage-schema.ts"),
+        1,
+      );
+
+      const storageReadme = await readFile("README.md", "utf8");
+      assert.equal(count(storageReadme, "[Storage](./docs/storage.md)"), 1);
+      assert.equal(count(storageReadme, "[存储](./docs/zh-CN/storage.md)"), 1);
+
+      const storageAgents = await readFile("AGENTS.md", "utf8");
+      assert.equal(count(storageAgents, "## Storage Module"), 1);
+      assert.match(storageAgents, /src\/features\/storage\/server\.ts/);
+      await writeFile(
+        "AGENTS.md",
+        storageAgents.replace("## Storage Module", "## Missing Storage Module"),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("AGENTS.md", storageAgents);
+
+      await writeFile(
+        "README.md",
+        storageReadme.replace(
+          "[Storage](./docs/storage.md)",
+          "[Missing Storage](./docs/storage.md)",
+        ),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("README.md", storageReadme);
+      await runSilently(["doctor"]);
+    });
+  });
+});
+
+test("storage installer requires database and auth modules", async () => {
+  await withWorkspace(async (workspace) => {
+    await runSilently(["create", "storage-app"]);
+    const appDir = resolve(workspace, "storage-app");
+
+    await withCwd(appDir, async () => {
+      await assert.rejects(
+        () => runSilently(["add", "storage"]),
+        /requires the database module/,
+      );
+
+      await runSilently(["add", "database"]);
+
+      await assert.rejects(
+        () => runSilently(["add", "storage"]),
+        /requires the auth module/,
+      );
     });
   });
 });

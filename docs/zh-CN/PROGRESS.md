@@ -39,7 +39,7 @@
 | Phase 1: Minimal Runnable Starter | 本地通过 | 基础 TanStack Start + Cloudflare Workers 模板可构建，使用 Tailwind CSS，已有最小 UI primitives，通过 smoke tests，并已有 CI/deploy workflows。 |
 | Phase 2: Database And Auth        | 本地通过 | 已有 D1、Drizzle、Better Auth、认证页面、session API、可复用 protected route guards、auth migrations、account route 和 auth e2e smoke。        |
 | Phase 3: CLI MVP                  | 本地通过 | 已有 `create`、`doctor`、`add database`、`add auth`、CLI 单元测试和模块感知 doctor 检查。                                                      |
-| Phase 4: Billing And Storage      | 未开始   | Stripe 和 R2 等基础路径稳定后再做。                                                                                                            |
+| Phase 4: Billing And Storage      | 部分完成 | 已有 R2 storage 模块、元数据 schema、认证文件 API 和 storage smoke。Stripe billing 尚未开始。                                                  |
 | Phase 5: Recipes                  | 未开始   | Recipes 等 MVP 模块稳定后再做。                                                                                                                |
 | Phase 6: Ecosystem                | 未开始   | Docs site、贡献指南、发布流程和 examples 后续再做。                                                                                            |
 
@@ -65,8 +65,8 @@
 | 生成应用包含 CI 和 deploy workflows   | 通过 | base template 包含 CI 和手动 Cloudflare deploy workflows。        |
 | 生成应用 env 文件可安全自定义         | 通过 | base smoke 和 release audit 会检查 env examples 与 `.gitignore`。 |
 | 生成应用包含中文文档                  | 通过 | base smoke 会检查生成应用中文 env 和 deployment docs。            |
-| 模块包含中文文档                      | 通过 | database/auth smoke 会检查生成应用中的模块中文文档。              |
-| 生成 README 会链接模块文档            | 通过 | CLI、database/auth smoke 和 pack check 会验证 README 模块链接。   |
+| 模块包含中文文档                      | 通过 | database/auth/storage smoke 会检查生成应用中的模块中文文档。      |
+| 生成 README 会链接模块文档            | 通过 | CLI、storage smoke 和 pack check 会验证 README 模块链接。         |
 | Doctor 可发现缺失的模块文档           | 通过 | CLI 单元测试和 pack check 会在模块文档已安装时运行 doctor。       |
 | Doctor 会检查基础文档和 secret guards | 通过 | CLI 单元测试、CLI smoke 和 pack check 覆盖 base doctor checks。   |
 | 支持只检查本地 release audit          | 通过 | `pnpm release:audit:local` 会跳过外部 gates。                     |
@@ -84,6 +84,7 @@
 | Generated base app smoke     | 通过     | `pnpm smoke`                        |
 | Generated database app smoke | 通过     | `pnpm smoke`                        |
 | Generated auth app smoke     | 通过     | `pnpm smoke`                        |
+| Generated storage app smoke  | 通过     | `node scripts/smoke/storage.mjs`    |
 | Generated app lint           | 通过     | `pnpm smoke`                        |
 | Wrangler deploy dry-run      | 通过     | `pnpm smoke`                        |
 | Deployed route verifier      | 通过     | `pnpm smoke`                        |
@@ -102,6 +103,7 @@
 | Auth browser e2e tests       | 通过     | `pnpm smoke`                        |
 | D1 migration smoke           | 通过     | `pnpm smoke`                        |
 | Auth migration smoke         | 通过     | `pnpm smoke`                        |
+| R2 storage API smoke         | 通过     | `node scripts/smoke/storage.mjs`    |
 | 模块 AGENTS 指引             | 通过     | `pnpm test`, `pnpm smoke`           |
 | 开源许可证                   | 已添加   | `LICENSE`                           |
 | 贡献指南                     | 已添加   | `CONTRIBUTING.md`                   |

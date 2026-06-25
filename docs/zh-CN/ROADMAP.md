@@ -85,6 +85,8 @@
 
 目标：补齐最小 SaaS 闭环。
 
+状态：部分完成。R2 storage 已实现并通过本地验证；Stripe billing 尚未开始。
+
 交付物：
 
 - Stripe checkout
@@ -92,10 +94,10 @@
 - subscription schema
 - billing portal
 - entitlement helper
-- R2 storage provider
-- file metadata table
-- upload and delete flows
-- billing and storage tests
+- R2 storage provider（本地完成）
+- file metadata table（本地完成）
+- upload and delete flows（本地完成）
+- billing and storage tests（storage 本地完成，billing 待完成）
 
 退出标准：
 

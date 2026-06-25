@@ -41,7 +41,7 @@ Latest commit:
 | Phase 1: Minimal Runnable Starter | Local pass  | Base TanStack Start + Cloudflare Workers template builds, uses Tailwind CSS, has minimal UI primitives, passes smoke tests, and has CI/deploy workflows. |
 | Phase 2: Database And Auth        | Local pass  | D1, Drizzle, Better Auth, auth pages, session API, reusable protected route guards, auth migrations, account route, and auth e2e smoke exist.            |
 | Phase 3: CLI MVP                  | Local pass  | `create`, `doctor`, `add database`, `add auth`, CLI unit tests, and module-aware doctor checks exist.                                                    |
-| Phase 4: Billing And Storage      | Not started | Stripe and R2 are planned after the base path is reliable.                                                                                               |
+| Phase 4: Billing And Storage      | Partial     | R2 storage module, metadata schema, authenticated files API, and storage smoke exist. Stripe billing has not started.                                    |
 | Phase 5: Recipes                  | Not started | Recipes wait until MVP modules are stable.                                                                                                               |
 | Phase 6: Ecosystem                | Not started | Docs site, contribution guide, releases, and examples come later.                                                                                        |
 
@@ -67,8 +67,8 @@ Latest commit:
 | Generated CI and deploy workflows exist                | Passing | Base template includes CI and manual Cloudflare deploy workflows.      |
 | Generated env files are safe to customize              | Passing | Base smoke and release audit check env examples and `.gitignore`.      |
 | Generated app Chinese docs exist                       | Passing | Base smoke checks generated app Chinese env and deployment docs.       |
-| Module Chinese docs exist                              | Passing | Database/auth smoke checks generated module Chinese docs.              |
-| Module docs are linked from generated README           | Passing | CLI, database/auth smoke, and pack check verify README module links.   |
+| Module Chinese docs exist                              | Passing | Database/auth/storage smoke checks generated module Chinese docs.      |
+| Module docs are linked from generated README           | Passing | CLI, storage smoke, and pack check verify README module links.         |
 | Doctor detects missing module docs                     | Passing | CLI unit tests and pack check run doctor with module docs installed.   |
 | Doctor checks base docs and secret guards              | Passing | CLI unit tests, CLI smoke, and pack check cover base doctor checks.    |
 | Local-only release audit exists                        | Passing | `pnpm release:audit:local` skips external gates for local checks.      |
@@ -86,6 +86,7 @@ Latest commit:
 | Generated base app smoke     | Passing          | `pnpm smoke`                        |
 | Generated database app smoke | Passing          | `pnpm smoke`                        |
 | Generated auth app smoke     | Passing          | `pnpm smoke`                        |
+| Generated storage app smoke  | Passing          | `node scripts/smoke/storage.mjs`    |
 | Generated app lint           | Passing          | `pnpm smoke`                        |
 | Wrangler deploy dry-run      | Passing          | `pnpm smoke`                        |
 | Deployed route verifier      | Passing          | `pnpm smoke`                        |
@@ -104,6 +105,7 @@ Latest commit:
 | Auth browser e2e tests       | Passing          | `pnpm smoke`                        |
 | D1 migration smoke           | Passing          | `pnpm smoke`                        |
 | Auth migration smoke         | Passing          | `pnpm smoke`                        |
+| R2 storage API smoke         | Passing          | `node scripts/smoke/storage.mjs`    |
 | Module AGENTS guidance       | Passing          | `pnpm test`, `pnpm smoke`           |
 | Open-source license          | Added            | `LICENSE`                           |
 | Contribution guide           | Added            | `CONTRIBUTING.md`                   |

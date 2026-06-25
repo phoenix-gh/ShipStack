@@ -100,16 +100,17 @@ Use a real Cloudflare account for this checklist.
    Leave the value empty until you have a concrete trusted client origin. CORS
    stays restrictive by default when this value is empty.
 
-## Manual D1 And Auth Deploy Pass
+## Manual D1, Auth, And Storage Deploy Pass
 
-Run these extra steps from a generated app when validating the database and auth
-modules.
+Run these extra steps from a generated app when validating the database, auth,
+and storage modules.
 
 1. Install modules.
 
    ```bash
    node ../packages/cli/dist/cli.js add database
    node ../packages/cli/dist/cli.js add auth
+   node ../packages/cli/dist/cli.js add storage
    pnpm install
    ```
 
@@ -140,13 +141,21 @@ modules.
 
    Use the deployed Worker origin for `BETTER_AUTH_URL`.
 
-6. Deploy again.
+6. Create the R2 bucket.
+
+   ```bash
+   wrangler r2 bucket create shipstack-files
+   ```
+
+7. Confirm `wrangler.jsonc` contains a `FILES` R2 binding.
+
+8. Deploy again.
 
    ```bash
    pnpm deploy
    ```
 
-7. Verify auth manually in the browser.
+9. Verify auth manually in the browser.
 
    - visit `/sign-up`
    - create a test account

@@ -9,10 +9,12 @@ shipstack create my-app
 shipstack doctor
 shipstack add database
 shipstack add auth
+shipstack add storage
 ```
 
 The generated app targets TanStack Start on Cloudflare Workers. The database
-module adds D1 and Drizzle. The auth module adds Better Auth.
+module adds D1 and Drizzle. The auth module adds Better Auth. The storage
+module adds Cloudflare R2 file storage with D1 metadata.
 
 ## Status
 

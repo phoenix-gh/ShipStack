@@ -52,6 +52,11 @@ export async function runCli(argv = process.argv.slice(2)) {
       return;
     }
 
+    if (moduleName === "storage" || moduleName === "storage-r2") {
+      await addStorageR2();
+      return;
+    }
+
     if (moduleName === "api") {
       console.log(
         "The API foundation is already included in the base starter.",
@@ -64,8 +69,8 @@ export async function runCli(argv = process.argv.slice(2)) {
     }
 
     console.log(`Module installation is not implemented yet: ${moduleName}`);
-    console.log("Available now: database, auth.");
-    console.log("Available later: billing-stripe, storage-r2, api-keys.");
+    console.log("Available now: database, auth, storage.");
+    console.log("Available later: billing-stripe, api-keys.");
     return;
   }
 
@@ -162,7 +167,7 @@ async function doctor() {
           "CLOUDFLARE_DATABASE_ID",
         ),
       ],
-      ["database wrangler DB binding", await hasWranglerBinding(cwd, "DB")],
+      ["database wrangler DB binding", await hasWranglerD1Binding(cwd, "DB")],
       [
         "database AGENTS.md guidance",
         await fileIncludes(resolve(cwd, "AGENTS.md"), "## Database Module"),
@@ -246,6 +251,54 @@ async function doctor() {
     );
   }
 
+  if (await hasStorageModule(cwd)) {
+    checks.push(
+      [
+        "storage src/db/storage-schema.ts",
+        existsSync(resolve(cwd, "src/db/storage-schema.ts")),
+      ],
+      [
+        "storage src/features/storage/server.ts",
+        existsSync(resolve(cwd, "src/features/storage/server.ts")),
+      ],
+      [
+        "storage api route",
+        existsSync(resolve(cwd, "src/routes/api.v1.files.ts")),
+      ],
+      [
+        "storage wrangler FILES binding",
+        await hasWranglerR2Binding(cwd, "FILES"),
+      ],
+      [
+        "storage drizzle schema config",
+        await fileIncludes(
+          resolve(cwd, "drizzle.config.ts"),
+          "./src/db/storage-schema.ts",
+        ),
+      ],
+      [
+        "storage AGENTS.md guidance",
+        await fileIncludes(resolve(cwd, "AGENTS.md"), "## Storage Module"),
+      ],
+      [
+        "storage docs",
+        existsSync(resolve(cwd, "docs/storage.md")) &&
+          existsSync(resolve(cwd, "docs/zh-CN/storage.md")),
+      ],
+      [
+        "storage README docs links",
+        (await fileIncludes(
+          resolve(cwd, "README.md"),
+          "[Storage](./docs/storage.md)",
+        )) &&
+          (await fileIncludes(
+            resolve(cwd, "README.md"),
+            "[存储](./docs/zh-CN/storage.md)",
+          )),
+      ],
+    );
+  }
+
   let failed = 0;
   for (const [label, ok] of checks) {
     console.log(`${ok ? "ok" : "missing"} ${label}`);
@@ -273,6 +326,13 @@ async function hasAuthModule(cwd: string) {
   );
 }
 
+async function hasStorageModule(cwd: string) {
+  return (
+    existsSync(resolve(cwd, "src/features/storage/server.ts")) ||
+    existsSync(resolve(cwd, "src/db/storage-schema.ts"))
+  );
+}
+
 async function packageJsonHasDependency(cwd: string, dependency: string) {
   const packageJsonPath = resolve(cwd, "package.json");
   if (!existsSync(packageJsonPath)) {
@@ -288,7 +348,7 @@ async function packageJsonHasDependency(cwd: string, dependency: string) {
   );
 }
 
-async function hasWranglerBinding(cwd: string, bindingName: string) {
+async function hasWranglerD1Binding(cwd: string, bindingName: string) {
   const wranglerPath = resolve(cwd, "wrangler.jsonc");
   if (!existsSync(wranglerPath)) {
     return false;
@@ -299,6 +359,19 @@ async function hasWranglerBinding(cwd: string, bindingName: string) {
     ? config.d1_databases
     : [];
   return d1Databases.some((binding) => {
+    return isRecord(binding) && binding.binding === bindingName;
+  });
+}
+
+async function hasWranglerR2Binding(cwd: string, bindingName: string) {
+  const wranglerPath = resolve(cwd, "wrangler.jsonc");
+  if (!existsSync(wranglerPath)) {
+    return false;
+  }
+
+  const config = parseJsonc(await readFile(wranglerPath, "utf8"));
+  const r2Buckets = Array.isArray(config.r2_buckets) ? config.r2_buckets : [];
+  return r2Buckets.some((binding) => {
     return isRecord(binding) && binding.binding === bindingName;
   });
 }
@@ -442,21 +515,114 @@ GOOGLE_CLIENT_SECRET=""
 }
 
 async function includeAuthSchemaInDrizzleConfig(file: string) {
+  await includeSchemaInDrizzleConfig(file, "./src/db/auth-schema.ts");
+}
+
+async function includeStorageSchemaInDrizzleConfig(file: string) {
+  await includeSchemaInDrizzleConfig(file, "./src/db/storage-schema.ts");
+}
+
+async function includeSchemaInDrizzleConfig(file: string, schemaPath: string) {
   if (!existsSync(file)) {
     return;
   }
 
   const content = await readFile(file, "utf8");
-  if (content.includes("./src/db/auth-schema.ts")) {
+  if (content.includes(schemaPath)) {
     return;
   }
 
+  const schemaPaths = findDrizzleSchemaPaths(content);
+  if (schemaPaths.length === 0) {
+    return;
+  }
+
+  const nextSchemaPaths = [...schemaPaths, schemaPath];
   const nextContent = content.replace(
-    'schema: "./src/db/schema.ts",',
-    'schema: ["./src/db/schema.ts", "./src/db/auth-schema.ts"],',
+    /schema:\s*(?:"[^"]+"|\[[\s\S]*?\]),/m,
+    formatDrizzleSchemaProperty(nextSchemaPaths),
   );
 
   await writeFile(file, nextContent);
+}
+
+function findDrizzleSchemaPaths(content: string) {
+  const match = content.match(/schema:\s*("[^"]+"|\[[\s\S]*?\]),/m);
+  if (!match?.[1]) {
+    return [];
+  }
+
+  return Array.from(match[1].matchAll(/"([^"]+)"/g))
+    .map((schemaMatch) => schemaMatch[1])
+    .filter((schemaPath): schemaPath is string => Boolean(schemaPath));
+}
+
+function formatDrizzleSchemaProperty(schemaPaths: string[]) {
+  if (schemaPaths.length === 1) {
+    return `schema: "${schemaPaths[0]}",`;
+  }
+
+  const inlineSchema = `schema: [${schemaPaths
+    .map((schemaPath) => `"${schemaPath}"`)
+    .join(", ")}],`;
+  if (inlineSchema.length <= 80) {
+    return inlineSchema;
+  }
+
+  return `schema: [\n${schemaPaths
+    .map((schemaPath) => `    "${schemaPath}",`)
+    .join("\n")}\n  ],`;
+}
+
+async function addStorageR2() {
+  const cwd = process.cwd();
+  assertProjectFile("package.json");
+  assertProjectFile("wrangler.jsonc");
+
+  if (!existsSync(resolve(cwd, "src/db/client.ts"))) {
+    throw new Error(
+      "The storage module requires the database module. Run `shipstack add database` first.",
+    );
+  }
+
+  if (!existsSync(resolve(cwd, "src/features/auth/server.ts"))) {
+    throw new Error(
+      "The storage module requires the auth module. Run `shipstack add auth` first.",
+    );
+  }
+
+  await copyModuleFiles("storage-r2", cwd);
+  await updateWranglerR2(resolve(cwd, "wrangler.jsonc"));
+  await includeStorageSchemaInDrizzleConfig(resolve(cwd, "drizzle.config.ts"));
+  await appendIfMissing(
+    resolve(cwd, "AGENTS.md"),
+    `
+## Storage Module
+
+- Use \`src/features/storage/server.ts\` for R2 object operations and file metadata writes.
+- Store file ownership and metadata in D1 before exposing files to users.
+- Check ownership before listing, reading, updating, or deleting files.
+- Keep the \`FILES\` R2 bucket private by default.
+- Do not use client-provided user IDs for storage ownership.
+`,
+    "## Storage Module",
+  );
+  await appendIfMissing(
+    resolve(cwd, "README.md"),
+    `
+- [Storage](./docs/storage.md)
+- [存储](./docs/zh-CN/storage.md)
+`,
+    "[Storage](./docs/storage.md)",
+  );
+
+  console.log("Installed storage-r2 module.");
+  console.log("");
+  console.log("Next steps:");
+  console.log("  pnpm install");
+  console.log("  wrangler r2 bucket create shipstack-files");
+  console.log("  pnpm db:generate");
+  console.log("  pnpm db:cf:migrate:local");
 }
 
 function assertProjectFile(fileName: string) {
@@ -572,6 +738,25 @@ async function updateWranglerD1(file: string) {
   await writeFile(file, `${JSON.stringify(config, null, 2)}\n`);
 }
 
+async function updateWranglerR2(file: string) {
+  const config = parseJsonc(await readFile(file, "utf8"));
+  const r2Buckets = Array.isArray(config.r2_buckets) ? config.r2_buckets : [];
+
+  const hasFilesBinding = r2Buckets.some((binding) => {
+    return isRecord(binding) && binding.binding === "FILES";
+  });
+
+  if (!hasFilesBinding) {
+    r2Buckets.push({
+      binding: "FILES",
+      bucket_name: "shipstack-files",
+    });
+  }
+
+  config.r2_buckets = r2Buckets;
+  await writeFile(file, `${JSON.stringify(config, null, 2)}\n`);
+}
+
 function parseJsonc(content: string) {
   return JSON.parse(stripJsonComments(content)) as Record<string, unknown>;
 }
@@ -624,6 +809,7 @@ Usage:
 Modules:
   database    Add Cloudflare D1 + Drizzle ORM
   auth        Add Better Auth
+  storage     Add Cloudflare R2 file storage
 
 This is an early CLI skeleton. More modules will land as the starter matures.`);
 }

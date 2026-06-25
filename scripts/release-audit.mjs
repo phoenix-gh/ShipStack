@@ -216,6 +216,10 @@ const checks = [
           "templates/modules/auth-better-auth/docs/zh-CN/auth.md",
           ["requireRouteSession", "GOOGLE_CLIENT_SECRET"],
         ),
+        await assertFileContainsMarkers(
+          "templates/modules/storage-r2/docs/zh-CN/storage.md",
+          ["wrangler r2 bucket create", "Better Auth session"],
+        ),
       ];
       const findings = checks
         .filter((check) => !check.ok)
@@ -225,7 +229,7 @@ const checks = [
         ok: findings.length === 0,
         detail:
           findings.length === 0
-            ? "database and auth module Chinese docs are present"
+            ? "database, auth, and storage module Chinese docs are present"
             : findings.join("\n  "),
       };
     },
@@ -236,8 +240,10 @@ const checks = [
       return await assertFileContainsMarkers("packages/cli/src/run-cli.ts", [
         "[Database](./docs/database.md)",
         "[Authentication](./docs/auth.md)",
+        "[Storage](./docs/storage.md)",
         "[数据库](./docs/zh-CN/database.md)",
         "[认证](./docs/zh-CN/auth.md)",
+        "[存储](./docs/zh-CN/storage.md)",
       ]);
     },
   },
@@ -249,6 +255,8 @@ const checks = [
         "database README docs links",
         "auth docs",
         "auth README docs links",
+        "storage docs",
+        "storage README docs links",
       ]);
     },
   },

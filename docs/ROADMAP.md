@@ -85,6 +85,9 @@ Current note: CLI create, doctor, database, and auth module flows pass local smo
 
 Goal: complete the smallest SaaS loop.
 
+Status: partial. R2 storage is implemented and locally verified. Stripe billing
+has not started.
+
 Deliverables:
 
 - Stripe checkout
@@ -92,10 +95,10 @@ Deliverables:
 - subscription schema
 - billing portal
 - entitlement helper
-- R2 storage provider
-- file metadata table
-- upload and delete flows
-- billing and storage tests
+- R2 storage provider (done locally)
+- file metadata table (done locally)
+- upload and delete flows (done locally)
+- billing and storage tests (storage done locally, billing pending)
 
 Exit criteria:
 

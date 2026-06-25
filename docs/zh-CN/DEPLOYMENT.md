@@ -95,15 +95,16 @@ pnpm smoke:temporary-deploy
 
    在有明确可信客户端 origin 之前保持为空。为空时，CORS 默认保持收紧。
 
-## D1 和 Auth 手动部署检查
+## D1、Auth 和 Storage 手动部署检查
 
-验证 database 和 auth 模块时，在生成应用里继续执行这些步骤。
+验证 database、auth 和 storage 模块时，在生成应用里继续执行这些步骤。
 
 1. 安装模块。
 
    ```bash
    node ../packages/cli/dist/cli.js add database
    node ../packages/cli/dist/cli.js add auth
+   node ../packages/cli/dist/cli.js add storage
    pnpm install
    ```
 
@@ -134,13 +135,21 @@ pnpm smoke:temporary-deploy
 
    `BETTER_AUTH_URL` 使用已部署的 Worker origin。
 
-6. 再次部署。
+6. 创建 R2 bucket。
+
+   ```bash
+   wrangler r2 bucket create shipstack-files
+   ```
+
+7. 确认 `wrangler.jsonc` 包含 `FILES` R2 binding。
+
+8. 再次部署。
 
    ```bash
    pnpm deploy
    ```
 
-7. 在浏览器里手动验证 auth。
+9. 在浏览器里手动验证 auth。
 
    - 访问 `/sign-up`
    - 创建测试账号

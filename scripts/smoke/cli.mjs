@@ -28,6 +28,10 @@ await runSmoke("cli", async (workspace) => {
   await run("node", [shipStackBin, "add", "auth"], { cwd: appDir });
   await assertAuthModule(appDir);
 
+  await run("node", [shipStackBin, "add", "storage"], { cwd: appDir });
+  await run("node", [shipStackBin, "add", "storage"], { cwd: appDir });
+  await assertStorageModule(appDir);
+
   await expectFailure(
     ["node", [createShipStackBin, "cli-app"]],
     workspace,
@@ -100,6 +104,33 @@ async function assertAuthModule(appDir) {
   assertCount(readme, "[Database](./docs/database.md)", 1);
   assertCount(readme, "[Authentication](./docs/auth.md)", 1);
   assertCount(readme, "[认证](./docs/zh-CN/auth.md)", 1);
+}
+
+async function assertStorageModule(appDir) {
+  const wrangler = JSON.parse(
+    await readFile(resolve(appDir, "wrangler.jsonc"), "utf8"),
+  );
+  const r2Bindings = wrangler.r2_buckets.filter(
+    (binding) => binding.binding === "FILES",
+  );
+  assertEqual(r2Bindings.length, 1);
+  assertEqual(r2Bindings[0].bucket_name, "shipstack-files");
+
+  const drizzleConfig = await readFile(
+    resolve(appDir, "drizzle.config.ts"),
+    "utf8",
+  );
+  assertCount(drizzleConfig, "./src/db/storage-schema.ts", 1);
+
+  const agents = await readFile(resolve(appDir, "AGENTS.md"), "utf8");
+  assertCount(agents, "## Storage Module", 1);
+  if (!agents.includes("src/features/storage/server.ts")) {
+    throw new Error("Expected AGENTS.md to mention storage server helpers");
+  }
+
+  const readme = await readFile(resolve(appDir, "README.md"), "utf8");
+  assertCount(readme, "[Storage](./docs/storage.md)", 1);
+  assertCount(readme, "[存储](./docs/zh-CN/storage.md)", 1);
 }
 
 async function expectFailure([command, args], cwd, expectedOutput) {

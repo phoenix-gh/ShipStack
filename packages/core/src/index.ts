@@ -170,8 +170,39 @@ export const authBetterAuthModule: ShipStackModule = {
   ],
 };
 
+export const storageR2Module: ShipStackModule = {
+  id: "storage-r2",
+  name: "Cloudflare R2 storage",
+  description:
+    "Adds an authenticated R2-backed file API with D1 metadata and ownership checks.",
+  category: "core",
+  dependencies: ["base", "database-d1", "auth-better-auth"],
+  wrangler: [
+    {
+      type: "r2",
+      binding: "FILES",
+      bucketName: "shipstack-files",
+    },
+  ],
+  checks: [
+    {
+      id: "storage-schema",
+      description: "Generated app has a src/db/storage-schema.ts file.",
+    },
+    {
+      id: "r2-binding",
+      description: "Generated app has a FILES R2 binding in wrangler.jsonc.",
+    },
+    {
+      id: "files-api",
+      description: "Generated app has an authenticated /api/v1/files route.",
+    },
+  ],
+};
+
 export const coreModules = [
   baseModule,
   databaseD1Module,
   authBetterAuthModule,
+  storageR2Module,
 ] satisfies ShipStackModule[];
