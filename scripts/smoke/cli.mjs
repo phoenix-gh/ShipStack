@@ -36,6 +36,10 @@ await runSmoke("cli", async (workspace) => {
   await run("node", [shipStackBin, "add", "billing"], { cwd: appDir });
   await assertBillingModule(appDir);
 
+  await run("node", [shipStackBin, "add", "api-keys"], { cwd: appDir });
+  await run("node", [shipStackBin, "add", "api-keys"], { cwd: appDir });
+  await assertApiKeysModule(appDir);
+
   await expectFailure(
     ["node", [createShipStackBin, "cli-app"]],
     workspace,
@@ -161,6 +165,24 @@ async function assertBillingModule(appDir) {
   const readme = await readFile(resolve(appDir, "README.md"), "utf8");
   assertCount(readme, "[Billing](./docs/billing.md)", 1);
   assertCount(readme, "[支付](./docs/zh-CN/billing.md)", 1);
+}
+
+async function assertApiKeysModule(appDir) {
+  const drizzleConfig = await readFile(
+    resolve(appDir, "drizzle.config.ts"),
+    "utf8",
+  );
+  assertCount(drizzleConfig, "./src/db/api-keys-schema.ts", 1);
+
+  const agents = await readFile(resolve(appDir, "AGENTS.md"), "utf8");
+  assertCount(agents, "## API Keys Module", 1);
+  if (!agents.includes("src/features/api-keys/server.ts")) {
+    throw new Error("Expected AGENTS.md to mention API keys server helpers");
+  }
+
+  const readme = await readFile(resolve(appDir, "README.md"), "utf8");
+  assertCount(readme, "[API Keys](./docs/api-keys.md)", 1);
+  assertCount(readme, "[API Keys](./docs/zh-CN/api-keys.md)", 1);
 }
 
 async function expectFailure([command, args], cwd, expectedOutput) {

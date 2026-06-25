@@ -11,13 +11,15 @@ shipstack add database
 shipstack add auth
 shipstack add storage
 shipstack add billing
+shipstack add api-keys
 ```
 
 The generated app targets TanStack Start on Cloudflare Workers. The database
 module adds D1 and Drizzle. The auth module adds Better Auth. The storage
 module adds Cloudflare R2 file storage with D1 metadata. The billing module adds
 Stripe Checkout, portal sessions, webhook-confirmed subscription state, and
-entitlement helpers.
+entitlement helpers. The API keys recipe adds hashed API keys for
+server-to-server, CLI, and partner clients.
 
 ## Status
 

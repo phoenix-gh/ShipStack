@@ -16,7 +16,7 @@
     "test": "pnpm -r --if-present test",
     "verify:local": "pnpm format:check && pnpm typecheck && pnpm test && pnpm build && pnpm pack:check && node scripts/release-audit.mjs --local --allow-dirty",
     "verify:release": "pnpm format:check && pnpm typecheck && pnpm test && pnpm build && pnpm pack:check && pnpm smoke",
-    "smoke": "pnpm build && node scripts/smoke/cli.mjs && node scripts/smoke/base.mjs && node scripts/smoke/database.mjs && node scripts/smoke/auth.mjs && node scripts/smoke/storage.mjs && node scripts/smoke/billing.mjs",
+    "smoke": "pnpm build && node scripts/smoke/cli.mjs && node scripts/smoke/base.mjs && node scripts/smoke/database.mjs && node scripts/smoke/auth.mjs && node scripts/smoke/storage.mjs && node scripts/smoke/billing.mjs && node scripts/smoke/api-keys.mjs",
     "smoke:temporary-deploy": "pnpm build && node scripts/smoke/temporary-deploy.mjs",
     "pack:check": "node scripts/pack-check.mjs",
     "release:audit": "node scripts/release-audit.mjs",

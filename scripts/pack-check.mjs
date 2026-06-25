@@ -21,6 +21,9 @@ try {
     "package/templates/base/package.json",
     "package/templates/modules/auth-better-auth/docs/zh-CN/auth.md",
     "package/templates/modules/auth-better-auth/src/features/auth/route-guards.ts",
+    "package/templates/modules/api-keys/docs/zh-CN/api-keys.md",
+    "package/templates/modules/api-keys/src/features/api-keys/server.ts",
+    "package/templates/modules/api-keys/src/routes/api.v1.api-keys.ts",
     "package/templates/modules/billing-stripe/docs/zh-CN/billing.md",
     "package/templates/modules/billing-stripe/src/features/billing/server.ts",
     "package/templates/modules/billing-stripe/src/routes/api.stripe.webhook.ts",
@@ -142,31 +145,38 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
     await run("node", [shipstackBin, "add", "auth"], { cwd: appDir });
     await run("node", [shipstackBin, "add", "storage"], { cwd: appDir });
     await run("node", [shipstackBin, "add", "billing"], { cwd: appDir });
+    await run("node", [shipstackBin, "add", "api-keys"], { cwd: appDir });
     await run("node", [shipstackBin, "doctor"], { cwd: appDir });
 
     await assertExists(resolve(appDir, "docs/zh-CN/database.md"));
     await assertExists(resolve(appDir, "docs/zh-CN/auth.md"));
     await assertExists(resolve(appDir, "docs/zh-CN/billing.md"));
     await assertExists(resolve(appDir, "docs/zh-CN/storage.md"));
+    await assertExists(resolve(appDir, "docs/zh-CN/api-keys.md"));
     await assertFileContains(resolve(appDir, "README.md"), [
       "[Database](./docs/database.md)",
       "[Authentication](./docs/auth.md)",
       "[Storage](./docs/storage.md)",
       "[Billing](./docs/billing.md)",
+      "[API Keys](./docs/api-keys.md)",
       "[数据库](./docs/zh-CN/database.md)",
       "[认证](./docs/zh-CN/auth.md)",
       "[存储](./docs/zh-CN/storage.md)",
       "[支付](./docs/zh-CN/billing.md)",
+      "[API Keys](./docs/zh-CN/api-keys.md)",
     ]);
     await assertExists(resolve(appDir, "src/db/schema.ts"));
     await assertExists(resolve(appDir, "src/db/billing-schema.ts"));
     await assertExists(resolve(appDir, "src/db/storage-schema.ts"));
+    await assertExists(resolve(appDir, "src/db/api-keys-schema.ts"));
     await assertExists(resolve(appDir, "src/features/auth/route-guards.ts"));
     await assertExists(resolve(appDir, "src/features/billing/server.ts"));
     await assertExists(resolve(appDir, "src/features/storage/server.ts"));
+    await assertExists(resolve(appDir, "src/features/api-keys/server.ts"));
     await assertExists(resolve(appDir, "src/routes/sign-in.tsx"));
     await assertExists(resolve(appDir, "src/routes/api.stripe.webhook.ts"));
     await assertExists(resolve(appDir, "src/routes/api.v1.files.ts"));
+    await assertExists(resolve(appDir, "src/routes/api.v1.api-keys.ts"));
   } finally {
     await rm(workspace, {
       force: true,

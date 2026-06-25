@@ -265,10 +265,36 @@ export const billingStripeModule: ShipStackModule = {
   ],
 };
 
+export const apiKeysModule: ShipStackModule = {
+  id: "api-keys",
+  name: "API keys",
+  description:
+    "Adds session-managed API keys for server-to-server, CLI, and partner API clients.",
+  category: "recipe",
+  dependencies: ["base", "database-d1", "auth-better-auth"],
+  checks: [
+    {
+      id: "api-keys-schema",
+      description: "Generated app has a src/db/api-keys-schema.ts file.",
+    },
+    {
+      id: "api-keys-api",
+      description:
+        "Generated app has session-authenticated API key management routes.",
+    },
+    {
+      id: "api-key-auth-helper",
+      description:
+        "Generated app has a reusable helper for session or API key request identity.",
+    },
+  ],
+};
+
 export const coreModules = [
   baseModule,
   databaseD1Module,
   authBetterAuthModule,
   storageR2Module,
   billingStripeModule,
+  apiKeysModule,
 ] satisfies ShipStackModule[];

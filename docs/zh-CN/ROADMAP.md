@@ -110,9 +110,11 @@
 
 目标：通过 recipes 扩展，而不是膨胀 starter。
 
+状态：第一个 recipe 本地通过。API keys 已实现并通过本地验证。
+
 初始 recipes：
 
-- API keys
+- API keys（本地完成）
 - OpenAPI generation
 - API rate limit
 - TypeScript API SDK
@@ -125,9 +127,9 @@
 
 退出标准：
 
-- recipes 可安装或可复制
-- 每个 recipe 文档化 tradeoffs
-- recipes 包含 tests 或 smoke checks
+- API keys recipe 可通过 CLI 安装
+- API keys recipe 文档说明 tradeoffs
+- API keys recipe 包含 tests 或 smoke checks
 
 ## Phase 6: Ecosystem
 

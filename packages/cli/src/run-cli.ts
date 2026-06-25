@@ -62,6 +62,11 @@ export async function runCli(argv = process.argv.slice(2)) {
       return;
     }
 
+    if (moduleName === "api-keys") {
+      await addApiKeys();
+      return;
+    }
+
     if (moduleName === "api") {
       console.log(
         "The API foundation is already included in the base starter.",
@@ -74,8 +79,7 @@ export async function runCli(argv = process.argv.slice(2)) {
     }
 
     console.log(`Module installation is not implemented yet: ${moduleName}`);
-    console.log("Available now: database, auth, storage, billing.");
-    console.log("Available later: api-keys.");
+    console.log("Available now: database, auth, storage, billing, api-keys.");
     return;
   }
 
@@ -367,6 +371,54 @@ async function doctor() {
     );
   }
 
+  if (await hasApiKeysModule(cwd)) {
+    checks.push(
+      [
+        "api keys src/db/api-keys-schema.ts",
+        existsSync(resolve(cwd, "src/db/api-keys-schema.ts")),
+      ],
+      [
+        "api keys src/features/api-keys/server.ts",
+        existsSync(resolve(cwd, "src/features/api-keys/server.ts")),
+      ],
+      [
+        "api keys management api route",
+        existsSync(resolve(cwd, "src/routes/api.v1.api-keys.ts")),
+      ],
+      [
+        "api keys /api/v1/me override",
+        await fileIncludes(resolve(cwd, "src/routes/api.v1.me.ts"), "api-key"),
+      ],
+      [
+        "api keys drizzle schema config",
+        await fileIncludes(
+          resolve(cwd, "drizzle.config.ts"),
+          "./src/db/api-keys-schema.ts",
+        ),
+      ],
+      [
+        "api keys AGENTS.md guidance",
+        await fileIncludes(resolve(cwd, "AGENTS.md"), "## API Keys Module"),
+      ],
+      [
+        "api keys docs",
+        existsSync(resolve(cwd, "docs/api-keys.md")) &&
+          existsSync(resolve(cwd, "docs/zh-CN/api-keys.md")),
+      ],
+      [
+        "api keys README docs links",
+        (await fileIncludes(
+          resolve(cwd, "README.md"),
+          "[API Keys](./docs/api-keys.md)",
+        )) &&
+          (await fileIncludes(
+            resolve(cwd, "README.md"),
+            "[API Keys](./docs/zh-CN/api-keys.md)",
+          )),
+      ],
+    );
+  }
+
   let failed = 0;
   for (const [label, ok] of checks) {
     console.log(`${ok ? "ok" : "missing"} ${label}`);
@@ -405,6 +457,13 @@ async function hasBillingModule(cwd: string) {
   return (
     existsSync(resolve(cwd, "src/features/billing/server.ts")) ||
     existsSync(resolve(cwd, "src/db/billing-schema.ts"))
+  );
+}
+
+async function hasApiKeysModule(cwd: string) {
+  return (
+    existsSync(resolve(cwd, "src/features/api-keys/server.ts")) ||
+    existsSync(resolve(cwd, "src/db/api-keys-schema.ts"))
   );
 }
 
@@ -601,6 +660,10 @@ async function includeBillingSchemaInDrizzleConfig(file: string) {
   await includeSchemaInDrizzleConfig(file, "./src/db/billing-schema.ts");
 }
 
+async function includeApiKeysSchemaInDrizzleConfig(file: string) {
+  await includeSchemaInDrizzleConfig(file, "./src/db/api-keys-schema.ts");
+}
+
 async function includeSchemaInDrizzleConfig(file: string, schemaPath: string) {
   if (!existsSync(file)) {
     return;
@@ -764,6 +827,56 @@ BILLING_PORTAL_RETURN_URL="http://localhost:5173/account"
   console.log("  pnpm install");
   console.log("  cp .dev.vars.example .dev.vars");
   console.log("  set Stripe billing values in .dev.vars");
+  console.log("  pnpm db:generate");
+  console.log("  pnpm db:cf:migrate:local");
+}
+
+async function addApiKeys() {
+  const cwd = process.cwd();
+  assertProjectFile("package.json");
+  assertProjectFile("wrangler.jsonc");
+
+  if (!existsSync(resolve(cwd, "src/db/client.ts"))) {
+    throw new Error(
+      "The api-keys module requires the database module. Run `shipstack add database` first.",
+    );
+  }
+
+  if (!existsSync(resolve(cwd, "src/features/auth/server.ts"))) {
+    throw new Error(
+      "The api-keys module requires the auth module. Run `shipstack add auth` first.",
+    );
+  }
+
+  await copyModuleFiles("api-keys", cwd);
+  await copyModuleOverrides("api-keys", cwd);
+  await includeApiKeysSchemaInDrizzleConfig(resolve(cwd, "drizzle.config.ts"));
+  await appendIfMissing(
+    resolve(cwd, "AGENTS.md"),
+    `
+## API Keys Module
+
+- Use \`src/features/api-keys/server.ts\` for API key creation, revocation, and request identity.
+- API keys are for server-to-server, CLI, and partner clients.
+- Do not use API keys as mobile-user login tokens.
+- Store only API key hashes in D1; show the plaintext key only once at creation time.
+- Derive API user identity from the session or verified API key, never from a client-provided user ID.
+`,
+    "## API Keys Module",
+  );
+  await appendIfMissing(
+    resolve(cwd, "README.md"),
+    `
+- [API Keys](./docs/api-keys.md)
+- [API Keys](./docs/zh-CN/api-keys.md)
+`,
+    "[API Keys](./docs/api-keys.md)",
+  );
+
+  console.log("Installed api-keys module.");
+  console.log("");
+  console.log("Next steps:");
+  console.log("  pnpm install");
   console.log("  pnpm db:generate");
   console.log("  pnpm db:cf:migrate:local");
 }
@@ -954,6 +1067,7 @@ Modules:
   auth        Add Better Auth
   storage     Add Cloudflare R2 file storage
   billing     Add Stripe billing
+  api-keys    Add API keys for external clients
 
 This is an early CLI skeleton. More modules will land as the starter matures.`);
 }

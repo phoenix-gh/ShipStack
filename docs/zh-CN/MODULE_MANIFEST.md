@@ -65,7 +65,7 @@ export interface ShipStackModule {
 
 示例：`auth-better-auth` 依赖 `database-d1`。
 
-示例：`api-keys` 依赖 `api` 和 `database-d1`。
+示例：`api-keys` 依赖 `database-d1` 和 `auth-better-auth`。
 
 ### `conflicts`
 

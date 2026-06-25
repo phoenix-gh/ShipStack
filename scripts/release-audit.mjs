@@ -224,6 +224,10 @@ const checks = [
           "templates/modules/storage-r2/docs/zh-CN/storage.md",
           ["wrangler r2 bucket create", "Better Auth session"],
         ),
+        await assertFileContainsMarkers(
+          "templates/modules/api-keys/docs/zh-CN/api-keys.md",
+          ["Authorization: Bearer", "D1 中只保存 hash"],
+        ),
       ];
       const findings = checks
         .filter((check) => !check.ok)
@@ -233,7 +237,7 @@ const checks = [
         ok: findings.length === 0,
         detail:
           findings.length === 0
-            ? "database, auth, billing, and storage module Chinese docs are present"
+            ? "database, auth, billing, storage, and API keys module Chinese docs are present"
             : findings.join("\n  "),
       };
     },
@@ -246,10 +250,12 @@ const checks = [
         "[Authentication](./docs/auth.md)",
         "[Billing](./docs/billing.md)",
         "[Storage](./docs/storage.md)",
+        "[API Keys](./docs/api-keys.md)",
         "[数据库](./docs/zh-CN/database.md)",
         "[认证](./docs/zh-CN/auth.md)",
         "[支付](./docs/zh-CN/billing.md)",
         "[存储](./docs/zh-CN/storage.md)",
+        "[API Keys](./docs/zh-CN/api-keys.md)",
       ]);
     },
   },
@@ -265,6 +271,8 @@ const checks = [
         "billing README docs links",
         "storage docs",
         "storage README docs links",
+        "api keys docs",
+        "api keys README docs links",
       ]);
     },
   },

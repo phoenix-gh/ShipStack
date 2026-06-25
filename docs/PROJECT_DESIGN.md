@@ -581,7 +581,7 @@ Support two API authentication modes:
 - session auth for first-party web or app clients that can use cookies
 - API key auth for CLIs, server-to-server calls, and third-party integrations
 
-MVP can include session-authenticated examples. API keys can ship as a follow-up module.
+The API keys recipe adds bearer authentication for CLIs, server-to-server calls, and third-party integrations.
 
 Do not treat API keys as mobile-user login tokens. Native app user authentication should use a dedicated session or bearer-token strategy with clear refresh, revocation, and storage rules.
 

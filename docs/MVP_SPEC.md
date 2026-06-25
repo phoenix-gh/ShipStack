@@ -72,6 +72,15 @@ A developer can create a TanStack Start app, run it locally, authenticate a user
 - ownership checks before file access
 - storage smoke test
 
+### API Keys Recipe
+
+- `shipstack add api-keys`
+- hashed API key storage in D1
+- session-managed key creation, listing, and revocation routes
+- bearer API key support for external API clients
+- reusable request identity helper for session or API key auth
+- API keys smoke test
+
 ### Deployment
 
 - `wrangler.jsonc`
@@ -96,7 +105,6 @@ A developer can create a TanStack Start app, run it locally, authenticate a user
 
 ## Out Of Scope
 
-- API keys
 - OpenAPI generation
 - public API rate limiting
 - generated SDKs
@@ -124,6 +132,7 @@ shipstack add database
 shipstack add auth
 shipstack add billing
 shipstack add storage
+shipstack add api-keys
 pnpm db:generate
 pnpm db:cf:migrate:local
 pnpm dev

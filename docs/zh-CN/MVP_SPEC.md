@@ -72,6 +72,15 @@
 - 文件访问前检查 ownership
 - storage smoke test
 
+### API Keys Recipe
+
+- `shipstack add api-keys`
+- 在 D1 中保存 hashed API key
+- session-managed key 创建、列表和撤销 routes
+- 为外部 API clients 支持 bearer API key
+- 可复用 request identity helper，支持 session 或 API key auth
+- API keys smoke test
+
 ### Deployment
 
 - `wrangler.jsonc`
@@ -96,7 +105,6 @@
 
 ## 范围外
 
-- API keys
 - OpenAPI generation
 - public API rate limiting
 - generated SDKs
@@ -124,6 +132,7 @@ shipstack add database
 shipstack add auth
 shipstack add billing
 shipstack add storage
+shipstack add api-keys
 pnpm db:generate
 pnpm db:cf:migrate:local
 pnpm dev

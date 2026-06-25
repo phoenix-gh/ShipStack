@@ -252,6 +252,52 @@ test("database and auth installers patch generated apps idempotently", async () 
       );
       await writeFile("README.md", billingReadme);
       await runSilently(["doctor"]);
+
+      await runSilently(["add", "api-keys"]);
+      await runSilently(["add", "api-keys"]);
+
+      const apiKeysDrizzleConfig = await readFile("drizzle.config.ts", "utf8");
+      assert.equal(
+        count(apiKeysDrizzleConfig, "./src/db/api-keys-schema.ts"),
+        1,
+      );
+
+      const apiKeysReadme = await readFile("README.md", "utf8");
+      assert.equal(count(apiKeysReadme, "[API Keys](./docs/api-keys.md)"), 1);
+      assert.equal(
+        count(apiKeysReadme, "[API Keys](./docs/zh-CN/api-keys.md)"),
+        1,
+      );
+
+      const apiKeysAgents = await readFile("AGENTS.md", "utf8");
+      assert.equal(count(apiKeysAgents, "## API Keys Module"), 1);
+      assert.match(apiKeysAgents, /src\/features\/api-keys\/server\.ts/);
+      await writeFile(
+        "AGENTS.md",
+        apiKeysAgents.replace(
+          "## API Keys Module",
+          "## Missing API Keys Module",
+        ),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("AGENTS.md", apiKeysAgents);
+
+      await writeFile(
+        "README.md",
+        apiKeysReadme.replace(
+          "[API Keys](./docs/api-keys.md)",
+          "[Missing API Keys](./docs/api-keys.md)",
+        ),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("README.md", apiKeysReadme);
+      await runSilently(["doctor"]);
     });
   });
 });
@@ -292,6 +338,27 @@ test("billing installer requires database and auth modules", async () => {
 
       await assert.rejects(
         () => runSilently(["add", "billing"]),
+        /requires the auth module/,
+      );
+    });
+  });
+});
+
+test("api keys installer requires database and auth modules", async () => {
+  await withWorkspace(async (workspace) => {
+    await runSilently(["create", "api-keys-app"]);
+    const appDir = resolve(workspace, "api-keys-app");
+
+    await withCwd(appDir, async () => {
+      await assert.rejects(
+        () => runSilently(["add", "api-keys"]),
+        /requires the database module/,
+      );
+
+      await runSilently(["add", "database"]);
+
+      await assert.rejects(
+        () => runSilently(["add", "api-keys"]),
         /requires the auth module/,
       );
     });

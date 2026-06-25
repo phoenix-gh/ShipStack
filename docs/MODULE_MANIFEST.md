@@ -65,7 +65,7 @@ Other module IDs required before installation.
 
 Example: `auth-better-auth` depends on `database-d1`.
 
-Example: `api-keys` depends on `api` and `database-d1`.
+Example: `api-keys` depends on `database-d1` and `auth-better-auth`.
 
 ### `conflicts`
 

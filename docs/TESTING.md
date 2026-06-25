@@ -36,6 +36,7 @@ The smoke suite creates temporary real apps, installs dependencies, and runs app
 - `scripts/smoke/auth.mjs` creates an app, installs database and Better Auth modules, installs auth twice, checks module Chinese docs, verifies linting, generates auth migrations, applies them locally with Wrangler, starts the dev server, verifies anonymous dashboard redirect, signs in, checks authenticated `/api/v1/me`, runs browser sign up/sign out/sign in/dashboard checks, then runs the same app checks.
 - `scripts/smoke/storage.mjs` creates an app, installs database, auth, and R2 storage modules, installs storage twice, checks module Chinese docs, generates and applies metadata migrations, starts the dev server, signs in, uploads a file through `/api/v1/files`, lists it, deletes it, and verifies the file list is empty again.
 - `scripts/smoke/billing.mjs` creates an app, installs database, auth, and Stripe billing modules, installs billing twice, checks module Chinese docs, generates and applies billing migrations, starts the dev server, signs in, posts a signed Stripe webhook fixture, verifies idempotency, and checks `/api/v1/billing/status`.
+- `scripts/smoke/api-keys.mjs` creates an app, installs database, auth, and API keys modules, installs API keys twice, checks module Chinese docs, generates and applies API key migrations, starts the dev server, signs in, creates an API key, authenticates `/api/v1/me` with `Authorization: Bearer`, revokes the key, and verifies revoked keys no longer authenticate.
 
 Smoke workspaces are created in the operating system temp directory. Passing runs are removed automatically. Failed runs are kept and printed so the generated project can be inspected.
 
@@ -74,7 +75,7 @@ exit code while external release gates are still intentionally pending.
 The CI workflow installs Playwright Chromium before running the release
 verification because the auth smoke includes a real browser flow.
 
-`pnpm test` runs package-level unit tests. `pnpm format:check` verifies repository formatting. `pnpm pack:check` verifies that npm package tarballs include the compiled entrypoints and generated-app templates required by the CLI, installs the packed tarballs into a temporary workspace, creates an app from the packed `create-shipstack` CLI, installs database, auth, billing, and storage modules from the packed `shipstack` CLI, verifies module docs links, and runs `shipstack doctor`.
+`pnpm test` runs package-level unit tests. `pnpm format:check` verifies repository formatting. `pnpm pack:check` verifies that npm package tarballs include the compiled entrypoints and generated-app templates required by the CLI, installs the packed tarballs into a temporary workspace, creates an app from the packed `create-shipstack` CLI, installs database, auth, billing, storage, and API keys modules from the packed `shipstack` CLI, verifies module docs links, and runs `shipstack doctor`.
 
 ### Optional Temporary Cloudflare Deploy Smoke
 

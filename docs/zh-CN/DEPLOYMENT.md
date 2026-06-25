@@ -95,9 +95,9 @@ pnpm smoke:temporary-deploy
 
    在有明确可信客户端 origin 之前保持为空。为空时，CORS 默认保持收紧。
 
-## D1、Auth、Billing 和 Storage 手动部署检查
+## D1、Auth、Billing、Storage 和 API Keys 手动部署检查
 
-验证 database、auth、billing 和 storage 模块时，在生成应用里继续执行这些步骤。
+验证 database、auth、billing、storage 和 API keys 模块时，在生成应用里继续执行这些步骤。
 
 1. 安装模块。
 
@@ -106,6 +106,7 @@ pnpm smoke:temporary-deploy
    node ../packages/cli/dist/cli.js add auth
    node ../packages/cli/dist/cli.js add billing
    node ../packages/cli/dist/cli.js add storage
+   node ../packages/cli/dist/cli.js add api-keys
    pnpm install
    ```
 

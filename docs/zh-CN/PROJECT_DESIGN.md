@@ -598,7 +598,7 @@ ShipStack 应该能作为这些客户端的 API backend：
 - session auth：用于可以使用 cookie 的 first-party web/app clients
 - API key auth：用于 CLI、server-to-server 和第三方集成
 
-MVP 可以只提供 session-authenticated 示例。API keys 作为后续模块提供。
+API keys recipe 会为 CLI、server-to-server 和第三方集成增加 bearer authentication。
 
 不要把 API keys 当成移动 App 用户登录 token。Native app 用户认证应该有独立的 session 或 bearer-token 策略，并明确 refresh、撤销和安全存储规则。
 
