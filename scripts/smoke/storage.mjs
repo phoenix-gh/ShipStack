@@ -132,7 +132,7 @@ async function verifyStorageRuntime(appDir) {
         beforeStart: async ({ origin }) => {
           await writeFile(
             devVarsPath,
-            `BETTER_AUTH_SECRET="shipstack-smoke-secret-at-least-32-characters"\nBETTER_AUTH_URL="${origin}"\n`,
+            `BETTER_AUTH_SECRET="storage smoke auth secret for local tests only"\nBETTER_AUTH_URL="${origin}"\n`,
           );
         },
       },
