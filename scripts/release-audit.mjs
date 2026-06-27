@@ -326,6 +326,61 @@ const checks = [
     },
   },
   {
+    label: "Generated module install docs include dependency install",
+    action: async () => {
+      return await assertFilesContainMarkers([
+        {
+          file: "templates/modules/api-keys/docs/api-keys.md",
+          markers: [
+            "shipstack add api-keys",
+            "pnpm install",
+            "pnpm db:generate",
+          ],
+        },
+        {
+          file: "templates/modules/api-keys/docs/zh-CN/api-keys.md",
+          markers: [
+            "shipstack add api-keys",
+            "pnpm install",
+            "pnpm db:generate",
+          ],
+        },
+        {
+          file: "templates/modules/openapi/docs/openapi.md",
+          markers: [
+            "shipstack add openapi",
+            "pnpm install",
+            "pnpm openapi:generate",
+          ],
+        },
+        {
+          file: "templates/modules/openapi/docs/zh-CN/openapi.md",
+          markers: [
+            "shipstack add openapi",
+            "pnpm install",
+            "pnpm openapi:generate",
+          ],
+        },
+        {
+          file: "templates/modules/api-rate-limit/docs/api-rate-limit.md",
+          markers: [
+            "shipstack add api-rate-limit",
+            "pnpm install",
+            "pnpm test",
+          ],
+        },
+        {
+          file: "templates/modules/api-rate-limit/docs/zh-CN/api-rate-limit.md",
+          markers: [
+            "shipstack add api-rate-limit",
+            "pnpm install",
+            "pnpm test",
+          ],
+        },
+      ]);
+    },
+  },
+  {
     label: "Generated module docs are linked from README",
     action: async () => {
       return await assertFileContainsMarkers("packages/cli/src/run-cli.ts", [

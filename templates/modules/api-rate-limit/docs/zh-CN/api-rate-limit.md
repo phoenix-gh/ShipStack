@@ -7,6 +7,7 @@ API rate limit 模块会添加一个小型 fixed-window helper，用来保护 AP
 
 ```bash
 shipstack add api-rate-limit
+pnpm install
 pnpm test
 pnpm build
 ```

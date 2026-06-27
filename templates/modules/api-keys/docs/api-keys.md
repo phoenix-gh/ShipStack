@@ -8,6 +8,7 @@ Install it after database and auth:
 shipstack add database
 shipstack add auth
 shipstack add api-keys
+pnpm install
 pnpm db:generate
 pnpm db:cf:migrate:local
 ```

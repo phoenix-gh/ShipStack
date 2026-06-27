@@ -7,6 +7,7 @@ Install it after API keys:
 
 ```bash
 shipstack add api-rate-limit
+pnpm install
 pnpm test
 pnpm build
 ```

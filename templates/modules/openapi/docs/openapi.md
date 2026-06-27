@@ -6,6 +6,7 @@ Install it with:
 
 ```bash
 shipstack add openapi
+pnpm install
 pnpm openapi:generate
 ```
 

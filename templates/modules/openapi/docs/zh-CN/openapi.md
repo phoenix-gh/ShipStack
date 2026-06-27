@@ -6,6 +6,7 @@ OpenAPI 模块会为已安装的 ShipStack API routes 生成 OpenAPI 3.1 文档�
 
 ```bash
 shipstack add openapi
+pnpm install
 pnpm openapi:generate
 ```
 

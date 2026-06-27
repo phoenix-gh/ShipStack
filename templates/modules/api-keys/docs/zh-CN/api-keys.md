@@ -8,6 +8,7 @@ API Keys 模块为 server-to-server、CLI 和第三方集成客户端增加 API 
 shipstack add database
 shipstack add auth
 shipstack add api-keys
+pnpm install
 pnpm db:generate
 pnpm db:cf:migrate:local
 ```
