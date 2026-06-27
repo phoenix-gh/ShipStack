@@ -12,10 +12,13 @@ External verification status in this workspace:
 - `pnpm smoke:temporary-deploy` has passed before, but the latest attempt on
   2026-06-24 failed before upload with Wrangler `fetch failed` connectivity
   errors.
-- The latest `pnpm verify:release` retry on 2026-06-24 reached generated app
-  dependency installation, then was stopped after repeated npm registry
-  `ECONNRESET` failures. No ShipStack code failure was observed before the
-  network stall.
+- The latest full local release verification on 2026-06-27 passed
+  `pnpm verify:local`, `pnpm smoke`, and `pnpm release:audit:local`.
+- The latest `pnpm smoke` run on 2026-06-27 also passed the generated app
+  `wrangler deploy --dry-run` check after `bubblewrap` was installed.
+- `pnpm smoke:temporary-deploy` still needs an explicit maintainer approval
+  before rerun because it uploads generated app code to Cloudflare's temporary
+  deployment service.
 - `git remote -v` has no configured remote, so remote GitHub Actions cannot be checked from this workspace.
 
 Last verified:
@@ -78,51 +81,51 @@ Latest commit:
 
 ## Test Progress
 
-| Check                        | Status           | Command                             |
-| ---------------------------- | ---------------- | ----------------------------------- |
-| Repository typecheck         | Passing          | `pnpm typecheck`                    |
-| Repository build             | Passing          | `pnpm build`                        |
-| CLI behavior smoke           | Passing          | `pnpm smoke`                        |
-| Generated base app smoke     | Passing          | `pnpm smoke`                        |
-| Generated database app smoke | Passing          | `pnpm smoke`                        |
-| Generated auth app smoke     | Passing          | `pnpm smoke`                        |
-| Generated billing app smoke  | Passing          | `node scripts/smoke/billing.mjs`    |
-| Generated storage app smoke  | Passing          | `node scripts/smoke/storage.mjs`    |
-| Generated API keys app smoke | Passing          | `node scripts/smoke/api-keys.mjs`   |
-| Generated OpenAPI app smoke  | Passing          | `node scripts/smoke/openapi.mjs`    |
-| Generated app lint           | Passing          | `pnpm smoke`                        |
-| Wrangler deploy dry-run      | Passing          | `pnpm smoke`                        |
-| Deployed route verifier      | Passing          | `pnpm smoke`                        |
-| Generated env safety         | Passing          | `pnpm smoke`, `pnpm release:audit`  |
-| Generated Chinese docs       | Passing          | `pnpm smoke`, `pnpm pack:check`     |
-| Module Chinese docs          | Passing          | `pnpm smoke`, `pnpm pack:check`     |
-| Module docs README links     | Passing          | `pnpm smoke`, `pnpm pack:check`     |
-| Doctor module docs checks    | Passing          | `pnpm test`, `pnpm pack:check`      |
-| Doctor base docs checks      | Passing          | `pnpm test`, `pnpm pack:check`      |
-| Local-only release audit     | Passing          | `pnpm release:audit:local`          |
-| Fast local verification      | Passing          | `pnpm verify:local`                 |
-| Temporary Cloudflare deploy  | External blocked | `pnpm smoke:temporary-deploy`       |
-| CLI unit tests               | Passing          | `pnpm test`                         |
-| Runtime API tests            | Passing          | `pnpm smoke`                        |
-| API CORS smoke               | Passing          | `pnpm smoke`                        |
-| Auth browser e2e tests       | Passing          | `pnpm smoke`                        |
-| D1 migration smoke           | Passing          | `pnpm smoke`                        |
-| Auth migration smoke         | Passing          | `pnpm smoke`                        |
-| Stripe billing webhook smoke | Passing          | `node scripts/smoke/billing.mjs`    |
-| R2 storage API smoke         | Passing          | `node scripts/smoke/storage.mjs`    |
-| API key bearer auth smoke    | Passing          | `node scripts/smoke/api-keys.mjs`   |
-| OpenAPI generation smoke     | Passing          | `node scripts/smoke/openapi.mjs`    |
-| Module AGENTS guidance       | Passing          | `pnpm test`, `pnpm smoke`           |
-| Open-source license          | Added            | `LICENSE`                           |
-| Contribution guide           | Added            | `CONTRIBUTING.md`                   |
-| Security policy              | Added            | `SECURITY.md`                       |
-| Issue and PR templates       | Added            | `.github` templates                 |
-| Release checklist            | Added            | `docs/RELEASE.md`                   |
-| npm package contents         | Passing          | `pnpm pack:check`                   |
-| CI workflow                  | Added            | GitHub Actions                      |
-| Release verification command | Passing          | `pnpm verify:release`               |
-| v0.1.0 release notes         | Added            | `docs/releases`                     |
-| npm publish workflow         | Added            | `.github/workflows/release-npm.yml` |
+| Check                        | Status         | Command                             |
+| ---------------------------- | -------------- | ----------------------------------- |
+| Repository typecheck         | Passing        | `pnpm typecheck`                    |
+| Repository build             | Passing        | `pnpm build`                        |
+| CLI behavior smoke           | Passing        | `pnpm smoke`                        |
+| Generated base app smoke     | Passing        | `pnpm smoke`                        |
+| Generated database app smoke | Passing        | `pnpm smoke`                        |
+| Generated auth app smoke     | Passing        | `pnpm smoke`                        |
+| Generated billing app smoke  | Passing        | `node scripts/smoke/billing.mjs`    |
+| Generated storage app smoke  | Passing        | `node scripts/smoke/storage.mjs`    |
+| Generated API keys app smoke | Passing        | `node scripts/smoke/api-keys.mjs`   |
+| Generated OpenAPI app smoke  | Passing        | `node scripts/smoke/openapi.mjs`    |
+| Generated app lint           | Passing        | `pnpm smoke`                        |
+| Wrangler deploy dry-run      | Passing        | `pnpm smoke`                        |
+| Deployed route verifier      | Passing        | `pnpm smoke`                        |
+| Generated env safety         | Passing        | `pnpm smoke`, `pnpm release:audit`  |
+| Generated Chinese docs       | Passing        | `pnpm smoke`, `pnpm pack:check`     |
+| Module Chinese docs          | Passing        | `pnpm smoke`, `pnpm pack:check`     |
+| Module docs README links     | Passing        | `pnpm smoke`, `pnpm pack:check`     |
+| Doctor module docs checks    | Passing        | `pnpm test`, `pnpm pack:check`      |
+| Doctor base docs checks      | Passing        | `pnpm test`, `pnpm pack:check`      |
+| Local-only release audit     | Passing        | `pnpm release:audit:local`          |
+| Fast local verification      | Passing        | `pnpm verify:local`                 |
+| Temporary Cloudflare deploy  | Needs approval | `pnpm smoke:temporary-deploy`       |
+| CLI unit tests               | Passing        | `pnpm test`                         |
+| Runtime API tests            | Passing        | `pnpm smoke`                        |
+| API CORS smoke               | Passing        | `pnpm smoke`                        |
+| Auth browser e2e tests       | Passing        | `pnpm smoke`                        |
+| D1 migration smoke           | Passing        | `pnpm smoke`                        |
+| Auth migration smoke         | Passing        | `pnpm smoke`                        |
+| Stripe billing webhook smoke | Passing        | `node scripts/smoke/billing.mjs`    |
+| R2 storage API smoke         | Passing        | `node scripts/smoke/storage.mjs`    |
+| API key bearer auth smoke    | Passing        | `node scripts/smoke/api-keys.mjs`   |
+| OpenAPI generation smoke     | Passing        | `node scripts/smoke/openapi.mjs`    |
+| Module AGENTS guidance       | Passing        | `pnpm test`, `pnpm smoke`           |
+| Open-source license          | Added          | `LICENSE`                           |
+| Contribution guide           | Added          | `CONTRIBUTING.md`                   |
+| Security policy              | Added          | `SECURITY.md`                       |
+| Issue and PR templates       | Added          | `.github` templates                 |
+| Release checklist            | Added          | `docs/RELEASE.md`                   |
+| npm package contents         | Passing        | `pnpm pack:check`                   |
+| CI workflow                  | Added          | GitHub Actions                      |
+| Release verification command | Passing        | `pnpm verify:release`               |
+| v0.1.0 release notes         | Added          | `docs/releases`                     |
+| npm publish workflow         | Added          | `.github/workflows/release-npm.yml` |
 
 ## Next Priority
 

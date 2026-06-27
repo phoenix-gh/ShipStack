@@ -192,11 +192,12 @@ billing, storage, API keys, and OpenAPI modules.
 
 ## Current Manual Status
 
-Temporary Cloudflare deployment has passed from this workspace with
-`pnpm smoke:temporary-deploy`. Real-account deployment has not been recorded for
-this repository yet. The generated app includes the commands and route checks
-needed for a maintainer or contributor with Cloudflare credentials to complete
-the pass.
+Temporary Cloudflare deployment has passed from this workspace before, but it
+has not been rerun for the current release candidate after the latest recipe
+changes. The latest local smoke run passed `wrangler deploy --dry-run`.
+Real-account deployment has not been recorded for this repository yet. The
+generated app includes the commands and route checks needed for a maintainer or
+contributor with Cloudflare credentials to complete the pass.
 
 ## References
 

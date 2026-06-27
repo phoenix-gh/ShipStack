@@ -11,9 +11,12 @@
 - `pnpm dlx wrangler whoami` 显示 Wrangler 尚未登录。
 - `pnpm smoke:temporary-deploy` 之前通过过 Cloudflare temporary account flow，
   但 2026-06-24 最新一次尝试在上传前因 Wrangler `fetch failed` 网络错误失败。
-- 2026-06-24 最新一次重跑 `pnpm verify:release` 已进入生成应用依赖安装阶段，
-  但 npm registry 持续返回 `ECONNRESET`，因此手动停止；停止前没有观察到
-  ShipStack 代码失败。
+- 2026-06-27 最新一次完整本地 release 验证已通过 `pnpm verify:local`、
+  `pnpm smoke` 和 `pnpm release:audit:local`。
+- 2026-06-27 最新一次 `pnpm smoke` 也在安装 `bubblewrap` 后通过了生成应用的
+  `wrangler deploy --dry-run` 检查。
+- `pnpm smoke:temporary-deploy` 仍需要维护者明确批准后才能重跑，因为它会把
+  生成应用代码上传到 Cloudflare temporary deployment 服务。
 - `git remote -v` 没有配置 remote，因此当前 workspace 无法检查远端 GitHub Actions。
 
 最近已验证：
@@ -99,7 +102,7 @@
 | Doctor base docs 检查        | 通过     | `pnpm test`, `pnpm pack:check`      |
 | 本地-only release audit      | 通过     | `pnpm release:audit:local`          |
 | 快速本地验证                 | 通过     | `pnpm verify:local`                 |
-| Cloudflare 临时部署          | 外部阻塞 | `pnpm smoke:temporary-deploy`       |
+| Cloudflare 临时部署          | 需要批准 | `pnpm smoke:temporary-deploy`       |
 | CLI unit tests               | 通过     | `pnpm test`                         |
 | Runtime API tests            | 通过     | `pnpm smoke`                        |
 | API CORS smoke               | 通过     | `pnpm smoke`                        |

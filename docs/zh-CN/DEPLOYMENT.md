@@ -186,7 +186,7 @@ pnpm smoke:temporary-deploy
 
 ## 当前手动状态
 
-当前 workspace 已通过 `pnpm smoke:temporary-deploy` 完成 Cloudflare 临时部署验证。真实账号部署验证还没有记录。生成应用已经包含维护者或贡献者拿到 Cloudflare 凭据后完成部署验证所需的命令和 route checks。
+当前 workspace 之前通过过 `pnpm smoke:temporary-deploy` 的 Cloudflare 临时部署验证，但在最新 recipe 改动后的当前 release candidate 上还没有重新运行。最新本地 smoke 已通过 `wrangler deploy --dry-run`。真实账号部署验证还没有记录。生成应用已经包含维护者或贡献者拿到 Cloudflare 凭据后完成部署验证所需的命令和 route checks。
 
 ## 参考资料
 
