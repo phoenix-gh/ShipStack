@@ -19,8 +19,9 @@ External verification status in this workspace:
   `wrangler deploy --dry-run`, and module smoke tests for database, auth,
   billing, storage, API keys, OpenAPI, and API rate limiting.
 - The latest full release audit on 2026-06-28 passed local checks but stopped
-  on two external blockers: no configured Git remote and unauthenticated
-  Wrangler.
+  on five external blockers: pending release evidence for real Cloudflare
+  deploy, remote GitHub Actions, and remote npm publish workflow dry-run, plus
+  no configured Git remote and unauthenticated Wrangler.
 - The latest local npm publish dry-run on 2026-06-28 passed
   `pnpm publish:dry-run` for `@shipstack/core`, `@shipstack/cli`, and
   `create-shipstack`.

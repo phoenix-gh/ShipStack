@@ -796,6 +796,29 @@ const checks = [
     },
   },
   {
+    label: "Real Cloudflare deploy evidence is recorded",
+    external: true,
+    action: async () => {
+      return await releaseEvidenceRecorded("Real Cloudflare Deploy Evidence");
+    },
+  },
+  {
+    label: "Remote GitHub Actions evidence is recorded",
+    external: true,
+    action: async () => {
+      return await releaseEvidenceRecorded("GitHub Actions Evidence");
+    },
+  },
+  {
+    label: "Remote npm publish workflow dry-run evidence is recorded",
+    external: true,
+    action: async () => {
+      return await releaseEvidenceRecorded(
+        "npm Publish Workflow Dry-Run Evidence",
+      );
+    },
+  },
+  {
     label: "Git remote is configured",
     external: true,
     action: async () => {
@@ -877,6 +900,43 @@ async function exists(path) {
   } catch {
     return false;
   }
+}
+
+async function releaseEvidenceRecorded(sectionTitle) {
+  const file = "docs/RELEASE_EVIDENCE.md";
+  const content = await readFile(resolve(repositoryRoot, file), "utf8");
+  const section = extractMarkdownSection(content, sectionTitle);
+  if (!section) {
+    return {
+      ok: false,
+      detail: `${file} is missing section: ${sectionTitle}`,
+      external: true,
+    };
+  }
+
+  const status = section.match(/^Status:\s*(.+)$/im)?.[1]?.trim() ?? "";
+  const ok = status !== "" && !/^pending$/i.test(status);
+
+  return {
+    ok,
+    detail: ok
+      ? `${file} ${sectionTitle}: ${status}`
+      : `${file} ${sectionTitle} status is pending`,
+    external: true,
+  };
+}
+
+function extractMarkdownSection(content, sectionTitle) {
+  const lines = content.split("\n");
+  const start = lines.findIndex((line) => line.trim() === `## ${sectionTitle}`);
+  if (start < 0) {
+    return "";
+  }
+
+  const end = lines.findIndex((line, index) => {
+    return index > start && line.startsWith("## ");
+  });
+  return lines.slice(start + 1, end < 0 ? undefined : end).join("\n");
 }
 
 async function assertFileContainsMarkers(file, requiredMarkers) {

@@ -102,5 +102,7 @@
 
 - Wrangler 还没有用真实 Cloudflare 账号登录。
 - 还没有 git remote，因此无法检查远端 GitHub Actions。
+- `docs/RELEASE_EVIDENCE.md` 还没有记录真实 Cloudflare deploy、远端 GitHub
+  Actions 和远端 npm publish workflow dry-run 的通过证据。
 
 Cloudflare temporary deploy smoke 是有价值的证据，但不能替代真实账号部署验证。

@@ -16,8 +16,10 @@
   tests、recipe installer next-step 输出检查、本地 D1 migrations、浏览器 auth
   smoke、生成应用 `wrangler deploy --dry-run`，以及 database、auth、billing、
   storage、API keys、OpenAPI、API rate limiting 的模块 smoke tests。
-- 2026-06-28 最新一次完整 release audit 已通过本地检查，但停在两个外部门槛：
-  没有配置 Git remote，且 Wrangler 尚未登录。
+- 2026-06-28 最新一次完整 release audit 已通过本地检查，但停在五个外部门槛：
+  真实 Cloudflare deploy、远端 GitHub Actions、远端 npm publish workflow
+  dry-run 的 release evidence 仍是 pending，且没有配置 Git remote、Wrangler
+  尚未登录。
 - 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack/core`、
   `@shipstack/cli` 和 `create-shipstack` 通过 `pnpm publish:dry-run`。
 - 2026-06-28 最新一次 `pnpm smoke` 在安装 `bubblewrap` 后通过，覆盖 recipe

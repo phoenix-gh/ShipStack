@@ -108,6 +108,8 @@ This workspace cannot complete the final release gate until:
 
 - Wrangler is authenticated with a real Cloudflare account.
 - A git remote exists and GitHub Actions can be checked remotely.
+- `docs/RELEASE_EVIDENCE.md` records passing evidence for real Cloudflare
+  deploy, remote GitHub Actions, and remote npm publish workflow dry-run.
 
 The temporary Cloudflare deploy smoke is useful evidence, but it does not
 replace the real-account deployment pass.
