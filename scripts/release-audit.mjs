@@ -609,6 +609,35 @@ const checks = [
     },
   },
   {
+    label: "release evidence templates describe external gate records",
+    action: async () => {
+      return await assertFilesContainMarkers([
+        {
+          file: "docs/RELEASE_EVIDENCE.md",
+          markers: [
+            "Real Cloudflare Deploy Evidence",
+            "Worker URL",
+            "pnpm verify:deployed",
+            "GitHub Actions Evidence",
+            "npm Publish Workflow Dry-Run Evidence",
+            "Do not paste secrets",
+          ],
+        },
+        {
+          file: "docs/zh-CN/RELEASE_EVIDENCE.md",
+          markers: [
+            "真实 Cloudflare 部署证据",
+            "Worker URL",
+            "pnpm verify:deployed",
+            "GitHub Actions 证据",
+            "npm Publish Workflow Dry-Run 证据",
+            "不要粘贴 secrets",
+          ],
+        },
+      ]);
+    },
+  },
+  {
     label: "README describes current release status",
     action: async () => {
       return await assertFilesContainMarkers([

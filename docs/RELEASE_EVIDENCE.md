@@ -1,0 +1,85 @@
+# Release Evidence
+
+Use this file when preparing a ShipStack release. Record links and command
+results for external gates here, then update `docs/PROGRESS.md` and
+`docs/releases/v0.1.0.md` with the final status.
+
+Do not paste secrets, API tokens, session cookies, account IDs that should stay
+private, or full environment files.
+
+## Real Cloudflare Deploy Evidence
+
+Status: pending
+
+- Date:
+- Commit:
+- Maintainer:
+- Wrangler account check:
+
+  ```sh
+  pnpm dlx wrangler whoami
+  ```
+
+- Worker URL:
+- Deploy command:
+
+  ```sh
+  pnpm deploy
+  ```
+
+- Route verification command:
+
+  ```sh
+  pnpm verify:deployed https://<your-worker-url>
+  ```
+
+- Result:
+- Notes:
+
+## GitHub Actions Evidence
+
+Status: pending
+
+- Date:
+- Commit:
+- Workflow:
+- Run URL:
+- Result:
+- Notes:
+
+## npm Publish Workflow Dry-Run Evidence
+
+Status: pending
+
+- Date:
+- Commit:
+- Workflow:
+- Run URL:
+- Input:
+
+  ```text
+  dry_run: true
+  ```
+
+- Result:
+- Packages checked:
+  - `@shipstack/core`
+  - `@shipstack/cli`
+  - `create-shipstack`
+- Notes:
+
+## Optional Temporary Cloudflare Deploy Evidence
+
+Status: pending
+
+- Date:
+- Commit:
+- Command:
+
+  ```sh
+  pnpm smoke:temporary-deploy
+  ```
+
+- Temporary Worker URL:
+- Result:
+- Notes:

@@ -50,8 +50,9 @@
 
 7. 确认 release branch 上的远端 GitHub Actions workflow 通过。
 
-8. 在 [部署验证](./DEPLOYMENT.md) 或
-   [v0.1.0 release notes](./releases/v0.1.0.md) 里记录真实部署后的 Worker 验证结果。
+8. 在 [Release 证据记录](./RELEASE_EVIDENCE.md) 中记录真实部署后的 Worker 验证结果，
+   然后在 [部署验证](./DEPLOYMENT.md) 或
+   [v0.1.0 release notes](./releases/v0.1.0.md) 里总结结果。
 
 9. 确认 release notes 包含：
 
@@ -92,6 +93,7 @@
 - `pnpm pack:check` 会在发布前验证 package 内容，并从打包 tarballs 创建应用。
 - `pnpm publish:dry-run` 会在远端 workflow 使用 provenance 发布前，先验证 npm
   能以 dry-run 模式接受打包 tarballs。
+- `docs/RELEASE_EVIDENCE.md` 记录外部 gate 链接和命令结果，但不记录 secrets。
 - `docs/PROGRESS.md` 与当前 release 状态一致。
 
 ## 当前已知外部缺口

@@ -53,6 +53,7 @@ Do not tag `v0.1.0` until these checks are complete:
 7. Confirm the remote GitHub Actions workflow passes on the release branch.
 
 8. Record the real deployed Worker verification result in
+   [Release Evidence](./RELEASE_EVIDENCE.md), then summarize the result in
    [Deployment Verification](./DEPLOYMENT.md) or
    [v0.1.0 release notes](./releases/v0.1.0.md).
 
@@ -97,6 +98,8 @@ Do not tag `v0.1.0` until these checks are complete:
   tarballs before publishing.
 - `pnpm publish:dry-run` verifies npm accepts the packed tarballs in dry-run
   mode before the remote workflow publishes them with provenance.
+- `docs/RELEASE_EVIDENCE.md` records external gate links and command results
+  without secrets.
 - `docs/PROGRESS.md` matches the current release status.
 
 ## Current Known External Gaps
