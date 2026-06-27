@@ -96,6 +96,53 @@
 - `docs/RELEASE_EVIDENCE.md` 记录外部 gate 链接和命令结果，但不记录 secrets。
 - `docs/PROGRESS.md` 与当前 release 状态一致。
 
+## 外部门槛执行清单
+
+当本地检查已经通过，但 `pnpm release:audit` 仍报告外部阻塞项时，按这个顺序处理。
+
+1. 配置 git remote，并推送 release branch。
+
+   ```sh
+   git remote add origin <repository-url>
+   git push -u origin HEAD
+   ```
+
+   如果 `origin` 已经存在，先用 `git remote -v` 检查，不要直接覆盖。
+
+2. 确认 Wrangler 已登录。
+
+   ```sh
+   pnpm dlx wrangler login
+   pnpm dlx wrangler whoami
+   ```
+
+   不要把 Cloudflare tokens 或 account IDs 粘贴进已提交文件。
+
+3. 按 [部署验证](./DEPLOYMENT.md) 执行真实 Cloudflare deploy pass。
+
+   把已部署的 Worker URL 和 `pnpm verify:deployed` 结果记录到
+   [Release 证据记录](./RELEASE_EVIDENCE.md)。
+
+4. 确认 GitHub 远端 CI。
+
+   在 GitHub Actions 中打开已推送的 branch 或 pull request，确认 CI workflow
+   已通过，然后把 run URL 和结果记录到
+   [Release 证据记录](./RELEASE_EVIDENCE.md)。
+
+5. 在远端运行 npm publish workflow dry-run。
+
+   使用 `Release npm Packages` workflow，并设置 `dry_run: true`。确认它检查了
+   `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack`，然后把 run URL
+   和结果记录到 [Release 证据记录](./RELEASE_EVIDENCE.md)。
+
+6. 重新运行完整 audit。
+
+   ```sh
+   pnpm release:audit
+   ```
+
+   只有这个命令没有本地失败、也没有外部阻塞项时，才可以准备打 tag。
+
 ## 当前已知外部缺口
 
 当前 workspace 还不能完成最终 release gate，因为：

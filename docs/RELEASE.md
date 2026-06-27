@@ -102,6 +102,56 @@ Do not tag `v0.1.0` until these checks are complete:
   without secrets.
 - `docs/PROGRESS.md` matches the current release status.
 
+## External Gate Runbook
+
+Use this sequence when the local checks pass but `pnpm release:audit` still
+reports external blockers.
+
+1. Configure the git remote and push the release branch.
+
+   ```sh
+   git remote add origin <repository-url>
+   git push -u origin HEAD
+   ```
+
+   If `origin` already exists, inspect it with `git remote -v` instead of
+   replacing it blindly.
+
+2. Confirm Wrangler is authenticated.
+
+   ```sh
+   pnpm dlx wrangler login
+   pnpm dlx wrangler whoami
+   ```
+
+   Do not paste Cloudflare tokens or account IDs into committed files.
+
+3. Run the real Cloudflare deploy pass from [Deployment Verification](./DEPLOYMENT.md).
+
+   Record the deployed Worker URL and `pnpm verify:deployed` result in
+   [Release Evidence](./RELEASE_EVIDENCE.md).
+
+4. Confirm remote CI on GitHub.
+
+   Open the pushed branch or pull request in GitHub Actions, confirm the CI
+   workflow passed, then record the run URL and result in
+   [Release Evidence](./RELEASE_EVIDENCE.md).
+
+5. Run the npm publish workflow dry-run remotely.
+
+   Use the `Release npm Packages` workflow with `dry_run: true`. Confirm it
+   checks `@shipstack/core`, `@shipstack/cli`, and `create-shipstack`, then
+   record the run URL and result in [Release Evidence](./RELEASE_EVIDENCE.md).
+
+6. Rerun the full audit.
+
+   ```sh
+   pnpm release:audit
+   ```
+
+   The release is not ready to tag until this command passes with no local
+   failures and no external blockers.
+
 ## Current Known External Gaps
 
 This workspace cannot complete the final release gate until:
