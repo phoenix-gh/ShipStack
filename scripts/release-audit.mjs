@@ -534,6 +534,36 @@ const checks = [
     },
   },
   {
+    label: "issue templates cover current modules",
+    action: async () => {
+      return await assertFilesContainMarkers([
+        {
+          file: ".github/ISSUE_TEMPLATE/bug_report.yml",
+          markers: [
+            "database module",
+            "auth module",
+            "billing module",
+            "storage module",
+            "API keys recipe",
+            "OpenAPI recipe",
+            "API rate limit recipe",
+            "API foundation",
+          ],
+        },
+        {
+          file: ".github/ISSUE_TEMPLATE/feature_request.yml",
+          markers: [
+            "base starter change",
+            "module",
+            "recipe",
+            "test or smoke check",
+            "paid or private starter code",
+          ],
+        },
+      ]);
+    },
+  },
+  {
     label: "tracked files do not contain obvious secrets",
     action: async () => {
       const findings = await scanTrackedFilesForSecrets();

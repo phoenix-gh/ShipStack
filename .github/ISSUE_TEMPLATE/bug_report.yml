@@ -45,6 +45,11 @@ body:
         - CLI
         - database module
         - auth module
+        - billing module
+        - storage module
+        - API keys recipe
+        - OpenAPI recipe
+        - API rate limit recipe
         - API foundation
         - deployment
         - documentation
