@@ -132,6 +132,7 @@ async function verifyGeneratedMetadata(appDir) {
     "shipstack add api-keys",
     "shipstack add openapi",
     "shipstack add api-rate-limit",
+    "pnpm install",
   ]) {
     if (!readme.includes(expectedCommand)) {
       throw new Error(`Generated README is missing ${expectedCommand}`);

@@ -19,6 +19,7 @@ shipstack add storage
 shipstack add api-keys
 shipstack add openapi
 shipstack add api-rate-limit
+pnpm install
 ```
 
 The database module adds Cloudflare D1 and Drizzle. The auth module adds Better

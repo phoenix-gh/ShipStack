@@ -230,6 +230,7 @@ const checks = [
         "shipstack add api-keys",
         "shipstack add openapi",
         "shipstack add api-rate-limit",
+        "pnpm install",
         "Stripe checkout",
         "R2-backed file APIs",
         "usable by external clients",
