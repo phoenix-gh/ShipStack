@@ -81,6 +81,15 @@ A developer can create a TanStack Start app, run it locally, authenticate a user
 - reusable request identity helper for session or API key auth
 - API keys smoke test
 
+### OpenAPI Recipe
+
+- `shipstack add openapi`
+- OpenAPI 3.1 generation script
+- generated `public/openapi.json`
+- `/api/openapi` route and `public/openapi.json` artifact
+- installed route detection for first-party modules
+- OpenAPI smoke test
+
 ### Deployment
 
 - `wrangler.jsonc`
@@ -105,7 +114,6 @@ A developer can create a TanStack Start app, run it locally, authenticate a user
 
 ## Out Of Scope
 
-- OpenAPI generation
 - public API rate limiting
 - generated SDKs
 - admin panel
@@ -133,7 +141,9 @@ shipstack add auth
 shipstack add billing
 shipstack add storage
 shipstack add api-keys
+shipstack add openapi
 pnpm db:generate
+pnpm openapi:generate
 pnpm db:cf:migrate:local
 pnpm dev
 pnpm lint

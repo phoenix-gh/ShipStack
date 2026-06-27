@@ -67,6 +67,11 @@ export async function runCli(argv = process.argv.slice(2)) {
       return;
     }
 
+    if (moduleName === "openapi" || moduleName === "api-openapi") {
+      await addOpenApi();
+      return;
+    }
+
     if (moduleName === "api") {
       console.log(
         "The API foundation is already included in the base starter.",
@@ -74,12 +79,14 @@ export async function runCli(argv = process.argv.slice(2)) {
       console.log(
         "Available now: /api/health, /api/v1/me, JSON envelopes, request IDs, and trusted-origin CORS.",
       );
-      console.log("Future API modules: api-keys, api-openapi, api-rate-limit.");
+      console.log("API modules: api-keys, openapi, api-rate-limit.");
       return;
     }
 
     console.log(`Module installation is not implemented yet: ${moduleName}`);
-    console.log("Available now: database, auth, storage, billing, api-keys.");
+    console.log(
+      "Available now: database, auth, storage, billing, api-keys, openapi.",
+    );
     return;
   }
 
@@ -419,6 +426,47 @@ async function doctor() {
     );
   }
 
+  if (await hasOpenApiModule(cwd)) {
+    checks.push(
+      [
+        "openapi generator script",
+        existsSync(resolve(cwd, "scripts/generate-openapi.mjs")),
+      ],
+      [
+        "openapi generated spec module",
+        existsSync(resolve(cwd, "src/features/openapi/generated.ts")),
+      ],
+      [
+        "openapi api route",
+        existsSync(resolve(cwd, "src/routes/api.openapi.ts")),
+      ],
+      [
+        "openapi package script",
+        await packageJsonHasScript(cwd, "openapi:generate"),
+      ],
+      [
+        "openapi AGENTS.md guidance",
+        await fileIncludes(resolve(cwd, "AGENTS.md"), "## OpenAPI Module"),
+      ],
+      [
+        "openapi docs",
+        existsSync(resolve(cwd, "docs/openapi.md")) &&
+          existsSync(resolve(cwd, "docs/zh-CN/openapi.md")),
+      ],
+      [
+        "openapi README docs links",
+        (await fileIncludes(
+          resolve(cwd, "README.md"),
+          "[OpenAPI](./docs/openapi.md)",
+        )) &&
+          (await fileIncludes(
+            resolve(cwd, "README.md"),
+            "[OpenAPI](./docs/zh-CN/openapi.md)",
+          )),
+      ],
+    );
+  }
+
   let failed = 0;
   for (const [label, ok] of checks) {
     console.log(`${ok ? "ok" : "missing"} ${label}`);
@@ -467,6 +515,13 @@ async function hasApiKeysModule(cwd: string) {
   );
 }
 
+async function hasOpenApiModule(cwd: string) {
+  return (
+    existsSync(resolve(cwd, "scripts/generate-openapi.mjs")) ||
+    existsSync(resolve(cwd, "src/features/openapi/generated.ts"))
+  );
+}
+
 async function packageJsonHasDependency(cwd: string, dependency: string) {
   const packageJsonPath = resolve(cwd, "package.json");
   if (!existsSync(packageJsonPath)) {
@@ -480,6 +535,18 @@ async function packageJsonHasDependency(cwd: string, dependency: string) {
     objectHasKey(packageJson.dependencies, dependency) ||
     objectHasKey(packageJson.devDependencies, dependency)
   );
+}
+
+async function packageJsonHasScript(cwd: string, scriptName: string) {
+  const packageJsonPath = resolve(cwd, "package.json");
+  if (!existsSync(packageJsonPath)) {
+    return false;
+  }
+
+  const packageJson = JSON.parse(
+    await readFile(packageJsonPath, "utf8"),
+  ) as Record<string, unknown>;
+  return objectHasKey(packageJson.scripts, scriptName);
 }
 
 async function hasWranglerD1Binding(cwd: string, bindingName: string) {
@@ -881,6 +948,46 @@ async function addApiKeys() {
   console.log("  pnpm db:cf:migrate:local");
 }
 
+async function addOpenApi() {
+  const cwd = process.cwd();
+  assertProjectFile("package.json");
+  assertProjectFile("wrangler.jsonc");
+
+  await copyModuleFiles("openapi", cwd);
+  await updatePackageJson(resolve(cwd, "package.json"), {
+    scripts: {
+      "openapi:generate": "node scripts/generate-openapi.mjs",
+    },
+  });
+  await appendIfMissing(
+    resolve(cwd, "AGENTS.md"),
+    `
+## OpenAPI Module
+
+- Run \`pnpm openapi:generate\` after adding or removing API routes.
+- Keep route behavior and \`scripts/generate-openapi.mjs\` path definitions aligned.
+- Serve the generated spec from \`/api/openapi\`.
+- Document auth requirements explicitly for session-authenticated and API-key-authenticated routes.
+`,
+    "## OpenAPI Module",
+  );
+  await appendIfMissing(
+    resolve(cwd, "README.md"),
+    `
+- [OpenAPI](./docs/openapi.md)
+- [OpenAPI](./docs/zh-CN/openapi.md)
+`,
+    "[OpenAPI](./docs/openapi.md)",
+  );
+
+  console.log("Installed openapi module.");
+  console.log("");
+  console.log("Next steps:");
+  console.log("  pnpm openapi:generate");
+  console.log("  pnpm lint");
+  console.log("  pnpm build");
+}
+
 function assertProjectFile(fileName: string) {
   if (!existsSync(resolve(process.cwd(), fileName))) {
     throw new Error(
@@ -1068,6 +1175,7 @@ Modules:
   storage     Add Cloudflare R2 file storage
   billing     Add Stripe billing
   api-keys    Add API keys for external clients
+  openapi     Add OpenAPI generation
 
 This is an early CLI skeleton. More modules will land as the starter matures.`);
 }

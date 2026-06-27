@@ -70,4 +70,4 @@ Do not use:
 Use:
 
 - ShipStack
-- explicit module names such as `database-d1`, `auth-better-auth`, `billing-stripe`, `storage-r2`, and `api-keys`
+- explicit module names such as `database-d1`, `auth-better-auth`, `billing-stripe`, `storage-r2`, `api-keys`, and `openapi`

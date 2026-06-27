@@ -100,10 +100,10 @@ Use a real Cloudflare account for this checklist.
    Leave the value empty until you have a concrete trusted client origin. CORS
    stays restrictive by default when this value is empty.
 
-## Manual D1, Auth, Billing, Storage, And API Keys Deploy Pass
+## Manual D1, Auth, Billing, Storage, API Keys, And OpenAPI Deploy Pass
 
 Run these extra steps from a generated app when validating the database, auth,
-billing, storage, and API keys modules.
+billing, storage, API keys, and OpenAPI modules.
 
 1. Install modules.
 
@@ -113,6 +113,7 @@ billing, storage, and API keys modules.
    node ../packages/cli/dist/cli.js add billing
    node ../packages/cli/dist/cli.js add storage
    node ../packages/cli/dist/cli.js add api-keys
+   node ../packages/cli/dist/cli.js add openapi
    pnpm install
    ```
 
@@ -130,6 +131,7 @@ billing, storage, and API keys modules.
 
    ```bash
    pnpm db:generate
+   pnpm openapi:generate
    pnpm db:cf:migrate:local
    pnpm db:cf:migrate:remote
    ```

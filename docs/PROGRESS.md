@@ -42,39 +42,39 @@ Latest commit:
 | Phase 2: Database And Auth        | Local pass  | D1, Drizzle, Better Auth, auth pages, session API, reusable protected route guards, auth migrations, account route, and auth e2e smoke exist.            |
 | Phase 3: CLI MVP                  | Local pass  | `create`, `doctor`, `add database`, `add auth`, CLI unit tests, and module-aware doctor checks exist.                                                    |
 | Phase 4: Billing And Storage      | Local pass  | Stripe billing and R2 storage modules exist with metadata schema, authenticated APIs, webhook/entitlement handling, and module smoke tests.              |
-| Phase 5: Recipes                  | Local pass  | API keys recipe exists with hashed key storage, session-managed key lifecycle routes, bearer auth support, docs, and smoke tests.                        |
+| Phase 5: Recipes                  | Local pass  | API keys and OpenAPI recipes exist with docs, CLI installers, and smoke tests.                                                                           |
 | Phase 6: Ecosystem                | Not started | Docs site, contribution guide, releases, and examples come later.                                                                                        |
 
 ## MVP Acceptance Progress
 
-| Acceptance criterion                                   | Status  | Verification                                                               |
-| ------------------------------------------------------ | ------- | -------------------------------------------------------------------------- |
-| Dependencies install successfully                      | Passing | `pnpm smoke` installs generated apps.                                      |
-| App starts locally                                     | Passing | Base generated app runtime smoke starts the dev server.                    |
-| Home route renders                                     | Passing | Base generated app runtime smoke checks `/`.                               |
-| Health route returns success                           | Passing | Base generated app runtime smoke checks `/health`.                         |
-| Health API returns success                             | Passing | Base generated app runtime smoke checks `/api/health`.                     |
-| Trusted API CORS stays restrictive by default          | Passing | Base generated app runtime smoke checks trusted and untrusted origins.     |
-| Authenticated `/api/v1/me` returns current user        | Passing | Auth generated app runtime smoke signs in and checks `/api/v1/me`.         |
-| D1 migration runs locally                              | Passing | Database generated app smoke runs generate and local apply.                |
-| User can sign up                                       | Passing | Auth browser smoke signs up through the generated UI.                      |
-| User can sign in                                       | Passing | Auth browser smoke signs back in through the generated UI.                 |
-| Anonymous user cannot access dashboard                 | Passing | Auth generated app runtime smoke checks dashboard redirect.                |
-| Authenticated user can access dashboard                | Passing | Auth browser smoke verifies the dashboard after sign up and sign in.       |
-| App builds for Cloudflare Workers                      | Passing | `pnpm smoke` runs generated app builds.                                    |
-| Worker deploy bundle passes local dry-run              | Passing | Base generated app smoke runs `pnpm deploy:dry-run`.                       |
-| Deployed Worker routes can be verified automatically   | Passing | Base generated app smoke runs `pnpm verify:deployed` against dev URL.      |
-| Generated CI and deploy workflows exist                | Passing | Base template includes CI and manual Cloudflare deploy workflows.          |
-| Generated env files are safe to customize              | Passing | Base smoke and release audit check env examples and `.gitignore`.          |
-| Generated app Chinese docs exist                       | Passing | Base smoke checks generated app Chinese env and deployment docs.           |
-| Module Chinese docs exist                              | Passing | Database/auth/billing/storage/API keys smoke checks generated module docs. |
-| Module docs are linked from generated README           | Passing | CLI, module smoke, and pack check verify README module links.              |
-| Doctor detects missing module docs                     | Passing | CLI unit tests and pack check run doctor with module docs installed.       |
-| Doctor checks base docs and secret guards              | Passing | CLI unit tests, CLI smoke, and pack check cover base doctor checks.        |
-| Local-only release audit exists                        | Passing | `pnpm release:audit:local` skips external gates for local checks.          |
-| Fast local verification command exists                 | Passing | `pnpm verify:local` runs local repo/package gates without smoke.           |
-| Deployment docs are complete enough to follow manually | Passing | Generated and maintainer deployment checklists exist.                      |
-| Generated `AGENTS.md` exists and matches layout        | Passing | Base template and installed modules include `AGENTS.md` guidance.          |
+| Acceptance criterion                                   | Status  | Verification                                                                       |
+| ------------------------------------------------------ | ------- | ---------------------------------------------------------------------------------- |
+| Dependencies install successfully                      | Passing | `pnpm smoke` installs generated apps.                                              |
+| App starts locally                                     | Passing | Base generated app runtime smoke starts the dev server.                            |
+| Home route renders                                     | Passing | Base generated app runtime smoke checks `/`.                                       |
+| Health route returns success                           | Passing | Base generated app runtime smoke checks `/health`.                                 |
+| Health API returns success                             | Passing | Base generated app runtime smoke checks `/api/health`.                             |
+| Trusted API CORS stays restrictive by default          | Passing | Base generated app runtime smoke checks trusted and untrusted origins.             |
+| Authenticated `/api/v1/me` returns current user        | Passing | Auth generated app runtime smoke signs in and checks `/api/v1/me`.                 |
+| D1 migration runs locally                              | Passing | Database generated app smoke runs generate and local apply.                        |
+| User can sign up                                       | Passing | Auth browser smoke signs up through the generated UI.                              |
+| User can sign in                                       | Passing | Auth browser smoke signs back in through the generated UI.                         |
+| Anonymous user cannot access dashboard                 | Passing | Auth generated app runtime smoke checks dashboard redirect.                        |
+| Authenticated user can access dashboard                | Passing | Auth browser smoke verifies the dashboard after sign up and sign in.               |
+| App builds for Cloudflare Workers                      | Passing | `pnpm smoke` runs generated app builds.                                            |
+| Worker deploy bundle passes local dry-run              | Passing | Base generated app smoke runs `pnpm deploy:dry-run`.                               |
+| Deployed Worker routes can be verified automatically   | Passing | Base generated app smoke runs `pnpm verify:deployed` against dev URL.              |
+| Generated CI and deploy workflows exist                | Passing | Base template includes CI and manual Cloudflare deploy workflows.                  |
+| Generated env files are safe to customize              | Passing | Base smoke and release audit check env examples and `.gitignore`.                  |
+| Generated app Chinese docs exist                       | Passing | Base smoke checks generated app Chinese env and deployment docs.                   |
+| Module Chinese docs exist                              | Passing | Database/auth/billing/storage/API keys/OpenAPI smoke checks generated module docs. |
+| Module docs are linked from generated README           | Passing | CLI, module smoke, and pack check verify README module links.                      |
+| Doctor detects missing module docs                     | Passing | CLI unit tests and pack check run doctor with module docs installed.               |
+| Doctor checks base docs and secret guards              | Passing | CLI unit tests, CLI smoke, and pack check cover base doctor checks.                |
+| Local-only release audit exists                        | Passing | `pnpm release:audit:local` skips external gates for local checks.                  |
+| Fast local verification command exists                 | Passing | `pnpm verify:local` runs local repo/package gates without smoke.                   |
+| Deployment docs are complete enough to follow manually | Passing | Generated and maintainer deployment checklists exist.                              |
+| Generated `AGENTS.md` exists and matches layout        | Passing | Base template and installed modules include `AGENTS.md` guidance.                  |
 
 ## Test Progress
 
@@ -89,6 +89,7 @@ Latest commit:
 | Generated billing app smoke  | Passing          | `node scripts/smoke/billing.mjs`    |
 | Generated storage app smoke  | Passing          | `node scripts/smoke/storage.mjs`    |
 | Generated API keys app smoke | Passing          | `node scripts/smoke/api-keys.mjs`   |
+| Generated OpenAPI app smoke  | Passing          | `node scripts/smoke/openapi.mjs`    |
 | Generated app lint           | Passing          | `pnpm smoke`                        |
 | Wrangler deploy dry-run      | Passing          | `pnpm smoke`                        |
 | Deployed route verifier      | Passing          | `pnpm smoke`                        |
@@ -110,6 +111,7 @@ Latest commit:
 | Stripe billing webhook smoke | Passing          | `node scripts/smoke/billing.mjs`    |
 | R2 storage API smoke         | Passing          | `node scripts/smoke/storage.mjs`    |
 | API key bearer auth smoke    | Passing          | `node scripts/smoke/api-keys.mjs`   |
+| OpenAPI generation smoke     | Passing          | `node scripts/smoke/openapi.mjs`    |
 | Module AGENTS guidance       | Passing          | `pnpm test`, `pnpm smoke`           |
 | Open-source license          | Added            | `LICENSE`                           |
 | Contribution guide           | Added            | `CONTRIBUTING.md`                   |

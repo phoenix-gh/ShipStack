@@ -593,7 +593,7 @@ For mobile or desktop apps, ShipStack should support:
 - bearer-token authentication where cookies are not suitable
 - stable API error codes
 - versioned routes
-- optional OpenAPI generation in a later module
+- optional OpenAPI generation through the OpenAPI recipe
 
 ### Security Rules
 

@@ -290,6 +290,29 @@ export const apiKeysModule: ShipStackModule = {
   ],
 };
 
+export const openApiModule: ShipStackModule = {
+  id: "openapi",
+  name: "OpenAPI generation",
+  description:
+    "Adds generated OpenAPI 3.1 documentation for installed ShipStack API routes.",
+  category: "recipe",
+  dependencies: ["base"],
+  checks: [
+    {
+      id: "openapi-generator",
+      description: "Generated app has a scripts/generate-openapi.mjs script.",
+    },
+    {
+      id: "openapi-route",
+      description: "Generated app serves OpenAPI JSON from /api/openapi.",
+    },
+    {
+      id: "openapi-docs",
+      description: "Generated app has OpenAPI setup and verification docs.",
+    },
+  ],
+};
+
 export const coreModules = [
   baseModule,
   databaseD1Module,
@@ -297,4 +320,5 @@ export const coreModules = [
   storageR2Module,
   billingStripeModule,
   apiKeysModule,
+  openApiModule,
 ] satisfies ShipStackModule[];

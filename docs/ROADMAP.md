@@ -111,13 +111,13 @@ Exit criteria:
 
 Goal: grow without bloating the starter.
 
-Status: local pass for the first recipe. API keys are implemented and locally
-verified.
+Status: local pass for the first recipes. API keys and OpenAPI generation are
+implemented and locally verified.
 
 Initial recipes:
 
 - API keys (done locally)
-- OpenAPI generation
+- OpenAPI generation (done locally)
 - API rate limit
 - TypeScript API SDK
 - admin user management
@@ -132,6 +132,9 @@ Exit criteria:
 - API keys recipe is installable from the CLI
 - API keys recipe documents tradeoffs
 - API keys recipe includes tests or smoke checks
+- OpenAPI recipe is installable from the CLI
+- OpenAPI recipe documents tradeoffs
+- OpenAPI recipe includes tests or smoke checks
 
 ## Phase 6: Ecosystem
 

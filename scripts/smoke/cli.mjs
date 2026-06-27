@@ -40,6 +40,10 @@ await runSmoke("cli", async (workspace) => {
   await run("node", [shipStackBin, "add", "api-keys"], { cwd: appDir });
   await assertApiKeysModule(appDir);
 
+  await run("node", [shipStackBin, "add", "openapi"], { cwd: appDir });
+  await run("node", [shipStackBin, "add", "openapi"], { cwd: appDir });
+  await assertOpenApiModule(appDir);
+
   await expectFailure(
     ["node", [createShipStackBin, "cli-app"]],
     workspace,
@@ -183,6 +187,26 @@ async function assertApiKeysModule(appDir) {
   const readme = await readFile(resolve(appDir, "README.md"), "utf8");
   assertCount(readme, "[API Keys](./docs/api-keys.md)", 1);
   assertCount(readme, "[API Keys](./docs/zh-CN/api-keys.md)", 1);
+}
+
+async function assertOpenApiModule(appDir) {
+  const packageJson = JSON.parse(
+    await readFile(resolve(appDir, "package.json"), "utf8"),
+  );
+  assertEqual(
+    packageJson.scripts["openapi:generate"],
+    "node scripts/generate-openapi.mjs",
+  );
+
+  const agents = await readFile(resolve(appDir, "AGENTS.md"), "utf8");
+  assertCount(agents, "## OpenAPI Module", 1);
+  if (!agents.includes("pnpm openapi:generate")) {
+    throw new Error("Expected AGENTS.md to mention OpenAPI generation");
+  }
+
+  const readme = await readFile(resolve(appDir, "README.md"), "utf8");
+  assertCount(readme, "[OpenAPI](./docs/openapi.md)", 1);
+  assertCount(readme, "[OpenAPI](./docs/zh-CN/openapi.md)", 1);
 }
 
 async function expectFailure([command, args], cwd, expectedOutput) {

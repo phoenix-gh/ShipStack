@@ -81,6 +81,15 @@
 - 可复用 request identity helper，支持 session 或 API key auth
 - API keys smoke test
 
+### OpenAPI Recipe
+
+- `shipstack add openapi`
+- OpenAPI 3.1 generation script
+- 生成 `public/openapi.json`
+- `/api/openapi` route and `public/openapi.json` artifact
+- 检测第一方模块已安装 routes
+- OpenAPI smoke test
+
 ### Deployment
 
 - `wrangler.jsonc`
@@ -105,7 +114,6 @@
 
 ## 范围外
 
-- OpenAPI generation
 - public API rate limiting
 - generated SDKs
 - admin panel
@@ -133,7 +141,9 @@ shipstack add auth
 shipstack add billing
 shipstack add storage
 shipstack add api-keys
+shipstack add openapi
 pnpm db:generate
+pnpm openapi:generate
 pnpm db:cf:migrate:local
 pnpm dev
 pnpm lint

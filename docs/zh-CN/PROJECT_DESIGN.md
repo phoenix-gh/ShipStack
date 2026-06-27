@@ -610,7 +610,7 @@ API keys recipe 会为 CLI、server-to-server 和第三方集成增加 bearer au
 - cookie 不适用时的 bearer-token authentication
 - 稳定的 API error codes
 - versioned routes
-- 后续模块中的 OpenAPI generation
+- 通过 OpenAPI recipe 提供可选 OpenAPI generation
 
 ### 安全规则
 

@@ -228,6 +228,10 @@ const checks = [
           "templates/modules/api-keys/docs/zh-CN/api-keys.md",
           ["Authorization: Bearer", "D1 中只保存 hash"],
         ),
+        await assertFileContainsMarkers(
+          "templates/modules/openapi/docs/zh-CN/openapi.md",
+          ["pnpm openapi:generate", "/api/openapi"],
+        ),
       ];
       const findings = checks
         .filter((check) => !check.ok)
@@ -237,7 +241,7 @@ const checks = [
         ok: findings.length === 0,
         detail:
           findings.length === 0
-            ? "database, auth, billing, storage, and API keys module Chinese docs are present"
+            ? "database, auth, billing, storage, API keys, and OpenAPI module Chinese docs are present"
             : findings.join("\n  "),
       };
     },
@@ -251,11 +255,13 @@ const checks = [
         "[Billing](./docs/billing.md)",
         "[Storage](./docs/storage.md)",
         "[API Keys](./docs/api-keys.md)",
+        "[OpenAPI](./docs/openapi.md)",
         "[数据库](./docs/zh-CN/database.md)",
         "[认证](./docs/zh-CN/auth.md)",
         "[支付](./docs/zh-CN/billing.md)",
         "[存储](./docs/zh-CN/storage.md)",
         "[API Keys](./docs/zh-CN/api-keys.md)",
+        "[OpenAPI](./docs/zh-CN/openapi.md)",
       ]);
     },
   },
@@ -273,6 +279,8 @@ const checks = [
         "storage README docs links",
         "api keys docs",
         "api keys README docs links",
+        "openapi docs",
+        "openapi README docs links",
       ]);
     },
   },

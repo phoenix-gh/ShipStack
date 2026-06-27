@@ -29,6 +29,9 @@ try {
     "package/templates/modules/billing-stripe/src/routes/api.stripe.webhook.ts",
     "package/templates/modules/database-d1/docs/zh-CN/database.md",
     "package/templates/modules/database-d1/drizzle.config.ts",
+    "package/templates/modules/openapi/docs/zh-CN/openapi.md",
+    "package/templates/modules/openapi/scripts/generate-openapi.mjs",
+    "package/templates/modules/openapi/src/routes/api.openapi.ts",
     "package/templates/modules/storage-r2/docs/zh-CN/storage.md",
     "package/templates/modules/storage-r2/src/features/storage/server.ts",
     "package/templates/modules/storage-r2/src/routes/api.v1.files.ts",
@@ -146,6 +149,7 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
     await run("node", [shipstackBin, "add", "storage"], { cwd: appDir });
     await run("node", [shipstackBin, "add", "billing"], { cwd: appDir });
     await run("node", [shipstackBin, "add", "api-keys"], { cwd: appDir });
+    await run("node", [shipstackBin, "add", "openapi"], { cwd: appDir });
     await run("node", [shipstackBin, "doctor"], { cwd: appDir });
 
     await assertExists(resolve(appDir, "docs/zh-CN/database.md"));
@@ -153,17 +157,20 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
     await assertExists(resolve(appDir, "docs/zh-CN/billing.md"));
     await assertExists(resolve(appDir, "docs/zh-CN/storage.md"));
     await assertExists(resolve(appDir, "docs/zh-CN/api-keys.md"));
+    await assertExists(resolve(appDir, "docs/zh-CN/openapi.md"));
     await assertFileContains(resolve(appDir, "README.md"), [
       "[Database](./docs/database.md)",
       "[Authentication](./docs/auth.md)",
       "[Storage](./docs/storage.md)",
       "[Billing](./docs/billing.md)",
       "[API Keys](./docs/api-keys.md)",
+      "[OpenAPI](./docs/openapi.md)",
       "[数据库](./docs/zh-CN/database.md)",
       "[认证](./docs/zh-CN/auth.md)",
       "[存储](./docs/zh-CN/storage.md)",
       "[支付](./docs/zh-CN/billing.md)",
       "[API Keys](./docs/zh-CN/api-keys.md)",
+      "[OpenAPI](./docs/zh-CN/openapi.md)",
     ]);
     await assertExists(resolve(appDir, "src/db/schema.ts"));
     await assertExists(resolve(appDir, "src/db/billing-schema.ts"));
@@ -173,10 +180,13 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
     await assertExists(resolve(appDir, "src/features/billing/server.ts"));
     await assertExists(resolve(appDir, "src/features/storage/server.ts"));
     await assertExists(resolve(appDir, "src/features/api-keys/server.ts"));
+    await assertExists(resolve(appDir, "src/features/openapi/generated.ts"));
     await assertExists(resolve(appDir, "src/routes/sign-in.tsx"));
     await assertExists(resolve(appDir, "src/routes/api.stripe.webhook.ts"));
     await assertExists(resolve(appDir, "src/routes/api.v1.files.ts"));
     await assertExists(resolve(appDir, "src/routes/api.v1.api-keys.ts"));
+    await assertExists(resolve(appDir, "src/routes/api.openapi.ts"));
+    await assertExists(resolve(appDir, "scripts/generate-openapi.mjs"));
   } finally {
     await rm(workspace, {
       force: true,

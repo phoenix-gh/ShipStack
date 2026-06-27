@@ -298,6 +298,51 @@ test("database and auth installers patch generated apps idempotently", async () 
       );
       await writeFile("README.md", apiKeysReadme);
       await runSilently(["doctor"]);
+
+      await runSilently(["add", "openapi"]);
+      await runSilently(["add", "openapi"]);
+
+      const openApiPackageJson = JSON.parse(
+        await readFile("package.json", "utf8"),
+      );
+      assert.equal(
+        openApiPackageJson.scripts["openapi:generate"],
+        "node scripts/generate-openapi.mjs",
+      );
+
+      const openApiReadme = await readFile("README.md", "utf8");
+      assert.equal(count(openApiReadme, "[OpenAPI](./docs/openapi.md)"), 1);
+      assert.equal(
+        count(openApiReadme, "[OpenAPI](./docs/zh-CN/openapi.md)"),
+        1,
+      );
+
+      const openApiAgents = await readFile("AGENTS.md", "utf8");
+      assert.equal(count(openApiAgents, "## OpenAPI Module"), 1);
+      assert.match(openApiAgents, /pnpm openapi:generate/);
+      await writeFile(
+        "AGENTS.md",
+        openApiAgents.replace("## OpenAPI Module", "## Missing OpenAPI Module"),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("AGENTS.md", openApiAgents);
+
+      await writeFile(
+        "README.md",
+        openApiReadme.replace(
+          "[OpenAPI](./docs/openapi.md)",
+          "[Missing OpenAPI](./docs/openapi.md)",
+        ),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("README.md", openApiReadme);
+      await runSilently(["doctor"]);
     });
   });
 });

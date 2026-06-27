@@ -40,39 +40,39 @@
 | Phase 2: Database And Auth        | 本地通过 | 已有 D1、Drizzle、Better Auth、认证页面、session API、可复用 protected route guards、auth migrations、account route 和 auth e2e smoke。        |
 | Phase 3: CLI MVP                  | 本地通过 | 已有 `create`、`doctor`、`add database`、`add auth`、CLI 单元测试和模块感知 doctor 检查。                                                      |
 | Phase 4: Billing And Storage      | 本地通过 | 已有 Stripe billing 与 R2 storage 模块、元数据 schema、认证 API、webhook/entitlement 处理和模块 smoke tests。                                  |
-| Phase 5: Recipes                  | 本地通过 | API keys recipe 已有 hashed key storage、session-managed key lifecycle routes、bearer auth support、文档和 smoke tests。                       |
+| Phase 5: Recipes                  | 本地通过 | API keys 和 OpenAPI recipes 已有文档、CLI installers 和 smoke tests。                                                                          |
 | Phase 6: Ecosystem                | 未开始   | Docs site、贡献指南、发布流程和 examples 后续再做。                                                                                            |
 
 ## MVP 验收进度
 
-| 验收项                                | 状态 | 验证方式                                                              |
-| ------------------------------------- | ---- | --------------------------------------------------------------------- |
-| 依赖可以成功安装                      | 通过 | `pnpm smoke` 会安装生成应用。                                         |
-| 应用可以本地启动                      | 通过 | base 生成应用 runtime smoke 会启动 dev server。                       |
-| Home route 可以渲染                   | 通过 | base 生成应用 runtime smoke 会检查 `/`。                              |
-| Health route 返回成功                 | 通过 | base 生成应用 runtime smoke 会检查 `/health`。                        |
-| Health API 返回成功                   | 通过 | base 生成应用 runtime smoke 会检查 `/api/health`。                    |
-| Trusted API CORS 默认保持收紧         | 通过 | base 生成应用 runtime smoke 会检查 trusted 和 untrusted origins。     |
-| 认证后的 `/api/v1/me` 返回当前用户    | 通过 | auth 生成应用 runtime smoke 会登录并检查 `/api/v1/me`。               |
-| D1 migration 可以本地运行             | 通过 | database 生成应用 smoke 会运行 generate 和 local apply。              |
-| 用户可以注册                          | 通过 | auth browser smoke 会通过生成 UI 注册。                               |
-| 用户可以登录                          | 通过 | auth browser smoke 会通过生成 UI 重新登录。                           |
-| 匿名用户不能访问 dashboard            | 通过 | auth 生成应用 runtime smoke 会检查 dashboard redirect。               |
-| 登录用户可以访问 dashboard            | 通过 | auth browser smoke 会在注册和登录后验证 dashboard。                   |
-| 应用可以构建到 Cloudflare Workers     | 通过 | `pnpm smoke` 会运行生成应用 build。                                   |
-| Worker deploy bundle 通过本地 dry-run | 通过 | base 生成应用 smoke 会运行 `pnpm deploy:dry-run`。                    |
-| 已部署 Worker routes 可自动验证       | 通过 | base 生成应用 smoke 会用 dev URL 运行 `pnpm verify:deployed`。        |
-| 生成应用包含 CI 和 deploy workflows   | 通过 | base template 包含 CI 和手动 Cloudflare deploy workflows。            |
-| 生成应用 env 文件可安全自定义         | 通过 | base smoke 和 release audit 会检查 env examples 与 `.gitignore`。     |
-| 生成应用包含中文文档                  | 通过 | base smoke 会检查生成应用中文 env 和 deployment docs。                |
-| 模块包含中文文档                      | 通过 | database/auth/billing/storage/API keys smoke 会检查生成应用模块文档。 |
-| 生成 README 会链接模块文档            | 通过 | CLI、module smoke 和 pack check 会验证 README 模块链接。              |
-| Doctor 可发现缺失的模块文档           | 通过 | CLI 单元测试和 pack check 会在模块文档已安装时运行 doctor。           |
-| Doctor 会检查基础文档和 secret guards | 通过 | CLI 单元测试、CLI smoke 和 pack check 覆盖 base doctor checks。       |
-| 支持只检查本地 release audit          | 通过 | `pnpm release:audit:local` 会跳过外部 gates。                         |
-| 支持快速本地验证命令                  | 通过 | `pnpm verify:local` 会运行本地 repo/package gates，不跑 smoke。       |
-| 部署文档足够手动执行                  | 通过 | 已有生成应用和维护者部署检查清单。                                    |
-| 生成应用有匹配布局的 `AGENTS.md`      | 通过 | base template 和已安装模块会提供 `AGENTS.md` 指引。                   |
+| 验收项                                | 状态 | 验证方式                                                                      |
+| ------------------------------------- | ---- | ----------------------------------------------------------------------------- |
+| 依赖可以成功安装                      | 通过 | `pnpm smoke` 会安装生成应用。                                                 |
+| 应用可以本地启动                      | 通过 | base 生成应用 runtime smoke 会启动 dev server。                               |
+| Home route 可以渲染                   | 通过 | base 生成应用 runtime smoke 会检查 `/`。                                      |
+| Health route 返回成功                 | 通过 | base 生成应用 runtime smoke 会检查 `/health`。                                |
+| Health API 返回成功                   | 通过 | base 生成应用 runtime smoke 会检查 `/api/health`。                            |
+| Trusted API CORS 默认保持收紧         | 通过 | base 生成应用 runtime smoke 会检查 trusted 和 untrusted origins。             |
+| 认证后的 `/api/v1/me` 返回当前用户    | 通过 | auth 生成应用 runtime smoke 会登录并检查 `/api/v1/me`。                       |
+| D1 migration 可以本地运行             | 通过 | database 生成应用 smoke 会运行 generate 和 local apply。                      |
+| 用户可以注册                          | 通过 | auth browser smoke 会通过生成 UI 注册。                                       |
+| 用户可以登录                          | 通过 | auth browser smoke 会通过生成 UI 重新登录。                                   |
+| 匿名用户不能访问 dashboard            | 通过 | auth 生成应用 runtime smoke 会检查 dashboard redirect。                       |
+| 登录用户可以访问 dashboard            | 通过 | auth browser smoke 会在注册和登录后验证 dashboard。                           |
+| 应用可以构建到 Cloudflare Workers     | 通过 | `pnpm smoke` 会运行生成应用 build。                                           |
+| Worker deploy bundle 通过本地 dry-run | 通过 | base 生成应用 smoke 会运行 `pnpm deploy:dry-run`。                            |
+| 已部署 Worker routes 可自动验证       | 通过 | base 生成应用 smoke 会用 dev URL 运行 `pnpm verify:deployed`。                |
+| 生成应用包含 CI 和 deploy workflows   | 通过 | base template 包含 CI 和手动 Cloudflare deploy workflows。                    |
+| 生成应用 env 文件可安全自定义         | 通过 | base smoke 和 release audit 会检查 env examples 与 `.gitignore`。             |
+| 生成应用包含中文文档                  | 通过 | base smoke 会检查生成应用中文 env 和 deployment docs。                        |
+| 模块包含中文文档                      | 通过 | database/auth/billing/storage/API keys/OpenAPI smoke 会检查生成应用模块文档。 |
+| 生成 README 会链接模块文档            | 通过 | CLI、module smoke 和 pack check 会验证 README 模块链接。                      |
+| Doctor 可发现缺失的模块文档           | 通过 | CLI 单元测试和 pack check 会在模块文档已安装时运行 doctor。                   |
+| Doctor 会检查基础文档和 secret guards | 通过 | CLI 单元测试、CLI smoke 和 pack check 覆盖 base doctor checks。               |
+| 支持只检查本地 release audit          | 通过 | `pnpm release:audit:local` 会跳过外部 gates。                                 |
+| 支持快速本地验证命令                  | 通过 | `pnpm verify:local` 会运行本地 repo/package gates，不跑 smoke。               |
+| 部署文档足够手动执行                  | 通过 | 已有生成应用和维护者部署检查清单。                                            |
+| 生成应用有匹配布局的 `AGENTS.md`      | 通过 | base template 和已安装模块会提供 `AGENTS.md` 指引。                           |
 
 ## 测试进度
 
@@ -87,6 +87,7 @@
 | Generated billing app smoke  | 通过     | `node scripts/smoke/billing.mjs`    |
 | Generated storage app smoke  | 通过     | `node scripts/smoke/storage.mjs`    |
 | Generated API keys app smoke | 通过     | `node scripts/smoke/api-keys.mjs`   |
+| Generated OpenAPI app smoke  | 通过     | `node scripts/smoke/openapi.mjs`    |
 | Generated app lint           | 通过     | `pnpm smoke`                        |
 | Wrangler deploy dry-run      | 通过     | `pnpm smoke`                        |
 | Deployed route verifier      | 通过     | `pnpm smoke`                        |
@@ -108,6 +109,7 @@
 | Stripe billing webhook smoke | 通过     | `node scripts/smoke/billing.mjs`    |
 | R2 storage API smoke         | 通过     | `node scripts/smoke/storage.mjs`    |
 | API key bearer auth smoke    | 通过     | `node scripts/smoke/api-keys.mjs`   |
+| OpenAPI generation smoke     | 通过     | `node scripts/smoke/openapi.mjs`    |
 | 模块 AGENTS 指引             | 通过     | `pnpm test`, `pnpm smoke`           |
 | 开源许可证                   | 已添加   | `LICENSE`                           |
 | 贡献指南                     | 已添加   | `CONTRIBUTING.md`                   |
