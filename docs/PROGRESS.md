@@ -112,6 +112,7 @@ Latest commit:
 | Deployed route verifier            | Passing        | `pnpm smoke`                            |
 | Generated env safety               | Passing        | `pnpm smoke`, `pnpm release:audit`      |
 | Generated Chinese docs             | Passing        | `pnpm smoke`, `pnpm pack:check`         |
+| Generated README current modules   | Passing        | `node scripts/smoke/base.mjs`           |
 | Module Chinese docs                | Passing        | `pnpm smoke`, `pnpm pack:check`         |
 | Module docs README links           | Passing        | `pnpm smoke`, `pnpm pack:check`         |
 | Doctor module docs checks          | Passing        | `pnpm test`, `pnpm pack:check`          |
@@ -133,6 +134,7 @@ Latest commit:
 | API key bearer auth smoke          | Passing        | `node scripts/smoke/api-keys.mjs`       |
 | OpenAPI generation smoke           | Passing        | `node scripts/smoke/openapi.mjs`        |
 | API rate limit smoke               | Passing        | `node scripts/smoke/api-rate-limit.mjs` |
+| Smoke dev server port retry        | Passing        | `node scripts/smoke/base.mjs`           |
 | Module AGENTS guidance             | Passing        | `pnpm test`, `pnpm smoke`               |
 | Open-source license                | Added          | `LICENSE`                               |
 | Contribution guide                 | Added          | `CONTRIBUTING.md`                       |

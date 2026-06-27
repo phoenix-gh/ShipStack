@@ -106,6 +106,7 @@
 | Deployed route verifier            | 通过     | `pnpm smoke`                            |
 | 生成应用 env 安全                  | 通过     | `pnpm smoke`, `pnpm release:audit`      |
 | 生成应用中文文档                   | 通过     | `pnpm smoke`, `pnpm pack:check`         |
+| 生成 README 当前模块说明           | 通过     | `node scripts/smoke/base.mjs`           |
 | 模块中文文档                       | 通过     | `pnpm smoke`, `pnpm pack:check`         |
 | README 模块文档链接                | 通过     | `pnpm smoke`, `pnpm pack:check`         |
 | Doctor 模块文档检查                | 通过     | `pnpm test`, `pnpm pack:check`          |
@@ -127,6 +128,7 @@
 | API key bearer auth smoke          | 通过     | `node scripts/smoke/api-keys.mjs`       |
 | OpenAPI generation smoke           | 通过     | `node scripts/smoke/openapi.mjs`        |
 | API rate limit smoke               | 通过     | `node scripts/smoke/api-rate-limit.mjs` |
+| Smoke dev server 端口重试          | 通过     | `node scripts/smoke/base.mjs`           |
 | 模块 AGENTS 指引                   | 通过     | `pnpm test`, `pnpm smoke`               |
 | 开源许可证                         | 已添加   | `LICENSE`                               |
 | 贡献指南                           | 已添加   | `CONTRIBUTING.md`                       |
