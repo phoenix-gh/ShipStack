@@ -490,6 +490,37 @@ const checks = [
     },
   },
   {
+    label: "progress docs describe current release status",
+    action: async () => {
+      return await assertFilesContainMarkers([
+        {
+          file: "docs/PROGRESS.md",
+          markers: [
+            "local `v0.1.0` MVP release candidate",
+            "Wrangler is not authenticated",
+            "no configured Git remote",
+            "pnpm publish:dry-run",
+            "Needs approval",
+            "Full release audit",
+            "External block",
+          ],
+        },
+        {
+          file: "docs/zh-CN/PROGRESS.md",
+          markers: [
+            "本地 `v0.1.0` MVP release candidate",
+            "Wrangler 尚未登录",
+            "没有配置 Git remote",
+            "pnpm publish:dry-run",
+            "需要批准",
+            "完整 release audit",
+            "外部阻塞",
+          ],
+        },
+      ]);
+    },
+  },
+  {
     label: "contributing guide lists release gates",
     action: async () => {
       return await assertFilesContainMarkers([
