@@ -435,24 +435,54 @@ const checks = [
   {
     label: "README describes current release status",
     action: async () => {
-      return await assertFileContainsMarkers("README.md", [
-        "local npm publish dry-run",
-        "real Cloudflare deployment pass",
-        "remote GitHub Actions confirmation",
-        "npm publish workflow dry-run on the remote repository",
+      return await assertFilesContainMarkers([
+        {
+          file: "README.md",
+          markers: [
+            "local npm publish dry-run",
+            "real Cloudflare deployment pass",
+            "remote GitHub Actions confirmation",
+            "npm publish workflow dry-run on the remote repository",
+          ],
+        },
+        {
+          file: "docs/zh-CN/README.md",
+          markers: [
+            "本地 npm publish dry-run",
+            "真实 Cloudflare 部署验证",
+            "远端仓库确认 GitHub Actions 通过",
+            "远端仓库运行 npm publish workflow dry-run",
+          ],
+        },
       ]);
     },
   },
   {
     label: "contributing guide lists release gates",
     action: async () => {
-      return await assertFileContainsMarkers("CONTRIBUTING.md", [
-        "pnpm verify:release",
-        "pnpm pack:check",
-        "pnpm publish:dry-run",
-        "pnpm smoke:temporary-deploy",
-        "real Cloudflare account deploy",
-        "remote npm publish workflow dry-run",
+      return await assertFilesContainMarkers([
+        {
+          file: "CONTRIBUTING.md",
+          markers: [
+            "pnpm verify:release",
+            "pnpm pack:check",
+            "pnpm publish:dry-run",
+            "pnpm smoke:temporary-deploy",
+            "real Cloudflare account deploy",
+            "remote npm publish workflow dry-run",
+          ],
+        },
+        {
+          file: "docs/zh-CN/CONTRIBUTING.md",
+          markers: [
+            "pnpm verify:release",
+            "pnpm pack:check",
+            "pnpm publish:dry-run",
+            "pnpm smoke:temporary-deploy",
+            "真实 Cloudflare 账号部署",
+            "远端 npm publish workflow dry-run",
+          ],
+        },
       ]);
     },
   },
@@ -580,6 +610,26 @@ async function assertFileContainsMarkers(file, requiredMarkers) {
       missingMarkers.length > 0
         ? `missing markers: ${missingMarkers.join(", ")}`
         : file,
+  };
+}
+
+async function assertFilesContainMarkers(fileChecks) {
+  const findings = [];
+
+  for (const fileCheck of fileChecks) {
+    const result = await assertFileContainsMarkers(
+      fileCheck.file,
+      fileCheck.markers,
+    );
+
+    if (!result.ok) {
+      findings.push(`${fileCheck.file}: ${result.detail}`);
+    }
+  }
+
+  return {
+    ok: findings.length === 0,
+    detail: findings.length > 0 ? findings.join("\n  ") : "all markers found",
   };
 }
 
