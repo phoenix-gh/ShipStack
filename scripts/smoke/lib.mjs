@@ -170,24 +170,49 @@ export async function verifyRuntimeRoutes(appDir, checks, options = {}) {
 }
 
 export async function withDevServer(appDir, callback, options = {}) {
-  const port = await getAvailablePort();
-  const origin = `http://127.0.0.1:${port}`;
+  let lastPortError;
 
-  if (options.beforeStart) {
-    await options.beforeStart({ origin, port });
+  for (let attempt = 1; attempt <= 5; attempt += 1) {
+    const port = await getAvailablePort();
+    const origin = `http://127.0.0.1:${port}`;
+
+    if (options.beforeStart) {
+      await options.beforeStart({ origin, port });
+    }
+
+    try {
+      const server = await startDevServer(appDir, port);
+
+      try {
+        await callback(origin);
+      } finally {
+        await server.stop();
+      }
+
+      return;
+    } catch (error) {
+      if (!isPortInUseError(error)) {
+        throw error;
+      }
+
+      lastPortError = error;
+    }
   }
 
-  const server = await startDevServer(appDir, port);
-
-  try {
-    await callback(origin);
-  } finally {
-    await server.stop();
-  }
+  throw new Error(
+    `Failed to start dev server after retrying local ports.\n${lastPortError?.message ?? ""}`,
+  );
 }
 
 async function startDevServer(appDir, port) {
-  const args = ["dev", "--host", "127.0.0.1", "--port", String(port)];
+  const args = [
+    "dev",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    String(port),
+    "--strictPort",
+  ];
   const label = ["pnpm", ...args].join(" ");
   const logs = [];
 
@@ -221,6 +246,16 @@ async function startDevServer(appDir, port) {
       await stopChild(child);
     },
   };
+}
+
+function isPortInUseError(error) {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+
+  return /(?:EADDRINUSE|address already in use|Port \d+ is already in use)/i.test(
+    error.message,
+  );
 }
 
 export async function verifyHttpCheck(url, check) {
