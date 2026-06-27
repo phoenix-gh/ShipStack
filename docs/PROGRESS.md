@@ -12,8 +12,15 @@ External verification status in this workspace:
 - `pnpm smoke:temporary-deploy` has passed before, but the latest attempt on
   2026-06-24 failed before upload with Wrangler `fetch failed` connectivity
   errors.
-- The latest full local verification on 2026-06-27 passed `pnpm verify:local`
-  and `pnpm smoke`.
+- The latest full local release verification on 2026-06-28 passed
+  `pnpm verify:release`, including format, typecheck, tests, build,
+  package-content checks, generated app smoke tests, local D1 migrations,
+  browser auth smoke, generated app `wrangler deploy --dry-run`, and module
+  smoke tests for database, auth, billing, storage, API keys, OpenAPI, and API
+  rate limiting.
+- The latest full release audit on 2026-06-28 passed local checks but stopped
+  on two external blockers: no configured Git remote and unauthenticated
+  Wrangler.
 - The latest `pnpm smoke` run on 2026-06-27 passed after `bubblewrap` was
   installed and Linux smoke workspaces were moved away from inherited
   `/mnt/c/...` temp paths. It also passed the generated app
@@ -32,6 +39,7 @@ Last verified:
 - `pnpm smoke`
 - `pnpm pack:check`
 - `pnpm verify:local`
+- `pnpm verify:release`
 
 Latest commit:
 
@@ -106,6 +114,8 @@ Latest commit:
 | Doctor base docs checks            | Passing        | `pnpm test`, `pnpm pack:check`          |
 | Local-only release audit           | Passing        | `pnpm release:audit:local`              |
 | Fast local verification            | Passing        | `pnpm verify:local`                     |
+| Full local release verification    | Passing        | `pnpm verify:release`                   |
+| Full release audit                 | External block | `pnpm release:audit`                    |
 | Temporary Cloudflare deploy        | Needs approval | `pnpm smoke:temporary-deploy`           |
 | CLI unit tests                     | Passing        | `pnpm test`                             |
 | Runtime API tests                  | Passing        | `pnpm smoke`                            |

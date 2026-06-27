@@ -11,8 +11,13 @@
 - `pnpm dlx wrangler whoami` 显示 Wrangler 尚未登录。
 - `pnpm smoke:temporary-deploy` 之前通过过 Cloudflare temporary account flow，
   但 2026-06-24 最新一次尝试在上传前因 Wrangler `fetch failed` 网络错误失败。
-- 2026-06-27 最新一次完整本地验证已通过 `pnpm verify:local` 和
-  `pnpm smoke`。
+- 2026-06-28 最新一次完整本地发布验证已通过 `pnpm verify:release`，覆盖
+  format、typecheck、tests、build、package-content checks、生成应用 smoke
+  tests、本地 D1 migrations、浏览器 auth smoke、生成应用
+  `wrangler deploy --dry-run`，以及 database、auth、billing、storage、API
+  keys、OpenAPI、API rate limiting 的模块 smoke tests。
+- 2026-06-28 最新一次完整 release audit 已通过本地检查，但停在两个外部门槛：
+  没有配置 Git remote，且 Wrangler 尚未登录。
 - 2026-06-27 最新一次 `pnpm smoke` 在安装 `bubblewrap` 且 Linux smoke
   workspace 避开继承到的 `/mnt/c/...` 临时路径后通过，也通过了生成应用的
   `wrangler deploy --dry-run` 检查。
@@ -29,6 +34,7 @@
 - `pnpm smoke`
 - `pnpm pack:check`
 - `pnpm verify:local`
+- `pnpm verify:release`
 
 最新提交：
 
@@ -103,6 +109,8 @@
 | Doctor base docs 检查              | 通过     | `pnpm test`, `pnpm pack:check`          |
 | 本地-only release audit            | 通过     | `pnpm release:audit:local`              |
 | 快速本地验证                       | 通过     | `pnpm verify:local`                     |
+| 完整本地发布验证                   | 通过     | `pnpm verify:release`                   |
+| 完整 release audit                 | 外部阻塞 | `pnpm release:audit`                    |
 | Cloudflare 临时部署                | 需要批准 | `pnpm smoke:temporary-deploy`           |
 | CLI unit tests                     | 通过     | `pnpm test`                             |
 | Runtime API tests                  | 通过     | `pnpm smoke`                            |
