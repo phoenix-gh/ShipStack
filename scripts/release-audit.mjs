@@ -62,6 +62,16 @@ const allowedCompetitorReferenceFiles = new Set([
   "docs/zh-CN/LEGAL_BOUNDARIES.md",
   "docs/zh-CN/RELEASE.md",
 ]);
+const releaseEvidenceRequiredFields = {
+  "Real Cloudflare Deploy Evidence": ["Date", "Commit", "Worker URL", "Result"],
+  "GitHub Actions Evidence": ["Date", "Commit", "Run URL", "Result"],
+  "npm Publish Workflow Dry-Run Evidence": [
+    "Date",
+    "Commit",
+    "Run URL",
+    "Result",
+  ],
+};
 
 const checks = [
   {
@@ -615,10 +625,13 @@ const checks = [
         {
           file: "docs/RELEASE_EVIDENCE.md",
           markers: [
+            "Required Fields",
             "Real Cloudflare Deploy Evidence",
+            "Date, Commit, Worker URL, Result",
             "Worker URL",
             "pnpm verify:deployed",
             "GitHub Actions Evidence",
+            "Date, Commit, Run URL, Result",
             "npm Publish Workflow Dry-Run Evidence",
             "Do not paste secrets",
           ],
@@ -626,10 +639,13 @@ const checks = [
         {
           file: "docs/zh-CN/RELEASE_EVIDENCE.md",
           markers: [
+            "必填字段",
             "真实 Cloudflare 部署证据",
+            "日期、Commit、Worker URL、结果",
             "Worker URL",
             "pnpm verify:deployed",
             "GitHub Actions 证据",
+            "日期、Commit、Run URL、结果",
             "npm Publish Workflow Dry-Run 证据",
             "不要粘贴 secrets",
           ],
@@ -915,15 +931,52 @@ async function releaseEvidenceRecorded(sectionTitle) {
   }
 
   const status = section.match(/^Status:\s*(.+)$/im)?.[1]?.trim() ?? "";
-  const ok = status !== "" && !/^pending$/i.test(status);
+  const statusReady = status !== "" && !/^pending$/i.test(status);
+  const missingFields = missingReleaseEvidenceFields(sectionTitle, section);
+  const ok = statusReady && missingFields.length === 0;
 
   return {
     ok,
-    detail: ok
-      ? `${file} ${sectionTitle}: ${status}`
-      : `${file} ${sectionTitle} status is pending`,
+    detail: releaseEvidenceDetail({
+      file,
+      sectionTitle,
+      status,
+      statusReady,
+      missingFields,
+    }),
     external: true,
   };
+}
+
+function releaseEvidenceDetail({
+  file,
+  sectionTitle,
+  status,
+  statusReady,
+  missingFields,
+}) {
+  if (!statusReady) {
+    return `${file} ${sectionTitle} status is pending`;
+  }
+
+  if (missingFields.length > 0) {
+    return `${file} ${sectionTitle} missing required evidence fields: ${missingFields.join(", ")}`;
+  }
+
+  return `${file} ${sectionTitle}: ${status}`;
+}
+
+function missingReleaseEvidenceFields(sectionTitle, section) {
+  const requiredFields = releaseEvidenceRequiredFields[sectionTitle] ?? [];
+  return requiredFields.filter(
+    (field) => !sectionFieldHasValue(section, field),
+  );
+}
+
+function sectionFieldHasValue(section, field) {
+  const escapedField = escapeRegExp(field);
+  const match = section.match(new RegExp(`^- ${escapedField}:\\s*(.+)$`, "im"));
+  return Boolean(match?.[1]?.trim());
 }
 
 function extractMarkdownSection(content, sectionTitle) {
@@ -937,6 +990,10 @@ function extractMarkdownSection(content, sectionTitle) {
     return index > start && line.startsWith("## ");
   });
   return lines.slice(start + 1, end < 0 ? undefined : end).join("\n");
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 async function assertFileContainsMarkers(file, requiredMarkers) {

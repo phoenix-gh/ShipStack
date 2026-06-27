@@ -7,6 +7,15 @@ results for external gates here, then update `docs/PROGRESS.md` and
 Do not paste secrets, API tokens, session cookies, account IDs that should stay
 private, or full environment files.
 
+## Required Fields
+
+The full release audit treats these sections as external gates. A section only
+passes when `Status` is not `pending` and the required fields below are filled:
+
+- Real Cloudflare Deploy Evidence: Date, Commit, Worker URL, Result
+- GitHub Actions Evidence: Date, Commit, Run URL, Result
+- npm Publish Workflow Dry-Run Evidence: Date, Commit, Run URL, Result
+
 ## Real Cloudflare Deploy Evidence
 
 Status: pending

@@ -11,4 +11,8 @@ test("release audit exposes external release evidence gates", async () => {
     source,
     /Remote npm publish workflow dry-run evidence is recorded/,
   );
+  assert.match(source, /releaseEvidenceRequiredFields/);
+  assert.match(source, /Worker URL/);
+  assert.match(source, /Run URL/);
+  assert.match(source, /missing required evidence fields/);
 });

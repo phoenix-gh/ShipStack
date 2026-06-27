@@ -5,6 +5,15 @@
 
 不要粘贴 secrets、API tokens、session cookies、需要保密的 account IDs，或完整环境文件。
 
+## 必填字段
+
+完整 release audit 会把这些 section 当作外部 gate。只有 `状态` 不再是
+`待完成`，并且下面的必填字段都有值时，section 才会通过：
+
+- 真实 Cloudflare 部署证据：日期、Commit、Worker URL、结果
+- GitHub Actions 证据：日期、Commit、Run URL、结果
+- npm Publish Workflow Dry-Run 证据：日期、Commit、Run URL、结果
+
 ## 真实 Cloudflare 部署证据
 
 状态：待完成
