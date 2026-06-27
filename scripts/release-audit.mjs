@@ -411,25 +411,57 @@ const checks = [
   {
     label: "release notes describe remaining gates",
     action: async () => {
-      const file = "docs/releases/v0.1.0.md";
-      const content = await readFile(resolve(repositoryRoot, file), "utf8");
-      const requiredMarkers = [
-        "pnpm release:audit",
-        "real Cloudflare deploy",
-        "remote CI",
-        "npm publish workflow dry-run",
-      ];
-      const missingMarkers = requiredMarkers.filter(
-        (marker) => !content.includes(marker),
-      );
-
-      return {
-        ok: missingMarkers.length === 0,
-        detail:
-          missingMarkers.length > 0
-            ? `missing markers: ${missingMarkers.join(", ")}`
-            : file,
-      };
+      return await assertFilesContainMarkers([
+        {
+          file: "docs/releases/v0.1.0.md",
+          markers: [
+            "pnpm release:audit",
+            "real Cloudflare deploy",
+            "remote CI",
+            "npm publish workflow dry-run",
+          ],
+        },
+        {
+          file: "docs/zh-CN/releases/v0.1.0.md",
+          markers: [
+            "pnpm release:audit",
+            "Cloudflare 部署验证",
+            "远端仓库的 GitHub Actions workflow",
+            "npm publish workflow dry-run",
+          ],
+        },
+      ]);
+    },
+  },
+  {
+    label: "release checklist describes release gates",
+    action: async () => {
+      return await assertFilesContainMarkers([
+        {
+          file: "docs/RELEASE.md",
+          markers: [
+            "pnpm verify:release",
+            "pnpm pack:check",
+            "pnpm publish:dry-run",
+            "pnpm smoke:temporary-deploy",
+            "real Cloudflare account deploy",
+            "remote GitHub Actions workflow",
+            "npm provenance",
+          ],
+        },
+        {
+          file: "docs/zh-CN/RELEASE.md",
+          markers: [
+            "pnpm verify:release",
+            "pnpm pack:check",
+            "pnpm publish:dry-run",
+            "pnpm smoke:temporary-deploy",
+            "真实 Cloudflare 账号部署",
+            "远端 GitHub Actions workflow",
+            "npm provenance",
+          ],
+        },
+      ]);
     },
   },
   {
