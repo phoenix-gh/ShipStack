@@ -519,6 +519,21 @@ const checks = [
     },
   },
   {
+    label: "PR template describes bounded verification",
+    action: async () => {
+      return await assertFileContainsMarkers(
+        ".github/PULL_REQUEST_TEMPLATE.md",
+        [
+          "pnpm verify:local",
+          "pnpm smoke` for template, module, CLI, generated app, or package changes",
+          "pnpm publish:dry-run",
+          "only when a maintainer approves an external Cloudflare temporary upload",
+          "remote npm workflow checks recorded when this is a release PR",
+        ],
+      );
+    },
+  },
+  {
     label: "tracked files do not contain obvious secrets",
     action: async () => {
       const findings = await scanTrackedFilesForSecrets();

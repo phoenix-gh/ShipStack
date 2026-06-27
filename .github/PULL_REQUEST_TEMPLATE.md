@@ -10,8 +10,11 @@ Run the checks that match the change:
 - [ ] `pnpm typecheck`
 - [ ] `pnpm test`
 - [ ] `pnpm build`
-- [ ] `pnpm smoke`
-- [ ] `pnpm smoke:temporary-deploy`
+- [ ] `pnpm verify:local`
+- [ ] `pnpm smoke` for template, module, CLI, generated app, or package changes
+- [ ] `pnpm publish:dry-run` for release or npm package changes
+- [ ] `pnpm smoke:temporary-deploy` only when a maintainer approves an external Cloudflare temporary upload
+- [ ] Real Cloudflare deploy, remote GitHub Actions, or remote npm workflow checks recorded when this is a release PR
 
 ## Documentation
 
