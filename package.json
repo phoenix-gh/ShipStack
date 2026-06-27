@@ -19,6 +19,7 @@
     "smoke": "pnpm build && node scripts/smoke/cli.mjs && node scripts/smoke/base.mjs && node scripts/smoke/database.mjs && node scripts/smoke/auth.mjs && node scripts/smoke/storage.mjs && node scripts/smoke/billing.mjs && node scripts/smoke/api-keys.mjs && node scripts/smoke/openapi.mjs && node scripts/smoke/api-rate-limit.mjs",
     "smoke:temporary-deploy": "pnpm build && node scripts/smoke/temporary-deploy.mjs",
     "pack:check": "node scripts/pack-check.mjs",
+    "publish:dry-run": "node scripts/publish-dry-run.mjs",
     "release:audit": "node scripts/release-audit.mjs",
     "release:audit:local": "node scripts/release-audit.mjs --local",
     "format:check": "prettier --check \"**/*.{md,json,jsonc,yml,yaml,mjs,ts,tsx,css}\"",

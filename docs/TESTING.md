@@ -83,6 +83,15 @@ verification because the auth smoke includes a real browser flow.
 
 `pnpm test` runs package-level unit tests. `pnpm format:check` verifies repository formatting. `pnpm pack:check` verifies that npm package tarballs include the compiled entrypoints and generated-app templates required by the CLI, installs the packed tarballs into a temporary workspace, creates an app from the packed `create-shipstack` CLI, installs database, auth, billing, storage, API keys, OpenAPI, and API rate limit modules from the packed `shipstack` CLI, verifies module docs links, and runs `shipstack doctor`.
 
+Use `pnpm publish:dry-run` before publishing packages. It packs
+`@shipstack/core`, `@shipstack/cli`, and `create-shipstack` in dependency order
+and runs `npm publish --dry-run --access public --tag next` on each tarball. Set
+`NPM_TAG=<tag>` to test another dist-tag. This command is intentionally separate
+from `pnpm verify:release` because it exercises npm publish behavior and may
+depend on registry availability. It does not publish packages and does not use
+npm provenance; provenance is verified by the remote GitHub Actions publish
+workflow.
+
 ### Optional Temporary Cloudflare Deploy Smoke
 
 When Wrangler is not authenticated, maintainers can still verify a real external

@@ -18,6 +18,8 @@
   keys、OpenAPI、API rate limiting 的模块 smoke tests。
 - 2026-06-28 最新一次完整 release audit 已通过本地检查，但停在两个外部门槛：
   没有配置 Git remote，且 Wrangler 尚未登录。
+- 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack/core`、
+  `@shipstack/cli` 和 `create-shipstack` 通过 `pnpm publish:dry-run`。
 - 2026-06-27 最新一次 `pnpm smoke` 在安装 `bubblewrap` 且 Linux smoke
   workspace 避开继承到的 `/mnt/c/...` 临时路径后通过，也通过了生成应用的
   `wrangler deploy --dry-run` 检查。
@@ -35,6 +37,7 @@
 - `pnpm pack:check`
 - `pnpm verify:local`
 - `pnpm verify:release`
+- `pnpm publish:dry-run`
 
 最新提交：
 
@@ -111,6 +114,7 @@
 | 快速本地验证                       | 通过     | `pnpm verify:local`                     |
 | 完整本地发布验证                   | 通过     | `pnpm verify:release`                   |
 | 完整 release audit                 | 外部阻塞 | `pnpm release:audit`                    |
+| 本地 npm publish dry-run           | 通过     | `pnpm publish:dry-run`                  |
 | Cloudflare 临时部署                | 需要批准 | `pnpm smoke:temporary-deploy`           |
 | CLI unit tests                     | 通过     | `pnpm test`                             |
 | Runtime API tests                  | 通过     | `pnpm smoke`                            |
@@ -133,6 +137,7 @@
 | CI workflow                        | 已添加   | GitHub Actions                          |
 | Release verification command       | 通过     | `pnpm verify:release`                   |
 | v0.1.0 release notes               | 已添加   | `docs/releases`                         |
+| 本地 npm publish dry-run command   | 通过     | `pnpm publish:dry-run`                  |
 | npm publish workflow               | 已添加   | `.github/workflows/release-npm.yml`     |
 
 ## 下一优先级

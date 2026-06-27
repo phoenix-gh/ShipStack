@@ -21,6 +21,9 @@ External verification status in this workspace:
 - The latest full release audit on 2026-06-28 passed local checks but stopped
   on two external blockers: no configured Git remote and unauthenticated
   Wrangler.
+- The latest local npm publish dry-run on 2026-06-28 passed
+  `pnpm publish:dry-run` for `@shipstack/core`, `@shipstack/cli`, and
+  `create-shipstack`.
 - The latest `pnpm smoke` run on 2026-06-27 passed after `bubblewrap` was
   installed and Linux smoke workspaces were moved away from inherited
   `/mnt/c/...` temp paths. It also passed the generated app
@@ -40,6 +43,7 @@ Last verified:
 - `pnpm pack:check`
 - `pnpm verify:local`
 - `pnpm verify:release`
+- `pnpm publish:dry-run`
 
 Latest commit:
 
@@ -116,6 +120,7 @@ Latest commit:
 | Fast local verification            | Passing        | `pnpm verify:local`                     |
 | Full local release verification    | Passing        | `pnpm verify:release`                   |
 | Full release audit                 | External block | `pnpm release:audit`                    |
+| Local npm publish dry-run          | Passing        | `pnpm publish:dry-run`                  |
 | Temporary Cloudflare deploy        | Needs approval | `pnpm smoke:temporary-deploy`           |
 | CLI unit tests                     | Passing        | `pnpm test`                             |
 | Runtime API tests                  | Passing        | `pnpm smoke`                            |
@@ -138,6 +143,7 @@ Latest commit:
 | CI workflow                        | Added          | GitHub Actions                          |
 | Release verification command       | Passing        | `pnpm verify:release`                   |
 | v0.1.0 release notes               | Added          | `docs/releases`                         |
+| Local npm publish dry-run command  | Passing        | `pnpm publish:dry-run`                  |
 | npm publish workflow               | Added          | `.github/workflows/release-npm.yml`     |
 
 ## Next Priority

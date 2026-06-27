@@ -90,6 +90,24 @@ const checks = [
     },
   },
   {
+    label: "Local npm publish dry-run script exists",
+    action: async () => {
+      const packageJson = JSON.parse(
+        await readFile(resolve(repositoryRoot, "package.json"), "utf8"),
+      );
+      const script = packageJson.scripts?.["publish:dry-run"];
+
+      return {
+        ok:
+          script === "node scripts/publish-dry-run.mjs" &&
+          (await exists(
+            resolve(repositoryRoot, "scripts/publish-dry-run.mjs"),
+          )),
+        detail: script ?? "missing",
+      };
+    },
+  },
+  {
     label: "Repository CI workflow shape is valid",
     action: async () => {
       return await assertFileContainsMarkers(".github/workflows/ci.yml", [

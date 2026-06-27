@@ -36,14 +36,24 @@
    pnpm pack:check
    ```
 
-5. 执行 [部署验证](./DEPLOYMENT.md) 里的真实 Cloudflare 账号部署 checklist。
+5. 运行本地 npm publish dry-run。
 
-6. 确认 release branch 上的远端 GitHub Actions workflow 通过。
+   ```sh
+   pnpm publish:dry-run
+   ```
 
-7. 在 [部署验证](./DEPLOYMENT.md) 或
+   这个命令会打包可发布 packages，并对每个 tarball 运行
+   `npm publish --dry-run`。它不会真正发布 package，也不会使用 provenance；
+   带 provenance 的发布仍以 GitHub Actions workflow 为准。
+
+6. 执行 [部署验证](./DEPLOYMENT.md) 里的真实 Cloudflare 账号部署 checklist。
+
+7. 确认 release branch 上的远端 GitHub Actions workflow 通过。
+
+8. 在 [部署验证](./DEPLOYMENT.md) 或
    [v0.1.0 release notes](./releases/v0.1.0.md) 里记录真实部署后的 Worker 验证结果。
 
-8. 确认 release notes 包含：
+9. 确认 release notes 包含：
 
    - 支持的 Node.js version
    - 支持的 pnpm version
@@ -52,14 +62,14 @@
    - known limitations
    - next planned modules
 
-9. 创建 release tag。
+10. 创建 release tag。
 
-   ```sh
-   git tag v0.1.0
-   git push origin v0.1.0
-   ```
+    ```sh
+    git tag v0.1.0
+    git push origin v0.1.0
+    ```
 
-10. 从 GitHub Actions 发布 npm packages。
+11. 从 GitHub Actions 发布 npm packages。
 
     等 tag 或 release branch 上的 CI 通过后，使用 `Release npm Packages`
     workflow。先用 `dry_run: true` 跑一次并检查输出；确认无误后，再用
@@ -80,6 +90,8 @@
 - 用户可见变化已同步更新英文和中文文档。
 - 修改 templates 或 modules 后，已通过 smoke tests 验证生成应用行为。
 - `pnpm pack:check` 会在发布前验证 package 内容，并从打包 tarballs 创建应用。
+- `pnpm publish:dry-run` 会在远端 workflow 使用 provenance 发布前，先验证 npm
+  能以 dry-run 模式接受打包 tarballs。
 - `docs/PROGRESS.md` 与当前 release 状态一致。
 
 ## 当前已知外部缺口

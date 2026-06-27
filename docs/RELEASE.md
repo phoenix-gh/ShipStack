@@ -37,16 +37,26 @@ Do not tag `v0.1.0` until these checks are complete:
    pnpm pack:check
    ```
 
-5. Run the real Cloudflare account deploy checklist in
+5. Run the local npm publish dry-run.
+
+   ```sh
+   pnpm publish:dry-run
+   ```
+
+   This command packs the publishable packages and runs `npm publish --dry-run`
+   on each tarball. It does not publish packages and does not use provenance;
+   the GitHub Actions workflow is still the source of truth for provenance.
+
+6. Run the real Cloudflare account deploy checklist in
    [Deployment Verification](./DEPLOYMENT.md).
 
-6. Confirm the remote GitHub Actions workflow passes on the release branch.
+7. Confirm the remote GitHub Actions workflow passes on the release branch.
 
-7. Record the real deployed Worker verification result in
+8. Record the real deployed Worker verification result in
    [Deployment Verification](./DEPLOYMENT.md) or
    [v0.1.0 release notes](./releases/v0.1.0.md).
 
-8. Confirm release notes include:
+9. Confirm release notes include:
 
    - supported Node.js version
    - supported pnpm version
@@ -55,14 +65,14 @@ Do not tag `v0.1.0` until these checks are complete:
    - known limitations
    - next planned modules
 
-9. Create the release tag.
+10. Create the release tag.
 
-   ```sh
-   git tag v0.1.0
-   git push origin v0.1.0
-   ```
+    ```sh
+    git tag v0.1.0
+    git push origin v0.1.0
+    ```
 
-10. Publish npm packages from GitHub Actions.
+11. Publish npm packages from GitHub Actions.
 
     Use the `Release npm Packages` workflow after CI passes on the tag or
     release branch. Run it once with `dry_run: true`, inspect the output, then
@@ -85,6 +95,8 @@ Do not tag `v0.1.0` until these checks are complete:
 - Generated-app behavior is verified through smoke tests after template or module changes.
 - `pnpm pack:check` verifies package contents and creates an app from packed
   tarballs before publishing.
+- `pnpm publish:dry-run` verifies npm accepts the packed tarballs in dry-run
+  mode before the remote workflow publishes them with provenance.
 - `docs/PROGRESS.md` matches the current release status.
 
 ## Current Known External Gaps
