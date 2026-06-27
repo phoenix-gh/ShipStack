@@ -433,6 +433,30 @@ const checks = [
     },
   },
   {
+    label: "README describes current release status",
+    action: async () => {
+      return await assertFileContainsMarkers("README.md", [
+        "local npm publish dry-run",
+        "real Cloudflare deployment pass",
+        "remote GitHub Actions confirmation",
+        "npm publish workflow dry-run on the remote repository",
+      ]);
+    },
+  },
+  {
+    label: "contributing guide lists release gates",
+    action: async () => {
+      return await assertFileContainsMarkers("CONTRIBUTING.md", [
+        "pnpm verify:release",
+        "pnpm pack:check",
+        "pnpm publish:dry-run",
+        "pnpm smoke:temporary-deploy",
+        "real Cloudflare account deploy",
+        "remote npm publish workflow dry-run",
+      ]);
+    },
+  },
+  {
     label: "tracked files do not contain obvious secrets",
     action: async () => {
       const findings = await scanTrackedFilesForSecrets();
