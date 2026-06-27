@@ -40,11 +40,27 @@ await runSmoke("cli", async (workspace) => {
   await run("node", [shipStackBin, "add", "api-keys"], { cwd: appDir });
   await assertApiKeysModule(appDir);
 
-  await run("node", [shipStackBin, "add", "openapi"], { cwd: appDir });
+  const openApiOutput = await runAndCapture(
+    "node",
+    [shipStackBin, "add", "openapi"],
+    { cwd: appDir },
+  );
+  assertOutputIncludes(openApiOutput.output, [
+    "pnpm install",
+    "pnpm openapi:generate",
+  ]);
   await run("node", [shipStackBin, "add", "openapi"], { cwd: appDir });
   await assertOpenApiModule(appDir);
 
-  await run("node", [shipStackBin, "add", "api-rate-limit"], { cwd: appDir });
+  const apiRateLimitOutput = await runAndCapture(
+    "node",
+    [shipStackBin, "add", "api-rate-limit"],
+    { cwd: appDir },
+  );
+  assertOutputIncludes(apiRateLimitOutput.output, [
+    "pnpm install",
+    "pnpm test",
+  ]);
   await run("node", [shipStackBin, "add", "api-rate-limit"], { cwd: appDir });
   await assertApiRateLimitModule(appDir);
 
@@ -258,4 +274,13 @@ function assertEqual(actual, expected) {
 function assertCount(content, marker, expected) {
   const actual = content.split(marker).length - 1;
   assertEqual(actual, expected);
+}
+
+function assertOutputIncludes(output, markers) {
+  const missing = markers.filter((marker) => !output.includes(marker));
+  if (missing.length > 0) {
+    throw new Error(
+      `Expected command output to include ${missing.join(", ")}. Received:\n${output}`,
+    );
+  }
 }
