@@ -38,6 +38,7 @@ Cloudflare is the default path, but the architecture should keep provider seams 
 ## Project Documents
 
 - [Project Design](./docs/PROJECT_DESIGN.md)
+- [Quickstart](./docs/QUICKSTART.md)
 - [MVP Specification](./docs/MVP_SPEC.md)
 - [Module Manifest Design](./docs/MODULE_MANIFEST.md)
 - [Roadmap](./docs/ROADMAP.md)

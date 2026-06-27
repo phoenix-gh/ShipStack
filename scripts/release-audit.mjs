@@ -181,6 +181,45 @@ const checks = [
     },
   },
   {
+    label: "Quickstart docs describe MVP path",
+    action: async () => {
+      return await assertFilesContainMarkers([
+        {
+          file: "docs/QUICKSTART.md",
+          markers: [
+            "pnpm create shipstack my-app",
+            "node packages/create-shipstack/dist/cli.js my-app",
+            "shipstack add database",
+            "shipstack add api-rate-limit",
+            "pnpm db:cf:migrate:local",
+            "pnpm deploy:dry-run",
+            "Deployment Verification",
+          ],
+        },
+        {
+          file: "docs/zh-CN/QUICKSTART.md",
+          markers: [
+            "pnpm create shipstack my-app",
+            "node packages/create-shipstack/dist/cli.js my-app",
+            "shipstack add database",
+            "shipstack add api-rate-limit",
+            "pnpm db:cf:migrate:local",
+            "pnpm deploy:dry-run",
+            "部署验证",
+          ],
+        },
+        {
+          file: "README.md",
+          markers: ["[Quickstart](./docs/QUICKSTART.md)"],
+        },
+        {
+          file: "docs/zh-CN/README.md",
+          markers: ["[快速开始](./QUICKSTART.md)"],
+        },
+      ]);
+    },
+  },
+  {
     label: "Generated env examples are guarded",
     action: async () => {
       const checks = [
