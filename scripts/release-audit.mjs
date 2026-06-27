@@ -220,6 +220,23 @@ const checks = [
     },
   },
   {
+    label: "Generated README describes current modules",
+    action: async () => {
+      return await assertFileContainsMarkers("templates/base/README.md", [
+        "shipstack add database",
+        "shipstack add auth",
+        "shipstack add billing",
+        "shipstack add storage",
+        "shipstack add api-keys",
+        "shipstack add openapi",
+        "shipstack add api-rate-limit",
+        "Stripe checkout",
+        "R2-backed file APIs",
+        "usable by external clients",
+      ]);
+    },
+  },
+  {
     label: "Generated env examples are guarded",
     action: async () => {
       const checks = [

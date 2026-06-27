@@ -14,10 +14,19 @@ pnpm dev
 ```bash
 shipstack add database
 shipstack add auth
+shipstack add billing
+shipstack add storage
+shipstack add api-keys
+shipstack add openapi
+shipstack add api-rate-limit
 ```
 
 The database module adds Cloudflare D1 and Drizzle. The auth module adds Better
 Auth, sign-in/sign-up pages, and protected dashboard/account routes.
+Billing adds Stripe checkout, portal, webhook handling, and entitlement helpers.
+Storage adds R2-backed file APIs with metadata. API keys, OpenAPI, and API rate
+limit recipes make the app usable by external clients without expanding the
+base starter.
 
 ## Useful Commands
 
@@ -48,6 +57,9 @@ pnpm verify:deployed https://<your-worker-url>
 - [Environment variables](./docs/env.md)
 - [中文部署文档](./docs/zh-CN/deployment.md)
 - [中文环境变量文档](./docs/zh-CN/env.md)
+
+Installed modules add their own docs under `docs/` and `docs/zh-CN/`, and the
+README is updated with links when a module is installed.
 
 ## Cloudflare
 

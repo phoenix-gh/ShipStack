@@ -127,9 +127,26 @@ async function verifyGeneratedMetadata(appDir) {
   for (const expectedCommand of [
     "shipstack add database",
     "shipstack add auth",
+    "shipstack add billing",
+    "shipstack add storage",
+    "shipstack add api-keys",
+    "shipstack add openapi",
+    "shipstack add api-rate-limit",
   ]) {
     if (!readme.includes(expectedCommand)) {
       throw new Error(`Generated README is missing ${expectedCommand}`);
+    }
+  }
+
+  for (const expectedDescription of [
+    "Stripe checkout",
+    "R2-backed file APIs",
+    "usable by external clients",
+  ]) {
+    if (!readme.includes(expectedDescription)) {
+      throw new Error(
+        `Generated README is missing module description: ${expectedDescription}`,
+      );
     }
   }
 
