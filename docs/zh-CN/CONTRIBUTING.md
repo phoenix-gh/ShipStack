@@ -96,8 +96,11 @@ docs: clarify cloudflare deployment
 打 `v0.1.0` tag 前，维护者应确认：
 
 1. `pnpm verify:release` 通过。
-2. `pnpm smoke:temporary-deploy` 通过。
-3. 已完成并记录真实 Cloudflare 账号部署。
-4. 远端 GitHub Actions workflow 通过。
+2. `pnpm pack:check` 通过。
+3. 本地 `pnpm publish:dry-run` 通过。
+4. 如果批准 temporary deploy check，`pnpm smoke:temporary-deploy` 通过。
+5. 已完成并记录真实 Cloudflare 账号部署。
+6. 远端 GitHub Actions workflow 通过。
+7. 远端 npm publish workflow dry-run 通过。
 
 完整 release flow 见 [Release Checklist](./RELEASE.md)。

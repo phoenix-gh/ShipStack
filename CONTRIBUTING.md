@@ -100,8 +100,11 @@ docs: clarify cloudflare deployment
 Before tagging `v0.1.0`, maintainers should verify:
 
 1. `pnpm verify:release` passes.
-2. `pnpm smoke:temporary-deploy` passes.
-3. A real Cloudflare account deploy has been completed and recorded.
-4. The remote GitHub Actions workflow passes.
+2. `pnpm pack:check` passes.
+3. `pnpm publish:dry-run` passes locally.
+4. `pnpm smoke:temporary-deploy` passes if a temporary deploy check is approved.
+5. A real Cloudflare account deploy has been completed and recorded.
+6. The remote GitHub Actions workflow passes.
+7. The remote npm publish workflow dry-run passes.
 
 Use the [Release Checklist](./docs/RELEASE.md) for the full release flow.
