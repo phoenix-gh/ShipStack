@@ -299,8 +299,10 @@ test("database and auth installers patch generated apps idempotently", async () 
       await writeFile("README.md", apiKeysReadme);
       await runSilently(["doctor"]);
 
+      const openApiOutput = await captureOutput(["add", "openapi"]);
       await runSilently(["add", "openapi"]);
-      await runSilently(["add", "openapi"]);
+      assert.match(openApiOutput, /pnpm install/);
+      assert.match(openApiOutput, /pnpm openapi:generate/);
 
       const openApiPackageJson = JSON.parse(
         await readFile("package.json", "utf8"),
@@ -344,8 +346,10 @@ test("database and auth installers patch generated apps idempotently", async () 
       await writeFile("README.md", openApiReadme);
       await runSilently(["doctor"]);
 
+      const rateLimitOutput = await captureOutput(["add", "api-rate-limit"]);
       await runSilently(["add", "api-rate-limit"]);
-      await runSilently(["add", "api-rate-limit"]);
+      assert.match(rateLimitOutput, /pnpm install/);
+      assert.match(rateLimitOutput, /pnpm test/);
 
       const rateLimitReadme = await readFile("README.md", "utf8");
       assert.equal(

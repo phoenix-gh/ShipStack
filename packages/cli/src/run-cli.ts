@@ -1039,6 +1039,7 @@ async function addOpenApi() {
   console.log("Installed openapi module.");
   console.log("");
   console.log("Next steps:");
+  console.log("  pnpm install");
   console.log("  pnpm openapi:generate");
   console.log("  pnpm lint");
   console.log("  pnpm build");
@@ -1082,6 +1083,7 @@ async function addApiRateLimit() {
   console.log("Installed api-rate-limit module.");
   console.log("");
   console.log("Next steps:");
+  console.log("  pnpm install");
   console.log("  pnpm test");
   console.log("  pnpm build");
 }
