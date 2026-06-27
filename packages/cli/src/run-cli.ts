@@ -72,6 +72,15 @@ export async function runCli(argv = process.argv.slice(2)) {
       return;
     }
 
+    if (
+      moduleName === "api-rate-limit" ||
+      moduleName === "rate-limit" ||
+      moduleName === "rate-limiting"
+    ) {
+      await addApiRateLimit();
+      return;
+    }
+
     if (moduleName === "api") {
       console.log(
         "The API foundation is already included in the base starter.",
@@ -85,7 +94,7 @@ export async function runCli(argv = process.argv.slice(2)) {
 
     console.log(`Module installation is not implemented yet: ${moduleName}`);
     console.log(
-      "Available now: database, auth, storage, billing, api-keys, openapi.",
+      "Available now: database, auth, storage, billing, api-keys, openapi, api-rate-limit.",
     );
     return;
   }
@@ -467,6 +476,49 @@ async function doctor() {
     );
   }
 
+  if (await hasApiRateLimitModule(cwd)) {
+    checks.push(
+      [
+        "api rate limit helper",
+        existsSync(resolve(cwd, "src/features/api/rate-limit.ts")),
+      ],
+      [
+        "api rate limit tests",
+        existsSync(resolve(cwd, "src/features/api/rate-limit.test.ts")),
+      ],
+      [
+        "api rate limit /api/v1/me override",
+        await fileIncludes(
+          resolve(cwd, "src/routes/api.v1.me.ts"),
+          "checkRateLimit",
+        ),
+      ],
+      [
+        "api rate limit AGENTS.md guidance",
+        await fileIncludes(
+          resolve(cwd, "AGENTS.md"),
+          "## API Rate Limit Module",
+        ),
+      ],
+      [
+        "api rate limit docs",
+        existsSync(resolve(cwd, "docs/api-rate-limit.md")) &&
+          existsSync(resolve(cwd, "docs/zh-CN/api-rate-limit.md")),
+      ],
+      [
+        "api rate limit README docs links",
+        (await fileIncludes(
+          resolve(cwd, "README.md"),
+          "[API Rate Limit](./docs/api-rate-limit.md)",
+        )) &&
+          (await fileIncludes(
+            resolve(cwd, "README.md"),
+            "[API Rate Limit](./docs/zh-CN/api-rate-limit.md)",
+          )),
+      ],
+    );
+  }
+
   let failed = 0;
   for (const [label, ok] of checks) {
     console.log(`${ok ? "ok" : "missing"} ${label}`);
@@ -520,6 +572,10 @@ async function hasOpenApiModule(cwd: string) {
     existsSync(resolve(cwd, "scripts/generate-openapi.mjs")) ||
     existsSync(resolve(cwd, "src/features/openapi/generated.ts"))
   );
+}
+
+async function hasApiRateLimitModule(cwd: string) {
+  return existsSync(resolve(cwd, "src/features/api/rate-limit.ts"));
 }
 
 async function packageJsonHasDependency(cwd: string, dependency: string) {
@@ -988,6 +1044,48 @@ async function addOpenApi() {
   console.log("  pnpm build");
 }
 
+async function addApiRateLimit() {
+  const cwd = process.cwd();
+  assertProjectFile("package.json");
+  assertProjectFile("wrangler.jsonc");
+
+  if (!(await hasApiKeysModule(cwd))) {
+    throw new Error(
+      "The api-rate-limit module requires the api-keys module. Run `shipstack add api-keys` first.",
+    );
+  }
+
+  await copyModuleFiles("api-rate-limit", cwd);
+  await copyModuleOverrides("api-rate-limit", cwd);
+  await appendIfMissing(
+    resolve(cwd, "AGENTS.md"),
+    `
+## API Rate Limit Module
+
+- Use \`src/features/api/rate-limit.ts\` to protect public or API-key-authenticated routes.
+- Keep limits explicit per route; do not hide global throttling in unrelated helpers.
+- Derive rate limit keys from verified identity, API key, or trusted request metadata.
+- The default in-memory limiter is suitable for local development and small starters only.
+- Prefer Cloudflare WAF or a future Durable Object/KV-backed limiter for production-scale public APIs.
+`,
+    "## API Rate Limit Module",
+  );
+  await appendIfMissing(
+    resolve(cwd, "README.md"),
+    `
+- [API Rate Limit](./docs/api-rate-limit.md)
+- [API Rate Limit](./docs/zh-CN/api-rate-limit.md)
+`,
+    "[API Rate Limit](./docs/api-rate-limit.md)",
+  );
+
+  console.log("Installed api-rate-limit module.");
+  console.log("");
+  console.log("Next steps:");
+  console.log("  pnpm test");
+  console.log("  pnpm build");
+}
+
 function assertProjectFile(fileName: string) {
   if (!existsSync(resolve(process.cwd(), fileName))) {
     throw new Error(
@@ -1176,6 +1274,7 @@ Modules:
   billing     Add Stripe billing
   api-keys    Add API keys for external clients
   openapi     Add OpenAPI generation
+  api-rate-limit  Add API rate limiting helpers
 
 This is an early CLI skeleton. More modules will land as the starter matures.`);
 }

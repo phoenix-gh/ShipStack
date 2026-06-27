@@ -313,6 +313,31 @@ export const openApiModule: ShipStackModule = {
   ],
 };
 
+export const apiRateLimitModule: ShipStackModule = {
+  id: "api-rate-limit",
+  name: "API rate limiting",
+  description:
+    "Adds route-level API rate limiting helpers for public and API-key-authenticated routes.",
+  category: "recipe",
+  dependencies: ["base", "database-d1", "auth-better-auth", "api-keys"],
+  checks: [
+    {
+      id: "api-rate-limit-helper",
+      description: "Generated app has a src/features/api/rate-limit.ts helper.",
+    },
+    {
+      id: "api-rate-limit-route",
+      description:
+        "Generated app demonstrates rate limiting on a versioned API route.",
+    },
+    {
+      id: "api-rate-limit-docs",
+      description:
+        "Generated app documents local and production rate limiting boundaries.",
+    },
+  ],
+};
+
 export const coreModules = [
   baseModule,
   databaseD1Module,
@@ -321,4 +346,5 @@ export const coreModules = [
   billingStripeModule,
   apiKeysModule,
   openApiModule,
+  apiRateLimitModule,
 ] satisfies ShipStackModule[];

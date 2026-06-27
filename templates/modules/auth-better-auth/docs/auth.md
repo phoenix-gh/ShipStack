@@ -38,9 +38,11 @@ export const Route = createFileRoute("/example")({
 });
 ```
 
-The helper redirects anonymous users to `/sign-in`. Server-side API handlers
-should derive identity from Better Auth session data or a future API key module,
-not from client-provided user IDs.
+The helper redirects anonymous users to `/sign-in` during server-side route
+loads. Client-side page components should still render an unauthenticated state
+from `authClient.useSession()` because SPA navigations can happen immediately
+after sign in. Server-side API handlers should derive identity from Better Auth
+session data or a future API key module, not from client-provided user IDs.
 
 ## Optional Google OAuth
 

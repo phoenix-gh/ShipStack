@@ -232,6 +232,10 @@ const checks = [
           "templates/modules/openapi/docs/zh-CN/openapi.md",
           ["pnpm openapi:generate", "/api/openapi"],
         ),
+        await assertFileContainsMarkers(
+          "templates/modules/api-rate-limit/docs/zh-CN/api-rate-limit.md",
+          ["Cloudflare WAF", "checkRateLimit"],
+        ),
       ];
       const findings = checks
         .filter((check) => !check.ok)
@@ -241,7 +245,7 @@ const checks = [
         ok: findings.length === 0,
         detail:
           findings.length === 0
-            ? "database, auth, billing, storage, API keys, and OpenAPI module Chinese docs are present"
+            ? "database, auth, billing, storage, API keys, OpenAPI, and API rate limit module Chinese docs are present"
             : findings.join("\n  "),
       };
     },
@@ -256,12 +260,14 @@ const checks = [
         "[Storage](./docs/storage.md)",
         "[API Keys](./docs/api-keys.md)",
         "[OpenAPI](./docs/openapi.md)",
+        "[API Rate Limit](./docs/api-rate-limit.md)",
         "[数据库](./docs/zh-CN/database.md)",
         "[认证](./docs/zh-CN/auth.md)",
         "[支付](./docs/zh-CN/billing.md)",
         "[存储](./docs/zh-CN/storage.md)",
         "[API Keys](./docs/zh-CN/api-keys.md)",
         "[OpenAPI](./docs/zh-CN/openapi.md)",
+        "[API Rate Limit](./docs/zh-CN/api-rate-limit.md)",
       ]);
     },
   },
@@ -281,6 +287,8 @@ const checks = [
         "api keys README docs links",
         "openapi docs",
         "openapi README docs links",
+        "api rate limit docs",
+        "api rate limit README docs links",
       ]);
     },
   },

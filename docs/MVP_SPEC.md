@@ -90,6 +90,15 @@ A developer can create a TanStack Start app, run it locally, authenticate a user
 - installed route detection for first-party modules
 - OpenAPI smoke test
 
+### API Rate Limit Recipe
+
+- `shipstack add api-rate-limit`
+- route-level fixed-window rate limit helper
+- JSON `RATE_LIMITED` error envelope
+- retry and rate limit response headers
+- local development and production boundary docs
+- API rate limit smoke test
+
 ### Deployment
 
 - `wrangler.jsonc`
@@ -114,7 +123,6 @@ A developer can create a TanStack Start app, run it locally, authenticate a user
 
 ## Out Of Scope
 
-- public API rate limiting
 - generated SDKs
 - admin panel
 - team accounts
@@ -142,6 +150,7 @@ shipstack add billing
 shipstack add storage
 shipstack add api-keys
 shipstack add openapi
+shipstack add api-rate-limit
 pnpm db:generate
 pnpm openapi:generate
 pnpm db:cf:migrate:local
@@ -168,6 +177,7 @@ The MVP is done when all of these pass from a fresh clone or generated app:
 - user can sign in
 - anonymous user cannot access dashboard
 - authenticated user can access dashboard
+- API rate limit helper returns a `RATE_LIMITED` envelope after the configured limit
 - app builds for Cloudflare Workers
 - deployment docs are complete enough to follow manually
 - generated `AGENTS.md` exists and matches the project layout

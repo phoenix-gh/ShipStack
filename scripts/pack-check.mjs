@@ -24,6 +24,8 @@ try {
     "package/templates/modules/api-keys/docs/zh-CN/api-keys.md",
     "package/templates/modules/api-keys/src/features/api-keys/server.ts",
     "package/templates/modules/api-keys/src/routes/api.v1.api-keys.ts",
+    "package/templates/modules/api-rate-limit/docs/zh-CN/api-rate-limit.md",
+    "package/templates/modules/api-rate-limit/src/features/api/rate-limit.ts",
     "package/templates/modules/billing-stripe/docs/zh-CN/billing.md",
     "package/templates/modules/billing-stripe/src/features/billing/server.ts",
     "package/templates/modules/billing-stripe/src/routes/api.stripe.webhook.ts",
@@ -150,6 +152,9 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
     await run("node", [shipstackBin, "add", "billing"], { cwd: appDir });
     await run("node", [shipstackBin, "add", "api-keys"], { cwd: appDir });
     await run("node", [shipstackBin, "add", "openapi"], { cwd: appDir });
+    await run("node", [shipstackBin, "add", "api-rate-limit"], {
+      cwd: appDir,
+    });
     await run("node", [shipstackBin, "doctor"], { cwd: appDir });
 
     await assertExists(resolve(appDir, "docs/zh-CN/database.md"));
@@ -158,6 +163,7 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
     await assertExists(resolve(appDir, "docs/zh-CN/storage.md"));
     await assertExists(resolve(appDir, "docs/zh-CN/api-keys.md"));
     await assertExists(resolve(appDir, "docs/zh-CN/openapi.md"));
+    await assertExists(resolve(appDir, "docs/zh-CN/api-rate-limit.md"));
     await assertFileContains(resolve(appDir, "README.md"), [
       "[Database](./docs/database.md)",
       "[Authentication](./docs/auth.md)",
@@ -165,12 +171,14 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
       "[Billing](./docs/billing.md)",
       "[API Keys](./docs/api-keys.md)",
       "[OpenAPI](./docs/openapi.md)",
+      "[API Rate Limit](./docs/api-rate-limit.md)",
       "[数据库](./docs/zh-CN/database.md)",
       "[认证](./docs/zh-CN/auth.md)",
       "[存储](./docs/zh-CN/storage.md)",
       "[支付](./docs/zh-CN/billing.md)",
       "[API Keys](./docs/zh-CN/api-keys.md)",
       "[OpenAPI](./docs/zh-CN/openapi.md)",
+      "[API Rate Limit](./docs/zh-CN/api-rate-limit.md)",
     ]);
     await assertExists(resolve(appDir, "src/db/schema.ts"));
     await assertExists(resolve(appDir, "src/db/billing-schema.ts"));
@@ -180,6 +188,7 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
     await assertExists(resolve(appDir, "src/features/billing/server.ts"));
     await assertExists(resolve(appDir, "src/features/storage/server.ts"));
     await assertExists(resolve(appDir, "src/features/api-keys/server.ts"));
+    await assertExists(resolve(appDir, "src/features/api/rate-limit.ts"));
     await assertExists(resolve(appDir, "src/features/openapi/generated.ts"));
     await assertExists(resolve(appDir, "src/routes/sign-in.tsx"));
     await assertExists(resolve(appDir, "src/routes/api.stripe.webhook.ts"));

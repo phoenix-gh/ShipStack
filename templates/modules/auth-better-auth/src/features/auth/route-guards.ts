@@ -14,6 +14,10 @@ export function createRouteSessionGuard(
   options: RequireRouteSessionOptions = {},
 ) {
   return async () => {
+    if (typeof document !== "undefined") {
+      return null;
+    }
+
     const session = await getSession();
 
     if (!session) {

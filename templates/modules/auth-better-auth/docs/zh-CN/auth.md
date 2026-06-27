@@ -37,8 +37,10 @@ export const Route = createFileRoute("/example")({
 });
 ```
 
-这个 helper 会把匿名用户重定向到 `/sign-in`。服务端 API handlers 应该从 Better
-Auth session data 或未来 API key 模块推导身份，不要信任客户端传入的 user ID。
+这个 helper 会在服务端 route load 时把匿名用户重定向到 `/sign-in`。客户端页面组件仍应通过
+`authClient.useSession()` 渲染未登录状态，因为 SPA 导航可能紧跟在登录后发生。服务端 API
+handlers 应该从 Better Auth session data 或未来 API key 模块推导身份，不要信任客户端传入的
+user ID。
 
 ## 可选 Google OAuth
 

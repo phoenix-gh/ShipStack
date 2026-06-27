@@ -44,6 +44,10 @@ await runSmoke("cli", async (workspace) => {
   await run("node", [shipStackBin, "add", "openapi"], { cwd: appDir });
   await assertOpenApiModule(appDir);
 
+  await run("node", [shipStackBin, "add", "api-rate-limit"], { cwd: appDir });
+  await run("node", [shipStackBin, "add", "api-rate-limit"], { cwd: appDir });
+  await assertApiRateLimitModule(appDir);
+
   await expectFailure(
     ["node", [createShipStackBin, "cli-app"]],
     workspace,
@@ -207,6 +211,26 @@ async function assertOpenApiModule(appDir) {
   const readme = await readFile(resolve(appDir, "README.md"), "utf8");
   assertCount(readme, "[OpenAPI](./docs/openapi.md)", 1);
   assertCount(readme, "[OpenAPI](./docs/zh-CN/openapi.md)", 1);
+}
+
+async function assertApiRateLimitModule(appDir) {
+  const agents = await readFile(resolve(appDir, "AGENTS.md"), "utf8");
+  assertCount(agents, "## API Rate Limit Module", 1);
+  if (!agents.includes("src/features/api/rate-limit.ts")) {
+    throw new Error("Expected AGENTS.md to mention API rate limit helpers");
+  }
+
+  const helper = await readFile(
+    resolve(appDir, "src/features/api/rate-limit.ts"),
+    "utf8",
+  );
+  if (!helper.includes("checkRateLimit")) {
+    throw new Error("Expected generated app to include checkRateLimit helper");
+  }
+
+  const readme = await readFile(resolve(appDir, "README.md"), "utf8");
+  assertCount(readme, "[API Rate Limit](./docs/api-rate-limit.md)", 1);
+  assertCount(readme, "[API Rate Limit](./docs/zh-CN/api-rate-limit.md)", 1);
 }
 
 async function expectFailure([command, args], cwd, expectedOutput) {

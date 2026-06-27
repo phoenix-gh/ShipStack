@@ -66,6 +66,11 @@ function createSpec() {
             },
             required: ["authenticated"],
           }),
+          ...(hasRateLimitModule()
+            ? {
+                429: errorResponse("Too many requests."),
+              }
+            : {}),
         },
       },
     },
@@ -409,6 +414,10 @@ function createSpec() {
 
 function routeExists(routePath) {
   return existsSync(resolve(root, routePath));
+}
+
+function hasRateLimitModule() {
+  return existsSync(resolve(root, "src/features/api/rate-limit.ts"));
 }
 
 function optionalSecurity() {

@@ -1,6 +1,6 @@
 # 模块 Manifest 设计
 
-ShipStack modules 描述可安装功能，例如 database、auth、billing、storage、API keys、OpenAPI 和 admin。
+ShipStack modules 描述可安装功能，例如 database、auth、billing、storage、API keys、OpenAPI、API rate limiting 和 admin。
 
 模块系统应该先保持简单，随着 CLI 成熟逐步结构化。
 

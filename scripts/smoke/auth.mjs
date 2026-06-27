@@ -124,36 +124,108 @@ async function verifyAuthBrowserFlow(origin) {
 
   try {
     const page = await browser.newPage();
+    const browserEvents = collectBrowserEvents(page);
 
     await page.goto(`${origin}/sign-up`);
     await waitForHydration(page);
+    await page.getByRole("link", { name: "Dashboard" }).click();
+    await page.waitForURL("**/dashboard");
+    await expectPageText(page, "Sign in required.", browserEvents);
+    await page.getByRole("link", { name: "Create account" }).click();
+    await page.waitForURL("**/sign-up");
+    await waitForHydration(page);
+
     await page.getByLabel("Name").fill("Browser Tester");
     await page.getByLabel("Email").fill(email);
     await page.getByLabel("Password").fill(password);
-    await page.getByRole("button", { name: "Create account" }).click();
-    await page.waitForURL("**/dashboard");
-    await page.getByText(`Welcome, Browser Tester.`).waitFor();
-    await page.getByText(email).waitFor();
+    await submitAuthForm(page, "Create account", "/api/auth/sign-up/email");
+    await page.goto(`${origin}/dashboard`);
+    await waitForHydration(page);
+    await expectPageText(page, `Welcome, Browser Tester.`, browserEvents);
+    await expectPageText(page, email, browserEvents);
 
     await page.getByRole("link", { name: "Account" }).click();
     await page.waitForURL("**/account");
     await page.getByText(email).waitFor();
-    await page.getByRole("button", { name: "Sign out" }).click();
+    await page.getByRole("button", { name: "Sign out" }).click({
+      force: true,
+    });
     await page.waitForURL("**/sign-in");
     await waitForHydration(page);
 
     await page.getByLabel("Email").fill(email);
     await page.getByLabel("Password").fill(password);
-    await page.getByRole("button", { name: "Sign in" }).click();
-    await page.waitForURL("**/dashboard");
-    await page.getByText(`Welcome, Browser Tester.`).waitFor();
+    await submitAuthForm(page, "Sign in", "/api/auth/sign-in/email");
+    await page.goto(`${origin}/dashboard`);
+    await waitForHydration(page);
+    await expectPageText(page, `Welcome, Browser Tester.`, browserEvents);
   } finally {
     await browser.close();
   }
 }
 
+function collectBrowserEvents(page) {
+  const events = [];
+  const push = (event) => {
+    events.push(event);
+    if (events.length > 80) {
+      events.splice(0, events.length - 80);
+    }
+  };
+
+  page.on("console", (message) => {
+    push(`console ${message.type()}: ${message.text()}`);
+  });
+  page.on("framenavigated", (frame) => {
+    if (frame === page.mainFrame()) {
+      push(`navigated ${frame.url()}`);
+    }
+  });
+  page.on("requestfailed", (request) => {
+    push(
+      `request failed ${request.method()} ${request.url()}: ${request.failure()?.errorText}`,
+    );
+  });
+  page.on("response", (response) => {
+    const url = response.url();
+    if (url.includes("/api/auth") || url.includes("/api/v1/me")) {
+      push(
+        `response ${response.status()} ${response.request().method()} ${url}`,
+      );
+    }
+  });
+
+  return events;
+}
+
+async function submitAuthForm(page, buttonName, apiPath) {
+  await Promise.all([
+    page.waitForResponse(
+      (response) => response.url().includes(apiPath) && response.ok(),
+    ),
+    page.getByRole("button", { name: buttonName }).click(),
+  ]);
+}
+
+async function expectPageText(page, text, browserEvents = []) {
+  try {
+    await page.getByText(text).waitFor();
+  } catch (error) {
+    const body = await page
+      .locator("body")
+      .innerText()
+      .catch(() => "");
+    throw new Error(
+      `Expected page to include ${JSON.stringify(text)} at ${page.url()}.\n\n${body}\n\nBrowser events:\n${browserEvents.join("\n")}`,
+      { cause: error },
+    );
+  }
+}
+
 async function waitForHydration(page) {
-  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded").catch(() => {
+    // SPA navigations may not fire a fresh DOMContentLoaded event.
+  });
   await page.waitForTimeout(500);
 }
 

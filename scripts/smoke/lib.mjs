@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { mkdtemp, rm } from "node:fs/promises";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
@@ -16,7 +17,9 @@ export const createShipStackBin = resolve(
 export const shipStackBin = resolve(repositoryRoot, "packages/cli/dist/cli.js");
 
 export async function createWorkspace(label) {
-  const directory = await mkdtemp(resolve(tmpdir(), `shipstack-${label}-`));
+  const directory = await mkdtemp(
+    resolve(getSmokeWorkspaceRoot(), `shipstack-${label}-`),
+  );
   let cleaned = false;
 
   return {
@@ -35,6 +38,23 @@ export async function createWorkspace(label) {
       });
     },
   };
+}
+
+export function getSmokeWorkspaceRoot() {
+  const configuredRoot = process.env.SHIPSTACK_SMOKE_TMPDIR;
+  if (configuredRoot) {
+    return resolve(configuredRoot);
+  }
+
+  if (
+    process.platform === "linux" &&
+    tmpdir().startsWith("/mnt/") &&
+    existsSync("/tmp")
+  ) {
+    return "/tmp";
+  }
+
+  return tmpdir();
 }
 
 export async function run(command, args, options = {}) {

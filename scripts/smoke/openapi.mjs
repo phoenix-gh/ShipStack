@@ -20,6 +20,8 @@ await runSmoke("openapi", async (workspace) => {
   await run("node", [shipStackBin, "add", "api-keys"], { cwd: appDir });
   await run("node", [shipStackBin, "add", "openapi"], { cwd: appDir });
   await run("node", [shipStackBin, "add", "openapi"], { cwd: appDir });
+  await run("node", [shipStackBin, "add", "api-rate-limit"], { cwd: appDir });
+  await run("node", [shipStackBin, "add", "api-rate-limit"], { cwd: appDir });
   await verifyOpenApiDocs(appDir);
 
   await verifyGeneratedApp(appDir, {
@@ -74,6 +76,10 @@ async function verifyGeneratedSpec(appDir) {
   assertPath(spec, "/api/v1/billing/checkout");
   assertPath(spec, "/api/v1/billing/portal");
   assertPath(spec, "/api/stripe/webhook");
+
+  if (!spec.paths["/api/v1/me"].get.responses["429"]) {
+    throw new Error("Expected OpenAPI spec to include rate limit response");
+  }
 
   if (!generatedModule.includes('"/api/v1/api-keys"')) {
     throw new Error("Generated OpenAPI TypeScript module is missing API keys");

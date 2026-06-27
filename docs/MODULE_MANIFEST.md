@@ -1,6 +1,6 @@
 # Module Manifest Design
 
-ShipStack modules describe installable functionality such as database, auth, billing, storage, API keys, OpenAPI, and admin.
+ShipStack modules describe installable functionality such as database, auth, billing, storage, API keys, OpenAPI, API rate limiting, and admin.
 
 The module system should start simple and become more structured as commands mature.
 

@@ -343,6 +343,59 @@ test("database and auth installers patch generated apps idempotently", async () 
       );
       await writeFile("README.md", openApiReadme);
       await runSilently(["doctor"]);
+
+      await runSilently(["add", "api-rate-limit"]);
+      await runSilently(["add", "api-rate-limit"]);
+
+      const rateLimitReadme = await readFile("README.md", "utf8");
+      assert.equal(
+        count(rateLimitReadme, "[API Rate Limit](./docs/api-rate-limit.md)"),
+        1,
+      );
+      assert.equal(
+        count(
+          rateLimitReadme,
+          "[API Rate Limit](./docs/zh-CN/api-rate-limit.md)",
+        ),
+        1,
+      );
+
+      const rateLimitAgents = await readFile("AGENTS.md", "utf8");
+      assert.equal(count(rateLimitAgents, "## API Rate Limit Module"), 1);
+      assert.match(rateLimitAgents, /src\/features\/api\/rate-limit\.ts/);
+
+      const rateLimitHelper = await readFile(
+        "src/features/api/rate-limit.ts",
+        "utf8",
+      );
+      assert.match(rateLimitHelper, /checkRateLimit/);
+
+      await writeFile(
+        "AGENTS.md",
+        rateLimitAgents.replace(
+          "## API Rate Limit Module",
+          "## Missing API Rate Limit Module",
+        ),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("AGENTS.md", rateLimitAgents);
+
+      await writeFile(
+        "README.md",
+        rateLimitReadme.replace(
+          "[API Rate Limit](./docs/api-rate-limit.md)",
+          "[Missing API Rate Limit](./docs/api-rate-limit.md)",
+        ),
+      );
+      await assert.rejects(
+        () => runSilently(["doctor"]),
+        /1 check\(s\) failed/,
+      );
+      await writeFile("README.md", rateLimitReadme);
+      await runSilently(["doctor"]);
     });
   });
 });
@@ -410,6 +463,28 @@ test("api keys installer requires database and auth modules", async () => {
   });
 });
 
+test("api rate limit installer requires api keys module", async () => {
+  await withWorkspace(async (workspace) => {
+    await runSilently(["create", "api-rate-limit-app"]);
+    const appDir = resolve(workspace, "api-rate-limit-app");
+
+    await withCwd(appDir, async () => {
+      await assert.rejects(
+        () => runSilently(["add", "api-rate-limit"]),
+        /requires the api-keys module/,
+      );
+
+      await runSilently(["add", "database"]);
+      await runSilently(["add", "auth"]);
+
+      await assert.rejects(
+        () => runSilently(["add", "api-rate-limit"]),
+        /requires the api-keys module/,
+      );
+    });
+  });
+});
+
 test("doctor reports missing project files", async () => {
   await withWorkspace(async () => {
     await assert.rejects(() => runSilently(["doctor"]), /8 check\(s\) failed/);
@@ -427,6 +502,7 @@ test("api module command explains that the API foundation is built in", async ()
       assert.match(output, /API foundation is already included/);
       assert.match(output, /\/api\/v1\/me/);
       assert.match(output, /trusted-origin CORS/);
+      assert.match(output, /api-rate-limit/);
     });
   });
 });

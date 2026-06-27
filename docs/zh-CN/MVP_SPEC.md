@@ -90,6 +90,15 @@
 - 检测第一方模块已安装 routes
 - OpenAPI smoke test
 
+### API Rate Limit Recipe
+
+- `shipstack add api-rate-limit`
+- route-level fixed-window rate limit helper
+- JSON `RATE_LIMITED` error envelope
+- retry 和 rate limit response headers
+- 本地开发和生产边界文档
+- API rate limit smoke test
+
 ### Deployment
 
 - `wrangler.jsonc`
@@ -114,7 +123,6 @@
 
 ## 范围外
 
-- public API rate limiting
 - generated SDKs
 - admin panel
 - team accounts
@@ -142,6 +150,7 @@ shipstack add billing
 shipstack add storage
 shipstack add api-keys
 shipstack add openapi
+shipstack add api-rate-limit
 pnpm db:generate
 pnpm openapi:generate
 pnpm db:cf:migrate:local
@@ -168,6 +177,7 @@ MVP 完成时，fresh clone 或生成项目必须满足：
 - 用户可以登录
 - 未登录用户不能访问 dashboard
 - 已登录用户可以访问 dashboard
+- API rate limit helper 在达到配置限制后返回 `RATE_LIMITED` envelope
 - app 可以 build 到 Cloudflare Workers
 - 部署文档足够完整，可以手动跟随
 - 生成的 `AGENTS.md` 存在，并匹配项目结构
