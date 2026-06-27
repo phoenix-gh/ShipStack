@@ -381,6 +381,38 @@ const checks = [
     },
   },
   {
+    label: "CLI recipe next steps include dependency install",
+    action: async () => {
+      const content = await readFile(
+        resolve(repositoryRoot, "packages/cli/src/run-cli.ts"),
+        "utf8",
+      );
+      const checks = [
+        {
+          label: "openapi",
+          pattern:
+            /Installed openapi module\.[\s\S]*?Next steps:[\s\S]*?pnpm install[\s\S]*?pnpm openapi:generate/,
+        },
+        {
+          label: "api-rate-limit",
+          pattern:
+            /Installed api-rate-limit module\.[\s\S]*?Next steps:[\s\S]*?pnpm install[\s\S]*?pnpm test/,
+        },
+      ];
+      const missing = checks
+        .filter((check) => !check.pattern.test(content))
+        .map((check) => check.label);
+
+      return {
+        ok: missing.length === 0,
+        detail:
+          missing.length === 0
+            ? "recipe CLI next steps include pnpm install"
+            : `missing pnpm install in: ${missing.join(", ")}`,
+      };
+    },
+  },
+  {
     label: "Generated module docs are linked from README",
     action: async () => {
       return await assertFileContainsMarkers("packages/cli/src/run-cli.ts", [
