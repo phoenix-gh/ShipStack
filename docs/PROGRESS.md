@@ -14,10 +14,10 @@ External verification status in this workspace:
   errors.
 - The latest full local release verification on 2026-06-28 passed
   `pnpm verify:release`, including format, typecheck, tests, build,
-  package-content checks, generated app smoke tests, local D1 migrations,
-  browser auth smoke, generated app `wrangler deploy --dry-run`, and module
-  smoke tests for database, auth, billing, storage, API keys, OpenAPI, and API
-  rate limiting.
+  package-content checks, generated app smoke tests, recipe installer next-step
+  output checks, local D1 migrations, browser auth smoke, generated app
+  `wrangler deploy --dry-run`, and module smoke tests for database, auth,
+  billing, storage, API keys, OpenAPI, and API rate limiting.
 - The latest full release audit on 2026-06-28 passed local checks but stopped
   on two external blockers: no configured Git remote and unauthenticated
   Wrangler.
@@ -25,9 +25,10 @@ External verification status in this workspace:
   `pnpm publish:dry-run` for `@shipstack/core`, `@shipstack/cli`, and
   `create-shipstack`.
 - The latest `pnpm smoke` run on 2026-06-28 passed after `bubblewrap` was
-  installed. It covered the base generated app `wrangler deploy --dry-run`,
-  local D1 migrations, auth browser smoke, and module smoke tests for database,
-  auth, billing, storage, API keys, OpenAPI, and API rate limiting.
+  installed. It covered recipe installer next-step output, the base generated
+  app `wrangler deploy --dry-run`, local D1 migrations, auth browser smoke, and
+  module smoke tests for database, auth, billing, storage, API keys, OpenAPI,
+  and API rate limiting.
 - `pnpm smoke:temporary-deploy` still needs an explicit maintainer approval
   before rerun because it uploads generated app code to Cloudflare's temporary
   deployment service.

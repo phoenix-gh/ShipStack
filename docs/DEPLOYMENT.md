@@ -197,7 +197,8 @@ Temporary Cloudflare deployment has passed from this workspace before, but it
 has not been rerun for the current release candidate after the latest recipe
 changes. The latest local release verification on 2026-06-28 passed
 `pnpm verify:release`, and the latest `pnpm smoke` run on 2026-06-28 passed,
-including generated app `wrangler deploy --dry-run`.
+including recipe installer next-step output checks and generated app
+`wrangler deploy --dry-run`.
 
 The latest full release audit on 2026-06-28 passed local checks and stopped on
 two external blockers: no configured Git remote and unauthenticated Wrangler.
