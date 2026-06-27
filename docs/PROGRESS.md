@@ -136,6 +136,7 @@ Latest commit:
 | Module AGENTS guidance             | Passing        | `pnpm test`, `pnpm smoke`               |
 | Open-source license                | Added          | `LICENSE`                               |
 | Contribution guide                 | Added          | `CONTRIBUTING.md`                       |
+| Quickstart docs                    | Passing        | `pnpm release:audit:local`              |
 | Security policy                    | Added          | `SECURITY.md`                           |
 | Issue and PR templates             | Added          | `.github` templates                     |
 | Release checklist                  | Added          | `docs/RELEASE.md`                       |

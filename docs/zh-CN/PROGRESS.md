@@ -130,6 +130,7 @@
 | 模块 AGENTS 指引                   | 通过     | `pnpm test`, `pnpm smoke`               |
 | 开源许可证                         | 已添加   | `LICENSE`                               |
 | 贡献指南                           | 已添加   | `CONTRIBUTING.md`                       |
+| 快速开始文档                       | 通过     | `pnpm release:audit:local`              |
 | 安全策略                           | 已添加   | `SECURITY.md`                           |
 | Issue 和 PR templates              | 已添加   | `.github` templates                     |
 | Release checklist                  | 已添加   | `docs/RELEASE.md`                       |
