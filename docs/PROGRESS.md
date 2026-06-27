@@ -24,10 +24,10 @@ External verification status in this workspace:
 - The latest local npm publish dry-run on 2026-06-28 passed
   `pnpm publish:dry-run` for `@shipstack/core`, `@shipstack/cli`, and
   `create-shipstack`.
-- The latest `pnpm smoke` run on 2026-06-27 passed after `bubblewrap` was
-  installed and Linux smoke workspaces were moved away from inherited
-  `/mnt/c/...` temp paths. It also passed the generated app
-  `wrangler deploy --dry-run` check.
+- The latest `pnpm smoke` run on 2026-06-28 passed after `bubblewrap` was
+  installed. It covered the base generated app `wrangler deploy --dry-run`,
+  local D1 migrations, auth browser smoke, and module smoke tests for database,
+  auth, billing, storage, API keys, OpenAPI, and API rate limiting.
 - `pnpm smoke:temporary-deploy` still needs an explicit maintainer approval
   before rerun because it uploads generated app code to Cloudflare's temporary
   deployment service.

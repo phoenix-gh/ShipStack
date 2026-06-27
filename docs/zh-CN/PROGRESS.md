@@ -20,9 +20,10 @@
   没有配置 Git remote，且 Wrangler 尚未登录。
 - 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack/core`、
   `@shipstack/cli` 和 `create-shipstack` 通过 `pnpm publish:dry-run`。
-- 2026-06-27 最新一次 `pnpm smoke` 在安装 `bubblewrap` 且 Linux smoke
-  workspace 避开继承到的 `/mnt/c/...` 临时路径后通过，也通过了生成应用的
-  `wrangler deploy --dry-run` 检查。
+- 2026-06-28 最新一次 `pnpm smoke` 在安装 `bubblewrap` 后通过，覆盖 base
+  生成应用的 `wrangler deploy --dry-run`、本地 D1 migrations、浏览器 auth
+  smoke，以及 database、auth、billing、storage、API keys、OpenAPI、API rate
+  limiting 的模块 smoke tests。
 - `pnpm smoke:temporary-deploy` 仍需要维护者明确批准后才能重跑，因为它会把
   生成应用代码上传到 Cloudflare temporary deployment 服务。
 - `git remote -v` 没有配置 remote，因此当前 workspace 无法检查远端 GitHub Actions。

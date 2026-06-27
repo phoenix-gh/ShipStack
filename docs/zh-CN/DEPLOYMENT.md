@@ -187,7 +187,7 @@ pnpm smoke:temporary-deploy
 
 ## 当前手动状态
 
-当前 workspace 之前通过过 `pnpm smoke:temporary-deploy` 的 Cloudflare 临时部署验证，但在最新 recipe 改动后的当前 release candidate 上还没有重新运行。2026-06-28 最新本地发布验证已通过 `pnpm verify:release`，其中包含生成应用的 `wrangler deploy --dry-run`。
+当前 workspace 之前通过过 `pnpm smoke:temporary-deploy` 的 Cloudflare 临时部署验证，但在最新 recipe 改动后的当前 release candidate 上还没有重新运行。2026-06-28 最新本地发布验证已通过 `pnpm verify:release`，且 2026-06-28 最新 `pnpm smoke` 已通过，其中包含生成应用的 `wrangler deploy --dry-run`。
 
 2026-06-28 最新完整 release audit 已通过本地检查，并停在两个外部门槛：没有配置 Git remote，且 Wrangler 尚未登录。真实账号部署验证还没有记录。生成应用已经包含维护者或贡献者拿到 Cloudflare 凭据后完成部署验证所需的命令和 route checks。
 
