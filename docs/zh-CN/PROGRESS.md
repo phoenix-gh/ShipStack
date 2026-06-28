@@ -5,7 +5,8 @@
 ## 当前快照
 
 状态：`v0.1.0` MVP release candidate。本地验证、远端 CI、真实 Cloudflare
-部署，以及远端 npm publish workflow dry-run 都已验证。
+部署，以及远端 npm publish workflow dry-run 都已验证。真实 npm 发布目前被
+`docs/RELEASE_EVIDENCE.md` 中记录的 npm token 权限问题阻塞。
 
 当前 workspace 的外部验证状态：
 
@@ -20,13 +21,18 @@
   storage、API keys、OpenAPI、API rate limiting 的模块 smoke tests。
 - 2026-06-28 最新一次远端 GitHub Actions CI 已在 `master` 上通过
   `pnpm verify:release`：
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28320940187
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28325911339
 - 2026-06-28 最新一次真实 Cloudflare 部署验证已通过：
   https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
 - 2026-06-28 最新一次远端 npm publish workflow dry-run 已对
   `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack-app` 通过：
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
-- 2026-06-28 最新一次完整 release audit 会在本组 release evidence 更新提交后通过。
+- 2026-06-28 最新一次正式 npm publish workflow 尝试已通过
+  `pnpm verify:release`，随后在 `npm publish` 阶段失败，因为当前
+  `NPM_TOKEN` 不是具备发布权限且可绕过 2FA 的 granular token：
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28325638587
+- 2026-06-28 最新一次本地 release audit 已通过
+  `node scripts/release-audit.mjs --local`。
 - 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack/core`、
   `@shipstack/cli` 和 `create-shipstack-app` 通过 `pnpm publish:dry-run`。
 - 2026-06-28 最新一次 `pnpm smoke` 在安装 `bubblewrap` 后通过，覆盖 recipe
@@ -124,7 +130,7 @@
 | 本地-only release audit            | 通过     | `pnpm release:audit:local`              |
 | 快速本地验证                       | 通过     | `pnpm verify:local`                     |
 | 完整本地发布验证                   | 通过     | `pnpm verify:release`                   |
-| 完整 release audit                 | 通过     | `pnpm release:audit`                    |
+| 完整 release audit                 | 本地通过 | `pnpm release:audit:local`              |
 | 本地 npm publish dry-run           | 通过     | `pnpm publish:dry-run`                  |
 | Cloudflare 临时部署                | 需要批准 | `pnpm smoke:temporary-deploy`           |
 | CLI unit tests                     | 通过     | `pnpm test`                             |
@@ -155,9 +161,12 @@
 
 ## 下一优先级
 
-1. 提交 release evidence 更新后，运行最终 `pnpm release:audit`。
-2. 推送 release evidence commit，并确认远端 CI 仍然为绿色。
-3. 准备 `v0.1.0` tag 和真实 npm publish 决策。
+1. 把 GitHub `NPM_TOKEN` secret 替换为具备发布权限、且发布时可绕过 2FA 的 npm
+   granular access token。
+2. 重新运行 `Release npm Packages` workflow，设置 `dry_run: false` 和
+   `npm_tag: next`。
+3. packages 发布成功后，记录 npm package 证据，并决定是打 alpha release tag，
+   还是 bump/tag `v0.1.0`。
 
 ## 更新规则
 

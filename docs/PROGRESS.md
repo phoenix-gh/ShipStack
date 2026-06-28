@@ -5,7 +5,9 @@ This file is the working progress board for ShipStack. Update it whenever a deli
 ## Current Snapshot
 
 Status: `v0.1.0` MVP release candidate with local verification, remote CI,
-real Cloudflare deploy, and remote npm publish workflow dry-run verified.
+real Cloudflare deploy, and remote npm publish workflow dry-run verified. Real
+npm publishing is currently blocked by the npm token permissions described in
+`docs/RELEASE_EVIDENCE.md`.
 
 External verification status in this workspace:
 
@@ -22,14 +24,19 @@ External verification status in this workspace:
   billing, storage, API keys, OpenAPI, and API rate limiting.
 - The latest remote GitHub Actions CI run on 2026-06-28 passed
   `pnpm verify:release` on `master`:
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28320940187
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28325911339
 - The latest real Cloudflare deploy verification on 2026-06-28 passed for:
   https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
 - The latest remote npm publish workflow dry-run on 2026-06-28 passed for
   `@shipstack/core`, `@shipstack/cli`, and `create-shipstack-app`:
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
-- The latest full release audit on 2026-06-28 should pass once the release
-  evidence updates in this file set are committed.
+- The latest real npm publish workflow attempt on 2026-06-28 passed
+  `pnpm verify:release`, then failed during `npm publish` because the configured
+  `NPM_TOKEN` was not a publish-capable granular token with the required 2FA
+  bypass permission:
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28325638587
+- The latest local release audit on 2026-06-28 passed
+  `node scripts/release-audit.mjs --local`.
 - The latest local npm publish dry-run on 2026-06-28 passed
   `pnpm publish:dry-run` for `@shipstack/core`, `@shipstack/cli`, and
   `create-shipstack-app`.
@@ -130,7 +137,7 @@ Latest commit:
 | Local-only release audit           | Passing        | `pnpm release:audit:local`              |
 | Fast local verification            | Passing        | `pnpm verify:local`                     |
 | Full local release verification    | Passing        | `pnpm verify:release`                   |
-| Full release audit                 | Passing        | `pnpm release:audit`                    |
+| Full release audit                 | Local passing  | `pnpm release:audit:local`              |
 | Local npm publish dry-run          | Passing        | `pnpm publish:dry-run`                  |
 | Temporary Cloudflare deploy        | Needs approval | `pnpm smoke:temporary-deploy`           |
 | CLI unit tests                     | Passing        | `pnpm test`                             |
@@ -161,9 +168,12 @@ Latest commit:
 
 ## Next Priority
 
-1. Run final `pnpm release:audit` after committing release evidence updates.
-2. Push the release evidence commit and confirm remote CI remains green.
-3. Prepare the `v0.1.0` tag and real npm publish decision.
+1. Replace the GitHub `NPM_TOKEN` secret with a publish-capable npm granular
+   access token that can bypass 2FA for publishing.
+2. Rerun the `Release npm Packages` workflow with `dry_run: false` and
+   `npm_tag: next`.
+3. After packages are published, record the npm package evidence and decide
+   whether to tag an alpha release or bump/tag `v0.1.0`.
 
 ## Update Rules
 

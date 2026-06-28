@@ -86,7 +86,10 @@ Do not tag `v0.1.0` until these checks are complete:
     - `create-shipstack-app`
 
     The workflow requires the repository secret `NPM_TOKEN` and publishes with
-    npm provenance enabled.
+    npm provenance enabled. Use a publish-capable npm granular access token. If
+    the npm account or organization requires two-factor authentication, the token
+    must be allowed to bypass 2FA for package publishing; otherwise the real
+    publish run will fail even when the dry-run and release verification pass.
 
 ## Pre-Release Safety Checks
 
@@ -143,7 +146,18 @@ reports external blockers.
    checks `@shipstack/core`, `@shipstack/cli`, and `create-shipstack-app`, then
    record the run URL and result in [Release Evidence](./RELEASE_EVIDENCE.md).
 
-6. Rerun the full audit.
+6. Configure the npm publishing token.
+
+   Create an npm granular access token that can publish `@shipstack/core`,
+   `@shipstack/cli`, and `create-shipstack-app`. Store it as the GitHub
+   repository secret `NPM_TOKEN`.
+
+   If npm two-factor authentication is enabled for publishing, make sure the
+   token is explicitly allowed to bypass 2FA. A classic automation token or a
+   granular token without publish and 2FA bypass permissions is not enough for
+   the real publish workflow.
+
+7. Rerun the full audit.
 
    ```sh
    pnpm release:audit
@@ -163,3 +177,8 @@ The external release gates have been recorded for this release candidate:
 Before tagging, rerun `pnpm release:audit` on the release commit and confirm the
 latest remote CI remains green. The temporary Cloudflare deploy smoke is useful
 extra evidence, but it does not replace the real-account deployment pass.
+
+The 2026-06-28 real npm publish attempt passed `pnpm verify:release` and then
+failed during `npm publish` because the configured `NPM_TOKEN` was not a
+publish-capable token with the required 2FA bypass permission. See
+[Release Evidence](./RELEASE_EVIDENCE.md) before rerunning the workflow.

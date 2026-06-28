@@ -82,7 +82,10 @@
     - `@shipstack/cli`
     - `create-shipstack-app`
 
-    该 workflow 需要仓库 secret `NPM_TOKEN`，并启用 npm provenance。
+    该 workflow 需要仓库 secret `NPM_TOKEN`，并启用 npm provenance。请使用具备
+    publish 权限的 npm granular access token。如果 npm 账号或 organization 要求
+    发布时使用 two-factor authentication，这个 token 必须允许绕过 2FA；否则即使
+    dry-run 和 release verification 都通过，正式发布仍会失败。
 
 ## Pre-Release Safety Checks
 
@@ -135,7 +138,17 @@
    `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack-app`，然后把 run URL
    和结果记录到 [Release 证据记录](./RELEASE_EVIDENCE.md)。
 
-6. 重新运行完整 audit。
+6. 配置 npm 发布 token。
+
+   创建一个可以发布 `@shipstack/core`、`@shipstack/cli` 和
+   `create-shipstack-app` 的 npm granular access token，并把它保存为 GitHub
+   repository secret `NPM_TOKEN`。
+
+   如果 npm 发布启用了 two-factor authentication，确认这个 token 明确允许绕过
+   2FA。classic automation token，或没有 publish 和 2FA bypass 权限的 granular
+   token，都不足以完成正式发布 workflow。
+
+7. 重新运行完整 audit。
 
    ```sh
    pnpm release:audit
@@ -153,3 +166,8 @@
 
 打 tag 前，在 release commit 上重跑 `pnpm release:audit`，并确认最新远端 CI
 仍为绿色。Cloudflare temporary deploy smoke 是有价值的补充证据，但不能替代真实账号部署验证。
+
+2026-06-28 的正式 npm publish 尝试已经通过 `pnpm verify:release`，随后在
+`npm publish` 阶段失败，原因是当前 `NPM_TOKEN` 不是具备发布权限且可绕过 2FA
+的 token。重新运行 workflow 前，请先查看
+[Release 证据记录](./RELEASE_EVIDENCE.md)。
