@@ -16,3 +16,15 @@ test("release audit exposes external release evidence gates", async () => {
   assert.match(source, /Run URL/);
   assert.match(source, /missing required evidence fields/);
 });
+
+test("create package typecheck does not depend on stale cli dist", async () => {
+  const packageJson = JSON.parse(
+    await readFile("packages/create-shipstack/package.json", "utf8"),
+  );
+
+  assert.match(
+    packageJson.scripts.typecheck,
+    /pnpm --filter @shipstack\/cli build/,
+  );
+  assert.match(packageJson.scripts.typecheck, /tsc -p tsconfig\.json --noEmit/);
+});
