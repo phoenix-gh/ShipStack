@@ -1,6 +1,12 @@
 name: Release npm Packages
 
 on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - .github/workflows/release-npm.yml
   workflow_dispatch:
     inputs:
       npm_tag:
@@ -24,6 +30,7 @@ permissions:
 jobs:
   publish:
     name: Publish
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
