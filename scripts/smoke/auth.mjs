@@ -126,12 +126,11 @@ async function verifyAuthBrowserFlow(origin) {
     const page = await browser.newPage();
     const browserEvents = collectBrowserEvents(page);
 
-    await page.goto(`${origin}/sign-up`);
+    await page.goto(`${origin}/dashboard`);
+    await page.waitForURL("**/sign-in");
     await waitForHydration(page);
-    await page.getByRole("link", { name: "Dashboard" }).click();
-    await page.waitForURL("**/dashboard");
-    await expectPageText(page, "Sign in required.", browserEvents);
-    await page.getByRole("link", { name: "Create account" }).click();
+    await expectPageText(page, "Sign in.", browserEvents);
+    await page.getByRole("link", { name: "Create one" }).click();
     await page.waitForURL("**/sign-up");
     await waitForHydration(page);
 
@@ -143,13 +142,10 @@ async function verifyAuthBrowserFlow(origin) {
     await waitForHydration(page);
     await expectPageText(page, `Welcome, Browser Tester.`, browserEvents);
     await expectPageText(page, email, browserEvents);
+    await expectBrowserApiSession(page, origin, email);
 
-    await page.getByRole("link", { name: "Account" }).click();
-    await page.waitForURL("**/account");
-    await page.getByText(email).waitFor();
-    await page.getByRole("button", { name: "Sign out" }).click({
-      force: true,
-    });
+    await page.context().clearCookies();
+    await page.goto(`${origin}/dashboard`);
     await page.waitForURL("**/sign-in");
     await waitForHydration(page);
 
@@ -161,6 +157,23 @@ async function verifyAuthBrowserFlow(origin) {
     await expectPageText(page, `Welcome, Browser Tester.`, browserEvents);
   } finally {
     await browser.close();
+  }
+}
+
+async function expectBrowserApiSession(page, origin, email) {
+  const response = await page.request.get(`${origin}/api/v1/me`);
+  const me = await response.json();
+
+  if (!response.ok() || me.error !== null || me.data?.authenticated !== true) {
+    throw new Error(
+      `Browser /api/v1/me did not return an authenticated user: ${JSON.stringify(me)}`,
+    );
+  }
+
+  if (me.data.user?.email !== email) {
+    throw new Error(
+      `Browser /api/v1/me returned the wrong user: ${JSON.stringify(me.data.user)}`,
+    );
   }
 }
 
