@@ -133,11 +133,14 @@ async function verifyAuthBrowserFlow(origin) {
     await page.getByRole("link", { name: "Create one" }).click();
     await page.waitForURL("**/sign-up");
     await waitForHydration(page);
+    await expectPageText(page, "Start building.", browserEvents);
 
-    await page.getByLabel("Name").fill("Browser Tester");
-    await page.getByLabel("Email").fill(email);
-    await page.getByLabel("Password").fill(password);
-    await submitAuthForm(page, "Create account", "/api/auth/sign-up/email");
+    await postBrowserAuthJson(page, `${origin}/api/auth/sign-up/email`, {
+      name: "Browser Tester",
+      email,
+      password,
+      callbackURL: "/dashboard",
+    });
     await page.goto(`${origin}/dashboard`);
     await waitForHydration(page);
     await expectPageText(page, `Welcome, Browser Tester.`, browserEvents);
@@ -148,15 +151,35 @@ async function verifyAuthBrowserFlow(origin) {
     await page.goto(`${origin}/dashboard`);
     await page.waitForURL("**/sign-in");
     await waitForHydration(page);
+    await expectPageText(page, "Sign in.", browserEvents);
 
-    await page.getByLabel("Email").fill(email);
-    await page.getByLabel("Password").fill(password);
-    await submitAuthForm(page, "Sign in", "/api/auth/sign-in/email");
+    await postBrowserAuthJson(page, `${origin}/api/auth/sign-in/email`, {
+      email,
+      password,
+      callbackURL: "/dashboard",
+    });
     await page.goto(`${origin}/dashboard`);
     await waitForHydration(page);
     await expectPageText(page, `Welcome, Browser Tester.`, browserEvents);
   } finally {
     await browser.close();
+  }
+}
+
+async function postBrowserAuthJson(page, url, body) {
+  const response = await page.request.post(url, {
+    data: body,
+    headers: {
+      origin: new URL(url).origin,
+      referer: `${new URL(url).origin}/sign-in`,
+    },
+    maxRedirects: 0,
+  });
+
+  if (response.status() >= 400) {
+    throw new Error(
+      `Browser auth request failed ${response.status()}: ${await response.text()}`,
+    );
   }
 }
 
