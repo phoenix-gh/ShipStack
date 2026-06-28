@@ -1,11 +1,11 @@
-# create-shipstack
+# create-shipstack-app
 
 Create a new ShipStack TanStack Start app.
 
 ## Usage
 
 ```bash
-pnpm create shipstack my-app
+pnpm create shipstack-app my-app
 cd my-app
 pnpm install
 pnpm dev

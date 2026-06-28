@@ -7,7 +7,7 @@
 Packages 发布后，可以使用 package create 命令：
 
 ```sh
-pnpm create shipstack my-app
+pnpm create shipstack-app my-app
 cd my-app
 pnpm install
 pnpm dev

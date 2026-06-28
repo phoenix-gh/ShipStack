@@ -140,7 +140,7 @@
 目标流程：
 
 ```bash
-pnpm create shipstack my-app
+pnpm create shipstack-app my-app
 cd my-app
 pnpm install
 shipstack doctor

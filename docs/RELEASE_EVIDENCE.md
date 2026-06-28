@@ -78,7 +78,7 @@ Status: passed
 - Packages checked:
   - `@shipstack/core`
   - `@shipstack/cli`
-  - `create-shipstack`
+  - `create-shipstack-app`
 - Notes: The remote workflow ran `pnpm verify:release` and completed
   `npm publish --dry-run --provenance --tag next` for all publishable packages.
 

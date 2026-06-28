@@ -22,7 +22,7 @@ const publishablePackages = [
   },
   {
     directory: "packages/create-shipstack",
-    name: "create-shipstack",
+    name: "create-shipstack-app",
   },
 ];
 const secretPatterns = [
@@ -197,7 +197,7 @@ const checks = [
         {
           file: "docs/QUICKSTART.md",
           markers: [
-            "pnpm create shipstack my-app",
+            "pnpm create shipstack-app my-app",
             "node packages/create-shipstack/dist/cli.js my-app",
             "shipstack add database",
             "shipstack add api-rate-limit",
@@ -209,7 +209,7 @@ const checks = [
         {
           file: "docs/zh-CN/QUICKSTART.md",
           markers: [
-            "pnpm create shipstack my-app",
+            "pnpm create shipstack-app my-app",
             "node packages/create-shipstack/dist/cli.js my-app",
             "shipstack add database",
             "shipstack add api-rate-limit",

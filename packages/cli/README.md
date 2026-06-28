@@ -31,5 +31,5 @@ route-level fixed-window helpers for public and API-key-authenticated routes.
 
 ## Related Packages
 
-- `create-shipstack`
+- `create-shipstack-app`
 - `@shipstack/core`

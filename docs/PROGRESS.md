@@ -26,13 +26,13 @@ External verification status in this workspace:
 - The latest real Cloudflare deploy verification on 2026-06-28 passed for:
   https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
 - The latest remote npm publish workflow dry-run on 2026-06-28 passed for
-  `@shipstack/core`, `@shipstack/cli`, and `create-shipstack`:
+  `@shipstack/core`, `@shipstack/cli`, and `create-shipstack-app`:
   https://github.com/phoenix-gh/ShipStack/actions/runs/28319962801
 - The latest full release audit on 2026-06-28 should pass once the release
   evidence updates in this file set are committed.
 - The latest local npm publish dry-run on 2026-06-28 passed
   `pnpm publish:dry-run` for `@shipstack/core`, `@shipstack/cli`, and
-  `create-shipstack`.
+  `create-shipstack-app`.
 - The latest `pnpm smoke` run on 2026-06-28 passed after `bubblewrap` was
   installed. It covered recipe installer next-step output, the base generated
   app `wrangler deploy --dry-run`, local D1 migrations, auth browser smoke, and

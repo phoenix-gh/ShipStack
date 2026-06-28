@@ -83,7 +83,7 @@ Do not tag `v0.1.0` until these checks are complete:
 
     - `@shipstack/core`
     - `@shipstack/cli`
-    - `create-shipstack`
+    - `create-shipstack-app`
 
     The workflow requires the repository secret `NPM_TOKEN` and publishes with
     npm provenance enabled.
@@ -140,7 +140,7 @@ reports external blockers.
 5. Run the npm publish workflow dry-run remotely.
 
    Use the `Release npm Packages` workflow with `dry_run: true`. Confirm it
-   checks `@shipstack/core`, `@shipstack/cli`, and `create-shipstack`, then
+   checks `@shipstack/core`, `@shipstack/cli`, and `create-shipstack-app`, then
    record the run URL and result in [Release Evidence](./RELEASE_EVIDENCE.md).
 
 6. Rerun the full audit.

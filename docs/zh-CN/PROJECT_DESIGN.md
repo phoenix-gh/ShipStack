@@ -7,7 +7,7 @@ ShipStack 是一个开源、模块化、Cloudflare 优先的 TanStack Start SaaS
 它应该更像一个可靠的项目创建和维护系统，而不是一个静态代码模板：
 
 ```bash
-pnpm create shipstack my-app
+pnpm create shipstack-app my-app
 cd my-app
 pnpm shipstack doctor
 pnpm shipstack add auth

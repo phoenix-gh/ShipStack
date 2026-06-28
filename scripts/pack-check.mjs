@@ -106,7 +106,7 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
           dependencies: {
             "@shipstack/cli": `file:${cliTarball}`,
             "@shipstack/core": `file:${coreTarball}`,
-            "create-shipstack": `file:${createTarball}`,
+            "create-shipstack-app": `file:${createTarball}`,
           },
           pnpm: {
             overrides: {
@@ -125,7 +125,7 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
     await run(
       "node",
       [
-        resolve(workspace, "node_modules/create-shipstack/dist/cli.js"),
+        resolve(workspace, "node_modules/create-shipstack-app/dist/cli.js"),
         "packed-app",
       ],
       {

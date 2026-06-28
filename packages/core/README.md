@@ -13,4 +13,4 @@ candidate.
 ## Related Packages
 
 - `@shipstack/cli`
-- `create-shipstack`
+- `create-shipstack-app`

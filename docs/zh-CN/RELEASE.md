@@ -80,7 +80,7 @@
 
     - `@shipstack/core`
     - `@shipstack/cli`
-    - `create-shipstack`
+    - `create-shipstack-app`
 
     该 workflow 需要仓库 secret `NPM_TOKEN`，并启用 npm provenance。
 
@@ -132,7 +132,7 @@
 5. 在远端运行 npm publish workflow dry-run。
 
    使用 `Release npm Packages` workflow，并设置 `dry_run: true`。确认它检查了
-   `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack`，然后把 run URL
+   `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack-app`，然后把 run URL
    和结果记录到 [Release 证据记录](./RELEASE_EVIDENCE.md)。
 
 6. 重新运行完整 audit。

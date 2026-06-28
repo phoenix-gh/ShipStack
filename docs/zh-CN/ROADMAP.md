@@ -65,7 +65,7 @@
 
 交付物：
 
-- `create-shipstack`
+- `create-shipstack-app`
 - `shipstack doctor`
 - `shipstack add database`
 - `shipstack add auth`

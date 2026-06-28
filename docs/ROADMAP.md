@@ -65,7 +65,7 @@ Goal: turn the starter into a repeatable tool.
 
 Deliverables:
 
-- `create-shipstack`
+- `create-shipstack-app`
 - `shipstack doctor`
 - `shipstack add database`
 - `shipstack add auth`

@@ -8,7 +8,7 @@ and verify the result.
 After the packages are published, use the package create command:
 
 ```sh
-pnpm create shipstack my-app
+pnpm create shipstack-app my-app
 cd my-app
 pnpm install
 pnpm dev

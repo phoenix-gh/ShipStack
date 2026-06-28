@@ -76,7 +76,7 @@
 - 已检查 packages：
   - `@shipstack/core`
   - `@shipstack/cli`
-  - `create-shipstack`
+  - `create-shipstack-app`
 - 备注：远端 workflow 已运行 `pnpm verify:release`，并对所有可发布 package
   完成 `npm publish --dry-run --provenance --tag next`。
 

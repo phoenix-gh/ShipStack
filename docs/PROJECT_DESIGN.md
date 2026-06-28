@@ -7,7 +7,7 @@ ShipStack is an open-source, modular, Cloudflare-first SaaS engineering stack fo
 It should feel less like a static template and more like a reliable project creation and maintenance system:
 
 ```bash
-pnpm create shipstack my-app
+pnpm create shipstack-app my-app
 cd my-app
 pnpm shipstack doctor
 pnpm shipstack add auth

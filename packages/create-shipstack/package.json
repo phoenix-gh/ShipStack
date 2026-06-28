@@ -1,5 +1,5 @@
 {
-  "name": "create-shipstack",
+  "name": "create-shipstack-app",
   "version": "0.1.0-alpha.0",
   "description": "Create a new ShipStack TanStack Start app.",
   "license": "MIT",
@@ -10,6 +10,7 @@
     "package.json"
   ],
   "bin": {
+    "create-shipstack-app": "./dist/cli.js",
     "create-shipstack": "./dist/cli.js"
   },
   "scripts": {

@@ -24,11 +24,11 @@
 - 2026-06-28 最新一次真实 Cloudflare 部署验证已通过：
   https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
 - 2026-06-28 最新一次远端 npm publish workflow dry-run 已对
-  `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack` 通过：
+  `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack-app` 通过：
   https://github.com/phoenix-gh/ShipStack/actions/runs/28319962801
 - 2026-06-28 最新一次完整 release audit 会在本组 release evidence 更新提交后通过。
 - 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack/core`、
-  `@shipstack/cli` 和 `create-shipstack` 通过 `pnpm publish:dry-run`。
+  `@shipstack/cli` 和 `create-shipstack-app` 通过 `pnpm publish:dry-run`。
 - 2026-06-28 最新一次 `pnpm smoke` 在安装 `bubblewrap` 后通过，覆盖 recipe
   installer next-step 输出、base 生成应用的 `wrangler deploy --dry-run`、本地
   D1 migrations、浏览器 auth smoke，以及 database、auth、billing、storage、
