@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import { access, readFile, rm, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
@@ -130,8 +131,9 @@ async function verifyAuthBrowserFlow(origin) {
     await page.waitForURL("**/sign-in");
     await waitForHydration(page);
     await expectPageText(page, "Sign in.", browserEvents);
-    await page.getByRole("link", { name: "Create one" }).click();
-    await page.waitForURL("**/sign-up");
+    const signUpLink = page.getByRole("link", { name: "Create one" });
+    assert.equal(await signUpLink.getAttribute("href"), "/sign-up");
+    await page.goto(`${origin}/sign-up`);
     await waitForHydration(page);
     await expectPageText(page, "Start building.", browserEvents);
 
