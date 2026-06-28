@@ -570,7 +570,7 @@ const checks = [
           file: "docs/releases/v0.1.0.md",
           markers: [
             "pnpm release:audit",
-            "real Cloudflare deploy",
+            "Cloudflare deploy",
             "npm publish workflow dry-run",
           ],
         },
