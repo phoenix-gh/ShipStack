@@ -84,6 +84,31 @@ Status: passed
   `npm publish --dry-run --provenance --tag next` for all publishable packages,
   including the available `create-shipstack-app` package name.
 
+## npm Publish Workflow Real Publish Attempt
+
+Status: blocked
+
+- Date: 2026-06-28
+- Commit: 907a86e
+- Workflow: Release npm Packages
+- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28325638587
+- Input:
+
+  ```text
+  dry_run: false
+  npm_tag: next
+  ```
+
+- Result: blocked
+- Packages checked after the failed run:
+  - `@shipstack/core@0.1.0-alpha.0`: not published
+  - `@shipstack/cli@0.1.0-alpha.0`: not published
+  - `create-shipstack-app@0.1.0-alpha.0`: not published
+- Notes: The workflow passed `pnpm verify:release` and failed during the first
+  real `npm publish` because npm requires two-factor authentication or a
+  granular access token with bypass 2FA enabled. Replace `NPM_TOKEN` with a
+  publish-capable granular token, then rerun the workflow.
+
 ## Optional Temporary Cloudflare Deploy Evidence
 
 Status: pending

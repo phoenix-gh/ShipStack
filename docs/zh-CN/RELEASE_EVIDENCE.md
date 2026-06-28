@@ -82,6 +82,31 @@
   完成 `npm publish --dry-run --provenance --tag next`，包括可用的
   `create-shipstack-app` package 名称。
 
+## npm Publish Workflow 正式发布尝试
+
+状态：已阻塞
+
+- 日期：2026-06-28
+- Commit：907a86e
+- Workflow：Release npm Packages
+- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28325638587
+- 输入：
+
+  ```text
+  dry_run: false
+  npm_tag: next
+  ```
+
+- 结果：已阻塞
+- 失败后检查的 packages：
+  - `@shipstack/core@0.1.0-alpha.0`：未发布
+  - `@shipstack/cli@0.1.0-alpha.0`：未发布
+  - `create-shipstack-app@0.1.0-alpha.0`：未发布
+- 备注：workflow 已通过 `pnpm verify:release`，在第一个正式
+  `npm publish` 时失败，因为 npm 要求 two-factor authentication，或启用了
+  bypass 2FA 的 granular access token。替换 `NPM_TOKEN` 为可发布的 granular
+  token 后，再重新运行 workflow。
+
 ## 可选 Cloudflare 临时部署证据
 
 状态：待完成
