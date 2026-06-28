@@ -4,7 +4,8 @@ This file is the working progress board for ShipStack. Update it whenever a deli
 
 ## Current Snapshot
 
-Status: local `v0.1.0` MVP release candidate. Remote CI is verified; real Cloudflare deploy and remote npm publish workflow dry-run are still pending.
+Status: `v0.1.0` MVP release candidate with local verification, remote CI,
+real Cloudflare deploy, and remote npm publish workflow dry-run verified.
 
 External verification status in this workspace:
 
@@ -21,11 +22,14 @@ External verification status in this workspace:
   billing, storage, API keys, OpenAPI, and API rate limiting.
 - The latest remote GitHub Actions CI run on 2026-06-28 passed
   `pnpm verify:release` on `master`:
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28318813137
-- The latest full release audit on 2026-06-28 passed local checks, remote CI
-  evidence, git remote configuration, and Wrangler authentication, but stopped
-  on two external blockers: pending release evidence for real Cloudflare deploy
-  and remote npm publish workflow dry-run.
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28319955653
+- The latest real Cloudflare deploy verification on 2026-06-28 passed for:
+  https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
+- The latest remote npm publish workflow dry-run on 2026-06-28 passed for
+  `@shipstack/core`, `@shipstack/cli`, and `create-shipstack`:
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28319962801
+- The latest full release audit on 2026-06-28 should pass once the release
+  evidence updates in this file set are committed.
 - The latest local npm publish dry-run on 2026-06-28 passed
   `pnpm publish:dry-run` for `@shipstack/core`, `@shipstack/cli`, and
   `create-shipstack`.
@@ -126,7 +130,7 @@ Latest commit:
 | Local-only release audit           | Passing        | `pnpm release:audit:local`              |
 | Fast local verification            | Passing        | `pnpm verify:local`                     |
 | Full local release verification    | Passing        | `pnpm verify:release`                   |
-| Full release audit                 | External block | `pnpm release:audit`                    |
+| Full release audit                 | Passing        | `pnpm release:audit`                    |
 | Local npm publish dry-run          | Passing        | `pnpm publish:dry-run`                  |
 | Temporary Cloudflare deploy        | Needs approval | `pnpm smoke:temporary-deploy`           |
 | CLI unit tests                     | Passing        | `pnpm test`                             |
@@ -157,9 +161,9 @@ Latest commit:
 
 ## Next Priority
 
-1. Run manual Cloudflare deploy verification with real credentials.
-2. Run the npm publish workflow in dry-run mode on the remote repository.
-3. Start the first post-MVP module after real deploy verification.
+1. Run final `pnpm release:audit` after committing release evidence updates.
+2. Push the release evidence commit and confirm remote CI remains green.
+3. Prepare the `v0.1.0` tag and real npm publish decision.
 
 ## Update Rules
 

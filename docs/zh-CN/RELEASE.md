@@ -145,9 +145,11 @@
 
 ## 当前已知外部缺口
 
-当前 workspace 还不能完成最终 release gate，因为：
+当前 release candidate 已记录这些外部 release gates：
 
-- `docs/RELEASE_EVIDENCE.md` 还没有记录真实 Cloudflare deploy 和远端 npm
-  publish workflow dry-run 的通过证据。
+- 真实 Cloudflare 账号部署验证
+- 远端 GitHub Actions CI
+- 远端 npm publish workflow dry-run
 
-Cloudflare temporary deploy smoke 是有价值的证据，但不能替代真实账号部署验证。
+打 tag 前，在 release commit 上重跑 `pnpm release:audit`，并确认最新远端 CI
+仍为绿色。Cloudflare temporary deploy smoke 是有价值的补充证据，但不能替代真实账号部署验证。

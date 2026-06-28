@@ -190,7 +190,9 @@ pnpm smoke:temporary-deploy
 当前 workspace 之前通过过 `pnpm smoke:temporary-deploy` 的 Cloudflare 临时部署验证，但在最新 recipe 改动后的当前 release candidate 上还没有重新运行。2026-06-28 最新本地发布验证已通过 `pnpm verify:release`，且 2026-06-28 最新 `pnpm smoke` 已通过，其中包含 recipe installer next-step 输出检查和生成应用的 `wrangler deploy --dry-run`。
 
 2026-06-28 最新远端 GitHub Actions CI 已在 `master` 上通过
-`pnpm verify:release`。最新完整 release audit 已通过本地检查、远端 CI 证据、git remote 配置和 Wrangler 登录检查，并停在两个外部门槛：真实 Cloudflare deploy 和远端 npm publish workflow dry-run 的 release evidence 仍是 pending。真实账号部署验证还没有记录。生成应用已经包含维护者或贡献者拿到 Cloudflare 凭据后完成部署验证所需的命令和 route checks。
+`pnpm verify:release`。2026-06-28 最新真实账号 Cloudflare 部署验证已在
+`https://shipstack-real-deploy-app-20260628.fong-250.workers.dev` 通过，且最新远端
+npm publish workflow dry-run 已对所有可发布 package 通过。生成应用已经包含维护者或贡献者用自己的 Cloudflare 凭据重复部署验证所需的命令和 route checks。
 
 ## 参考资料
 

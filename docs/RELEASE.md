@@ -154,10 +154,12 @@ reports external blockers.
 
 ## Current Known External Gaps
 
-This workspace cannot complete the final release gate until:
+The external release gates have been recorded for this release candidate:
 
-- `docs/RELEASE_EVIDENCE.md` records passing evidence for real Cloudflare
-  deploy and remote npm publish workflow dry-run.
+- real Cloudflare account deploy verification
+- remote GitHub Actions CI
+- remote npm publish workflow dry-run
 
-The temporary Cloudflare deploy smoke is useful evidence, but it does not
-replace the real-account deployment pass.
+Before tagging, rerun `pnpm release:audit` on the release commit and confirm the
+latest remote CI remains green. The temporary Cloudflare deploy smoke is useful
+extra evidence, but it does not replace the real-account deployment pass.

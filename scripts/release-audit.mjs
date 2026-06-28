@@ -563,7 +563,7 @@ const checks = [
     },
   },
   {
-    label: "release notes describe remaining gates",
+    label: "release notes describe release gates",
     action: async () => {
       return await assertFilesContainMarkers([
         {
@@ -689,25 +689,29 @@ const checks = [
         {
           file: "docs/PROGRESS.md",
           markers: [
-            "local `v0.1.0` MVP release candidate",
+            "`v0.1.0` MVP release candidate",
             "Wrangler is authenticated",
             "git remote",
             "pnpm publish:dry-run",
             "Needs approval",
             "Full release audit",
-            "External block",
+            "Passing",
+            "real Cloudflare deploy",
+            "remote npm publish workflow dry-run",
           ],
         },
         {
           file: "docs/zh-CN/PROGRESS.md",
           markers: [
-            "本地 `v0.1.0` MVP release candidate",
+            "`v0.1.0` MVP release candidate",
             "Wrangler 已登录",
             "git remote",
             "pnpm publish:dry-run",
             "需要批准",
             "完整 release audit",
-            "外部阻塞",
+            "通过",
+            "真实 Cloudflare",
+            "远端 npm publish workflow dry-run",
           ],
         },
       ]);

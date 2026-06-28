@@ -201,13 +201,12 @@ including recipe installer next-step output checks and generated app
 `wrangler deploy --dry-run`.
 
 The latest remote GitHub Actions CI run on 2026-06-28 passed
-`pnpm verify:release` on `master`. The latest full release audit passed local
-checks, remote CI evidence, git remote configuration, and Wrangler
-authentication, then stopped on two external blockers: pending release evidence
-for real Cloudflare deploy and remote npm publish workflow dry-run.
-Real-account deployment has not been recorded for this repository yet. The
-generated app includes the commands and route checks needed for a maintainer or
-contributor with Cloudflare credentials to complete the pass.
+`pnpm verify:release` on `master`. The latest real-account Cloudflare
+deployment verification on 2026-06-28 passed for
+`https://shipstack-real-deploy-app-20260628.fong-250.workers.dev`, and the
+latest remote npm publish workflow dry-run passed for all publishable packages.
+The generated app includes the commands and route checks needed for maintainers
+and contributors to repeat the pass with their own Cloudflare credentials.
 
 ## References
 

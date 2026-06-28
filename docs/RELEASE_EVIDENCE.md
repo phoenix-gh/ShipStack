@@ -18,18 +18,18 @@ passes when `Status` is not `pending` and the required fields below are filled:
 
 ## Real Cloudflare Deploy Evidence
 
-Status: pending
+Status: passed
 
-- Date:
-- Commit:
-- Maintainer:
-- Wrangler account check:
+- Date: 2026-06-28
+- Commit: 092160f
+- Maintainer: phoenix-gh
+- Wrangler account check: passed
 
   ```sh
   pnpm dlx wrangler whoami
   ```
 
-- Worker URL:
+- Worker URL: https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
 - Deploy command:
 
   ```sh
@@ -39,45 +39,48 @@ Status: pending
 - Route verification command:
 
   ```sh
-  pnpm verify:deployed https://<your-worker-url>
+  pnpm verify:deployed https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
   ```
 
-- Result:
-- Notes:
+- Result: passed
+- Notes: Generated a fresh base app at `/tmp/shipstack-real-deploy-app-20260628`,
+  ran dependency install, generated-app verification, real Cloudflare Workers
+  deploy, and deployed route verification. Do not commit Cloudflare account IDs.
 
 ## GitHub Actions Evidence
 
 Status: passed
 
 - Date: 2026-06-28
-- Commit: d9c5c45
+- Commit: 092160f
 - Workflow: CI
-- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28318813137
+- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28319955653
 - Result: passed
 - Notes: Verified `pnpm verify:release` on the remote `master` branch after
-  fixing fresh-clone package typecheck ordering and stabilizing auth browser
-  smoke checks.
+  fixing generated absolute-path app names and generated deploy commands.
 
 ## npm Publish Workflow Dry-Run Evidence
 
-Status: pending
+Status: passed
 
-- Date:
-- Commit:
-- Workflow:
-- Run URL:
+- Date: 2026-06-28
+- Commit: 092160f
+- Workflow: Release npm Packages
+- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28319962801
 - Input:
 
   ```text
   dry_run: true
+  npm_tag: next
   ```
 
-- Result:
+- Result: passed
 - Packages checked:
   - `@shipstack/core`
   - `@shipstack/cli`
   - `create-shipstack`
-- Notes:
+- Notes: The remote workflow ran `pnpm verify:release` and completed
+  `npm publish --dry-run --provenance --tag next` for all publishable packages.
 
 ## Optional Temporary Cloudflare Deploy Evidence
 

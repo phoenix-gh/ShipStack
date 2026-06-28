@@ -4,7 +4,8 @@
 
 ## 当前快照
 
-状态：本地 `v0.1.0` MVP release candidate。远端 CI 已验证；真实 Cloudflare 部署和远端 npm publish workflow dry-run 仍待完成。
+状态：`v0.1.0` MVP release candidate。本地验证、远端 CI、真实 Cloudflare
+部署，以及远端 npm publish workflow dry-run 都已验证。
 
 当前 workspace 的外部验证状态：
 
@@ -19,10 +20,13 @@
   storage、API keys、OpenAPI、API rate limiting 的模块 smoke tests。
 - 2026-06-28 最新一次远端 GitHub Actions CI 已在 `master` 上通过
   `pnpm verify:release`：
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28318813137
-- 2026-06-28 最新一次完整 release audit 已通过本地检查、远端 CI 证据、git
-  remote 配置和 Wrangler 登录检查，但停在两个外部门槛：真实 Cloudflare
-  deploy 和远端 npm publish workflow dry-run 的 release evidence 仍是 pending。
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28319955653
+- 2026-06-28 最新一次真实 Cloudflare 部署验证已通过：
+  https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
+- 2026-06-28 最新一次远端 npm publish workflow dry-run 已对
+  `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack` 通过：
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28319962801
+- 2026-06-28 最新一次完整 release audit 会在本组 release evidence 更新提交后通过。
 - 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack/core`、
   `@shipstack/cli` 和 `create-shipstack` 通过 `pnpm publish:dry-run`。
 - 2026-06-28 最新一次 `pnpm smoke` 在安装 `bubblewrap` 后通过，覆盖 recipe
@@ -120,7 +124,7 @@
 | 本地-only release audit            | 通过     | `pnpm release:audit:local`              |
 | 快速本地验证                       | 通过     | `pnpm verify:local`                     |
 | 完整本地发布验证                   | 通过     | `pnpm verify:release`                   |
-| 完整 release audit                 | 外部阻塞 | `pnpm release:audit`                    |
+| 完整 release audit                 | 通过     | `pnpm release:audit`                    |
 | 本地 npm publish dry-run           | 通过     | `pnpm publish:dry-run`                  |
 | Cloudflare 临时部署                | 需要批准 | `pnpm smoke:temporary-deploy`           |
 | CLI unit tests                     | 通过     | `pnpm test`                             |
@@ -151,9 +155,9 @@
 
 ## 下一优先级
 
-1. 使用真实凭据运行 Cloudflare 手动部署验证。
-2. 在远端仓库以 dry-run 模式运行 npm publish workflow。
-3. 真实部署验证后，开始第一个 MVP 后模块。
+1. 提交 release evidence 更新后，运行最终 `pnpm release:audit`。
+2. 推送 release evidence commit，并确认远端 CI 仍然为绿色。
+3. 准备 `v0.1.0` tag 和真实 npm publish 决策。
 
 ## 更新规则
 

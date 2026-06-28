@@ -16,18 +16,18 @@
 
 ## 真实 Cloudflare 部署证据
 
-状态：待完成
+状态：已通过
 
-- 日期：
-- Commit：
-- 维护者：
-- Wrangler 账号检查：
+- 日期：2026-06-28
+- Commit：092160f
+- 维护者：phoenix-gh
+- Wrangler 账号检查：通过
 
   ```sh
   pnpm dlx wrangler whoami
   ```
 
-- Worker URL：
+- Worker URL：https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
 - 部署命令：
 
   ```sh
@@ -37,44 +37,48 @@
 - Route 验证命令：
 
   ```sh
-  pnpm verify:deployed https://<your-worker-url>
+  pnpm verify:deployed https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
   ```
 
-- 结果：
-- 备注：
+- 结果：通过
+- 备注：在 `/tmp/shipstack-real-deploy-app-20260628` 生成了全新的 base app，
+  运行依赖安装、生成应用验证、真实 Cloudflare Workers 部署，以及已部署 route
+  验证。不要提交 Cloudflare account IDs。
 
 ## GitHub Actions 证据
 
 状态：已通过
 
 - 日期：2026-06-28
-- Commit：d9c5c45
+- Commit：092160f
 - Workflow：CI
-- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28318813137
+- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28319955653
 - 结果：通过
-- 备注：在修复 fresh clone 下 package typecheck 顺序，并稳定 auth browser
-  smoke checks 之后，远端 `master` branch 已通过 `pnpm verify:release`。
+- 备注：修复生成应用绝对路径名称和生成应用部署命令后，远端 `master` branch
+  已通过 `pnpm verify:release`。
 
 ## npm Publish Workflow Dry-Run 证据
 
-状态：待完成
+状态：已通过
 
-- 日期：
-- Commit：
-- Workflow：
-- Run URL：
+- 日期：2026-06-28
+- Commit：092160f
+- Workflow：Release npm Packages
+- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28319962801
 - 输入：
 
   ```text
   dry_run: true
+  npm_tag: next
   ```
 
-- 结果：
+- 结果：通过
 - 已检查 packages：
   - `@shipstack/core`
   - `@shipstack/cli`
   - `create-shipstack`
-- 备注：
+- 备注：远端 workflow 已运行 `pnpm verify:release`，并对所有可发布 package
+  完成 `npm publish --dry-run --provenance --tag next`。
 
 ## 可选 Cloudflare 临时部署证据
 
