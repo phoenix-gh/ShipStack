@@ -67,7 +67,7 @@ Use a real Cloudflare account for this checklist.
 4. Deploy the base app.
 
    ```bash
-   pnpm deploy
+   pnpm run deploy
    ```
 
 5. Check the deployed routes.
@@ -172,7 +172,7 @@ billing, storage, API keys, OpenAPI, and API rate limit modules.
 9. Deploy again.
 
    ```bash
-   pnpm deploy
+   pnpm run deploy
    ```
 
 10. Verify auth manually in the browser.

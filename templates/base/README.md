@@ -41,7 +41,7 @@ pnpm verify
 pnpm build
 pnpm preview
 pnpm deploy:dry-run
-pnpm deploy
+pnpm run deploy
 pnpm verify:deployed https://<your-worker-url>
 ```
 

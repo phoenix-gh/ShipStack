@@ -31,7 +31,7 @@
 - 部署命令：
 
   ```sh
-  pnpm deploy
+  pnpm run deploy
   ```
 
 - Route 验证命令：

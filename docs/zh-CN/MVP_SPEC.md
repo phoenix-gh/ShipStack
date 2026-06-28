@@ -157,7 +157,7 @@ pnpm db:cf:migrate:local
 pnpm dev
 pnpm lint
 pnpm test
-pnpm deploy
+pnpm run deploy
 ```
 
 具体命令可以在实现过程中调整，但首次使用体验要保持短而清楚。

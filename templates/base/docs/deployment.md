@@ -45,7 +45,7 @@ without uploading it to Cloudflare.
 Deploy the Worker:
 
 ```bash
-pnpm deploy
+pnpm run deploy
 ```
 
 After deployment, Wrangler prints the Worker URL. Verify the deployed browser

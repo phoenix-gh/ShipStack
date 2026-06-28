@@ -41,7 +41,7 @@ pnpm deploy:dry-run
 部署 Worker：
 
 ```bash
-pnpm deploy
+pnpm run deploy
 ```
 
 部署后，Wrangler 会打印 Worker URL。验证已部署的浏览器和 API health routes：

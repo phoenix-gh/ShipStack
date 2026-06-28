@@ -33,7 +33,7 @@ Status: pending
 - Deploy command:
 
   ```sh
-  pnpm deploy
+  pnpm run deploy
   ```
 
 - Route verification command:

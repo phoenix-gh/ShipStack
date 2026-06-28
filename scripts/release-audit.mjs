@@ -515,7 +515,7 @@ const checks = [
           "pnpm install --frozen-lockfile",
           "pnpm verify",
           "CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}",
-          "pnpm deploy",
+          "pnpm run deploy",
         ],
       );
     },

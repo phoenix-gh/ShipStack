@@ -157,7 +157,7 @@ pnpm db:cf:migrate:local
 pnpm dev
 pnpm lint
 pnpm test
-pnpm deploy
+pnpm run deploy
 ```
 
 The exact commands can change during implementation, but the first-run experience should remain this short.

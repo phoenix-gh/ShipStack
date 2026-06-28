@@ -64,7 +64,7 @@ pnpm smoke:temporary-deploy
 4. 部署基础应用。
 
    ```bash
-   pnpm deploy
+   pnpm run deploy
    ```
 
 5. 检查线上 routes。
@@ -166,7 +166,7 @@ pnpm smoke:temporary-deploy
 9. 再次部署。
 
    ```bash
-   pnpm deploy
+   pnpm run deploy
    ```
 
 10. 在浏览器里手动验证 auth。
