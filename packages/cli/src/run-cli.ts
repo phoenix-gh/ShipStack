@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import { cp, mkdir, readFile, rename, writeFile } from "node:fs/promises";
-import { dirname, relative, resolve } from "node:path";
+import { basename, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -108,6 +108,7 @@ async function create(projectName: string | undefined) {
   }
 
   const targetDir = resolve(process.cwd(), projectName);
+  const appName = basename(targetDir);
 
   if (existsSync(targetDir)) {
     throw new Error(`Target directory already exists: ${targetDir}`);
@@ -120,10 +121,10 @@ async function create(projectName: string | undefined) {
   await renameTemplateDotfiles(targetDir);
 
   await replaceInFile(resolve(targetDir, "package.json"), {
-    "{{projectName}}": projectName,
+    "{{projectName}}": appName,
   });
   await replaceInFile(resolve(targetDir, "wrangler.jsonc"), {
-    "{{projectName}}": projectName,
+    "{{projectName}}": appName,
   });
 
   console.log(`Created ${projectName}`);

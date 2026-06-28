@@ -6,6 +6,22 @@ import test from "node:test";
 
 import { runCli } from "../dist/run-cli.js";
 
+test("create uses the directory name for package and worker names when given an absolute path", async () => {
+  await withWorkspace(async (workspace) => {
+    const appDir = resolve(workspace, "absolute-app");
+
+    await runSilently(["create", appDir]);
+
+    const packageJson = JSON.parse(
+      await readFile(resolve(appDir, "package.json"), "utf8"),
+    );
+    const wrangler = await readFile(resolve(appDir, "wrangler.jsonc"), "utf8");
+
+    assert.equal(packageJson.name, "absolute-app");
+    assert.match(wrangler, /"name": "absolute-app"/);
+  });
+});
+
 test("database and auth installers patch generated apps idempotently", async () => {
   await withWorkspace(async (workspace) => {
     await runSilently(["create", "unit-app"]);
