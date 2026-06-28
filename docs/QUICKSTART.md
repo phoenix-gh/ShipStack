@@ -118,6 +118,6 @@ account:
 - [Deployment Verification](./DEPLOYMENT.md)
 - generated app `docs/deployment.md`
 
-The project currently treats real Cloudflare deploy verification, remote GitHub
-Actions, and the remote npm publish workflow dry-run as final external release
-gates.
+The project currently treats real Cloudflare deploy verification and the remote
+npm publish workflow dry-run as final external release gates. Remote GitHub
+Actions verification is recorded in `docs/RELEASE_EVIDENCE.md`.

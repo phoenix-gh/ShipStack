@@ -106,8 +106,7 @@ Cloudflare 账号下的手动部署检查。
 
 1. 如果 CLI 行为变得更复杂，给底层 patch helper 增加 CLI 单元测试。
 2. 使用维护者真实账号完成 Cloudflare 手动部署验证。
-3. 在远端仓库确认 GitHub Actions workflow 可以通过。
-4. 未来 schema 变化时补更多 D1 migration 边界场景。
-5. 未来 API key 模块的模块级 smoke tests。
+3. 未来 schema 变化时补更多 D1 migration 边界场景。
+4. 未来 API key 模块的模块级 smoke tests。
 
 如果某个行为暂时不能自动化，就在引入它的模块文档附近写清楚手动验证路径。

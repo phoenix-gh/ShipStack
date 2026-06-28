@@ -4,11 +4,12 @@ This file is the working progress board for ShipStack. Update it whenever a deli
 
 ## Current Snapshot
 
-Status: local `v0.1.0` MVP release candidate. External Cloudflare deploy and remote CI verification are still pending.
+Status: local `v0.1.0` MVP release candidate. Remote CI is verified; real Cloudflare deploy and remote npm publish workflow dry-run are still pending.
 
 External verification status in this workspace:
 
-- `pnpm dlx wrangler whoami` reports that Wrangler is not authenticated.
+- `pnpm dlx wrangler whoami` reports that Wrangler is authenticated. Do not
+  commit Cloudflare account IDs or tokens.
 - `pnpm smoke:temporary-deploy` has passed before, but the latest attempt on
   2026-06-24 failed before upload with Wrangler `fetch failed` connectivity
   errors.
@@ -18,10 +19,13 @@ External verification status in this workspace:
   output checks, local D1 migrations, browser auth smoke, generated app
   `wrangler deploy --dry-run`, and module smoke tests for database, auth,
   billing, storage, API keys, OpenAPI, and API rate limiting.
-- The latest full release audit on 2026-06-28 passed local checks but stopped
-  on five external blockers: pending release evidence for real Cloudflare
-  deploy, remote GitHub Actions, and remote npm publish workflow dry-run, plus
-  no configured Git remote and unauthenticated Wrangler.
+- The latest remote GitHub Actions CI run on 2026-06-28 passed
+  `pnpm verify:release` on `master`:
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28318813137
+- The latest full release audit on 2026-06-28 passed local checks, remote CI
+  evidence, git remote configuration, and Wrangler authentication, but stopped
+  on two external blockers: pending release evidence for real Cloudflare deploy
+  and remote npm publish workflow dry-run.
 - The latest local npm publish dry-run on 2026-06-28 passed
   `pnpm publish:dry-run` for `@shipstack/core`, `@shipstack/cli`, and
   `create-shipstack`.
@@ -33,7 +37,7 @@ External verification status in this workspace:
 - `pnpm smoke:temporary-deploy` still needs an explicit maintainer approval
   before rerun because it uploads generated app code to Cloudflare's temporary
   deployment service.
-- `git remote -v` has no configured remote, so remote GitHub Actions cannot be checked from this workspace.
+- `git remote -v` is configured for `https://github.com/phoenix-gh/ShipStack.git`.
 
 Last verified:
 
@@ -154,9 +158,8 @@ Latest commit:
 ## Next Priority
 
 1. Run manual Cloudflare deploy verification with real credentials.
-2. Confirm the GitHub Actions workflow on the remote repository.
-3. Run the npm publish workflow in dry-run mode on the remote repository.
-4. Start the first post-MVP module after real deploy verification.
+2. Run the npm publish workflow in dry-run mode on the remote repository.
+3. Start the first post-MVP module after real deploy verification.
 
 ## Update Rules
 

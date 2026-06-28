@@ -200,13 +200,14 @@ changes. The latest local release verification on 2026-06-28 passed
 including recipe installer next-step output checks and generated app
 `wrangler deploy --dry-run`.
 
-The latest full release audit on 2026-06-28 passed local checks and stopped on
-five external blockers: pending release evidence for real Cloudflare deploy,
-remote GitHub Actions, and remote npm publish workflow dry-run, plus no
-configured Git remote and unauthenticated Wrangler. Real-account deployment has
-not been recorded for this repository yet. The generated app includes the
-commands and route checks needed for a maintainer or contributor with
-Cloudflare credentials to complete the pass.
+The latest remote GitHub Actions CI run on 2026-06-28 passed
+`pnpm verify:release` on `master`. The latest full release audit passed local
+checks, remote CI evidence, git remote configuration, and Wrangler
+authentication, then stopped on two external blockers: pending release evidence
+for real Cloudflare deploy and remote npm publish workflow dry-run.
+Real-account deployment has not been recorded for this repository yet. The
+generated app includes the commands and route checks needed for a maintainer or
+contributor with Cloudflare credentials to complete the pass.
 
 ## References
 

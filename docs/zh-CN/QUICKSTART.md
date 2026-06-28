@@ -113,5 +113,6 @@ pnpm verify:deployed http://127.0.0.1:<port>
 - [部署验证](./DEPLOYMENT.md)
 - 生成应用里的 `docs/deployment.md`
 
-当前项目把真实 Cloudflare 部署验证、远端 GitHub Actions、远端 npm publish workflow
-dry-run 视为最终外部 release gates。
+当前项目把真实 Cloudflare 部署验证和远端 npm publish workflow dry-run
+视为最终外部 release gates。远端 GitHub Actions 验证已记录在
+`docs/RELEASE_EVIDENCE.md`。

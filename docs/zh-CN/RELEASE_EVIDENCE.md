@@ -45,14 +45,15 @@
 
 ## GitHub Actions 证据
 
-状态：待完成
+状态：已通过
 
-- 日期：
-- Commit：
-- Workflow：
-- Run URL：
-- 结果：
-- 备注：
+- 日期：2026-06-28
+- Commit：d9c5c45
+- Workflow：CI
+- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28318813137
+- 结果：通过
+- 备注：在修复 fresh clone 下 package typecheck 顺序，并稳定 auth browser
+  smoke checks 之后，远端 `master` branch 已通过 `pnpm verify:release`。
 
 ## npm Publish Workflow Dry-Run 证据
 

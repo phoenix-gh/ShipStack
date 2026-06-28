@@ -47,14 +47,16 @@ Status: pending
 
 ## GitHub Actions Evidence
 
-Status: pending
+Status: passed
 
-- Date:
-- Commit:
-- Workflow:
-- Run URL:
-- Result:
-- Notes:
+- Date: 2026-06-28
+- Commit: d9c5c45
+- Workflow: CI
+- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28318813137
+- Result: passed
+- Notes: Verified `pnpm verify:release` on the remote `master` branch after
+  fixing fresh-clone package typecheck ordering and stabilizing auth browser
+  smoke checks.
 
 ## npm Publish Workflow Dry-Run Evidence
 

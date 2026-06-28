@@ -118,8 +118,7 @@ Add tests in this order:
 
 1. CLI unit tests around lower-level patching helpers if CLI behavior grows more complex.
 2. Manual Cloudflare deploy verification with the maintainer's real account.
-3. Confirm the GitHub Actions workflow on the remote repository.
-4. More D1 migration edge cases for future schema changes.
-5. Module smoke tests for future API key modules.
+3. More D1 migration edge cases for future schema changes.
+4. Module smoke tests for future API key modules.
 
 If a behavior cannot be automated yet, document the manual verification path near the module that introduces it.

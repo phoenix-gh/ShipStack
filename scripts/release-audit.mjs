@@ -571,7 +571,6 @@ const checks = [
           markers: [
             "pnpm release:audit",
             "real Cloudflare deploy",
-            "remote CI",
             "npm publish workflow dry-run",
           ],
         },
@@ -580,7 +579,6 @@ const checks = [
           markers: [
             "pnpm release:audit",
             "Cloudflare 部署验证",
-            "远端仓库的 GitHub Actions workflow",
             "npm publish workflow dry-run",
           ],
         },
@@ -670,7 +668,6 @@ const checks = [
           markers: [
             "local npm publish dry-run",
             "real Cloudflare deployment pass",
-            "remote GitHub Actions confirmation",
             "npm publish workflow dry-run on the remote repository",
           ],
         },
@@ -679,7 +676,6 @@ const checks = [
           markers: [
             "本地 npm publish dry-run",
             "真实 Cloudflare 部署验证",
-            "远端仓库确认 GitHub Actions 通过",
             "远端仓库运行 npm publish workflow dry-run",
           ],
         },
@@ -694,8 +690,8 @@ const checks = [
           file: "docs/PROGRESS.md",
           markers: [
             "local `v0.1.0` MVP release candidate",
-            "Wrangler is not authenticated",
-            "no configured Git remote",
+            "Wrangler is authenticated",
+            "git remote",
             "pnpm publish:dry-run",
             "Needs approval",
             "Full release audit",
@@ -706,8 +702,8 @@ const checks = [
           file: "docs/zh-CN/PROGRESS.md",
           markers: [
             "本地 `v0.1.0` MVP release candidate",
-            "Wrangler 尚未登录",
-            "没有配置 Git remote",
+            "Wrangler 已登录",
+            "git remote",
             "pnpm publish:dry-run",
             "需要批准",
             "完整 release audit",

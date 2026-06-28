@@ -4,11 +4,12 @@
 
 ## 当前快照
 
-状态：本地 `v0.1.0` MVP release candidate。真实 Cloudflare 部署和远端 CI 验证仍待完成。
+状态：本地 `v0.1.0` MVP release candidate。远端 CI 已验证；真实 Cloudflare 部署和远端 npm publish workflow dry-run 仍待完成。
 
 当前 workspace 的外部验证状态：
 
-- `pnpm dlx wrangler whoami` 显示 Wrangler 尚未登录。
+- `pnpm dlx wrangler whoami` 显示 Wrangler 已登录。不要提交 Cloudflare
+  account IDs 或 tokens。
 - `pnpm smoke:temporary-deploy` 之前通过过 Cloudflare temporary account flow，
   但 2026-06-24 最新一次尝试在上传前因 Wrangler `fetch failed` 网络错误失败。
 - 2026-06-28 最新一次完整本地发布验证已通过 `pnpm verify:release`，覆盖
@@ -16,10 +17,12 @@
   tests、recipe installer next-step 输出检查、本地 D1 migrations、浏览器 auth
   smoke、生成应用 `wrangler deploy --dry-run`，以及 database、auth、billing、
   storage、API keys、OpenAPI、API rate limiting 的模块 smoke tests。
-- 2026-06-28 最新一次完整 release audit 已通过本地检查，但停在五个外部门槛：
-  真实 Cloudflare deploy、远端 GitHub Actions、远端 npm publish workflow
-  dry-run 的 release evidence 仍是 pending，且没有配置 Git remote、Wrangler
-  尚未登录。
+- 2026-06-28 最新一次远端 GitHub Actions CI 已在 `master` 上通过
+  `pnpm verify:release`：
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28318813137
+- 2026-06-28 最新一次完整 release audit 已通过本地检查、远端 CI 证据、git
+  remote 配置和 Wrangler 登录检查，但停在两个外部门槛：真实 Cloudflare
+  deploy 和远端 npm publish workflow dry-run 的 release evidence 仍是 pending。
 - 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack/core`、
   `@shipstack/cli` 和 `create-shipstack` 通过 `pnpm publish:dry-run`。
 - 2026-06-28 最新一次 `pnpm smoke` 在安装 `bubblewrap` 后通过，覆盖 recipe
@@ -28,7 +31,7 @@
   API keys、OpenAPI、API rate limiting 的模块 smoke tests。
 - `pnpm smoke:temporary-deploy` 仍需要维护者明确批准后才能重跑，因为它会把
   生成应用代码上传到 Cloudflare temporary deployment 服务。
-- `git remote -v` 没有配置 remote，因此当前 workspace 无法检查远端 GitHub Actions。
+- `git remote -v` 已配置为 `https://github.com/phoenix-gh/ShipStack.git`。
 
 最近已验证：
 
@@ -149,9 +152,8 @@
 ## 下一优先级
 
 1. 使用真实凭据运行 Cloudflare 手动部署验证。
-2. 在远端仓库确认 GitHub Actions workflow 可以通过。
-3. 在远端仓库以 dry-run 模式运行 npm publish workflow。
-4. 真实部署验证后，开始第一个 MVP 后模块。
+2. 在远端仓库以 dry-run 模式运行 npm publish workflow。
+3. 真实部署验证后，开始第一个 MVP 后模块。
 
 ## 更新规则
 
