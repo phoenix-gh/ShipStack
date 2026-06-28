@@ -22,12 +22,12 @@ External verification status in this workspace:
   billing, storage, API keys, OpenAPI, and API rate limiting.
 - The latest remote GitHub Actions CI run on 2026-06-28 passed
   `pnpm verify:release` on `master`:
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28319955653
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28320940187
 - The latest real Cloudflare deploy verification on 2026-06-28 passed for:
   https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
 - The latest remote npm publish workflow dry-run on 2026-06-28 passed for
   `@shipstack/core`, `@shipstack/cli`, and `create-shipstack-app`:
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28319962801
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - The latest full release audit on 2026-06-28 should pass once the release
   evidence updates in this file set are committed.
 - The latest local npm publish dry-run on 2026-06-28 passed

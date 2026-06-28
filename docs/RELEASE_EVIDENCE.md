@@ -21,7 +21,7 @@ passes when `Status` is not `pending` and the required fields below are filled:
 Status: passed
 
 - Date: 2026-06-28
-- Commit: 092160f
+- Commit: 86578a9
 - Maintainer: phoenix-gh
 - Wrangler account check: passed
 
@@ -52,21 +52,22 @@ Status: passed
 Status: passed
 
 - Date: 2026-06-28
-- Commit: 092160f
+- Commit: 86578a9
 - Workflow: CI
-- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28319955653
+- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28320940187
 - Result: passed
 - Notes: Verified `pnpm verify:release` on the remote `master` branch after
-  fixing generated absolute-path app names and generated deploy commands.
+  fixing generated absolute-path app names, generated deploy commands, the
+  publishable create package name, and auth browser smoke navigation timing.
 
 ## npm Publish Workflow Dry-Run Evidence
 
 Status: passed
 
 - Date: 2026-06-28
-- Commit: 092160f
+- Commit: 86578a9
 - Workflow: Release npm Packages
-- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28319962801
+- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - Input:
 
   ```text
@@ -80,7 +81,8 @@ Status: passed
   - `@shipstack/cli`
   - `create-shipstack-app`
 - Notes: The remote workflow ran `pnpm verify:release` and completed
-  `npm publish --dry-run --provenance --tag next` for all publishable packages.
+  `npm publish --dry-run --provenance --tag next` for all publishable packages,
+  including the available `create-shipstack-app` package name.
 
 ## Optional Temporary Cloudflare Deploy Evidence
 

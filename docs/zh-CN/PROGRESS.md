@@ -20,12 +20,12 @@
   storage、API keys、OpenAPI、API rate limiting 的模块 smoke tests。
 - 2026-06-28 最新一次远端 GitHub Actions CI 已在 `master` 上通过
   `pnpm verify:release`：
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28319955653
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28320940187
 - 2026-06-28 最新一次真实 Cloudflare 部署验证已通过：
   https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
 - 2026-06-28 最新一次远端 npm publish workflow dry-run 已对
   `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack-app` 通过：
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28319962801
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - 2026-06-28 最新一次完整 release audit 会在本组 release evidence 更新提交后通过。
 - 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack/core`、
   `@shipstack/cli` 和 `create-shipstack-app` 通过 `pnpm publish:dry-run`。

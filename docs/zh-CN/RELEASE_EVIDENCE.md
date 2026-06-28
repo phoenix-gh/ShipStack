@@ -19,7 +19,7 @@
 状态：已通过
 
 - 日期：2026-06-28
-- Commit：092160f
+- Commit：86578a9
 - 维护者：phoenix-gh
 - Wrangler 账号检查：通过
 
@@ -50,21 +50,22 @@
 状态：已通过
 
 - 日期：2026-06-28
-- Commit：092160f
+- Commit：86578a9
 - Workflow：CI
-- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28319955653
+- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28320940187
 - 结果：通过
-- 备注：修复生成应用绝对路径名称和生成应用部署命令后，远端 `master` branch
-  已通过 `pnpm verify:release`。
+- 备注：修复生成应用绝对路径名称、生成应用部署命令、可发布 create package 名称，
+  以及 auth browser smoke 导航时序后，远端 `master` branch 已通过
+  `pnpm verify:release`。
 
 ## npm Publish Workflow Dry-Run 证据
 
 状态：已通过
 
 - 日期：2026-06-28
-- Commit：092160f
+- Commit：86578a9
 - Workflow：Release npm Packages
-- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28319962801
+- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - 输入：
 
   ```text
@@ -78,7 +79,8 @@
   - `@shipstack/cli`
   - `create-shipstack-app`
 - 备注：远端 workflow 已运行 `pnpm verify:release`，并对所有可发布 package
-  完成 `npm publish --dry-run --provenance --tag next`。
+  完成 `npm publish --dry-run --provenance --tag next`，包括可用的
+  `create-shipstack-app` package 名称。
 
 ## 可选 Cloudflare 临时部署证据
 
