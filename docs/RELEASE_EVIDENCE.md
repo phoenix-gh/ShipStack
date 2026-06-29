@@ -88,10 +88,10 @@ Status: passed
 
 Status: blocked
 
-- Date: 2026-06-28
-- Commit: 907a86e
+- Date: 2026-06-29
+- Commit: 0d8cbf4
 - Workflow: Release npm Packages
-- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28325638587
+- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28371537956
 - Input:
 
   ```text
@@ -104,10 +104,22 @@ Status: blocked
   - `@shipstack/core@0.1.0-alpha.0`: not published
   - `@shipstack/cli@0.1.0-alpha.0`: not published
   - `create-shipstack-app@0.1.0-alpha.0`: not published
-- Notes: The workflow passed `pnpm verify:release` and failed during the first
-  real `npm publish` because npm requires two-factor authentication or a
-  granular access token with bypass 2FA enabled. Replace `NPM_TOKEN` with a
-  publish-capable granular token, then rerun the workflow.
+- Notes: The workflow passed `pnpm verify:release` after the auth smoke
+  assertion fix in `0d8cbf4`, then failed during the first real `npm publish`
+  because npm still requires two-factor authentication or a granular access
+  token with bypass 2FA enabled. The updated `NPM_TOKEN` was present, but it did
+  not satisfy npm's publish-time 2FA bypass requirement.
+
+Previous blocked attempts:
+
+- 2026-06-28, commit `907a86e`,
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28325638587: passed
+  `pnpm verify:release`, then failed at `npm publish` for the same npm 2FA
+  bypass requirement.
+- 2026-06-29, commit `9baf21b`,
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28370661628: failed
+  before publish during `pnpm verify:release` because of a flaky auth browser
+  smoke text assertion. Fixed by `0d8cbf4`.
 
 ## Optional Temporary Cloudflare Deploy Evidence
 

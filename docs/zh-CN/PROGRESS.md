@@ -14,24 +14,22 @@
   account IDs 或 tokens。
 - `pnpm smoke:temporary-deploy` 之前通过过 Cloudflare temporary account flow，
   但 2026-06-24 最新一次尝试在上传前因 Wrangler `fetch failed` 网络错误失败。
-- 2026-06-28 最新一次完整本地发布验证已通过 `pnpm verify:release`，覆盖
-  format、typecheck、tests、build、package-content checks、生成应用 smoke
-  tests、recipe installer next-step 输出检查、本地 D1 migrations、浏览器 auth
-  smoke、生成应用 `wrangler deploy --dry-run`，以及 database、auth、billing、
-  storage、API keys、OpenAPI、API rate limiting 的模块 smoke tests。
-- 2026-06-28 最新一次远端 GitHub Actions CI 已在 `master` 上通过
+- 2026-06-29 最新一次针对 auth 的本地 smoke 已在稳定浏览器文本断言后通过
+  `node scripts/smoke/auth.mjs`。
+- 2026-06-29 最新一次远端 GitHub Actions CI 已在 `master` 上通过
   `pnpm verify:release`：
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28325911339
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28371065475
 - 2026-06-28 最新一次真实 Cloudflare 部署验证已通过：
   https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
 - 2026-06-28 最新一次远端 npm publish workflow dry-run 已对
   `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack-app` 通过：
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
-- 2026-06-28 最新一次正式 npm publish workflow 尝试已通过
-  `pnpm verify:release`，随后在 `npm publish` 阶段失败，因为当前
-  `NPM_TOKEN` 不是具备发布权限且可绕过 2FA 的 granular token：
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28325638587
-- 2026-06-28 最新一次本地 release audit 已通过
+- 2026-06-29 最新一次正式 npm publish workflow 尝试已通过
+  `pnpm verify:release`，随后在 `npm publish` 阶段失败，因为 npm 仍要求
+  two-factor authentication，或启用了发布时 2FA bypass 的 granular access
+  token：
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28371537956
+- 2026-06-29 最新一次本地 release audit 已通过
   `node scripts/release-audit.mjs --local`。
 - 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack/core`、
   `@shipstack/cli` 和 `create-shipstack-app` 通过 `pnpm publish:dry-run`。
@@ -161,8 +159,8 @@
 
 ## 下一优先级
 
-1. 把 GitHub `NPM_TOKEN` secret 替换为具备发布权限、且发布时可绕过 2FA 的 npm
-   granular access token。
+1. 把 GitHub `NPM_TOKEN` secret 替换为明确具备 package publish 权限、且发布时
+   启用 2FA bypass 的 npm granular access token。
 2. 重新运行 `Release npm Packages` workflow，设置 `dry_run: false` 和
    `npm_tag: next`。
 3. packages 发布成功后，记录 npm package 证据，并决定是打 alpha release tag，

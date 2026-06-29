@@ -16,26 +16,22 @@ External verification status in this workspace:
 - `pnpm smoke:temporary-deploy` has passed before, but the latest attempt on
   2026-06-24 failed before upload with Wrangler `fetch failed` connectivity
   errors.
-- The latest full local release verification on 2026-06-28 passed
-  `pnpm verify:release`, including format, typecheck, tests, build,
-  package-content checks, generated app smoke tests, recipe installer next-step
-  output checks, local D1 migrations, browser auth smoke, generated app
-  `wrangler deploy --dry-run`, and module smoke tests for database, auth,
-  billing, storage, API keys, OpenAPI, and API rate limiting.
-- The latest remote GitHub Actions CI run on 2026-06-28 passed
+- The latest targeted local auth smoke on 2026-06-29 passed
+  `node scripts/smoke/auth.mjs` after stabilizing the browser text assertion.
+- The latest remote GitHub Actions CI run on 2026-06-29 passed
   `pnpm verify:release` on `master`:
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28325911339
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28371065475
 - The latest real Cloudflare deploy verification on 2026-06-28 passed for:
   https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
 - The latest remote npm publish workflow dry-run on 2026-06-28 passed for
   `@shipstack/core`, `@shipstack/cli`, and `create-shipstack-app`:
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
-- The latest real npm publish workflow attempt on 2026-06-28 passed
-  `pnpm verify:release`, then failed during `npm publish` because the configured
-  `NPM_TOKEN` was not a publish-capable granular token with the required 2FA
-  bypass permission:
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28325638587
-- The latest local release audit on 2026-06-28 passed
+- The latest real npm publish workflow attempt on 2026-06-29 passed
+  `pnpm verify:release`, then failed during `npm publish` because npm still
+  requires two-factor authentication or a granular access token with publish-time
+  2FA bypass enabled:
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28371537956
+- The latest local release audit on 2026-06-29 passed
   `node scripts/release-audit.mjs --local`.
 - The latest local npm publish dry-run on 2026-06-28 passed
   `pnpm publish:dry-run` for `@shipstack/core`, `@shipstack/cli`, and
@@ -168,8 +164,9 @@ Latest commit:
 
 ## Next Priority
 
-1. Replace the GitHub `NPM_TOKEN` secret with a publish-capable npm granular
-   access token that can bypass 2FA for publishing.
+1. Replace the GitHub `NPM_TOKEN` secret with an npm granular access token that
+   explicitly has package publish permission and publish-time 2FA bypass
+   enabled.
 2. Rerun the `Release npm Packages` workflow with `dry_run: false` and
    `npm_tag: next`.
 3. After packages are published, record the npm package evidence and decide

@@ -86,10 +86,10 @@
 
 状态：已阻塞
 
-- 日期：2026-06-28
-- Commit：907a86e
+- 日期：2026-06-29
+- Commit：0d8cbf4
 - Workflow：Release npm Packages
-- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28325638587
+- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28371537956
 - 输入：
 
   ```text
@@ -102,10 +102,22 @@
   - `@shipstack/core@0.1.0-alpha.0`：未发布
   - `@shipstack/cli@0.1.0-alpha.0`：未发布
   - `create-shipstack-app@0.1.0-alpha.0`：未发布
-- 备注：workflow 已通过 `pnpm verify:release`，在第一个正式
-  `npm publish` 时失败，因为 npm 要求 two-factor authentication，或启用了
-  bypass 2FA 的 granular access token。替换 `NPM_TOKEN` 为可发布的 granular
-  token 后，再重新运行 workflow。
+- 备注：在 `0d8cbf4` 修复 auth smoke 断言后，workflow 已通过
+  `pnpm verify:release`，随后在第一个正式 `npm publish` 时失败，因为 npm
+  仍要求 two-factor authentication，或启用了 bypass 2FA 的 granular access
+  token。更新后的 `NPM_TOKEN` 已存在，但仍不满足 npm 发布时的 2FA bypass
+  要求。
+
+历史阻塞尝试：
+
+- 2026-06-28，commit `907a86e`，
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28325638587：已通过
+  `pnpm verify:release`，随后因同一个 npm 2FA bypass 要求在 `npm publish`
+  阶段失败。
+- 2026-06-29，commit `9baf21b`，
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28370661628：发布前的
+  `pnpm verify:release` 失败，原因是 auth browser smoke 文本断言存在时序波动。
+  已由 `0d8cbf4` 修复。
 
 ## 可选 Cloudflare 临时部署证据
 
