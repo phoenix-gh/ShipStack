@@ -115,6 +115,12 @@ https://registry.npmjs.org/@shipstack%2fcore`. This was a different blocker
 
 Previous blocked attempts:
 
+- 2026-06-30, commit `7e48c8e`,
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28409697166: failed
+  before publish during `pnpm verify:release` because Chromium reported
+  `net::ERR_ABORTED` during auth browser smoke navigation. The targeted local
+  auth smoke passed after replacing Playwright navigation waiters with path
+  polling and short retries.
 - 2026-06-30, commit `c5fae75`,
   https://github.com/phoenix-gh/ShipStack/actions/runs/28409426279: failed
   before publish during `pnpm verify:release` because the auth browser smoke

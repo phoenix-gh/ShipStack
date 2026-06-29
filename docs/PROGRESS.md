@@ -28,10 +28,11 @@ External verification status in this workspace:
   `@shipstack-dev/core`, `@shipstack-dev/cli`, and `create-shipstack-app`:
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - The latest real npm publish workflow attempt on 2026-06-30 failed before
-  publish during `pnpm verify:release` because the auth browser smoke reused a
-  cleared session page when checking the protected dashboard redirect. The local
-  targeted auth smoke now passes after switching that check to a fresh page:
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28409426279
+  publish during `pnpm verify:release` because Chromium reported
+  `net::ERR_ABORTED` during auth browser smoke navigation. The local targeted
+  auth smoke now passes after replacing Playwright navigation waiters with
+  path polling and short retries:
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28409697166
 - The previous real npm publish workflow attempt on 2026-06-29 passed
   `pnpm verify:release`, then failed during `npm publish` with `E404 Not Found`
   while trying to publish the old `@shipstack/core` package. The old

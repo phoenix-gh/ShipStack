@@ -136,7 +136,12 @@ async function verifyAuthBrowserFlow(origin) {
     await expectPageText(page, "Sign in.", browserEvents);
     const signUpLink = page.getByRole("link", { name: "Create one" });
     assert.equal(await signUpLink.getAttribute("href"), "/sign-up");
-    await page.goto(`${origin}/sign-up`);
+    await gotoPageAndWaitForPath(
+      page,
+      `${origin}/sign-up`,
+      "/sign-up",
+      browserEvents,
+    );
     await waitForHydration(page);
     await expectPageText(page, "Start building.", browserEvents);
 
@@ -146,7 +151,12 @@ async function verifyAuthBrowserFlow(origin) {
       password,
       callbackURL: "/dashboard",
     });
-    await page.goto(`${origin}/dashboard`);
+    await gotoPageAndWaitForPath(
+      page,
+      `${origin}/dashboard`,
+      "/dashboard",
+      browserEvents,
+    );
     await waitForHydration(page);
     await expectPageText(page, `Welcome, Browser Tester.`, browserEvents);
     await expectPageText(page, email, browserEvents);
@@ -169,7 +179,12 @@ async function verifyAuthBrowserFlow(origin) {
       password,
       callbackURL: "/dashboard",
     });
-    await page.goto(`${origin}/dashboard`);
+    await gotoPageAndWaitForPath(
+      page,
+      `${origin}/dashboard`,
+      "/dashboard",
+      browserEvents,
+    );
     await waitForHydration(page);
     await expectPageText(page, `Welcome, Browser Tester.`, browserEvents);
   } finally {
@@ -195,10 +210,12 @@ async function postBrowserAuthJson(page, url, body) {
 }
 
 async function gotoProtectedRouteAndWaitForSignIn(page, url, browserEvents) {
-  const waitForSignIn = page.waitForURL("**/sign-in", { timeout: 30_000 });
-  const goto = page
-    .goto(url, { waitUntil: "domcontentloaded" })
-    .catch((error) => {
+  await gotoPageAndWaitForPath(page, url, "/sign-in", browserEvents);
+}
+
+async function gotoPageAndWaitForPath(page, url, expectedPath, browserEvents) {
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    await page.goto(url, { waitUntil: "domcontentloaded" }).catch((error) => {
       if (String(error?.message ?? error).includes("net::ERR_ABORTED")) {
         return;
       }
@@ -206,14 +223,28 @@ async function gotoProtectedRouteAndWaitForSignIn(page, url, browserEvents) {
       throw error;
     });
 
-  try {
-    await Promise.all([waitForSignIn, goto]);
-  } catch (error) {
-    throw new Error(
-      `Expected protected route ${url} to navigate to /sign-in, current URL is ${page.url()}.\n\nBrowser events:\n${browserEvents.join("\n")}`,
-      { cause: error },
-    );
+    if (await waitForPagePath(page, expectedPath)) {
+      return;
+    }
   }
+
+  throw new Error(
+    `Expected ${url} to navigate to ${expectedPath}, current URL is ${page.url()}.\n\nBrowser events:\n${browserEvents.join("\n")}`,
+  );
+}
+
+async function waitForPagePath(page, expectedPath) {
+  const deadline = Date.now() + 10_000;
+
+  while (Date.now() < deadline) {
+    if (new URL(page.url()).pathname === expectedPath) {
+      return true;
+    }
+
+    await page.waitForTimeout(250);
+  }
+
+  return false;
 }
 
 async function expectBrowserApiSession(page, origin, email) {

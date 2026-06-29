@@ -112,6 +112,11 @@ https://registry.npmjs.org/@shipstack%2fcore` 失败。这已经不是之前的 
 
 历史阻塞尝试：
 
+- 2026-06-30，commit `7e48c8e`，
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28409697166：发布前的
+  `pnpm verify:release` 失败，原因是 Chromium 在 auth browser smoke navigation
+  期间报告 `net::ERR_ABORTED`。将 Playwright navigation waiters 替换为 path
+  polling 和短重试后，targeted local auth smoke 已通过。
 - 2026-06-30，commit `c5fae75`，
   https://github.com/phoenix-gh/ShipStack/actions/runs/28409426279：发布前的
   `pnpm verify:release` 失败，原因是 auth browser smoke 在期待匿名

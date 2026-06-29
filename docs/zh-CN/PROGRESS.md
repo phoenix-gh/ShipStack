@@ -26,10 +26,10 @@
   `@shipstack-dev/core`、`@shipstack-dev/cli` 和 `create-shipstack-app` 通过：
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - 2026-06-30 最新一次正式 npm publish workflow 尝试在发布前的
-  `pnpm verify:release` 阶段失败，原因是 auth browser smoke 在检查 protected
-  dashboard redirect 时复用了已清 session 的页面。该检查改为使用全新页面后，
-  本地 targeted auth smoke 已通过：
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28409426279
+  `pnpm verify:release` 阶段失败，原因是 Chromium 在 auth browser smoke
+  navigation 期间报告 `net::ERR_ABORTED`。将 Playwright navigation waiters
+  替换为 path polling 和短重试后，本地 targeted auth smoke 已通过：
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28409697166
 - 2026-06-29 上一次正式 npm publish workflow 尝试已通过
   `pnpm verify:release`，随后在发布旧的 `@shipstack/core` package 时以
   `E404 Not Found` 失败。旧的 `@shipstack` npm scope 已被其他 owner 占用，
