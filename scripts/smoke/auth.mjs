@@ -246,18 +246,32 @@ async function submitAuthForm(page, buttonName, apiPath) {
 }
 
 async function expectPageText(page, text, browserEvents = []) {
+  const deadline = Date.now() + 30_000;
+  let body = "";
+
   try {
-    await page.getByText(text).waitFor();
+    while (Date.now() < deadline) {
+      body = await page
+        .locator("body")
+        .innerText({ timeout: 2_000 })
+        .catch(() => "");
+
+      if (body.includes(text)) {
+        return;
+      }
+
+      await page.waitForTimeout(250);
+    }
   } catch (error) {
-    const body = await page
-      .locator("body")
-      .innerText()
-      .catch(() => "");
     throw new Error(
       `Expected page to include ${JSON.stringify(text)} at ${page.url()}.\n\n${body}\n\nBrowser events:\n${browserEvents.join("\n")}`,
       { cause: error },
     );
   }
+
+  throw new Error(
+    `Expected page to include ${JSON.stringify(text)} at ${page.url()}.\n\n${body}\n\nBrowser events:\n${browserEvents.join("\n")}`,
+  );
 }
 
 async function waitForHydration(page) {
