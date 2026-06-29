@@ -5,8 +5,9 @@
 ## 当前快照
 
 状态：`v0.1.0` MVP release candidate。本地验证、远端 CI、真实 Cloudflare
-部署，以及远端 npm publish workflow dry-run 都已验证。真实 npm 发布目前被
-`docs/RELEASE_EVIDENCE.md` 中记录的 npm token 权限问题阻塞。
+部署，以及远端 npm publish workflow dry-run 都已验证。真实 npm 发布正在等待
+迁移 publishable package scope 后重跑；旧的 `@shipstack` scope 已被占用，当前
+改用 `@shipstack-dev`。
 
 当前 workspace 的外部验证状态：
 
@@ -22,17 +23,17 @@
 - 2026-06-28 最新一次真实 Cloudflare 部署验证已通过：
   https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
 - 2026-06-28 最新一次远端 npm publish workflow dry-run 已对
-  `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack-app` 通过：
+  `@shipstack-dev/core`、`@shipstack-dev/cli` 和 `create-shipstack-app` 通过：
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - 2026-06-29 最新一次正式 npm publish workflow 尝试已通过
-  `pnpm verify:release`，随后在发布 `@shipstack/core` 时以
-  `E404 Not Found` 失败。当前阻塞点是 npm organization/scope 权限：需要能在
-  `@shipstack` 下创建或发布 packages：
+  `pnpm verify:release`，随后在发布旧的 `@shipstack/core` package 时以
+  `E404 Not Found` 失败。旧的 `@shipstack` npm scope 已被其他 owner 占用，
+  因此 publishable packages 已迁移到 `@shipstack-dev/*`：
   https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884
 - 2026-06-29 最新一次本地 release audit 已通过
   `node scripts/release-audit.mjs --local`。
-- 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack/core`、
-  `@shipstack/cli` 和 `create-shipstack-app` 通过 `pnpm publish:dry-run`。
+- 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack-dev/core`、
+  `@shipstack-dev/cli` 和 `create-shipstack-app` 通过 `pnpm publish:dry-run`。
 - 2026-06-28 最新一次 `pnpm smoke` 在安装 `bubblewrap` 后通过，覆盖 recipe
   installer next-step 输出、base 生成应用的 `wrangler deploy --dry-run`、本地
   D1 migrations、浏览器 auth smoke，以及 database、auth、billing、storage、
@@ -159,8 +160,8 @@
 
 ## 下一优先级
 
-1. 确认 npm `shipstack` organization/scope 已存在，并且 GitHub `NPM_TOKEN`
-   可以在 `@shipstack` 下创建和发布 packages。
+1. 确认 GitHub `NPM_TOKEN` 可以在 npm `@shipstack-dev` scope 下创建和发布
+   packages。
 2. 重新运行 `Release npm Packages` workflow，设置 `dry_run: false` 和
    `npm_tag: next`。
 3. packages 发布成功后，记录 npm package 证据，并决定是打 alpha release tag，

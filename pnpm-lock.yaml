@@ -22,7 +22,7 @@ importers:
 
   packages/cli:
     dependencies:
-      "@shipstack/core":
+      "@shipstack-dev/core":
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -41,7 +41,7 @@ importers:
 
   packages/create-shipstack:
     dependencies:
-      "@shipstack/cli":
+      "@shipstack-dev/cli":
         specifier: workspace:*
         version: link:../cli
     devDependencies:

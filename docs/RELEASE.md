@@ -81,8 +81,8 @@ Do not tag `v0.1.0` until these checks are complete:
 
     Packages are published in dependency order:
 
-    - `@shipstack/core`
-    - `@shipstack/cli`
+    - `@shipstack-dev/core`
+    - `@shipstack-dev/cli`
     - `create-shipstack-app`
 
     The workflow requires the repository secret `NPM_TOKEN` and publishes with
@@ -143,13 +143,13 @@ reports external blockers.
 5. Run the npm publish workflow dry-run remotely.
 
    Use the `Release npm Packages` workflow with `dry_run: true`. Confirm it
-   checks `@shipstack/core`, `@shipstack/cli`, and `create-shipstack-app`, then
+   checks `@shipstack-dev/core`, `@shipstack-dev/cli`, and `create-shipstack-app`, then
    record the run URL and result in [Release Evidence](./RELEASE_EVIDENCE.md).
 
 6. Configure the npm publishing token.
 
-   Create an npm granular access token that can publish `@shipstack/core`,
-   `@shipstack/cli`, and `create-shipstack-app`. Store it as the GitHub
+   Create an npm granular access token that can publish `@shipstack-dev/core`,
+   `@shipstack-dev/cli`, and `create-shipstack-app`. Store it as the GitHub
    repository secret `NPM_TOKEN`.
 
    If npm two-factor authentication is enabled for publishing, make sure the

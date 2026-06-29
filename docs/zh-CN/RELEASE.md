@@ -78,8 +78,8 @@
 
     Packages 会按依赖顺序发布：
 
-    - `@shipstack/core`
-    - `@shipstack/cli`
+    - `@shipstack-dev/core`
+    - `@shipstack-dev/cli`
     - `create-shipstack-app`
 
     该 workflow 需要仓库 secret `NPM_TOKEN`，并启用 npm provenance。请使用具备
@@ -135,12 +135,12 @@
 5. 在远端运行 npm publish workflow dry-run。
 
    使用 `Release npm Packages` workflow，并设置 `dry_run: true`。确认它检查了
-   `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack-app`，然后把 run URL
+   `@shipstack-dev/core`、`@shipstack-dev/cli` 和 `create-shipstack-app`，然后把 run URL
    和结果记录到 [Release 证据记录](./RELEASE_EVIDENCE.md)。
 
 6. 配置 npm 发布 token。
 
-   创建一个可以发布 `@shipstack/core`、`@shipstack/cli` 和
+   创建一个可以发布 `@shipstack-dev/core`、`@shipstack-dev/cli` 和
    `create-shipstack-app` 的 npm granular access token，并把它保存为 GitHub
    repository secret `NPM_TOKEN`。
 

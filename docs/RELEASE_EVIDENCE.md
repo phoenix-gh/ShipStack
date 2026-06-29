@@ -77,8 +77,8 @@ Status: passed
 
 - Result: passed
 - Packages checked:
-  - `@shipstack/core`
-  - `@shipstack/cli`
+  - `@shipstack-dev/core`
+  - `@shipstack-dev/cli`
   - `create-shipstack-app`
 - Notes: The remote workflow ran `pnpm verify:release` and completed
   `npm publish --dry-run --provenance --tag next` for all publishable packages,
@@ -101,17 +101,17 @@ Status: blocked
 
 - Result: blocked
 - Packages checked after the failed run:
-  - `@shipstack/core@0.1.0-alpha.0`: not published
-  - `@shipstack/cli@0.1.0-alpha.0`: not published
+  - `@shipstack-dev/core@0.1.0-alpha.0`: not published
+  - `@shipstack-dev/cli@0.1.0-alpha.0`: not published
   - `create-shipstack-app@0.1.0-alpha.0`: not published
 - Notes: The workflow passed `pnpm verify:release`, then failed during the
   first real `npm publish` with `E404 Not Found - PUT
-https://registry.npmjs.org/@shipstack%2fcore`. This is a different blocker
-  than the earlier 2FA error: the updated `NPM_TOKEN` is now reaching npm, but
-  it still does not have permission to create or publish the new
-  `@shipstack/core` package under the `@shipstack` scope. Confirm the npm
-  `shipstack` organization/scope exists and that the token can create and
-  publish packages in that scope.
+https://registry.npmjs.org/@shipstack%2fcore`. This was a different blocker
+  than the earlier 2FA error: the updated `NPM_TOKEN` reached npm, but the
+  original `@shipstack` scope is occupied by another owner. The publishable
+  scoped packages have since moved to `@shipstack-dev/core` and
+  `@shipstack-dev/cli`; rerun the workflow with an `NPM_TOKEN` that can publish
+  in the `@shipstack-dev` scope.
 
 Previous blocked attempts:
 

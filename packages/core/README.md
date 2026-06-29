@@ -1,4 +1,4 @@
-# @shipstack/core
+# @shipstack-dev/core
 
 Shared utilities for ShipStack packages.
 
@@ -12,5 +12,5 @@ candidate.
 
 ## Related Packages
 
-- `@shipstack/cli`
+- `@shipstack-dev/cli`
 - `create-shipstack-app`

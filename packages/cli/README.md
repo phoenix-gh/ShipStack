@@ -1,4 +1,4 @@
-# @shipstack/cli
+# @shipstack-dev/cli
 
 CLI for creating and extending ShipStack apps.
 
@@ -32,4 +32,4 @@ route-level fixed-window helpers for public and API-key-authenticated routes.
 ## Related Packages
 
 - `create-shipstack-app`
-- `@shipstack/core`
+- `@shipstack-dev/core`

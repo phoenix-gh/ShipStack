@@ -104,14 +104,14 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
         {
           private: true,
           dependencies: {
-            "@shipstack/cli": `file:${cliTarball}`,
-            "@shipstack/core": `file:${coreTarball}`,
+            "@shipstack-dev/cli": `file:${cliTarball}`,
+            "@shipstack-dev/core": `file:${coreTarball}`,
             "create-shipstack-app": `file:${createTarball}`,
           },
           pnpm: {
             overrides: {
-              "@shipstack/cli": `file:${cliTarball}`,
-              "@shipstack/core": `file:${coreTarball}`,
+              "@shipstack-dev/cli": `file:${cliTarball}`,
+              "@shipstack-dev/core": `file:${coreTarball}`,
             },
           },
         },
@@ -144,7 +144,7 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
 
     const shipstackBin = resolve(
       workspace,
-      "node_modules/@shipstack/cli/dist/cli.js",
+      "node_modules/@shipstack-dev/cli/dist/cli.js",
     );
     await run("node", [shipstackBin, "add", "database"], { cwd: appDir });
     await run("node", [shipstackBin, "add", "auth"], { cwd: appDir });

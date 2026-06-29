@@ -24,7 +24,7 @@ test("create package typecheck does not depend on stale cli dist", async () => {
 
   assert.match(
     packageJson.scripts.typecheck,
-    /pnpm --filter @shipstack\/cli build/,
+    /pnpm --filter @shipstack-dev\/cli build/,
   );
   assert.match(packageJson.scripts.typecheck, /tsc -p tsconfig\.json --noEmit/);
 });

@@ -6,8 +6,8 @@ This file is the working progress board for ShipStack. Update it whenever a deli
 
 Status: `v0.1.0` MVP release candidate with local verification, remote CI,
 real Cloudflare deploy, and remote npm publish workflow dry-run verified. Real
-npm publishing is currently blocked by the npm token permissions described in
-`docs/RELEASE_EVIDENCE.md`.
+npm publishing is waiting for a rerun after moving the publishable package
+scope from the occupied `@shipstack` scope to `@shipstack-dev`.
 
 External verification status in this workspace:
 
@@ -24,18 +24,18 @@ External verification status in this workspace:
 - The latest real Cloudflare deploy verification on 2026-06-28 passed for:
   https://shipstack-real-deploy-app-20260628.fong-250.workers.dev
 - The latest remote npm publish workflow dry-run on 2026-06-28 passed for
-  `@shipstack/core`, `@shipstack/cli`, and `create-shipstack-app`:
+  `@shipstack-dev/core`, `@shipstack-dev/cli`, and `create-shipstack-app`:
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - The latest real npm publish workflow attempt on 2026-06-29 passed
   `pnpm verify:release`, then failed during `npm publish` with `E404 Not Found`
-  while trying to publish `@shipstack/core`. The current blocker is npm
-  organization/scope permission for creating or publishing packages under
-  `@shipstack`:
+  while trying to publish the old `@shipstack/core` package. The old
+  `@shipstack` npm scope is occupied by another owner, so publishable packages
+  have been migrated to `@shipstack-dev/*`:
   https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884
 - The latest local release audit on 2026-06-29 passed
   `node scripts/release-audit.mjs --local`.
 - The latest local npm publish dry-run on 2026-06-28 passed
-  `pnpm publish:dry-run` for `@shipstack/core`, `@shipstack/cli`, and
+  `pnpm publish:dry-run` for `@shipstack-dev/core`, `@shipstack-dev/cli`, and
   `create-shipstack-app`.
 - The latest `pnpm smoke` run on 2026-06-28 passed after `bubblewrap` was
   installed. It covered recipe installer next-step output, the base generated
@@ -165,8 +165,8 @@ Latest commit:
 
 ## Next Priority
 
-1. Confirm the npm `shipstack` organization/scope exists and the GitHub
-   `NPM_TOKEN` can create and publish packages under `@shipstack`.
+1. Confirm the GitHub `NPM_TOKEN` can create and publish packages under the
+   npm `@shipstack-dev` scope.
 2. Rerun the `Release npm Packages` workflow with `dry_run: false` and
    `npm_tag: next`.
 3. After packages are published, record the npm package evidence and decide

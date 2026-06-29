@@ -20,5 +20,5 @@ API route foundations, CI and deploy workflows, and a generated `AGENTS.md`.
 
 ## Related Packages
 
-- `@shipstack/cli`
-- `@shipstack/core`
+- `@shipstack-dev/cli`
+- `@shipstack-dev/core`

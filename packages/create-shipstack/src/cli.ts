@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { runCli } from "@shipstack/cli";
+import { runCli } from "@shipstack-dev/cli";
 
 const args = process.argv.slice(2);
 const normalizedArgs = args[0] === "create" ? args : ["create", ...args];

@@ -14,11 +14,11 @@ const packageJsonFiles = [
 const publishablePackages = [
   {
     directory: "packages/core",
-    name: "@shipstack/core",
+    name: "@shipstack-dev/core",
   },
   {
     directory: "packages/cli",
-    name: "@shipstack/cli",
+    name: "@shipstack-dev/cli",
   },
   {
     directory: "packages/create-shipstack",

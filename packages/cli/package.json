@@ -1,5 +1,5 @@
 {
-  "name": "@shipstack/cli",
+  "name": "@shipstack-dev/cli",
   "version": "0.1.0-alpha.0",
   "description": "CLI for creating and extending ShipStack apps.",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "test": "pnpm build && node --test tests/*.test.mjs"
   },
   "dependencies": {
-    "@shipstack/core": "workspace:*"
+    "@shipstack-dev/core": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.5.4",

@@ -16,10 +16,10 @@
   "scripts": {
     "build": "tsc -p tsconfig.json && node scripts/make-bin-executable.mjs",
     "prepack": "pnpm build",
-    "typecheck": "pnpm --filter @shipstack/cli build && tsc -p tsconfig.json --noEmit"
+    "typecheck": "pnpm --filter @shipstack-dev/cli build && tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@shipstack/cli": "workspace:*"
+    "@shipstack-dev/cli": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.5.4",

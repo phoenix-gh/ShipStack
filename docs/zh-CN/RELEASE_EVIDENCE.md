@@ -75,8 +75,8 @@
 
 - 结果：通过
 - 已检查 packages：
-  - `@shipstack/core`
-  - `@shipstack/cli`
+  - `@shipstack-dev/core`
+  - `@shipstack-dev/cli`
   - `create-shipstack-app`
 - 备注：远端 workflow 已运行 `pnpm verify:release`，并对所有可发布 package
   完成 `npm publish --dry-run --provenance --tag next`，包括可用的
@@ -99,15 +99,16 @@
 
 - 结果：已阻塞
 - 失败后检查的 packages：
-  - `@shipstack/core@0.1.0-alpha.0`：未发布
-  - `@shipstack/cli@0.1.0-alpha.0`：未发布
+  - `@shipstack-dev/core@0.1.0-alpha.0`：未发布
+  - `@shipstack-dev/cli@0.1.0-alpha.0`：未发布
   - `create-shipstack-app@0.1.0-alpha.0`：未发布
 - 备注：workflow 已通过 `pnpm verify:release`，随后在第一个正式
   `npm publish` 时以 `E404 Not Found - PUT
 https://registry.npmjs.org/@shipstack%2fcore` 失败。这已经不是之前的 2FA
-  错误：更新后的 `NPM_TOKEN` 已经抵达 npm，但仍没有权限在 `@shipstack` scope
-  下创建或发布新的 `@shipstack/core` package。需要确认 npm `shipstack`
-  organization/scope 已存在，并且该 token 可以在这个 scope 下创建和发布 packages。
+  错误：更新后的 `NPM_TOKEN` 已经抵达 npm，但原来的 `@shipstack` scope 已被其他
+  owner 占用。可发布的 scoped packages 已迁移到 `@shipstack-dev/core` 和
+  `@shipstack-dev/cli`；接下来需要用可在 `@shipstack-dev` scope 发布的
+  `NPM_TOKEN` 重跑 workflow。
 
 历史阻塞尝试：
 
