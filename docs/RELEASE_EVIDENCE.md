@@ -89,9 +89,9 @@ Status: passed
 Status: blocked
 
 - Date: 2026-06-29
-- Commit: 0d8cbf4
+- Commit: 87f41a3
 - Workflow: Release npm Packages
-- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28371537956
+- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884
 - Input:
 
   ```text
@@ -104,14 +104,21 @@ Status: blocked
   - `@shipstack/core@0.1.0-alpha.0`: not published
   - `@shipstack/cli@0.1.0-alpha.0`: not published
   - `create-shipstack-app@0.1.0-alpha.0`: not published
-- Notes: The workflow passed `pnpm verify:release` after the auth smoke
-  assertion fix in `0d8cbf4`, then failed during the first real `npm publish`
-  because npm still requires two-factor authentication or a granular access
-  token with bypass 2FA enabled. The updated `NPM_TOKEN` was present, but it did
-  not satisfy npm's publish-time 2FA bypass requirement.
+- Notes: The workflow passed `pnpm verify:release`, then failed during the
+  first real `npm publish` with `E404 Not Found - PUT
+https://registry.npmjs.org/@shipstack%2fcore`. This is a different blocker
+  than the earlier 2FA error: the updated `NPM_TOKEN` is now reaching npm, but
+  it still does not have permission to create or publish the new
+  `@shipstack/core` package under the `@shipstack` scope. Confirm the npm
+  `shipstack` organization/scope exists and that the token can create and
+  publish packages in that scope.
 
 Previous blocked attempts:
 
+- 2026-06-29, commit `0d8cbf4`,
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28371537956: passed
+  `pnpm verify:release`, then failed at `npm publish` for npm's publish-time 2FA
+  bypass requirement.
 - 2026-06-28, commit `907a86e`,
   https://github.com/phoenix-gh/ShipStack/actions/runs/28325638587: passed
   `pnpm verify:release`, then failed at `npm publish` for the same npm 2FA

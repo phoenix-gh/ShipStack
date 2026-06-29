@@ -87,9 +87,9 @@
 状态：已阻塞
 
 - 日期：2026-06-29
-- Commit：0d8cbf4
+- Commit：87f41a3
 - Workflow：Release npm Packages
-- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28371537956
+- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884
 - 输入：
 
   ```text
@@ -102,14 +102,19 @@
   - `@shipstack/core@0.1.0-alpha.0`：未发布
   - `@shipstack/cli@0.1.0-alpha.0`：未发布
   - `create-shipstack-app@0.1.0-alpha.0`：未发布
-- 备注：在 `0d8cbf4` 修复 auth smoke 断言后，workflow 已通过
-  `pnpm verify:release`，随后在第一个正式 `npm publish` 时失败，因为 npm
-  仍要求 two-factor authentication，或启用了 bypass 2FA 的 granular access
-  token。更新后的 `NPM_TOKEN` 已存在，但仍不满足 npm 发布时的 2FA bypass
-  要求。
+- 备注：workflow 已通过 `pnpm verify:release`，随后在第一个正式
+  `npm publish` 时以 `E404 Not Found - PUT
+https://registry.npmjs.org/@shipstack%2fcore` 失败。这已经不是之前的 2FA
+  错误：更新后的 `NPM_TOKEN` 已经抵达 npm，但仍没有权限在 `@shipstack` scope
+  下创建或发布新的 `@shipstack/core` package。需要确认 npm `shipstack`
+  organization/scope 已存在，并且该 token 可以在这个 scope 下创建和发布 packages。
 
 历史阻塞尝试：
 
+- 2026-06-29，commit `0d8cbf4`，
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28371537956：已通过
+  `pnpm verify:release`，随后因 npm 发布时 2FA bypass 要求在 `npm publish`
+  阶段失败。
 - 2026-06-28，commit `907a86e`，
   https://github.com/phoenix-gh/ShipStack/actions/runs/28325638587：已通过
   `pnpm verify:release`，随后因同一个 npm 2FA bypass 要求在 `npm publish`

@@ -27,10 +27,11 @@ External verification status in this workspace:
   `@shipstack/core`, `@shipstack/cli`, and `create-shipstack-app`:
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - The latest real npm publish workflow attempt on 2026-06-29 passed
-  `pnpm verify:release`, then failed during `npm publish` because npm still
-  requires two-factor authentication or a granular access token with publish-time
-  2FA bypass enabled:
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28371537956
+  `pnpm verify:release`, then failed during `npm publish` with `E404 Not Found`
+  while trying to publish `@shipstack/core`. The current blocker is npm
+  organization/scope permission for creating or publishing packages under
+  `@shipstack`:
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884
 - The latest local release audit on 2026-06-29 passed
   `node scripts/release-audit.mjs --local`.
 - The latest local npm publish dry-run on 2026-06-28 passed
@@ -164,9 +165,8 @@ Latest commit:
 
 ## Next Priority
 
-1. Replace the GitHub `NPM_TOKEN` secret with an npm granular access token that
-   explicitly has package publish permission and publish-time 2FA bypass
-   enabled.
+1. Confirm the npm `shipstack` organization/scope exists and the GitHub
+   `NPM_TOKEN` can create and publish packages under `@shipstack`.
 2. Rerun the `Release npm Packages` workflow with `dry_run: false` and
    `npm_tag: next`.
 3. After packages are published, record the npm package evidence and decide

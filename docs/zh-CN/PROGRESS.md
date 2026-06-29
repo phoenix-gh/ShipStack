@@ -25,10 +25,10 @@
   `@shipstack/core`、`@shipstack/cli` 和 `create-shipstack-app` 通过：
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - 2026-06-29 最新一次正式 npm publish workflow 尝试已通过
-  `pnpm verify:release`，随后在 `npm publish` 阶段失败，因为 npm 仍要求
-  two-factor authentication，或启用了发布时 2FA bypass 的 granular access
-  token：
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28371537956
+  `pnpm verify:release`，随后在发布 `@shipstack/core` 时以
+  `E404 Not Found` 失败。当前阻塞点是 npm organization/scope 权限：需要能在
+  `@shipstack` 下创建或发布 packages：
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884
 - 2026-06-29 最新一次本地 release audit 已通过
   `node scripts/release-audit.mjs --local`。
 - 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack/core`、
@@ -159,8 +159,8 @@
 
 ## 下一优先级
 
-1. 把 GitHub `NPM_TOKEN` secret 替换为明确具备 package publish 权限、且发布时
-   启用 2FA bypass 的 npm granular access token。
+1. 确认 npm `shipstack` organization/scope 已存在，并且 GitHub `NPM_TOKEN`
+   可以在 `@shipstack` 下创建和发布 packages。
 2. 重新运行 `Release npm Packages` workflow，设置 `dry_run: false` 和
    `npm_tag: next`。
 3. packages 发布成功后，记录 npm package 证据，并决定是打 alpha release tag，
