@@ -86,10 +86,10 @@
 
 状态：已阻塞
 
-- 日期：2026-06-29
-- Commit：87f41a3
+- 日期：2026-06-30
+- Commit：3b084e4
 - Workflow：Release npm Packages
-- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884
+- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28409972907
 - 输入：
 
   ```text
@@ -102,16 +102,19 @@
   - `@shipstack-dev/core@0.1.0-alpha.0`：未发布
   - `@shipstack-dev/cli@0.1.0-alpha.0`：未发布
   - `create-shipstack-app@0.1.0-alpha.0`：未发布
-- 备注：workflow 已通过 `pnpm verify:release`，随后在第一个正式
-  `npm publish` 时以 `E404 Not Found - PUT
-https://registry.npmjs.org/@shipstack%2fcore` 失败。这已经不是之前的 2FA
-  错误：更新后的 `NPM_TOKEN` 已经抵达 npm，但原来的 `@shipstack` scope 已被其他
-  owner 占用。可发布的 scoped packages 已迁移到 `@shipstack-dev/core` 和
-  `@shipstack-dev/cli`；接下来需要用可在 `@shipstack-dev` scope 发布的
-  `NPM_TOKEN` 重跑 workflow。
+- 备注：workflow 已通过 `pnpm verify:release`，进入第一个正式 `npm publish`，
+  并完成 npm provenance statement 签名。随后发布以 `E422` 失败，原因是 npm
+  provenance 不支持 private GitHub Actions source repositories。当前 GitHub
+  repository 是 private；需要改为 public 后再重跑 provenance 发布。
 
 历史阻塞尝试：
 
+- 2026-06-29，commit `87f41a3`，
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884：已通过
+  `pnpm verify:release`，随后在发布旧的 `@shipstack/core` package 时以
+  `E404 Not Found` 失败。原来的 `@shipstack` scope 已被其他 owner 占用，因此
+  publishable scoped packages 已迁移到 `@shipstack-dev/core` 和
+  `@shipstack-dev/cli`。
 - 2026-06-30，commit `7e48c8e`，
   https://github.com/phoenix-gh/ShipStack/actions/runs/28409697166：发布前的
   `pnpm verify:release` 失败，原因是 Chromium 在 auth browser smoke navigation

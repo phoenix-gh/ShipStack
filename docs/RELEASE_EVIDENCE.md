@@ -88,10 +88,10 @@ Status: passed
 
 Status: blocked
 
-- Date: 2026-06-29
-- Commit: 87f41a3
+- Date: 2026-06-30
+- Commit: 3b084e4
 - Workflow: Release npm Packages
-- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884
+- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28409972907
 - Input:
 
   ```text
@@ -104,17 +104,20 @@ Status: blocked
   - `@shipstack-dev/core@0.1.0-alpha.0`: not published
   - `@shipstack-dev/cli@0.1.0-alpha.0`: not published
   - `create-shipstack-app@0.1.0-alpha.0`: not published
-- Notes: The workflow passed `pnpm verify:release`, then failed during the
-  first real `npm publish` with `E404 Not Found - PUT
-https://registry.npmjs.org/@shipstack%2fcore`. This was a different blocker
-  than the earlier 2FA error: the updated `NPM_TOKEN` reached npm, but the
-  original `@shipstack` scope is occupied by another owner. The publishable
-  scoped packages have since moved to `@shipstack-dev/core` and
-  `@shipstack-dev/cli`; rerun the workflow with an `NPM_TOKEN` that can publish
-  in the `@shipstack-dev` scope.
+- Notes: The workflow passed `pnpm verify:release`, reached the first real
+  `npm publish`, and npm signed a provenance statement. The publish then failed
+  with `E422` because npm provenance does not support private GitHub Actions
+  source repositories. The GitHub repository is currently private; make it
+  public before rerunning provenance publishing.
 
 Previous blocked attempts:
 
+- 2026-06-29, commit `87f41a3`,
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884: passed
+  `pnpm verify:release`, then failed during `npm publish` with `E404 Not Found`
+  for the old `@shipstack/core` package. The original `@shipstack` scope is
+  occupied by another owner, so publishable scoped packages moved to
+  `@shipstack-dev/core` and `@shipstack-dev/cli`.
 - 2026-06-30, commit `7e48c8e`,
   https://github.com/phoenix-gh/ShipStack/actions/runs/28409697166: failed
   before publish during `pnpm verify:release` because Chromium reported

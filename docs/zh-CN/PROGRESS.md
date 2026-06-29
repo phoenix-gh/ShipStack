@@ -25,11 +25,12 @@
 - 2026-06-28 最新一次远端 npm publish workflow dry-run 已对
   `@shipstack-dev/core`、`@shipstack-dev/cli` 和 `create-shipstack-app` 通过：
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
-- 2026-06-30 最新一次正式 npm publish workflow 尝试在发布前的
-  `pnpm verify:release` 阶段失败，原因是 Chromium 在 auth browser smoke
-  navigation 期间报告 `net::ERR_ABORTED`。将 Playwright navigation waiters
-  替换为 path polling 和短重试后，本地 targeted auth smoke 已通过：
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28409697166
+- 2026-06-30 最新一次正式 npm publish workflow 尝试已通过
+  `pnpm verify:release`，进入 `npm publish`，并完成 npm provenance 签名，
+  随后因为 npm provenance 不支持 private GitHub Actions source repositories
+  而以 `E422` 失败。当前 GitHub repository 是 private，需要改成 public 后
+  provenance 发布才能通过：
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28409972907
 - 2026-06-29 上一次正式 npm publish workflow 尝试已通过
   `pnpm verify:release`，随后在发布旧的 `@shipstack/core` package 时以
   `E404 Not Found` 失败。旧的 `@shipstack` npm scope 已被其他 owner 占用，
@@ -165,8 +166,8 @@
 
 ## 下一优先级
 
-1. 确认 GitHub `NPM_TOKEN` 可以在 npm `@shipstack-dev` scope 下创建和发布
-   packages。
+1. 将 GitHub repository 改为 public，让 npm provenance 可以验证 GitHub Actions
+   source repository。
 2. 重新运行 `Release npm Packages` workflow，设置 `dry_run: false` 和
    `npm_tag: next`。
 3. packages 发布成功后，记录 npm package 证据，并决定是打 alpha release tag，
