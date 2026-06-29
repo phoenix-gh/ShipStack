@@ -115,6 +115,12 @@ https://registry.npmjs.org/@shipstack%2fcore`. This was a different blocker
 
 Previous blocked attempts:
 
+- 2026-06-30, commit `c5fae75`,
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28409426279: failed
+  before publish during `pnpm verify:release` because the auth browser smoke
+  reused a cleared session page while expecting an anonymous protected-route
+  redirect. The targeted local auth smoke passed after switching that check to a
+  fresh browser page.
 - 2026-06-29, commit `0d8cbf4`,
   https://github.com/phoenix-gh/ShipStack/actions/runs/28371537956: passed
   `pnpm verify:release`, then failed at `npm publish` for npm's publish-time 2FA

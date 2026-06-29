@@ -124,11 +124,14 @@ async function verifyAuthBrowserFlow(origin) {
   const password = "correct-horse-battery-staple";
 
   try {
-    const page = await browser.newPage();
-    const browserEvents = collectBrowserEvents(page);
+    let page = await browser.newPage();
+    let browserEvents = collectBrowserEvents(page);
 
-    await page.goto(`${origin}/dashboard`);
-    await page.waitForURL("**/sign-in");
+    await gotoProtectedRouteAndWaitForSignIn(
+      page,
+      `${origin}/dashboard`,
+      browserEvents,
+    );
     await waitForHydration(page);
     await expectPageText(page, "Sign in.", browserEvents);
     const signUpLink = page.getByRole("link", { name: "Create one" });
@@ -149,9 +152,15 @@ async function verifyAuthBrowserFlow(origin) {
     await expectPageText(page, email, browserEvents);
     await expectBrowserApiSession(page, origin, email);
 
-    await page.context().clearCookies();
-    await page.goto(`${origin}/dashboard`);
-    await page.waitForURL("**/sign-in");
+    await page.close();
+    page = await browser.newPage();
+    browserEvents = collectBrowserEvents(page);
+
+    await gotoProtectedRouteAndWaitForSignIn(
+      page,
+      `${origin}/dashboard`,
+      browserEvents,
+    );
     await waitForHydration(page);
     await expectPageText(page, "Sign in.", browserEvents);
 
@@ -181,6 +190,28 @@ async function postBrowserAuthJson(page, url, body) {
   if (response.status() >= 400) {
     throw new Error(
       `Browser auth request failed ${response.status()}: ${await response.text()}`,
+    );
+  }
+}
+
+async function gotoProtectedRouteAndWaitForSignIn(page, url, browserEvents) {
+  const waitForSignIn = page.waitForURL("**/sign-in", { timeout: 30_000 });
+  const goto = page
+    .goto(url, { waitUntil: "domcontentloaded" })
+    .catch((error) => {
+      if (String(error?.message ?? error).includes("net::ERR_ABORTED")) {
+        return;
+      }
+
+      throw error;
+    });
+
+  try {
+    await Promise.all([waitForSignIn, goto]);
+  } catch (error) {
+    throw new Error(
+      `Expected protected route ${url} to navigate to /sign-in, current URL is ${page.url()}.\n\nBrowser events:\n${browserEvents.join("\n")}`,
+      { cause: error },
     );
   }
 }

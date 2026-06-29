@@ -15,8 +15,8 @@
   account IDs 或 tokens。
 - `pnpm smoke:temporary-deploy` 之前通过过 Cloudflare temporary account flow，
   但 2026-06-24 最新一次尝试在上传前因 Wrangler `fetch failed` 网络错误失败。
-- 2026-06-29 最新一次针对 auth 的本地 smoke 已在稳定浏览器文本断言后通过
-  `node scripts/smoke/auth.mjs`。
+- 2026-06-30 最新一次针对 auth 的本地 smoke 已在稳定 protected-route 浏览器
+  session reset flow 后通过 `node scripts/smoke/auth.mjs`。
 - 2026-06-29 最新一次远端 GitHub Actions CI 已在 `master` 上通过
   `pnpm verify:release`：
   https://github.com/phoenix-gh/ShipStack/actions/runs/28371065475
@@ -25,7 +25,12 @@
 - 2026-06-28 最新一次远端 npm publish workflow dry-run 已对
   `@shipstack-dev/core`、`@shipstack-dev/cli` 和 `create-shipstack-app` 通过：
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
-- 2026-06-29 最新一次正式 npm publish workflow 尝试已通过
+- 2026-06-30 最新一次正式 npm publish workflow 尝试在发布前的
+  `pnpm verify:release` 阶段失败，原因是 auth browser smoke 在检查 protected
+  dashboard redirect 时复用了已清 session 的页面。该检查改为使用全新页面后，
+  本地 targeted auth smoke 已通过：
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28409426279
+- 2026-06-29 上一次正式 npm publish workflow 尝试已通过
   `pnpm verify:release`，随后在发布旧的 `@shipstack/core` package 时以
   `E404 Not Found` 失败。旧的 `@shipstack` npm scope 已被其他 owner 占用，
   因此 publishable packages 已迁移到 `@shipstack-dev/*`：

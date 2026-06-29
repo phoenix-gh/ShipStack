@@ -112,6 +112,11 @@ https://registry.npmjs.org/@shipstack%2fcore` 失败。这已经不是之前的 
 
 历史阻塞尝试：
 
+- 2026-06-30，commit `c5fae75`，
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28409426279：发布前的
+  `pnpm verify:release` 失败，原因是 auth browser smoke 在期待匿名
+  protected-route redirect 时复用了已清 session 的页面。该检查改为使用全新浏览器
+  页面后，targeted local auth smoke 已通过。
 - 2026-06-29，commit `0d8cbf4`，
   https://github.com/phoenix-gh/ShipStack/actions/runs/28371537956：已通过
   `pnpm verify:release`，随后因 npm 发布时 2FA bypass 要求在 `npm publish`

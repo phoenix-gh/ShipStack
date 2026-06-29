@@ -16,8 +16,9 @@ External verification status in this workspace:
 - `pnpm smoke:temporary-deploy` has passed before, but the latest attempt on
   2026-06-24 failed before upload with Wrangler `fetch failed` connectivity
   errors.
-- The latest targeted local auth smoke on 2026-06-29 passed
-  `node scripts/smoke/auth.mjs` after stabilizing the browser text assertion.
+- The latest targeted local auth smoke on 2026-06-30 passed
+  `node scripts/smoke/auth.mjs` after stabilizing the protected-route browser
+  session reset flow.
 - The latest remote GitHub Actions CI run on 2026-06-29 passed
   `pnpm verify:release` on `master`:
   https://github.com/phoenix-gh/ShipStack/actions/runs/28371065475
@@ -26,7 +27,12 @@ External verification status in this workspace:
 - The latest remote npm publish workflow dry-run on 2026-06-28 passed for
   `@shipstack-dev/core`, `@shipstack-dev/cli`, and `create-shipstack-app`:
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
-- The latest real npm publish workflow attempt on 2026-06-29 passed
+- The latest real npm publish workflow attempt on 2026-06-30 failed before
+  publish during `pnpm verify:release` because the auth browser smoke reused a
+  cleared session page when checking the protected dashboard redirect. The local
+  targeted auth smoke now passes after switching that check to a fresh page:
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28409426279
+- The previous real npm publish workflow attempt on 2026-06-29 passed
   `pnpm verify:release`, then failed during `npm publish` with `E404 Not Found`
   while trying to publish the old `@shipstack/core` package. The old
   `@shipstack` npm scope is occupied by another owner, so publishable packages
