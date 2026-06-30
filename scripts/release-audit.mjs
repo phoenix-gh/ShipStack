@@ -198,7 +198,7 @@ const checks = [
         {
           file: "docs/QUICKSTART.md",
           markers: [
-            "pnpm create shipstack-app my-app",
+            "pnpm create shipstack-app@next my-app",
             "node packages/create-shipstack/dist/cli.js my-app",
             "shipstack add database",
             "shipstack add api-rate-limit",
@@ -210,7 +210,7 @@ const checks = [
         {
           file: "docs/zh-CN/QUICKSTART.md",
           markers: [
-            "pnpm create shipstack-app my-app",
+            "pnpm create shipstack-app@next my-app",
             "node packages/create-shipstack/dist/cli.js my-app",
             "shipstack add database",
             "shipstack add api-rate-limit",

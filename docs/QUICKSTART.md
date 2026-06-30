@@ -5,10 +5,12 @@ and verify the result.
 
 ## Create An App
 
-After the packages are published, use the package create command:
+The fixed alpha is currently published under the `next` npm dist-tag while
+`latest` is still blocked on npm dist-tag write permissions. Use `@next` until
+`latest` moves to `0.1.0-alpha.1`:
 
 ```sh
-pnpm create shipstack-app my-app
+pnpm create shipstack-app@next my-app
 cd my-app
 pnpm install
 pnpm dev

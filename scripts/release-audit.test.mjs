@@ -28,3 +28,9 @@ test("create package typecheck does not depend on stale cli dist", async () => {
   );
   assert.match(packageJson.scripts.typecheck, /tsc -p tsconfig\.json --noEmit/);
 });
+
+test("release audit accepts the current next-tag quickstart command", async () => {
+  const source = await readFile("scripts/release-audit.mjs", "utf8");
+
+  assert.match(source, /pnpm create shipstack-app@next my-app/);
+});

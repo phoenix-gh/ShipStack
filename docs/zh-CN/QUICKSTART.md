@@ -4,10 +4,11 @@
 
 ## 创建应用
 
-Packages 发布后，可以使用 package create 命令：
+带修复的 alpha 目前发布在 npm `next` dist-tag 下；`latest` 仍被 npm dist-tag
+写权限问题阻塞。在 `latest` 移到 `0.1.0-alpha.1` 之前，请使用 `@next`：
 
 ```sh
-pnpm create shipstack-app my-app
+pnpm create shipstack-app@next my-app
 cd my-app
 pnpm install
 pnpm dev
