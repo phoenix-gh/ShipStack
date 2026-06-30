@@ -135,6 +135,27 @@ Do not tag `v0.1.0` until these checks are complete:
     pnpm release:dist-tags --version 0.1.0-alpha.1 --tag latest
     ```
 
+    If `npm whoami` succeeds but `npm dist-tag add` returns `E403 Forbidden`,
+    confirm the signed-in npm user has package write access and that the active
+    npm session or token is allowed to perform package write operations. A
+    package owner with read-write collaborator access can still be blocked by
+    npm token policy, organization policy, or publish/MFA settings.
+
+    Useful diagnostics:
+
+    ```sh
+    npm whoami
+    npm owner ls @shipstack-dev/core
+    npm owner ls @shipstack-dev/cli
+    npm owner ls create-shipstack-app
+    npm access list collaborators @shipstack-dev/core
+    npm access list collaborators @shipstack-dev/cli
+    npm access list collaborators create-shipstack-app
+    npm access get status @shipstack-dev/core
+    npm access get status @shipstack-dev/cli
+    npm access get status create-shipstack-app
+    ```
+
 ## Pre-Release Safety Checks
 
 - No real secrets, tokens, session cookies, or production IDs are committed.

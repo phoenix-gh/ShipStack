@@ -182,6 +182,30 @@
   `pnpm openapi:generate`、`pnpm db:cf:migrate:local`、`pnpm test`、`pnpm lint`、
   `pnpm typecheck`、`pnpm build` 和 `pnpm deploy:dry-run`。
 
+## npm Dist-Tag Promotion 证据
+
+状态：阻塞
+
+- 日期：2026-07-01
+- 目标：把 `latest` 移到 `0.1.0-alpha.1`
+- 结果：被 npm registry `E403 Forbidden` 阻塞
+- 已验证：
+  - npm authentication 已成功。
+  - package owner checks 可以看到已登录 maintainer。
+  - package collaborator checks 显示 read-write access。
+  - 三个 packages 都是 public。
+  - npm registry 仍显示 `next: 0.1.0-alpha.1` 且
+    `latest: 0.1.0-alpha.0`。
+- 失败命令：
+
+  ```sh
+  npm dist-tag add @shipstack-dev/core@0.1.0-alpha.1 latest
+  ```
+
+- 备注：这个失败不再是缺少登录。它更像 npm token/session 的 package-write
+  policy、organization policy，或 publish/MFA 设置阻止了 dist-tag 写操作；即使
+  package ownership 和 read-write collaborator access 都存在，也可能发生。
+
 历史阻塞尝试：
 
 - 2026-06-30，commit `204fe82`，

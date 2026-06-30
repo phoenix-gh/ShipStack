@@ -187,6 +187,31 @@ Status: follow-up published
   `pnpm db:cf:migrate:local`, `pnpm test`, `pnpm lint`, `pnpm typecheck`,
   `pnpm build`, and `pnpm deploy:dry-run`.
 
+## npm Dist-Tag Promotion Evidence
+
+Status: blocked
+
+- Date: 2026-07-01
+- Target: move `latest` to `0.1.0-alpha.1`
+- Result: blocked by npm registry `E403 Forbidden`
+- Verified:
+  - npm authentication succeeds.
+  - package owner checks list the signed-in maintainer.
+  - package collaborator checks report read-write access.
+  - all three packages are public.
+  - npm registry still reports `next: 0.1.0-alpha.1` and
+    `latest: 0.1.0-alpha.0`.
+- Failed command:
+
+  ```sh
+  npm dist-tag add @shipstack-dev/core@0.1.0-alpha.1 latest
+  ```
+
+- Notes: The failure is no longer a missing-login issue. It appears to be an npm
+  token/session package-write policy, organization policy, or publish/MFA
+  setting that prevents dist-tag writes even though package ownership and
+  read-write collaborator access are present.
+
 Previous blocked attempts:
 
 - 2026-06-30, commit `204fe82`,

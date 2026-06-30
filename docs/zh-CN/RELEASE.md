@@ -129,6 +129,26 @@ metadata。
     pnpm release:dist-tags --version 0.1.0-alpha.1 --tag latest
     ```
 
+    如果 `npm whoami` 已成功，但 `npm dist-tag add` 返回 `E403 Forbidden`，
+    先确认当前 npm 用户拥有 package 写权限，并确认当前 npm session 或 token 允许执行
+    package write 操作。即使用户是 package owner 且拥有 read-write collaborator
+    权限，也仍可能被 npm token policy、organization policy 或 publish/MFA 设置挡住。
+
+    可用诊断命令：
+
+    ```sh
+    npm whoami
+    npm owner ls @shipstack-dev/core
+    npm owner ls @shipstack-dev/cli
+    npm owner ls create-shipstack-app
+    npm access list collaborators @shipstack-dev/core
+    npm access list collaborators @shipstack-dev/cli
+    npm access list collaborators create-shipstack-app
+    npm access get status @shipstack-dev/core
+    npm access get status @shipstack-dev/cli
+    npm access get status create-shipstack-app
+    ```
+
 ## Pre-Release Safety Checks
 
 - 没有提交真实 secrets、tokens、session cookies 或 production IDs。

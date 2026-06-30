@@ -35,6 +35,11 @@ verify:release` and published `@shipstack-dev/core`,
   packages exist with `next` pointing to `0.1.0-alpha.1`. The `latest`
   dist-tag still points to `0.1.0-alpha.0` until a maintainer with valid npm
   auth moves it.
+- The latest `latest` dist-tag promotion attempt on 2026-07-01 confirmed npm
+  authentication works and package owner/read-write access is present, but
+  `npm dist-tag add @shipstack-dev/core@0.1.0-alpha.1 latest` returned
+  `E403 Forbidden`. This now appears to be an npm token/session package-write
+  policy issue rather than a missing login or package ownership issue.
 - The latest published-alpha first-run check on 2026-06-30 found that
   `create-shipstack-app@0.1.0-alpha.0` generated an app without a local
   `shipstack` binary. After manually adding
@@ -192,7 +197,8 @@ Latest commit:
 
 ## Next Priority
 
-1. Move the npm `latest` dist-tag to `0.1.0-alpha.1` after refreshing npm auth.
+1. Move the npm `latest` dist-tag to `0.1.0-alpha.1` after resolving the npm
+   package-write `E403` policy issue.
 2. Repeat the full first-run check with the default
    `pnpm create shipstack-app my-app` command after `latest` moves.
 3. Continue first-run feedback toward stable `v0.1.0`.

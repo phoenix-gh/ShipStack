@@ -30,6 +30,11 @@
 - 2026-06-30 最新一次 npm registry 验证已确认三个 packages 都存在，且 `next`
   dist-tag 指向 `0.1.0-alpha.1`。`latest` dist-tag 仍指向
   `0.1.0-alpha.0`，直到拥有有效 npm auth 的 maintainer 移动它。
+- 2026-07-01 最新一次 `latest` dist-tag promotion 尝试已确认 npm auth 可用，
+  package owner/read-write 权限也存在，但
+  `npm dist-tag add @shipstack-dev/core@0.1.0-alpha.1 latest` 返回
+  `E403 Forbidden`。这现在更像 npm token/session 的 package-write policy 问题，
+  而不是缺少登录或 package ownership。
 - 2026-06-30 最新一次 published-alpha 首次运行检查发现：
   `create-shipstack-app@0.1.0-alpha.0` 生成的 app 没有本地 `shipstack`
   binary。手动添加 `@shipstack-dev/cli@0.1.0-alpha.0` 后，模块安装、生成应用
@@ -179,7 +184,8 @@
 
 ## 下一优先级
 
-1. 刷新 npm auth 后，把 npm `latest` dist-tag 移到 `0.1.0-alpha.1`。
+1. 解决 npm package-write `E403` policy 问题后，把 npm `latest` dist-tag 移到
+   `0.1.0-alpha.1`。
 2. `latest` 移动后，用默认 `pnpm create shipstack-app my-app` 命令重复完整首次运行检查。
 3. 继续收集 stable `v0.1.0` 前的首次运行反馈。
 
