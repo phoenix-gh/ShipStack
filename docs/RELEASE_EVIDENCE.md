@@ -179,6 +179,13 @@ Status: follow-up published
 - Follow-up verification: `pnpm create shipstack-app@next alpha1-next-app`,
   `pnpm install`, and `pnpm exec shipstack doctor` passed without manually
   adding `@shipstack-dev/cli`.
+- Full `@next` MVP first-run verification: on 2026-07-01,
+  `pnpm create shipstack-app@next next-full-app` passed, then database, auth,
+  billing, storage, API keys, OpenAPI, and API rate limit modules were
+  installed from the published package flow. The generated app passed
+  `pnpm exec shipstack doctor`, `pnpm db:generate`, `pnpm openapi:generate`,
+  `pnpm db:cf:migrate:local`, `pnpm test`, `pnpm lint`, `pnpm typecheck`,
+  `pnpm build`, and `pnpm deploy:dry-run`.
 
 Previous blocked attempts:
 

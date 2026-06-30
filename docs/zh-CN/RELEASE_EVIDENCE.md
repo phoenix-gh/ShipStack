@@ -175,6 +175,12 @@
   移动之前，请使用 `pnpm create shipstack-app@next my-app`。
 - 后续验证：`pnpm create shipstack-app@next alpha1-next-app`、`pnpm install`
   和 `pnpm exec shipstack doctor` 已在未手动添加 `@shipstack-dev/cli` 的情况下通过。
+- 完整 `@next` MVP 首次运行验证：2026-07-01，
+  `pnpm create shipstack-app@next next-full-app` 已通过，随后通过已发布 package
+  流程安装 database、auth、billing、storage、API keys、OpenAPI 和 API rate limit
+  modules。生成应用已通过 `pnpm exec shipstack doctor`、`pnpm db:generate`、
+  `pnpm openapi:generate`、`pnpm db:cf:migrate:local`、`pnpm test`、`pnpm lint`、
+  `pnpm typecheck`、`pnpm build` 和 `pnpm deploy:dry-run`。
 
 历史阻塞尝试：
 

@@ -43,6 +43,11 @@
 - 2026-06-30 已通过 published `@next` 首次运行检查：
   `pnpm create shipstack-app@next alpha1-next-app`、`pnpm install` 和
   `pnpm exec shipstack doctor` 都可在不手动添加 CLI 的情况下运行。
+- 2026-07-01 已通过 published `@next` 的完整 MVP 首次运行检查：运行
+  `pnpm create shipstack-app@next next-full-app`，安装 database、auth、billing、
+  storage、API keys、OpenAPI 和 API rate limit modules，然后通过生成应用的
+  `doctor`、`db:generate`、`openapi:generate`、`db:cf:migrate:local`、`test`、
+  `lint`、`typecheck`、`build` 和 `deploy:dry-run`。
 - 2026-06-30 最新一次本地 release audit 已在 `pnpm verify:local` 中通过。
 - 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack-dev/core`、
   `@shipstack-dev/cli` 和 `create-shipstack-app` 通过 `pnpm publish:dry-run`。
@@ -175,7 +180,8 @@
 ## 下一优先级
 
 1. 刷新 npm auth 后，把 npm `latest` dist-tag 移到 `0.1.0-alpha.1`。
-2. 继续收集 stable `v0.1.0` 前的首次运行反馈。
+2. `latest` 移动后，用默认 `pnpm create shipstack-app my-app` 命令重复完整首次运行检查。
+3. 继续收集 stable `v0.1.0` 前的首次运行反馈。
 
 ## 更新规则
 

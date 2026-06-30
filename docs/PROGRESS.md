@@ -51,6 +51,12 @@ verify:release` and published `@shipstack-dev/core`,
 - A published `@next` first-run check passed on 2026-06-30:
   `pnpm create shipstack-app@next alpha1-next-app`, `pnpm install`, and
   `pnpm exec shipstack doctor` worked without manually adding the CLI.
+- A full published `@next` MVP first-run check passed on 2026-07-01. It ran
+  `pnpm create shipstack-app@next next-full-app`, installed database, auth,
+  billing, storage, API keys, OpenAPI, and API rate limit modules, then passed
+  generated app `doctor`, `db:generate`, `openapi:generate`,
+  `db:cf:migrate:local`, `test`, `lint`, `typecheck`, `build`, and
+  `deploy:dry-run`.
 - The latest local release audit on 2026-06-30 passed as part of
   `pnpm verify:local`.
 - The latest local npm publish dry-run on 2026-06-28 passed
@@ -187,7 +193,9 @@ Latest commit:
 ## Next Priority
 
 1. Move the npm `latest` dist-tag to `0.1.0-alpha.1` after refreshing npm auth.
-2. Continue first-run feedback toward stable `v0.1.0`.
+2. Repeat the full first-run check with the default
+   `pnpm create shipstack-app my-app` command after `latest` moves.
+3. Continue first-run feedback toward stable `v0.1.0`.
 
 ## Update Rules
 
