@@ -141,6 +141,7 @@ async function verifyPackedCli({ cliTarball, coreTarball, createTarball }) {
     await assertExists(resolve(appDir, "scripts/verify-deployed.mjs"));
     await assertExists(resolve(appDir, "src/routes/api.health.ts"));
     await assertExists(resolve(appDir, "AGENTS.md"));
+    await assertGeneratedAppUsesLocalCli(resolve(appDir, "package.json"));
 
     const shipstackBin = resolve(
       workspace,
@@ -209,6 +210,25 @@ async function assertExists(path) {
     await access(path);
   } catch {
     throw new Error(`Expected path to exist: ${path}`);
+  }
+}
+
+async function assertGeneratedAppUsesLocalCli(packageJsonPath) {
+  const appPackageJson = JSON.parse(await readFile(packageJsonPath, "utf8"));
+  const cliPackageJson = JSON.parse(
+    await readFile(
+      resolve(repositoryRoot, "packages/cli/package.json"),
+      "utf8",
+    ),
+  );
+
+  if (
+    appPackageJson.devDependencies?.["@shipstack-dev/cli"] !==
+    cliPackageJson.version
+  ) {
+    throw new Error(
+      `Expected generated app to depend on @shipstack-dev/cli ${cliPackageJson.version}.`,
+    );
   }
 }
 

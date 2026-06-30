@@ -118,6 +118,27 @@
 - 备注：已创建 annotated git tag 和 GitHub prerelease，与已发布 npm package
   version `0.1.0-alpha.0` 匹配。
 
+## 已发布 Alpha 首次运行反馈
+
+状态：部分通过
+
+- 日期：2026-06-30
+- 已发布版本：`0.1.0-alpha.0`
+- 命令：
+
+  ```sh
+  pnpm create shipstack-app published-alpha-app
+  ```
+
+- 结果：显式把 `@shipstack-dev/cli@0.1.0-alpha.0` 添加为生成应用
+  dev dependency 后，生成应用依赖安装、模块安装、lint、tests、typecheck、build、
+  本地 D1 migration、OpenAPI generation 和 `deploy:dry-run` 都已通过。
+- 发现：已发布 alpha 生成的 app 在 `pnpm install` 后没有本地 `shipstack`
+  binary，因此 `pnpm exec shipstack doctor` 会失败，直到手动添加
+  `@shipstack-dev/cli`。
+- 修复：base template 现在会把匹配版本的 `@shipstack-dev/cli` 写入生成应用
+  dev dependency，CLI 和 package checks 也会在稳定版 `v0.1.0` 前覆盖这个首次运行预期。
+
 历史阻塞尝试：
 
 - 2026-06-30，commit `204fe82`，

@@ -120,6 +120,29 @@ Status: passed
 - Notes: Created an annotated git tag and GitHub prerelease matching the
   published npm package version `0.1.0-alpha.0`.
 
+## Published Alpha First-Run Feedback
+
+Status: partial
+
+- Date: 2026-06-30
+- Published version: `0.1.0-alpha.0`
+- Command:
+
+  ```sh
+  pnpm create shipstack-app published-alpha-app
+  ```
+
+- Result: generated app dependency install, module installation, lint, tests,
+  typecheck, build, local D1 migration, OpenAPI generation, and
+  `deploy:dry-run` passed after explicitly adding
+  `@shipstack-dev/cli@0.1.0-alpha.0` as a generated-app dev dependency.
+- Finding: the published alpha generated app did not include a local
+  `shipstack` binary after `pnpm install`, so `pnpm exec shipstack doctor`
+  failed until `@shipstack-dev/cli` was added manually.
+- Fix: the base template now includes a generated-app dev dependency on the
+  matching `@shipstack-dev/cli` version, and CLI plus package checks cover this
+  first-run expectation before the stable `v0.1.0` release.
+
 Previous blocked attempts:
 
 - 2026-06-30, commit `204fe82`,

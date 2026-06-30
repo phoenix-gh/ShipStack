@@ -29,6 +29,12 @@
   https://github.com/phoenix-gh/ShipStack/actions/runs/28451043094
 - 2026-06-30 最新一次 npm registry 验证已确认三个 packages 都存在，且 `next`
   和 `latest` dist-tags 都指向 `0.1.0-alpha.0`。
+- 2026-06-30 最新一次 published-alpha 首次运行检查发现：
+  `create-shipstack-app@0.1.0-alpha.0` 生成的 app 没有本地 `shipstack`
+  binary。手动添加 `@shipstack-dev/cli@0.1.0-alpha.0` 后，模块安装、生成应用
+  lint、tests、typecheck、build、本地 D1 migration、OpenAPI generation 和
+  Workers deploy dry-run 已通过。template 现在会为下一次 release 写入匹配版本的
+  CLI。
 - 2026-06-30 已创建 `v0.1.0-alpha.0` Git tag 和 GitHub prerelease：
   https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
 - 2026-06-30 最新一次本地 release audit 已在 `pnpm verify:local` 中通过。
@@ -96,6 +102,7 @@
 | 生成 README 会链接模块文档            | 通过 | CLI、module smoke 和 pack check 会验证 README 模块链接。                                     |
 | Doctor 可发现缺失的模块文档           | 通过 | CLI 单元测试和 pack check 会在模块文档已安装时运行 doctor。                                  |
 | Doctor 会检查基础文档和 secret guards | 通过 | CLI 单元测试、CLI smoke 和 pack check 覆盖 base doctor checks。                              |
+| 生成应用包含本地 ShipStack CLI        | 通过 | CLI 单元测试和 pack check 会验证 `@shipstack-dev/cli` 已加入生成应用。                       |
 | 支持只检查本地 release audit          | 通过 | `pnpm release:audit:local` 会跳过外部 gates。                                                |
 | 支持快速本地验证命令                  | 通过 | `pnpm verify:local` 会运行本地 repo/package gates，不跑 smoke。                              |
 | 部署文档足够手动执行                  | 通过 | 已有生成应用和维护者部署检查清单。                                                           |
@@ -126,6 +133,7 @@
 | README 模块文档链接                | 通过     | `pnpm smoke`, `pnpm pack:check`         |
 | Doctor 模块文档检查                | 通过     | `pnpm test`, `pnpm pack:check`          |
 | Doctor base docs 检查              | 通过     | `pnpm test`, `pnpm pack:check`          |
+| 生成应用本地 ShipStack CLI         | 通过     | `pnpm test`, `pnpm pack:check`          |
 | 本地-only release audit            | 通过     | `pnpm release:audit:local`              |
 | 快速本地验证                       | 通过     | `pnpm verify:local`                     |
 | 完整本地发布验证                   | 通过     | `pnpm verify:release`                   |
@@ -160,8 +168,9 @@
 
 ## 下一优先级
 
-1. 继续观察 public repo 和 npm packages 的第一轮外部反馈。
-2. 根据 alpha feedback 规划稳定版 `v0.1.0` 标准。
+1. 在生成应用本地 CLI 修复后重新运行 package checks。
+2. 推送修复后确认远端 CI。
+3. 继续收集 stable `v0.1.0` 前的首次运行反馈。
 
 ## 更新规则
 

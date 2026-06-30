@@ -34,6 +34,13 @@ verify:release` and published `@shipstack-dev/core`,
 - The latest npm registry verification on 2026-06-30 confirmed all three
   packages exist with `next` and `latest` dist-tags pointing to
   `0.1.0-alpha.0`.
+- The latest published-alpha first-run check on 2026-06-30 found that
+  `create-shipstack-app@0.1.0-alpha.0` generated an app without a local
+  `shipstack` binary. After manually adding
+  `@shipstack-dev/cli@0.1.0-alpha.0`, module installation, generated-app lint,
+  tests, typecheck, build, local D1 migration, OpenAPI generation, and Workers
+  deploy dry-run passed. The template now pins the matching CLI version for the
+  next release.
 - The `v0.1.0-alpha.0` Git tag and GitHub prerelease were created on
   2026-06-30:
   https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
@@ -106,6 +113,7 @@ Latest commit:
 | Module docs are linked from generated README           | Passing | CLI, module smoke, and pack check verify README module links.                                     |
 | Doctor detects missing module docs                     | Passing | CLI unit tests and pack check run doctor with module docs installed.                              |
 | Doctor checks base docs and secret guards              | Passing | CLI unit tests, CLI smoke, and pack check cover base doctor checks.                               |
+| Generated app includes local ShipStack CLI             | Passing | CLI unit tests and pack check verify `@shipstack-dev/cli` is added to generated apps.             |
 | Local-only release audit exists                        | Passing | `pnpm release:audit:local` skips external gates for local checks.                                 |
 | Fast local verification command exists                 | Passing | `pnpm verify:local` runs local repo/package gates without smoke.                                  |
 | Deployment docs are complete enough to follow manually | Passing | Generated and maintainer deployment checklists exist.                                             |
@@ -136,6 +144,7 @@ Latest commit:
 | Module docs README links           | Passing        | `pnpm smoke`, `pnpm pack:check`         |
 | Doctor module docs checks          | Passing        | `pnpm test`, `pnpm pack:check`          |
 | Doctor base docs checks            | Passing        | `pnpm test`, `pnpm pack:check`          |
+| Generated local ShipStack CLI      | Passing        | `pnpm test`, `pnpm pack:check`          |
 | Local-only release audit           | Passing        | `pnpm release:audit:local`              |
 | Fast local verification            | Passing        | `pnpm verify:local`                     |
 | Full local release verification    | Passing        | `pnpm verify:release`                   |
@@ -170,8 +179,9 @@ Latest commit:
 
 ## Next Priority
 
-1. Keep monitoring the public repo and npm packages for first external feedback.
-2. Plan the stable `v0.1.0` criteria after alpha feedback.
+1. Re-run package checks after the generated-app local CLI fix.
+2. Confirm remote CI after pushing the fix.
+3. Continue first-run feedback toward stable `v0.1.0`.
 
 ## Update Rules
 

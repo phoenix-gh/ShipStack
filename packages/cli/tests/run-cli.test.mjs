@@ -22,6 +22,26 @@ test("create uses the directory name for package and worker names when given an 
   });
 });
 
+test("create installs the matching ShipStack CLI for local project commands", async () => {
+  await withWorkspace(async (workspace) => {
+    const appDir = resolve(workspace, "local-cli-app");
+
+    await runSilently(["create", appDir]);
+
+    const packageJson = JSON.parse(
+      await readFile(resolve(appDir, "package.json"), "utf8"),
+    );
+    const cliPackageJson = JSON.parse(
+      await readFile(resolve(import.meta.dirname, "../package.json"), "utf8"),
+    );
+
+    assert.equal(
+      packageJson.devDependencies["@shipstack-dev/cli"],
+      cliPackageJson.version,
+    );
+  });
+});
+
 test("database and auth installers patch generated apps idempotently", async () => {
   await withWorkspace(async (workspace) => {
     await runSilently(["create", "unit-app"]);

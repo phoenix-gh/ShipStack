@@ -109,6 +109,7 @@ async function create(projectName: string | undefined) {
 
   const targetDir = resolve(process.cwd(), projectName);
   const appName = basename(targetDir);
+  const shipstackVersion = await getCliPackageVersion();
 
   if (existsSync(targetDir)) {
     throw new Error(`Target directory already exists: ${targetDir}`);
@@ -122,6 +123,7 @@ async function create(projectName: string | undefined) {
 
   await replaceInFile(resolve(targetDir, "package.json"), {
     "{{projectName}}": appName,
+    "{{shipstackVersion}}": shipstackVersion,
   });
   await replaceInFile(resolve(targetDir, "wrangler.jsonc"), {
     "{{projectName}}": appName,
@@ -133,6 +135,18 @@ async function create(projectName: string | undefined) {
   console.log(`  cd ${projectName}`);
   console.log("  pnpm install");
   console.log("  pnpm dev");
+}
+
+async function getCliPackageVersion() {
+  const packageJson = JSON.parse(
+    await readFile(resolve(packageRoot, "package.json"), "utf8"),
+  ) as { version?: unknown };
+
+  if (typeof packageJson.version !== "string" || !packageJson.version) {
+    throw new Error("Unable to determine ShipStack CLI package version.");
+  }
+
+  return packageJson.version;
 }
 
 async function renameTemplateDotfiles(targetDir: string) {
