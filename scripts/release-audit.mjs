@@ -151,7 +151,7 @@ const checks = [
         "utf8",
       );
       const releaseNotesMatch = releaseNotes.includes("# ShipStack v0.1.0");
-      const expectedVersion = "0.1.0-alpha.0";
+      const expectedVersion = "0.1.0-alpha.1";
 
       return {
         ok:
@@ -1091,7 +1091,7 @@ async function auditPublishablePackageMetadata() {
       findings.push(`${packageInfo.directory}: README title is missing`);
     }
 
-    if (!readme.includes("0.1.0-alpha.0")) {
+    if (!readme.includes("0.1.0-alpha.1")) {
       findings.push(`${packageInfo.directory}: README version is missing`);
     }
   }

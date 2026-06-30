@@ -8,7 +8,7 @@ candidate.
 
 ## Status
 
-`0.1.0-alpha.0` is a release candidate package for the first ShipStack MVP.
+`0.1.0-alpha.1` is a release candidate package for the first ShipStack MVP.
 
 ## Related Packages
 
