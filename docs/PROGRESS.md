@@ -45,6 +45,12 @@ verify:release` and published `@shipstack-dev/core`,
 - The `v0.1.0-alpha.0` Git tag and GitHub prerelease were created on
   2026-06-30:
   https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
+- The `v0.1.0-alpha.1` Git tag and GitHub prerelease were created on
+  2026-06-30:
+  https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.1
+- A published `@next` first-run check passed on 2026-06-30:
+  `pnpm create shipstack-app@next alpha1-next-app`, `pnpm install`, and
+  `pnpm exec shipstack doctor` worked without manually adding the CLI.
 - The latest local release audit on 2026-06-30 passed as part of
   `pnpm verify:local`.
 - The latest local npm publish dry-run on 2026-06-28 passed
@@ -180,9 +186,8 @@ Latest commit:
 
 ## Next Priority
 
-1. Re-run package checks after the generated-app local CLI fix.
-2. Move the npm `latest` dist-tag to `0.1.0-alpha.1` after refreshing npm auth.
-3. Continue first-run feedback toward stable `v0.1.0`.
+1. Move the npm `latest` dist-tag to `0.1.0-alpha.1` after refreshing npm auth.
+2. Continue first-run feedback toward stable `v0.1.0`.
 
 ## Update Rules
 

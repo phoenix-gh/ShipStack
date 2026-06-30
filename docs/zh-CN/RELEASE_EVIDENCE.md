@@ -133,6 +133,16 @@
 状态：已通过
 
 - 日期：2026-06-30
+- Commit：e791ab0
+- Tag：`v0.1.0-alpha.1`
+- Release URL：https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.1
+- 结果：通过
+- 备注：已为包含生成应用本地 CLI 修复的 alpha follow-up release 创建 annotated git
+  tag 和 GitHub prerelease。
+
+上一个 alpha release：
+
+- 日期：2026-06-30
 - Commit：86dbb73
 - Tag：`v0.1.0-alpha.0`
 - Release URL：https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
@@ -163,6 +173,8 @@
   前覆盖这个首次运行预期。
 - 后续：`0.1.0-alpha.1` 已带着这个修复发布到 `next` dist-tag。在 `latest`
   移动之前，请使用 `pnpm create shipstack-app@next my-app`。
+- 后续验证：`pnpm create shipstack-app@next alpha1-next-app`、`pnpm install`
+  和 `pnpm exec shipstack doctor` 已在未手动添加 `@shipstack-dev/cli` 的情况下通过。
 
 历史阻塞尝试：
 

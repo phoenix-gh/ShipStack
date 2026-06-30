@@ -135,6 +135,16 @@ Previous real publish:
 Status: passed
 
 - Date: 2026-06-30
+- Commit: e791ab0
+- Tag: `v0.1.0-alpha.1`
+- Release URL: https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.1
+- Result: passed
+- Notes: Created an annotated git tag and GitHub prerelease for the alpha
+  follow-up release that includes the generated-app local CLI fix.
+
+Previous alpha release:
+
+- Date: 2026-06-30
 - Commit: 86dbb73
 - Tag: `v0.1.0-alpha.0`
 - Release URL: https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
@@ -166,6 +176,9 @@ Status: follow-up published
   cover this first-run expectation before the stable `v0.1.0` release.
 - Follow-up: `0.1.0-alpha.1` has been published with this fix under the `next`
   dist-tag. Use `pnpm create shipstack-app@next my-app` until `latest` is moved.
+- Follow-up verification: `pnpm create shipstack-app@next alpha1-next-app`,
+  `pnpm install`, and `pnpm exec shipstack doctor` passed without manually
+  adding `@shipstack-dev/cli`.
 
 Previous blocked attempts:
 
