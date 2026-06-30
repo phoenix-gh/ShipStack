@@ -199,9 +199,13 @@ Before calling the MVP complete:
 11. Build for Workers.
 12. Deploy to a real Cloudflare account or document why deploy was not run.
 
-## First Release Tag
+## Release Tags
 
-Use `v0.1.0` for the first MVP release.
+Use `v0.1.0-alpha.0` for the first public alpha release. It has been published
+to npm and GitHub.
+
+Use `v0.1.0` for the first stable MVP release after alpha first-run feedback is
+reviewed and any required fixes are either shipped or explicitly deferred.
 
 The release notes should include:
 
@@ -210,3 +214,6 @@ The release notes should include:
 - required Cloudflare setup
 - known limitations
 - next planned modules
+
+Before tagging stable `v0.1.0`, repeat the manual verification checklist using
+the published packages rather than only local workspace packages.

@@ -34,7 +34,8 @@
 - 生成 app 可以部署到 Cloudflare Workers
 - CI 证明 template 可以 build
 
-当前说明：本地生成应用 build 和 smoke path 已通过。真实 Cloudflare deploy pass 仍需要账号凭据。
+当前说明：生成应用 smoke path、真实 Cloudflare deploy pass、远端 CI、npm
+provenance 发布，以及 `v0.1.0-alpha.0` prerelease 都已通过。
 
 ## Phase 2: Database And Auth
 
@@ -85,7 +86,8 @@
 
 目标：补齐最小 SaaS 闭环。
 
-状态：本地通过。Stripe billing 和 R2 storage 已实现并通过本地验证。
+状态：alpha 已发布。Stripe billing 和 R2 storage 已实现、通过本地验证，并已包含在
+`v0.1.0-alpha.0`。
 
 交付物：
 
@@ -110,7 +112,8 @@
 
 目标：通过 recipes 扩展，而不是膨胀 starter。
 
-状态：第一批 recipes 本地通过。API keys、OpenAPI generation 和 API rate limiting 已实现并通过本地验证。
+状态：第一批 recipes 已随 alpha 发布。API keys、OpenAPI generation 和 API rate
+limiting 已实现、通过本地验证，并已包含在 `v0.1.0-alpha.0`。
 
 初始 recipes：
 
@@ -141,6 +144,9 @@
 
 目标：成为可信的 Cloudflare-first SaaS 开源底座。
 
+状态：已开始。已有 public GitHub repository、npm packages、npm provenance 和
+alpha GitHub prerelease。
+
 交付物：
 
 - docs site
@@ -148,7 +154,7 @@
 - contribution guide
 - module authoring guide
 - community showcase
-- release automation
+- release automation（alpha path 已完成）
 - update guide
 
 退出标准：
@@ -156,3 +162,14 @@
 - 外部用户贡献 recipes
 - 有真实上线 app 被列出
 - releases 包含 migration notes
+
+## Stable v0.1.0 重点
+
+alpha release 已验证 package、CI、deploy 和 release machinery。稳定版
+`v0.1.0` 应等待至少一次基于已发布 packages 的 fresh install 反馈：
+
+- `pnpm create shipstack-app my-app`
+- 添加 database、auth、billing、storage、API keys、OpenAPI 和 API rate limit
+- 运行生成应用的 lint、tests、typecheck、build 和本地 D1 migration
+- 确认 Cloudflare deploy checklist 仍准确
+- 记录自 `v0.1.0-alpha.0` 以来的 migration 或 breaking notes

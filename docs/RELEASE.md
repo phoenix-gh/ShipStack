@@ -2,6 +2,19 @@
 
 This checklist is for maintainers preparing the first ShipStack release.
 
+## Alpha Release Status
+
+`v0.1.0-alpha.0` has been published:
+
+- GitHub release: https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
+- npm packages:
+  - `@shipstack-dev/core@0.1.0-alpha.0`
+  - `@shipstack-dev/cli@0.1.0-alpha.0`
+  - `create-shipstack-app@0.1.0-alpha.0`
+
+The repository is public so npm provenance can verify GitHub Actions source
+metadata.
+
 ## v0.1.0 Gate
 
 Do not tag `v0.1.0` until these checks are complete:
@@ -66,14 +79,26 @@ Do not tag `v0.1.0` until these checks are complete:
    - known limitations
    - next planned modules
 
-10. Create the release tag.
+10. Verify first-run install from the published alpha packages.
+
+    ```sh
+    pnpm create shipstack-app my-app
+    cd my-app
+    pnpm install
+    shipstack doctor
+    ```
+
+    Install the first-party modules, run the generated app checks, and record
+    any fix or known limitation before tagging stable `v0.1.0`.
+
+11. Create the release tag.
 
     ```sh
     git tag v0.1.0
     git push origin v0.1.0
     ```
 
-11. Publish npm packages from GitHub Actions.
+12. Publish npm packages from GitHub Actions.
 
     Use the `Release npm Packages` workflow after CI passes on the tag or
     release branch. Run it once with `dry_run: true`, inspect the output, then
@@ -85,11 +110,9 @@ Do not tag `v0.1.0` until these checks are complete:
     - `@shipstack-dev/cli`
     - `create-shipstack-app`
 
-    The workflow requires the repository secret `NPM_TOKEN` and publishes with
-    npm provenance enabled. Use a publish-capable npm granular access token. If
-    the npm account or organization requires two-factor authentication, the token
-    must be allowed to bypass 2FA for package publishing; otherwise the real
-    publish run will fail even when the dry-run and release verification pass.
+    The workflow requires the repository secret `NPM_TOKEN`, publishes with npm
+    provenance enabled, and requires publishable package `repository.url`
+    metadata to match the public GitHub repository.
 
 ## Pre-Release Safety Checks
 
@@ -168,17 +191,16 @@ reports external blockers.
 
 ## Current Known External Gaps
 
-The external release gates have been recorded for this release candidate:
+The external release gates have been recorded for the alpha release:
 
 - real Cloudflare account deploy verification
 - remote GitHub Actions CI
 - remote npm publish workflow dry-run
+- real npm publish with provenance
+- GitHub prerelease tag
 
-Before tagging, rerun `pnpm release:audit` on the release commit and confirm the
-latest remote CI remains green. The temporary Cloudflare deploy smoke is useful
-extra evidence, but it does not replace the real-account deployment pass.
-
-The 2026-06-28 real npm publish attempt passed `pnpm verify:release` and then
-failed during `npm publish` because the configured `NPM_TOKEN` was not a
-publish-capable token with the required 2FA bypass permission. See
-[Release Evidence](./RELEASE_EVIDENCE.md) before rerunning the workflow.
+Before tagging stable `v0.1.0`, rerun `pnpm release:audit` on the release
+commit, confirm the latest remote CI remains green, and repeat first-run
+verification from the published alpha packages. The temporary Cloudflare deploy
+smoke is useful extra evidence, but it does not replace the real-account
+deployment pass.

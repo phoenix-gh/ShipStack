@@ -2,6 +2,19 @@
 
 这份 checklist 给维护者准备 ShipStack 第一个 release 时使用。
 
+## Alpha Release 状态
+
+`v0.1.0-alpha.0` 已发布：
+
+- GitHub release：https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
+- npm packages：
+  - `@shipstack-dev/core@0.1.0-alpha.0`
+  - `@shipstack-dev/cli@0.1.0-alpha.0`
+  - `create-shipstack-app@0.1.0-alpha.0`
+
+repository 已改为 public，因此 npm provenance 可以验证 GitHub Actions source
+metadata。
+
 ## v0.1.0 Gate
 
 以下检查完成前，不要打 `v0.1.0` tag：
@@ -63,14 +76,26 @@
    - known limitations
    - next planned modules
 
-10. 创建 release tag。
+10. 用已发布的 alpha packages 验证 first-run install。
+
+    ```sh
+    pnpm create shipstack-app my-app
+    cd my-app
+    pnpm install
+    shipstack doctor
+    ```
+
+    安装第一方 modules，运行生成应用 checks，并在打 stable `v0.1.0` 前记录需要修复
+    的问题或 known limitations。
+
+11. 创建 release tag。
 
     ```sh
     git tag v0.1.0
     git push origin v0.1.0
     ```
 
-11. 从 GitHub Actions 发布 npm packages。
+12. 从 GitHub Actions 发布 npm packages。
 
     等 tag 或 release branch 上的 CI 通过后，使用 `Release npm Packages`
     workflow。先用 `dry_run: true` 跑一次并检查输出；确认无误后，再用
@@ -82,10 +107,8 @@
     - `@shipstack-dev/cli`
     - `create-shipstack-app`
 
-    该 workflow 需要仓库 secret `NPM_TOKEN`，并启用 npm provenance。请使用具备
-    publish 权限的 npm granular access token。如果 npm 账号或 organization 要求
-    发布时使用 two-factor authentication，这个 token 必须允许绕过 2FA；否则即使
-    dry-run 和 release verification 都通过，正式发布仍会失败。
+    该 workflow 需要仓库 secret `NPM_TOKEN`，并启用 npm provenance。可发布 package
+    的 `repository.url` metadata 必须匹配 public GitHub repository。
 
 ## Pre-Release Safety Checks
 
@@ -158,16 +181,14 @@
 
 ## 当前已知外部缺口
 
-当前 release candidate 已记录这些外部 release gates：
+alpha release 已记录这些外部 release gates：
 
 - 真实 Cloudflare 账号部署验证
 - 远端 GitHub Actions CI
 - 远端 npm publish workflow dry-run
+- 带 provenance 的真实 npm publish
+- GitHub prerelease tag
 
-打 tag 前，在 release commit 上重跑 `pnpm release:audit`，并确认最新远端 CI
-仍为绿色。Cloudflare temporary deploy smoke 是有价值的补充证据，但不能替代真实账号部署验证。
-
-2026-06-28 的正式 npm publish 尝试已经通过 `pnpm verify:release`，随后在
-`npm publish` 阶段失败，原因是当前 `NPM_TOKEN` 不是具备发布权限且可绕过 2FA
-的 token。重新运行 workflow 前，请先查看
-[Release 证据记录](./RELEASE_EVIDENCE.md)。
+打 stable `v0.1.0` tag 前，在 release commit 上重跑 `pnpm release:audit`，确认
+最新远端 CI 仍为绿色，并基于已发布 alpha packages 重复 first-run verification。
+Cloudflare temporary deploy smoke 是有价值的补充证据，但不能替代真实账号部署验证。

@@ -199,9 +199,13 @@ MVP 完成时，fresh clone 或生成项目必须满足：
 11. build for Workers。
 12. 部署到真实 Cloudflare account，或记录为什么没有部署。
 
-## 第一版 Release Tag
+## Release Tags
 
-第一个 MVP release 使用 `v0.1.0`。
+第一个 public alpha release 使用 `v0.1.0-alpha.0`。它已经发布到 npm 和
+GitHub。
+
+第一个 stable MVP release 使用 `v0.1.0`。在 reviewed alpha first-run feedback
+之后，再决定是否发布；需要修复的问题要么已发布，要么明确记录为 deferred。
 
 Release notes 应包含：
 
@@ -210,3 +214,6 @@ Release notes 应包含：
 - required Cloudflare setup
 - known limitations
 - next planned modules
+
+在打 stable `v0.1.0` tag 前，应使用已发布 packages 重新执行手动验证清单，而不只
+依赖本地 workspace packages。

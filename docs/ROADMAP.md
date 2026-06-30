@@ -34,7 +34,8 @@ Exit criteria:
 - generated app can deploy to Cloudflare Workers
 - CI proves the template builds
 
-Current note: the local generated-app build and smoke path pass. A real Cloudflare deploy pass still needs account credentials.
+Current note: the generated-app smoke path, real Cloudflare deploy pass, remote
+CI, npm provenance publish, and `v0.1.0-alpha.0` prerelease have passed.
 
 ## Phase 2: Database And Auth
 
@@ -85,8 +86,8 @@ Current note: CLI create, doctor, database, and auth module flows pass local smo
 
 Goal: complete the smallest SaaS loop.
 
-Status: local pass. Stripe billing and R2 storage are implemented and locally
-verified.
+Status: alpha published. Stripe billing and R2 storage are implemented,
+locally verified, and included in `v0.1.0-alpha.0`.
 
 Deliverables:
 
@@ -111,8 +112,9 @@ Exit criteria:
 
 Goal: grow without bloating the starter.
 
-Status: local pass for the first recipes. API keys, OpenAPI generation, and API
-rate limiting are implemented and locally verified.
+Status: alpha published for the first recipes. API keys, OpenAPI generation,
+and API rate limiting are implemented, locally verified, and included in
+`v0.1.0-alpha.0`.
 
 Initial recipes:
 
@@ -143,6 +145,9 @@ Exit criteria:
 
 Goal: become a trusted open-source base for Cloudflare-first SaaS apps.
 
+Status: started. Public GitHub repository, npm packages, npm provenance, and an
+alpha GitHub prerelease exist.
+
 Deliverables:
 
 - docs site
@@ -150,7 +155,7 @@ Deliverables:
 - contribution guide
 - module authoring guide
 - community showcase
-- release automation
+- release automation (alpha path done)
 - update guide
 
 Exit criteria:
@@ -158,3 +163,15 @@ Exit criteria:
 - external users contribute recipes
 - real launched apps are listed
 - releases include migration notes
+
+## Stable v0.1.0 Focus
+
+The alpha release proves the package, CI, deploy, and release machinery. The
+stable `v0.1.0` release should wait for first-run feedback from at least one
+fresh install using the published packages:
+
+- `pnpm create shipstack-app my-app`
+- add database, auth, billing, storage, API keys, OpenAPI, and API rate limit
+- run generated app lint, tests, typecheck, build, and local D1 migration
+- verify the Cloudflare deploy checklist remains accurate
+- record any migration or breaking notes since `v0.1.0-alpha.0`
