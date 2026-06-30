@@ -121,8 +121,13 @@ metadata。
     的 `repository.url` metadata 必须匹配 public GitHub repository。
 
     如果 prerelease 发布时使用了 `npm_tag: next`，并且它也应该成为默认的
-    `pnpm create shipstack-app` 版本，拥有 npm 发布权限的 maintainer 应使用
-    `npm dist-tag add` 移动 `latest` dist-tag。
+    `pnpm create shipstack-app` 版本，拥有 npm 发布权限的 maintainer 应先检查将要执行
+    的命令，再移动 `latest` dist-tag：
+
+    ```sh
+    pnpm release:dist-tags --version 0.1.0-alpha.1 --tag latest --dry-run
+    pnpm release:dist-tags --version 0.1.0-alpha.1 --tag latest
+    ```
 
 ## Pre-Release Safety Checks
 

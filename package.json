@@ -26,6 +26,7 @@
     "publish:dry-run": "node scripts/publish-dry-run.mjs",
     "release:audit": "node scripts/release-audit.mjs",
     "release:audit:local": "node scripts/release-audit.mjs --local",
+    "release:dist-tags": "node scripts/npm-dist-tags.mjs",
     "format:check": "prettier --check \"**/*.{md,json,jsonc,yml,yaml,mjs,ts,tsx,css}\"",
     "format": "prettier --write \"**/*.{md,json,jsonc,yml,yaml,mjs,ts,tsx,css}\""
   },

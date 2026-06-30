@@ -127,7 +127,13 @@ Do not tag `v0.1.0` until these checks are complete:
 
     If a prerelease was published with `npm_tag: next` and should also become
     the default `pnpm create shipstack-app` version, a maintainer with npm
-    publish access should move the `latest` dist-tag with `npm dist-tag add`.
+    publish access should move the `latest` dist-tag after checking the exact
+    commands:
+
+    ```sh
+    pnpm release:dist-tags --version 0.1.0-alpha.1 --tag latest --dry-run
+    pnpm release:dist-tags --version 0.1.0-alpha.1 --tag latest
+    ```
 
 ## Pre-Release Safety Checks
 
