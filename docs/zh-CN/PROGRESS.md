@@ -25,10 +25,11 @@
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - 2026-06-30 最新一次正式 npm publish workflow 已通过 `pnpm verify:release`，
   并以 npm provenance 发布 `@shipstack-dev/core`、`@shipstack-dev/cli` 和
-  `create-shipstack-app` 的 `0.1.0-alpha.0`：
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28451043094
+  `create-shipstack-app` 的 `0.1.0-alpha.1`：
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28456891005
 - 2026-06-30 最新一次 npm registry 验证已确认三个 packages 都存在，且 `next`
-  和 `latest` dist-tags 都指向 `0.1.0-alpha.0`。
+  dist-tag 指向 `0.1.0-alpha.1`。`latest` dist-tag 仍指向
+  `0.1.0-alpha.0`，直到拥有有效 npm auth 的 maintainer 移动它。
 - 2026-06-30 最新一次 published-alpha 首次运行检查发现：
   `create-shipstack-app@0.1.0-alpha.0` 生成的 app 没有本地 `shipstack`
   binary。手动添加 `@shipstack-dev/cli@0.1.0-alpha.0` 后，模块安装、生成应用
@@ -168,7 +169,7 @@
 
 ## 下一优先级
 
-1. 在生成应用本地 CLI 修复后重新运行 package checks。
+1. 刷新 npm auth 后，把 npm `latest` dist-tag 移到 `0.1.0-alpha.1`。
 2. 推送修复后确认远端 CI。
 3. 继续收集 stable `v0.1.0` 前的首次运行反馈。
 

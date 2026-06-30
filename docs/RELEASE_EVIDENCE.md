@@ -89,6 +89,28 @@ Status: passed
 Status: passed
 
 - Date: 2026-06-30
+- Commit: 6c50d2b
+- Workflow: Release npm Packages
+- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28456891005
+- Input:
+
+  ```text
+  dry_run: false
+  npm_tag: next
+  ```
+
+- Result: passed
+- Packages verified after publish:
+  - `@shipstack-dev/core@0.1.0-alpha.1`: published, `next`
+  - `@shipstack-dev/cli@0.1.0-alpha.1`: published, `next`
+  - `create-shipstack-app@0.1.0-alpha.1`: published, `next`
+- Notes: This alpha includes the generated-app local CLI fix. npm registry
+  verification confirmed `next` points to `0.1.0-alpha.1`; `latest` still
+  points to `0.1.0-alpha.0` until a maintainer with valid npm auth moves it.
+
+Previous real publish:
+
+- Date: 2026-06-30
 - Commit: d76f1a6
 - Workflow: Release npm Packages
 - Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28451043094
@@ -122,7 +144,7 @@ Status: passed
 
 ## Published Alpha First-Run Feedback
 
-Status: partial
+Status: follow-up published
 
 - Date: 2026-06-30
 - Published version: `0.1.0-alpha.0`
@@ -142,6 +164,8 @@ Status: partial
 - Fix: the base template now includes a generated-app dev dependency on a
   compatible `@shipstack-dev/cli` prerelease range, and CLI plus package checks
   cover this first-run expectation before the stable `v0.1.0` release.
+- Follow-up: `0.1.0-alpha.1` has been published with this fix under the `next`
+  dist-tag. Use `pnpm create shipstack-app@next my-app` until `latest` is moved.
 
 Previous blocked attempts:
 

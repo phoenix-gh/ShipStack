@@ -4,7 +4,18 @@ This checklist is for maintainers preparing the first ShipStack release.
 
 ## Alpha Release Status
 
-`v0.1.0-alpha.0` has been published:
+`v0.1.0-alpha.1` has been published with the generated-app local CLI fix:
+
+- npm packages:
+  - `@shipstack-dev/core@0.1.0-alpha.1`
+  - `@shipstack-dev/cli@0.1.0-alpha.1`
+  - `create-shipstack-app@0.1.0-alpha.1`
+
+It is currently available through the `next` npm dist-tag. The `latest`
+dist-tag still points to `0.1.0-alpha.0` until a maintainer with valid npm auth
+moves it.
+
+`v0.1.0-alpha.0` was the first public alpha release:
 
 - GitHub release: https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
 - npm packages:
@@ -82,7 +93,7 @@ Do not tag `v0.1.0` until these checks are complete:
 10. Verify first-run install from the published alpha packages.
 
     ```sh
-    pnpm create shipstack-app my-app
+    pnpm create shipstack-app@next my-app
     cd my-app
     pnpm install
     shipstack doctor

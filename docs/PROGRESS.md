@@ -28,12 +28,13 @@ External verification status in this workspace:
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - The latest real npm publish workflow on 2026-06-30 passed `pnpm
 verify:release` and published `@shipstack-dev/core`,
-  `@shipstack-dev/cli`, and `create-shipstack-app` at
-  `0.1.0-alpha.0` with npm provenance:
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28451043094
+  `@shipstack-dev/cli`, and `create-shipstack-app` at `0.1.0-alpha.1` with
+  npm provenance:
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28456891005
 - The latest npm registry verification on 2026-06-30 confirmed all three
-  packages exist with `next` and `latest` dist-tags pointing to
-  `0.1.0-alpha.0`.
+  packages exist with `next` pointing to `0.1.0-alpha.1`. The `latest`
+  dist-tag still points to `0.1.0-alpha.0` until a maintainer with valid npm
+  auth moves it.
 - The latest published-alpha first-run check on 2026-06-30 found that
   `create-shipstack-app@0.1.0-alpha.0` generated an app without a local
   `shipstack` binary. After manually adding
@@ -180,7 +181,7 @@ Latest commit:
 ## Next Priority
 
 1. Re-run package checks after the generated-app local CLI fix.
-2. Confirm remote CI after pushing the fix.
+2. Move the npm `latest` dist-tag to `0.1.0-alpha.1` after refreshing npm auth.
 3. Continue first-run feedback toward stable `v0.1.0`.
 
 ## Update Rules

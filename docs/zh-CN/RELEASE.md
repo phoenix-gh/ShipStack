@@ -4,7 +4,17 @@
 
 ## Alpha Release 状态
 
-`v0.1.0-alpha.0` 已发布：
+`v0.1.0-alpha.1` 已带着生成应用本地 CLI 修复发布：
+
+- npm packages：
+  - `@shipstack-dev/core@0.1.0-alpha.1`
+  - `@shipstack-dev/cli@0.1.0-alpha.1`
+  - `create-shipstack-app@0.1.0-alpha.1`
+
+它目前可通过 npm `next` dist-tag 使用。`latest` dist-tag 仍指向
+`0.1.0-alpha.0`，直到拥有有效 npm auth 的 maintainer 移动它。
+
+`v0.1.0-alpha.0` 是第一个 public alpha release：
 
 - GitHub release：https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
 - npm packages：
@@ -79,7 +89,7 @@ metadata。
 10. 用已发布的 alpha packages 验证 first-run install。
 
     ```sh
-    pnpm create shipstack-app my-app
+    pnpm create shipstack-app@next my-app
     cd my-app
     pnpm install
     shipstack doctor

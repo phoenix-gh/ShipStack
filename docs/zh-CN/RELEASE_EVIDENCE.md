@@ -87,6 +87,28 @@
 状态：已通过
 
 - 日期：2026-06-30
+- Commit：6c50d2b
+- Workflow：Release npm Packages
+- Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28456891005
+- 输入：
+
+  ```text
+  dry_run: false
+  npm_tag: next
+  ```
+
+- 结果：通过
+- 发布后验证的 packages：
+  - `@shipstack-dev/core@0.1.0-alpha.1`：已发布，`next`
+  - `@shipstack-dev/cli@0.1.0-alpha.1`：已发布，`next`
+  - `create-shipstack-app@0.1.0-alpha.1`：已发布，`next`
+- 备注：这个 alpha 包含生成应用本地 CLI 修复。npm registry 验证确认
+  `next` 指向 `0.1.0-alpha.1`；`latest` 仍指向 `0.1.0-alpha.0`，直到拥有有效
+  npm auth 的 maintainer 移动它。
+
+上一次正式发布：
+
+- 日期：2026-06-30
 - Commit：d76f1a6
 - Workflow：Release npm Packages
 - Run URL：https://github.com/phoenix-gh/ShipStack/actions/runs/28451043094
@@ -120,7 +142,7 @@
 
 ## 已发布 Alpha 首次运行反馈
 
-状态：部分通过
+状态：后续版本已发布
 
 - 日期：2026-06-30
 - 已发布版本：`0.1.0-alpha.0`
@@ -139,6 +161,8 @@
 - 修复：base template 现在会把兼容的 `@shipstack-dev/cli` prerelease range 写入
   生成应用 dev dependency，CLI 和 package checks 也会在稳定版 `v0.1.0`
   前覆盖这个首次运行预期。
+- 后续：`0.1.0-alpha.1` 已带着这个修复发布到 `next` dist-tag。在 `latest`
+  移动之前，请使用 `pnpm create shipstack-app@next my-app`。
 
 历史阻塞尝试：
 
