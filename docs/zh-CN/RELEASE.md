@@ -110,6 +110,10 @@ metadata。
     该 workflow 需要仓库 secret `NPM_TOKEN`，并启用 npm provenance。可发布 package
     的 `repository.url` metadata 必须匹配 public GitHub repository。
 
+    如果 prerelease 发布时使用了 `npm_tag: next`，并且它也应该成为默认的
+    `pnpm create shipstack-app` 版本，拥有 npm 发布权限的 maintainer 应使用
+    `npm dist-tag add` 移动 `latest` dist-tag。
+
 ## Pre-Release Safety Checks
 
 - 没有提交真实 secrets、tokens、session cookies 或 production IDs。

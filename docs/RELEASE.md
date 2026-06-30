@@ -114,6 +114,10 @@ Do not tag `v0.1.0` until these checks are complete:
     provenance enabled, and requires publishable package `repository.url`
     metadata to match the public GitHub repository.
 
+    If a prerelease was published with `npm_tag: next` and should also become
+    the default `pnpm create shipstack-app` version, a maintainer with npm
+    publish access should move the `latest` dist-tag with `npm dist-tag add`.
+
 ## Pre-Release Safety Checks
 
 - No real secrets, tokens, session cookies, or production IDs are committed.
