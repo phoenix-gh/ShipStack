@@ -106,6 +106,18 @@
   `npm publish --access public --provenance --tag next` 发布全部 packages。npm
   registry 验证已确认发布版本和 repository metadata。
 
+## GitHub Alpha Release 证据
+
+状态：已通过
+
+- 日期：2026-06-30
+- Commit：86dbb73
+- Tag：`v0.1.0-alpha.0`
+- Release URL：https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
+- 结果：通过
+- 备注：已创建 annotated git tag 和 GitHub prerelease，与已发布 npm package
+  version `0.1.0-alpha.0` 匹配。
+
 历史阻塞尝试：
 
 - 2026-06-30，commit `204fe82`，

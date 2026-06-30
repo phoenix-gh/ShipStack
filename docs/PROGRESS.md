@@ -34,6 +34,9 @@ verify:release` and published `@shipstack-dev/core`,
 - The latest npm registry verification on 2026-06-30 confirmed all three
   packages exist with `next` and `latest` dist-tags pointing to
   `0.1.0-alpha.0`.
+- The `v0.1.0-alpha.0` Git tag and GitHub prerelease were created on
+  2026-06-30:
+  https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
 - The latest local release audit on 2026-06-30 passed as part of
   `pnpm verify:local`.
 - The latest local npm publish dry-run on 2026-06-28 passed
@@ -167,8 +170,8 @@ Latest commit:
 
 ## Next Priority
 
-1. Decide whether to tag an alpha release or bump/tag `v0.1.0`.
-2. Keep monitoring the public repo and npm packages for first external feedback.
+1. Keep monitoring the public repo and npm packages for first external feedback.
+2. Plan the stable `v0.1.0` criteria after alpha feedback.
 
 ## Update Rules
 

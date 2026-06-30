@@ -108,6 +108,18 @@ Status: passed
   `npm publish --access public --provenance --tag next`, and npm registry
   verification confirmed the published versions and repository metadata.
 
+## GitHub Alpha Release Evidence
+
+Status: passed
+
+- Date: 2026-06-30
+- Commit: 86dbb73
+- Tag: `v0.1.0-alpha.0`
+- Release URL: https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
+- Result: passed
+- Notes: Created an annotated git tag and GitHub prerelease matching the
+  published npm package version `0.1.0-alpha.0`.
+
 Previous blocked attempts:
 
 - 2026-06-30, commit `204fe82`,

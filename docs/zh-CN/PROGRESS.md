@@ -29,6 +29,8 @@
   https://github.com/phoenix-gh/ShipStack/actions/runs/28451043094
 - 2026-06-30 最新一次 npm registry 验证已确认三个 packages 都存在，且 `next`
   和 `latest` dist-tags 都指向 `0.1.0-alpha.0`。
+- 2026-06-30 已创建 `v0.1.0-alpha.0` Git tag 和 GitHub prerelease：
+  https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
 - 2026-06-30 最新一次本地 release audit 已在 `pnpm verify:local` 中通过。
 - 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack-dev/core`、
   `@shipstack-dev/cli` 和 `create-shipstack-app` 通过 `pnpm publish:dry-run`。
@@ -158,8 +160,8 @@
 
 ## 下一优先级
 
-1. 决定是打 alpha release tag，还是 bump/tag `v0.1.0`。
-2. 继续观察 public repo 和 npm packages 的第一轮外部反馈。
+1. 继续观察 public repo 和 npm packages 的第一轮外部反馈。
+2. 根据 alpha feedback 规划稳定版 `v0.1.0` 标准。
 
 ## 更新规则
 
