@@ -5,9 +5,8 @@ This file is the working progress board for ShipStack. Update it whenever a deli
 ## Current Snapshot
 
 Status: `v0.1.0` MVP release candidate with local verification, remote CI,
-real Cloudflare deploy, and remote npm publish workflow dry-run verified. Real
-npm publishing is waiting for a rerun after moving the publishable package
-scope from the occupied `@shipstack` scope to `@shipstack-dev`.
+real Cloudflare deploy, remote npm publish workflow dry-run, and real npm
+publishing verified.
 
 External verification status in this workspace:
 
@@ -27,20 +26,16 @@ External verification status in this workspace:
 - The latest remote npm publish workflow dry-run on 2026-06-28 passed for
   `@shipstack-dev/core`, `@shipstack-dev/cli`, and `create-shipstack-app`:
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
-- The latest real npm publish workflow attempt on 2026-06-30 passed
-  `pnpm verify:release`, reached `npm publish`, signed npm provenance, then
-  failed with `E422` because publishable package metadata did not include a
-  `repository.url` matching `https://github.com/phoenix-gh/ShipStack`. Package
-  metadata and the release audit now check this before the next rerun:
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28450280472
-- The previous real npm publish workflow attempt on 2026-06-29 passed
-  `pnpm verify:release`, then failed during `npm publish` with `E404 Not Found`
-  while trying to publish the old `@shipstack/core` package. The old
-  `@shipstack` npm scope is occupied by another owner, so publishable packages
-  have been migrated to `@shipstack-dev/*`:
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884
-- The latest local release audit on 2026-06-29 passed
-  `node scripts/release-audit.mjs --local`.
+- The latest real npm publish workflow on 2026-06-30 passed `pnpm
+verify:release` and published `@shipstack-dev/core`,
+  `@shipstack-dev/cli`, and `create-shipstack-app` at
+  `0.1.0-alpha.0` with npm provenance:
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28451043094
+- The latest npm registry verification on 2026-06-30 confirmed all three
+  packages exist with `next` and `latest` dist-tags pointing to
+  `0.1.0-alpha.0`.
+- The latest local release audit on 2026-06-30 passed as part of
+  `pnpm verify:local`.
 - The latest local npm publish dry-run on 2026-06-28 passed
   `pnpm publish:dry-run` for `@shipstack-dev/core`, `@shipstack-dev/cli`, and
   `create-shipstack-app`.
@@ -172,10 +167,8 @@ Latest commit:
 
 ## Next Priority
 
-1. Rerun the `Release npm Packages` workflow with `dry_run: false` and
-   `npm_tag: next`.
-2. After packages are published, record the npm package evidence and decide
-   whether to tag an alpha release or bump/tag `v0.1.0`.
+1. Decide whether to tag an alpha release or bump/tag `v0.1.0`.
+2. Keep monitoring the public repo and npm packages for first external feedback.
 
 ## Update Rules
 

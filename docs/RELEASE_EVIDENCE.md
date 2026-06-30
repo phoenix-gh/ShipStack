@@ -84,14 +84,14 @@ Status: passed
   `npm publish --dry-run --provenance --tag next` for all publishable packages,
   including the available `create-shipstack-app` package name.
 
-## npm Publish Workflow Real Publish Attempt
+## npm Publish Workflow Real Publish Evidence
 
-Status: blocked
+Status: passed
 
 - Date: 2026-06-30
-- Commit: 3b084e4
+- Commit: d76f1a6
 - Workflow: Release npm Packages
-- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28409972907
+- Run URL: https://github.com/phoenix-gh/ShipStack/actions/runs/28451043094
 - Input:
 
   ```text
@@ -99,20 +99,24 @@ Status: blocked
   npm_tag: next
   ```
 
-- Result: blocked
-- Packages checked after the failed run:
-  - `@shipstack-dev/core@0.1.0-alpha.0`: not published
-  - `@shipstack-dev/cli@0.1.0-alpha.0`: not published
-  - `create-shipstack-app@0.1.0-alpha.0`: not published
-- Notes: The workflow passed `pnpm verify:release`, reached the first real
-  `npm publish`, and npm signed a provenance statement. The publish then failed
-  with `E422` because the tarball package metadata had an empty
-  `repository.url`; npm expected it to match
-  `https://github.com/phoenix-gh/ShipStack` from provenance. Publishable package
-  metadata now includes this repository URL, and the release audit checks it.
+- Result: passed
+- Packages verified after publish:
+  - `@shipstack-dev/core@0.1.0-alpha.0`: published, `next` and `latest`
+  - `@shipstack-dev/cli@0.1.0-alpha.0`: published, `next` and `latest`
+  - `create-shipstack-app@0.1.0-alpha.0`: published, `next` and `latest`
+- Notes: The workflow passed `pnpm verify:release`, published all packages with
+  `npm publish --access public --provenance --tag next`, and npm registry
+  verification confirmed the published versions and repository metadata.
 
 Previous blocked attempts:
 
+- 2026-06-30, commit `204fe82`,
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28450280472: passed
+  `pnpm verify:release`, reached `npm publish`, signed npm provenance, then
+  failed with `E422` because the tarball package metadata had an empty
+  `repository.url`; npm expected it to match
+  `https://github.com/phoenix-gh/ShipStack` from provenance. Publishable package
+  metadata now includes this repository URL, and the release audit checks it.
 - 2026-06-30, commit `3b084e4`,
   https://github.com/phoenix-gh/ShipStack/actions/runs/28409972907: passed
   `pnpm verify:release`, reached `npm publish`, signed npm provenance, then

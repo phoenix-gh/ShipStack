@@ -5,9 +5,7 @@
 ## 当前快照
 
 状态：`v0.1.0` MVP release candidate。本地验证、远端 CI、真实 Cloudflare
-部署，以及远端 npm publish workflow dry-run 都已验证。真实 npm 发布正在等待
-迁移 publishable package scope 后重跑；旧的 `@shipstack` scope 已被占用，当前
-改用 `@shipstack-dev`。
+部署、远端 npm publish workflow dry-run，以及真实 npm 发布都已验证。
 
 当前 workspace 的外部验证状态：
 
@@ -25,19 +23,13 @@
 - 2026-06-28 最新一次远端 npm publish workflow dry-run 已对
   `@shipstack-dev/core`、`@shipstack-dev/cli` 和 `create-shipstack-app` 通过：
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
-- 2026-06-30 最新一次正式 npm publish workflow 尝试已通过
-  `pnpm verify:release`，进入 `npm publish`，并完成 npm provenance 签名，
-  随后因为可发布 package metadata 没有包含匹配
-  `https://github.com/phoenix-gh/ShipStack` 的 `repository.url` 而以 `E422`
-  失败。package metadata 和 release audit 已补上该检查，下一步可重跑：
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28450280472
-- 2026-06-29 上一次正式 npm publish workflow 尝试已通过
-  `pnpm verify:release`，随后在发布旧的 `@shipstack/core` package 时以
-  `E404 Not Found` 失败。旧的 `@shipstack` npm scope 已被其他 owner 占用，
-  因此 publishable packages 已迁移到 `@shipstack-dev/*`：
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884
-- 2026-06-29 最新一次本地 release audit 已通过
-  `node scripts/release-audit.mjs --local`。
+- 2026-06-30 最新一次正式 npm publish workflow 已通过 `pnpm verify:release`，
+  并以 npm provenance 发布 `@shipstack-dev/core`、`@shipstack-dev/cli` 和
+  `create-shipstack-app` 的 `0.1.0-alpha.0`：
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28451043094
+- 2026-06-30 最新一次 npm registry 验证已确认三个 packages 都存在，且 `next`
+  和 `latest` dist-tags 都指向 `0.1.0-alpha.0`。
+- 2026-06-30 最新一次本地 release audit 已在 `pnpm verify:local` 中通过。
 - 2026-06-28 最新一次本地 npm publish dry-run 已对 `@shipstack-dev/core`、
   `@shipstack-dev/cli` 和 `create-shipstack-app` 通过 `pnpm publish:dry-run`。
 - 2026-06-28 最新一次 `pnpm smoke` 在安装 `bubblewrap` 后通过，覆盖 recipe
@@ -166,10 +158,8 @@
 
 ## 下一优先级
 
-1. 重新运行 `Release npm Packages` workflow，设置 `dry_run: false` 和
-   `npm_tag: next`。
-2. packages 发布成功后，记录 npm package 证据，并决定是打 alpha release tag，
-   还是 bump/tag `v0.1.0`。
+1. 决定是打 alpha release tag，还是 bump/tag `v0.1.0`。
+2. 继续观察 public repo 和 npm packages 的第一轮外部反馈。
 
 ## 更新规则
 
