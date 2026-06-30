@@ -25,6 +25,7 @@ const publishablePackages = [
     name: "create-shipstack-app",
   },
 ];
+const repositoryUrl = "https://github.com/phoenix-gh/ShipStack";
 const secretPatterns = [
   {
     label: "private key block",
@@ -1075,6 +1076,15 @@ async function auditPublishablePackageMetadata() {
 
     if (packageJson.private !== false) {
       findings.push(`${packageInfo.directory}: package must be publishable`);
+    }
+
+    if (
+      packageJson.repository?.type !== "git" ||
+      packageJson.repository?.url !== repositoryUrl
+    ) {
+      findings.push(
+        `${packageInfo.directory}: repository.url must match ${repositoryUrl}`,
+      );
     }
 
     if (!readme.includes(`# ${packageInfo.name}`)) {

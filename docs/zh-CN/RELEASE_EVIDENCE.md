@@ -103,12 +103,18 @@
   - `@shipstack-dev/cli@0.1.0-alpha.0`：未发布
   - `create-shipstack-app@0.1.0-alpha.0`：未发布
 - 备注：workflow 已通过 `pnpm verify:release`，进入第一个正式 `npm publish`，
-  并完成 npm provenance statement 签名。随后发布以 `E422` 失败，原因是 npm
-  provenance 不支持 private GitHub Actions source repositories。当前 GitHub
-  repository 是 private；需要改为 public 后再重跑 provenance 发布。
+  并完成 npm provenance statement 签名。随后发布以 `E422` 失败，原因是 tarball
+  package metadata 里的 `repository.url` 为空；npm 期望它与 provenance 中的
+  `https://github.com/phoenix-gh/ShipStack` 匹配。可发布 package metadata 已补上
+  该 repository URL，release audit 也已加入检查。
 
 历史阻塞尝试：
 
+- 2026-06-30，commit `3b084e4`，
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28409972907：已通过
+  `pnpm verify:release`，进入 `npm publish`，并完成 npm provenance 签名，
+  随后因为 npm provenance 不支持 private GitHub Actions source repositories
+  而以 `E422` 失败。GitHub repository 已改为 public。
 - 2026-06-29，commit `87f41a3`，
   https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884：已通过
   `pnpm verify:release`，随后在发布旧的 `@shipstack/core` package 时以

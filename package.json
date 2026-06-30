@@ -4,6 +4,10 @@
   "license": "MIT",
   "private": true,
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phoenix-gh/ShipStack"
+  },
   "packageManager": "pnpm@10.33.0",
   "workspaces": [
     "apps/*",

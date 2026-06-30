@@ -5,6 +5,10 @@
   "license": "MIT",
   "private": false,
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phoenix-gh/ShipStack"
+  },
   "files": [
     "dist",
     "package.json"

@@ -106,12 +106,18 @@ Status: blocked
   - `create-shipstack-app@0.1.0-alpha.0`: not published
 - Notes: The workflow passed `pnpm verify:release`, reached the first real
   `npm publish`, and npm signed a provenance statement. The publish then failed
-  with `E422` because npm provenance does not support private GitHub Actions
-  source repositories. The GitHub repository is currently private; make it
-  public before rerunning provenance publishing.
+  with `E422` because the tarball package metadata had an empty
+  `repository.url`; npm expected it to match
+  `https://github.com/phoenix-gh/ShipStack` from provenance. Publishable package
+  metadata now includes this repository URL, and the release audit checks it.
 
 Previous blocked attempts:
 
+- 2026-06-30, commit `3b084e4`,
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28409972907: passed
+  `pnpm verify:release`, reached `npm publish`, signed npm provenance, then
+  failed with `E422` because npm provenance does not support private GitHub
+  Actions source repositories. The GitHub repository has since been made public.
 - 2026-06-29, commit `87f41a3`,
   https://github.com/phoenix-gh/ShipStack/actions/runs/28372735884: passed
   `pnpm verify:release`, then failed during `npm publish` with `E404 Not Found`

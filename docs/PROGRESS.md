@@ -29,10 +29,10 @@ External verification status in this workspace:
   https://github.com/phoenix-gh/ShipStack/actions/runs/28320946840
 - The latest real npm publish workflow attempt on 2026-06-30 passed
   `pnpm verify:release`, reached `npm publish`, signed npm provenance, then
-  failed with `E422` because npm provenance does not support private GitHub
-  Actions source repositories. The GitHub repository is currently private and
-  must be made public before provenance publishing can pass:
-  https://github.com/phoenix-gh/ShipStack/actions/runs/28409972907
+  failed with `E422` because publishable package metadata did not include a
+  `repository.url` matching `https://github.com/phoenix-gh/ShipStack`. Package
+  metadata and the release audit now check this before the next rerun:
+  https://github.com/phoenix-gh/ShipStack/actions/runs/28450280472
 - The previous real npm publish workflow attempt on 2026-06-29 passed
   `pnpm verify:release`, then failed during `npm publish` with `E404 Not Found`
   while trying to publish the old `@shipstack/core` package. The old
@@ -172,11 +172,9 @@ Latest commit:
 
 ## Next Priority
 
-1. Make the GitHub repository public so npm provenance can verify the GitHub
-   Actions source repository.
-2. Rerun the `Release npm Packages` workflow with `dry_run: false` and
+1. Rerun the `Release npm Packages` workflow with `dry_run: false` and
    `npm_tag: next`.
-3. After packages are published, record the npm package evidence and decide
+2. After packages are published, record the npm package evidence and decide
    whether to tag an alpha release or bump/tag `v0.1.0`.
 
 ## Update Rules
