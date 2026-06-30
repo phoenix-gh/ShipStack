@@ -22,7 +22,7 @@ test("create uses the directory name for package and worker names when given an 
   });
 });
 
-test("create installs the matching ShipStack CLI for local project commands", async () => {
+test("create installs a compatible ShipStack CLI for local project commands", async () => {
   await withWorkspace(async (workspace) => {
     const appDir = resolve(workspace, "local-cli-app");
 
@@ -37,7 +37,7 @@ test("create installs the matching ShipStack CLI for local project commands", as
 
     assert.equal(
       packageJson.devDependencies["@shipstack-dev/cli"],
-      cliPackageJson.version,
+      expectedGeneratedCliDependency(cliPackageJson.version),
     );
   });
 });
@@ -600,4 +600,14 @@ async function captureOutput(argv) {
 
 function count(value, pattern) {
   return value.split(pattern).length - 1;
+}
+
+function expectedGeneratedCliDependency(version) {
+  const alphaMatch = version.match(/^(\d+\.\d+\.\d+)-alpha\.\d+$/);
+
+  if (alphaMatch) {
+    return `>=${alphaMatch[1]}-alpha.0 <${alphaMatch[1]}`;
+  }
+
+  return version;
 }

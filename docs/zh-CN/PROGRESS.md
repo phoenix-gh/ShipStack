@@ -33,8 +33,8 @@
   `create-shipstack-app@0.1.0-alpha.0` 生成的 app 没有本地 `shipstack`
   binary。手动添加 `@shipstack-dev/cli@0.1.0-alpha.0` 后，模块安装、生成应用
   lint、tests、typecheck、build、本地 D1 migration、OpenAPI generation 和
-  Workers deploy dry-run 已通过。template 现在会为下一次 release 写入匹配版本的
-  CLI。
+  Workers deploy dry-run 已通过。template 现在会为下一次 release 写入兼容的 CLI
+  prerelease range。
 - 2026-06-30 已创建 `v0.1.0-alpha.0` Git tag 和 GitHub prerelease：
   https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0
 - 2026-06-30 最新一次本地 release audit 已在 `pnpm verify:local` 中通过。

@@ -139,9 +139,9 @@ Status: partial
 - Finding: the published alpha generated app did not include a local
   `shipstack` binary after `pnpm install`, so `pnpm exec shipstack doctor`
   failed until `@shipstack-dev/cli` was added manually.
-- Fix: the base template now includes a generated-app dev dependency on the
-  matching `@shipstack-dev/cli` version, and CLI plus package checks cover this
-  first-run expectation before the stable `v0.1.0` release.
+- Fix: the base template now includes a generated-app dev dependency on a
+  compatible `@shipstack-dev/cli` prerelease range, and CLI plus package checks
+  cover this first-run expectation before the stable `v0.1.0` release.
 
 Previous blocked attempts:
 

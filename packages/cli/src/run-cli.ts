@@ -109,7 +109,9 @@ async function create(projectName: string | undefined) {
 
   const targetDir = resolve(process.cwd(), projectName);
   const appName = basename(targetDir);
-  const shipstackVersion = await getCliPackageVersion();
+  const shipstackVersion = getGeneratedCliDependencyVersion(
+    await getCliPackageVersion(),
+  );
 
   if (existsSync(targetDir)) {
     throw new Error(`Target directory already exists: ${targetDir}`);
@@ -147,6 +149,16 @@ async function getCliPackageVersion() {
   }
 
   return packageJson.version;
+}
+
+function getGeneratedCliDependencyVersion(version: string) {
+  const alphaMatch = version.match(/^(\d+\.\d+\.\d+)-alpha\.\d+$/);
+
+  if (alphaMatch) {
+    return `>=${alphaMatch[1]}-alpha.0 <${alphaMatch[1]}`;
+  }
+
+  return version;
 }
 
 async function renameTemplateDotfiles(targetDir: string) {

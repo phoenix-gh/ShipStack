@@ -39,8 +39,8 @@ verify:release` and published `@shipstack-dev/core`,
   `shipstack` binary. After manually adding
   `@shipstack-dev/cli@0.1.0-alpha.0`, module installation, generated-app lint,
   tests, typecheck, build, local D1 migration, OpenAPI generation, and Workers
-  deploy dry-run passed. The template now pins the matching CLI version for the
-  next release.
+  deploy dry-run passed. The template now pins a compatible CLI prerelease range
+  for the next release.
 - The `v0.1.0-alpha.0` Git tag and GitHub prerelease were created on
   2026-06-30:
   https://github.com/phoenix-gh/ShipStack/releases/tag/v0.1.0-alpha.0

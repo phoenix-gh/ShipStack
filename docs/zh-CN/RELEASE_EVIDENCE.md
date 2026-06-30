@@ -136,8 +136,9 @@
 - 发现：已发布 alpha 生成的 app 在 `pnpm install` 后没有本地 `shipstack`
   binary，因此 `pnpm exec shipstack doctor` 会失败，直到手动添加
   `@shipstack-dev/cli`。
-- 修复：base template 现在会把匹配版本的 `@shipstack-dev/cli` 写入生成应用
-  dev dependency，CLI 和 package checks 也会在稳定版 `v0.1.0` 前覆盖这个首次运行预期。
+- 修复：base template 现在会把兼容的 `@shipstack-dev/cli` prerelease range 写入
+  生成应用 dev dependency，CLI 和 package checks 也会在稳定版 `v0.1.0`
+  前覆盖这个首次运行预期。
 
 历史阻塞尝试：
 

@@ -224,12 +224,22 @@ async function assertGeneratedAppUsesLocalCli(packageJsonPath) {
 
   if (
     appPackageJson.devDependencies?.["@shipstack-dev/cli"] !==
-    cliPackageJson.version
+    expectedGeneratedCliDependency(cliPackageJson.version)
   ) {
     throw new Error(
-      `Expected generated app to depend on @shipstack-dev/cli ${cliPackageJson.version}.`,
+      `Expected generated app to depend on @shipstack-dev/cli ${expectedGeneratedCliDependency(cliPackageJson.version)}.`,
     );
   }
+}
+
+function expectedGeneratedCliDependency(version) {
+  const alphaMatch = version.match(/^(\d+\.\d+\.\d+)-alpha\.\d+$/);
+
+  if (alphaMatch) {
+    return `>=${alphaMatch[1]}-alpha.0 <${alphaMatch[1]}`;
+  }
+
+  return version;
 }
 
 async function assertFileContains(path, markers) {
